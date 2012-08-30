@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Feedback</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= yield :title %></title>
 
-<%= yield %>
+    <%= yield :section_meta_tags %>
+  </head>
 
-</body>
+  <body class="mainstream">
+    <div id="wrapper">
+      <%= yield %>
+    </div>
+  </body>
 </html>
