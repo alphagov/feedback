@@ -66,5 +66,8 @@ module Feedback
     config.assets.version = '1.0'
 
     config.assets.prefix = 'feedback' # this has to match the path configured in puppet and deploy scripts.
+
+    # Disable Rack::Cache
+    config.action_dispatch.rack_cache = nil
   end
 end
