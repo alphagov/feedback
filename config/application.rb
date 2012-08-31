@@ -64,5 +64,7 @@ module Feedback
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.assets.prefix = 'feedback' # this has to match the path configured in puppet and deploy scripts.
   end
 end
