@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://gems.gemfury.com/vo6ZrmjBQu5szyywDszE/'
 
 gem 'rails', '3.2.8'
 
@@ -9,6 +10,7 @@ else
 end
 
 gem "unicorn", '4.3.1'
+gem "router-client", '3.1.0', :require => false
 
 # Gems used only for assets and not required
 # in production environments by default.
