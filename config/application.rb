@@ -69,5 +69,7 @@ module Feedback
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
+
+    config.slimmer.logger = Rails.logger
   end
 end
