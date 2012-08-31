@@ -11,6 +11,9 @@ end
 
 gem "unicorn", '4.3.1'
 gem "router-client", '3.1.0', :require => false
+gem "exception_notification"
+gem "aws-ses", :require => 'aws/ses'
+gem "plek", "0.3.0" # Used in exception_notification config
 
 # Gems used only for assets and not required
 # in production environments by default.
