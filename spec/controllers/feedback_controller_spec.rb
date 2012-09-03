@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe PagesController do
+describe FeedbackController do
 
-  describe "GET 'feedback'" do
+  describe "GET 'landing'" do
     it "returns http success" do
-      get 'feedback'
+      get :landing
       response.should be_success
     end
   end

@@ -5,7 +5,7 @@ Feedback::Application.routes.draw do
 
   # See how all your routes lay out with "rake routes"
 
-  get "/feedback", :to => "pages#feedback"
+  get "/feedback", :to => "feedback#landing"
 
   root :to => redirect("/feedback", :status => 302)
 end
