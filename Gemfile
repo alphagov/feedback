@@ -29,4 +29,5 @@ group :development, :test do
   gem 'capybara', '1.1.2'
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
+  gem 'webmock', '1.8.9'
 end
