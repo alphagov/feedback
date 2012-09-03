@@ -8,7 +8,7 @@ describe TicketClient do
   describe "creating a client instance" do
     before :each do
       TicketClient.instance_variable_set('@client', nil) # Clear any memoized state
-      ZendeskAPI::Client.stub!(:new).and_return(:a_client_instance)
+      ZendeskAPI::Client.stub(:new).and_return(:a_client_instance)
     end
     after :all do
       TicketClient.instance_variable_set('@client', nil) # Clear any memoized state
@@ -29,7 +29,7 @@ describe TicketClient do
     end
 
     it "should set the client logger to the Rails logger" do
-      YAML.stub!(:load_file).
+      YAML.stub(:load_file).
         and_return({"url"=>"https://example.zendesk.com/api/v2", "username"=>"a_user@example.com", "password"=>"super_secret"})
 
       config_mock = OpenStruct.new
