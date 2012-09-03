@@ -7,6 +7,8 @@ class TicketClient
       config.url = details["url"]
       config.username = details["username"]
       config.password = details["password"]
+
+      config.logger = Rails.logger
     end
   end
 end

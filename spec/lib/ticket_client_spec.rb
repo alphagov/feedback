@@ -28,6 +28,17 @@ describe TicketClient do
       config_mock.password.should == "super_secret"
     end
 
+    it "should set the client logger to the Rails logger" do
+      YAML.stub!(:load_file).
+        and_return({"url"=>"https://example.zendesk.com/api/v2", "username"=>"a_user@example.com", "password"=>"super_secret"})
+
+      config_mock = OpenStruct.new
+      ZendeskAPI::Client.should_receive(:new).and_yield(config_mock)
+
+      TicketClient.client
+      config_mock.logger.should == Rails.logger
+    end
+
     it "should memoize the client instance" do
       TicketClient.client
       ZendeskAPI::Client.should_not_receive(:new)
