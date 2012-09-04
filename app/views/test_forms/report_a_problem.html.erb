@@ -1,9 +1,18 @@
 <h1>Report a problem</h1>
 
 <%= form_tag "/feedback", :authenticity_token => false do %>
-  <%= label_tag :comment do %>
-    Comment
-    <%= text_field_tag :comment %>
+  <%= hidden_field_tag :url, "#{request.protocol}#{request.host_with_port}#{request.fullpath}" %>
+  <%= label_tag :what_doing do %>
+    What were you doing?
+    <%= text_field_tag :what_doing %>
+  <% end %>
+  <%= label_tag :what_happened do %>
+    What happened?
+    <%= text_field_tag :what_happened %>
+  <% end %>
+  <%= label_tag :what_expected do %>
+    What did you expect to happen?
+    <%= text_field_tag :what_expected %>
   <% end %>
 
   <%= submit_tag "Submit" %>

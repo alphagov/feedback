@@ -5,6 +5,66 @@ require 'ticket_client'
 
 describe TicketClient do
 
+  describe "report a problem" do
+    before :each do
+      @tickets = double("Tickets", :create => nil)
+      TicketClient.stub(:client).and_return(double("Zendesk Client", :tickets => @tickets))
+    end
+
+    it "should create a ticket in zendesk with the correct fields" do
+      expected_description = <<-EOT
+url: http://www.example.com/somewhere
+what_doing: Nothing
+what_happened: Something
+what_expected: Something else
+      EOT
+      @tickets.should_receive(:create).with(:subject => "/somewhere", :tags => ['report_a_problem'], :description => expected_description)
+
+      TicketClient.report_a_problem(
+        :url => "http://www.example.com/somewhere",
+        :what_doing => "Nothing",
+        :what_happened => "Something",
+        :what_expected => "Something else"
+      )
+    end
+
+    describe "handling invalid/missing url's" do
+      it "should set the subject to unknown page for a missing url" do
+        @tickets.should_receive(:create).with(hash_including(:subject => "Unknown page"))
+
+        TicketClient.report_a_problem(:url => nil)
+      end
+
+      it "should set the subject to unknown page for an invalid url" do
+        @tickets.should_receive(:create).with(hash_including(:subject => "Unknown page"))
+
+        TicketClient.report_a_problem(:url => "Not a URL")
+      end
+    end
+
+    it "should return true if the ticket was created" do
+      @tickets.stub(:create).and_return(:a_ticket)
+
+      TicketClient.report_a_problem(
+        :url => "http://www.example.com/somewhere",
+        :what_doing => "Nothing",
+        :what_happened => "Something",
+        :what_expected => "Something else"
+      ).should == true
+    end
+
+    it "should return false if there was an error" do
+      @tickets.stub(:create).and_return(nil) # ZendeskAPI swallows all errors, and just returns nil...
+
+      TicketClient.report_a_problem(
+        :url => "http://www.example.com/somewhere",
+        :what_doing => "Nothing",
+        :what_happened => "Something",
+        :what_expected => "Something else"
+      ).should == false
+    end
+  end
+
   describe "creating a client instance" do
     before :each do
       TicketClient.instance_variable_set('@client', nil) # Clear any memoized state
