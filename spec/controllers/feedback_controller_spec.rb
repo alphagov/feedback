@@ -9,4 +9,12 @@ describe FeedbackController do
     end
   end
 
+  describe "POST 'submit'" do
+
+    it "should render the thankyou template" do
+      post :submit
+      response.should render_template('thankyou')
+    end
+  end
+
 end

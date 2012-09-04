@@ -1,0 +1,10 @@
+<h1>Report a problem</h1>
+
+<%= form_tag "/feedback", :authenticity_token => false do %>
+  <%= label_tag :comment do %>
+    Comment
+    <%= text_field_tag :comment %>
+  <% end %>
+
+  <%= submit_tag "Submit" %>
+<% end %>
