@@ -1,4 +1,4 @@
 # Example config for Zendesk client
-url: "https://example.zengesk.com/api/v2"
+url: "https://example.zendesk.com/api/v2"
 username: "a_user@example.com"
 password: "super_secret"
