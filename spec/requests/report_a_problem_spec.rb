@@ -12,6 +12,7 @@ describe "Reporting a problem with this content/tool" do
     i_should_be_on "/feedback"
 
     page.should have_content("Thanks for submitting feedback")
+    page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
 
     expected_description = <<-EOT
 url: http://www.example.com/test_forms/report_a_problem
