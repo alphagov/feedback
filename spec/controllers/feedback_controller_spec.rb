@@ -7,6 +7,11 @@ describe FeedbackController do
       get :landing
       response.should be_success
     end
+
+    it "should set cache control headers for 10 mins" do
+      get :landing
+      response.headers["Cache-Control"].should == "max-age=600, public"
+    end
   end
 
   describe "POST 'submit'" do
