@@ -11,7 +11,7 @@ describe FeedbackController do
 
   describe "POST 'submit'" do
     before :each do
-      TicketClient.stub(:report_a_problem)
+      TicketClient.stub(:report_a_problem).and_return(true)
     end
 
     context "with a valid report_a_problem submission" do
@@ -56,6 +56,22 @@ describe FeedbackController do
         do_submit
         response.should render_template('thankyou')
       end
+
+      context "when ticket creation fails" do
+        before :each do
+          TicketClient.stub(:report_a_problem).and_return(false)
+        end
+
+        it "should render the something_went_wrong template" do
+          do_submit
+          response.should render_template('something_went_wrong')
+        end
+
+        it "should still assign the return_path" do
+          do_submit
+          assigns[:return_path].should == "/somewhere"
+        end
+      end
     end
-  end
+  end # POST 'submit'
 end

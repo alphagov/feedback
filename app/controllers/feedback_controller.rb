@@ -7,9 +7,12 @@ class FeedbackController < ApplicationController
   end
 
   def submit
-    TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
     extract_return_path(params[:url])
-    render :action => 'thankyou'
+    if TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
+      render :action => 'thankyou'
+    else
+      render :action => 'something_went_wrong'
+    end
   end
 
   private

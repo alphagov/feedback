@@ -26,6 +26,10 @@ module ZendeskStubs
       ticket[k].should == v
     end
   end
+
+  def given_zendesk_ticket_creation_fails
+    @zendesk_tickets.stub(:create).and_return(nil)
+  end
 end
 
 RSpec.configure do |config|
