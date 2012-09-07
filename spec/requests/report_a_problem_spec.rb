@@ -11,7 +11,7 @@ describe "Reporting a problem with this content/tool" do
 
     i_should_be_on "/feedback"
 
-    page.should have_content("Thanks for submitting feedback")
+    page.should have_content("Thank you for your help.")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
 
     expected_description = <<-EOT
@@ -33,7 +33,7 @@ what_wrong: It didn't work
 
     i_should_be_on "/feedback"
 
-    page.should have_content("Sorry, there was a problem submitting feedback")
+    page.should have_content("Sorry, something went wrong.")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
   end
 end
