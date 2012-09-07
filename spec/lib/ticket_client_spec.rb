@@ -15,16 +15,14 @@ describe TicketClient do
       expected_description = <<-EOT
 url: http://www.example.com/somewhere
 what_doing: Nothing
-what_happened: Something
-what_expected: Something else
+what_wrong: Something
       EOT
       @tickets.should_receive(:create).with(:subject => "/somewhere", :tags => ['report_a_problem'], :description => expected_description)
 
       TicketClient.report_a_problem(
         :url => "http://www.example.com/somewhere",
         :what_doing => "Nothing",
-        :what_happened => "Something",
-        :what_expected => "Something else"
+        :what_wrong => "Something"
       )
     end
 
@@ -48,8 +46,7 @@ what_expected: Something else
       TicketClient.report_a_problem(
         :url => "http://www.example.com/somewhere",
         :what_doing => "Nothing",
-        :what_happened => "Something",
-        :what_expected => "Something else"
+        :what_wrong => "Something"
       ).should == true
     end
 
@@ -59,8 +56,7 @@ what_expected: Something else
       TicketClient.report_a_problem(
         :url => "http://www.example.com/somewhere",
         :what_doing => "Nothing",
-        :what_happened => "Something",
-        :what_expected => "Something else"
+        :what_wrong => "Something"
       ).should == false
     end
   end

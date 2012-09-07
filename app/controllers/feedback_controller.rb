@@ -1,7 +1,7 @@
 require 'ticket_client'
 
 class FeedbackController < ApplicationController
-  TICKET_PARAMS = %w(url what_doing what_happened what_expected)
+  TICKET_PARAMS = %w(url what_doing what_wrong)
 
   before_filter :set_cache_control, :only => [:landing]
 

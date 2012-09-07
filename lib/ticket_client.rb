@@ -5,8 +5,7 @@ class TicketClient
       description = <<-EOT
 url: #{params[:url]}
 what_doing: #{params[:what_doing]}
-what_happened: #{params[:what_happened]}
-what_expected: #{params[:what_expected]}
+what_wrong: #{params[:what_wrong]}
       EOT
       result = client.tickets.create(
         :subject => path_for_url(params[:url]),

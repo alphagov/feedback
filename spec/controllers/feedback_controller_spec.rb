@@ -24,8 +24,7 @@ describe FeedbackController do
         post :submit, {
           :url => "http://www.example.com/somewhere",
           :what_doing => "Nothing",
-          :what_expected => "Something else",
-          :what_happened => "Something",
+          :what_wrong => "Something",
         }.merge(attrs)
       end
 
@@ -33,8 +32,7 @@ describe FeedbackController do
         TicketClient.should_receive(:report_a_problem).with(
           :url => "http://www.example.com/somewhere",
           :what_doing => "Nothing",
-          :what_happened => "Something",
-          :what_expected => "Something else"
+          :what_wrong => "Something"
         )
 
         do_submit
