@@ -16,18 +16,24 @@ what_wrong: #{params[:what_wrong]}
     end
 
     def client
-      @client ||= ZendeskAPI::Client.new do |config|
-        details = YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
-
-        config.url = details["url"]
-        config.username = details["username"]
-        config.password = details["password"]
-
-        config.logger = Rails.logger
-      end
+      @client ||= build_client
     end
 
     private
+
+    def build_client
+      details = YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
+      if details["development_mode"]
+        DummyClient.new
+      else
+        ZendeskAPI::Client.new do |config|
+          config.url = details["url"]
+          config.username = details["username"]
+          config.password = details["password"]
+          config.logger = Rails.logger
+        end
+      end
+    end
 
     def path_for_url(url)
       uri = URI.parse(url)
@@ -36,4 +42,17 @@ what_wrong: #{params[:what_wrong]}
       "Unknown page"
     end
   end # << self
+
+  class DummyClient
+    class Tickets
+      def self.create(attrs)
+        Rails.logger.info "Zendesk ticket created: #{attrs.inspect}"
+        attrs
+      end
+    end
+
+    def tickets
+      Tickets
+    end
+  end
 end

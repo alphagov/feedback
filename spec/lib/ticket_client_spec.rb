@@ -64,7 +64,11 @@ what_wrong: Something
   describe "creating a client instance" do
     before :each do
       TicketClient.instance_variable_set('@client', nil) # Clear any memoized state
+      YAML.stub(:load_file).
+        with(Rails.root.join('config', 'zendesk.yml')).
+        and_return({"url"=>"https://example.zendesk.com/api/v2", "username"=>"a_user@example.com", "password"=>"super_secret"})
       ZendeskAPI::Client.stub(:new).and_return(:a_client_instance)
+      TicketClient::DummyClient.stub(:new).and_return(:a_dummy_client)
     end
     after :all do
       TicketClient.instance_variable_set('@client', nil) # Clear any memoized state
@@ -85,9 +89,6 @@ what_wrong: Something
     end
 
     it "should set the client logger to the Rails logger" do
-      YAML.stub(:load_file).
-        and_return({"url"=>"https://example.zendesk.com/api/v2", "username"=>"a_user@example.com", "password"=>"super_secret"})
-
       config_mock = OpenStruct.new
       ZendeskAPI::Client.should_receive(:new).and_yield(config_mock)
 
@@ -100,5 +101,39 @@ what_wrong: Something
       ZendeskAPI::Client.should_not_receive(:new)
       TicketClient.client.should == :a_client_instance
     end
+
+    context "when in development mode" do
+      before :each do
+        YAML.stub(:load_file).
+          with(Rails.root.join('config', 'zendesk.yml')).
+          and_return({"development_mode"=>true})
+      end
+
+      it "should create and return a new instance of the dummy client" do
+        TicketClient::DummyClient.should_receive(:new).and_return(:dummy_client)
+        TicketClient.client.should == :dummy_client
+      end
+
+      it "should memoize the dummy client instance" do
+        TicketClient.client
+        TicketClient::DummyClient.should_not_receive(:new)
+        TicketClient.client.should == :a_dummy_client
+      end
+    end
+  end
+end
+
+describe TicketClient::DummyClient do
+  before :each do
+    @client = TicketClient::DummyClient.new
+  end
+
+  it "should log ticket creation to the Rails log" do
+    details = {:subject => "/somewhere", :tags => ['report_a_problem'], :description => "some_description_stuff\nsome_more_stuff"}
+
+    Rails.logger.should_receive(:info).
+      with("Zendesk ticket created: {:subject=>\"/somewhere\", :tags=>[\"report_a_problem\"], :description=>\"some_description_stuff\\nsome_more_stuff\"}")
+
+    @client.tickets.create(details).should be_true
   end
 end
