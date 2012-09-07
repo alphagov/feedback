@@ -9,11 +9,20 @@ class FeedbackController < ApplicationController
   end
 
   def submit
-    extract_return_path(params[:url])
-    if TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
-      render :action => 'thankyou'
+    result = TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
+    if result
+      @message = "Thank you for your help."
+      template = "thankyou"
     else
-      render :action => 'something_went_wrong'
+      @message = "Sorry, something went wrong."
+      template = "something_went_wrong"
+    end
+    respond_to do |format|
+      format.js { render :json => {"status" => (result ? "success" : "error"), "message" => @message} }
+      format.html do
+        extract_return_path(params[:url])
+        render :action => template
+      end
     end
   end
 
