@@ -68,9 +68,9 @@ describe FeedbackController do
             TicketClient.stub(:report_a_problem).and_return(false)
           end
 
-          it "should render the something_went_wrong template assigning the message string" do
+          it "should render the thankyou template assigning the message string" do
             do_submit
-            response.should render_template('something_went_wrong')
+            response.should render_template('thankyou')
             assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
             assigns[:message].should be_html_safe
           end
