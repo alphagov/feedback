@@ -11,10 +11,10 @@ class FeedbackController < ApplicationController
   def submit
     result = TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
     if result
-      @message = "<p>Thank you for your help.</p> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>"
+      @message = "<p>Thank you for your help.</p> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>".html_safe
       template = "thankyou"
     else
-      @message = "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
+      @message = "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>".html_safe
       template = "something_went_wrong"
     end
     respond_to do |format|
