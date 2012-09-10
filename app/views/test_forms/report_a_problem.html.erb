@@ -1,0 +1,16 @@
+<h1>Report a problem</h1>
+
+<p>Help us improve GOV.UK by telling us:</p>
+<%= form_tag "/feedback", :authenticity_token => false do %>
+  <%= hidden_field_tag :url, "#{request.protocol}#{request.host_with_port}#{request.fullpath}" %>
+  <%= label_tag :what_doing do %>
+    What you were doing
+    <%= text_field_tag :what_doing %>
+  <% end %>
+  <%= label_tag :what_wrong do %>
+    What is wrong with this page
+    <%= text_field_tag :what_wrong %>
+  <% end %>
+
+  <%= submit_tag "Send" %>
+<% end %>
