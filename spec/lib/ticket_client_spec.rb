@@ -128,12 +128,23 @@ describe TicketClient::DummyClient do
     @client = TicketClient::DummyClient.new
   end
 
-  it "should log ticket creation to the Rails log" do
-    details = {:subject => "/somewhere", :tags => ['report_a_problem'], :description => "some_description_stuff\nsome_more_stuff"}
+  context "creating a ticket" do
+    it "should log ticket creation to the Rails log, and return trueish" do
+      details = {:subject => "/somewhere", :tags => ['report_a_problem'], :description => "some_description_stuff\nsome_more_stuff"}
 
-    Rails.logger.should_receive(:info).
-      with("Zendesk ticket created: {:subject=>\"/somewhere\", :tags=>[\"report_a_problem\"], :description=>\"some_description_stuff\\nsome_more_stuff\"}")
+      Rails.logger.should_receive(:info).
+        with("Zendesk ticket created: {:subject=>\"/somewhere\", :tags=>[\"report_a_problem\"], :description=>\"some_description_stuff\\nsome_more_stuff\"}")
 
-    @client.tickets.create(details).should be_true
+      @client.tickets.create(details).should be_true
+    end
+
+    it "should simulate ticket creation fail when triggered by 'break_zendesk' string" do
+      details = {:subject => "/somewhere", :tags => ['report_a_problem'], :description => "some_description_stuff\nsomehting_break_zendesk_something\nome_more_stuff"}
+
+      Rails.logger.should_receive(:info).
+        with("Simulating Zendesk ticket creation fail for: {:subject=>\"/somewhere\", :tags=>[\"report_a_problem\"], :description=>\"some_description_stuff\\nsomehting_break_zendesk_something\\nome_more_stuff\"}")
+
+      @client.tickets.create(details).should == nil
+    end
   end
 end

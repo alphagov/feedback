@@ -46,8 +46,13 @@ what_wrong: #{params[:what_wrong]}
   class DummyClient
     class Tickets
       def self.create(attrs)
-        Rails.logger.info "Zendesk ticket created: #{attrs.inspect}"
-        attrs
+        if attrs[:description] =~ /break_zendesk/
+          Rails.logger.info "Simulating Zendesk ticket creation fail for: #{attrs.inspect}"
+          nil
+        else
+          Rails.logger.info "Zendesk ticket created: #{attrs.inspect}"
+          attrs
+        end
       end
     end
 
