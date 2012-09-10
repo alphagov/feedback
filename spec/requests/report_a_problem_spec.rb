@@ -33,7 +33,8 @@ what_wrong: It didn't work
 
     i_should_be_on "/feedback"
 
-    page.should have_content("Sorry, something went wrong.")
+    page.should have_content("Sorry, we're unable to receive your message right now.")
+    page.should have_link("support page", :href => "/feedback")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
   end
 end

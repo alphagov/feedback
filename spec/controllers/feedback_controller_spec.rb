@@ -59,7 +59,8 @@ describe FeedbackController do
         it "should render the thankyou template assigning the message string" do
           do_submit
           response.should render_template('thankyou')
-          assigns[:message].should == "Thank you for your help."
+          assigns[:message].should == "<p>Thank you for your help.</p> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>"
+          assigns[:message].should be_html_safe
         end
 
         context "when ticket creation fails" do
@@ -70,7 +71,8 @@ describe FeedbackController do
           it "should render the something_went_wrong template assigning the message string" do
             do_submit
             response.should render_template('something_went_wrong')
-            assigns[:message].should == "Sorry, something went wrong."
+            assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
+            assigns[:message].should be_html_safe
           end
 
           it "should still assign the return_path" do
@@ -102,14 +104,14 @@ describe FeedbackController do
         it "should return json indicating success" do
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "success", "message" => "Thank you for your help."}
+          data.should == {"status" => "success", "message" => "<p>Thank you for your help.</p> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>"}
         end
 
         it "should return json indicating failure when ticket creation fails"  do
           TicketClient.stub(:report_a_problem).and_return(false)
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "error", "message" => "Sorry, something went wrong."}
+          data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
         end
       end # AJAX
     end # valid report_a_problem
