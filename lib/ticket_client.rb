@@ -4,9 +4,10 @@ class TicketClient
 	class << self
 
 		def raise_ticket(zendesk)
+			tags = zendesk[:tags] << "public_form"
 			result = client.tickets.create(
 				:subject => zendesk[:subject],
-				:tags => zendesk[:tags],
+				:tags => tags,
 				:requester => {name: zendesk[:name], email: zendesk[:email]},
 				:fields => [{id: DEPARTMENT_FIELD, value: zendesk[:department]}],
 				:description => zendesk[:description]
