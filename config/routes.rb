@@ -5,6 +5,8 @@ Feedback::Application.routes.draw do
 
   # See how all your routes lay out with "rake routes"
 
+  get "/ask-a-question", :to => "ask_a_question#landing"
+  post "/ask-a-question", :to => "ask_a_question#submit"
   get "/feedback", :to => "feedback#landing"
   post "/feedback", :to => "feedback#submit"
 
