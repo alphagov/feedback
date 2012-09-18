@@ -1,4 +1,4 @@
-require 'ticket_client'
+require 'ticket_client_connection'
 
 class FeedbackController < ApplicationController
   TICKET_PARAMS = %w(url what_doing what_wrong)
@@ -9,7 +9,8 @@ class FeedbackController < ApplicationController
   end
 
   def submit
-    result = TicketClient.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
+    client = TicketClientConnection.get_client
+    result = client.report_a_problem(params.select {|k,v| TICKET_PARAMS.include?(k) }.symbolize_keys)
     if result
       @message = "<p>Thank you for your help.</p> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>".html_safe
     else
