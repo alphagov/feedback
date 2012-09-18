@@ -12,6 +12,11 @@ describe FeedbackController do
       get :landing
       response.headers["Cache-Control"].should == "max-age=600, public"
     end
+
+    it "should send a dummy artefact to slimmer with a Feedback section" do
+      controller.should_receive(:set_slimmer_dummy_artefact).with(:section_name => "Feedback", :section_link => "/feedback")
+      get :landing
+    end
   end
 
   describe "POST 'submit'" do

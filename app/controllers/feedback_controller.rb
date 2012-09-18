@@ -1,9 +1,13 @@
 require 'ticket_client'
+require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
+  include Slimmer::Headers
+
   TICKET_PARAMS = %w(url what_doing what_wrong)
 
   before_filter :set_cache_control, :only => [:landing]
+  before_filter :setup_slimmer_artefact, :only => [:landing]
 
   def landing
   end
@@ -28,6 +32,10 @@ class FeedbackController < ApplicationController
 
   def set_cache_control
     expires_in 10.minutes, :public => true unless Rails.env.development?
+  end
+
+  def setup_slimmer_artefact
+    set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
   end
 
   def extract_return_path(url)
