@@ -1,4 +1,5 @@
 <% content_for :title, "Ask a Question | Help | GOV.UK Beta (Test)" %>
+
 <section id="content" role="main" class="group multi-page">
 <header class="page-header group">
 <hgroup>
@@ -7,56 +8,66 @@
 </header>
 
 <div class="article-container group">
-	<aside>
-	<div class="inner">
-		<nav role="navigation" class="page-navigation">
-		<ol>
-			<li>
-			<a href="/ask-a-question" title="Ask a Question">
-				<span class="part-title">Ask a Question</span>
-			</a>
-			</li>
-			<li>
-			<a href="/general-feedback" title="General Feedback">
-				<span class="part-title">General Feedback</span>
-			</a>
-			</li>
-		</ol>
-		</nav>
-	</div>
-	</aside>
+  <aside>
+  <div class="inner">
+    <nav role="navigation" class="page-navigation">
+    <ol>
+      <li>
+      <a href="/ask-a-question" title="Ask a Question">
+        <span class="part-title">Ask a Question</span>
+      </a>
+      </li>
+      <li>
+      <a href="/general-feedback" title="General Feedback">
+        <span class="part-title">General Feedback</span>
+      </a>
+      </li>
+    </ol>
+    </nav>
+  </div>
+  </aside>
 
-	<article role="article" class="group">
-	<div class="inner">
-		<header>
-		<h1><span>Ask a Question</span></h1>
-		</header>
-		<form action="/ask-a-question" method="post">
-			<fieldset>
-				<label>Name</label>
-				<input type="text" name="name" id="name" />
-				<label>Email</label>
-				<input type="email" name="email" id="email" />
-				<label>Verify Email</label>
-				<input type="email" name="verifyemail" id="verify-email" />
-			</fieldset>
-			<fieldset>
-				<label>What can we help you with?</label>
-				<span>Please don't include any personal or financial information</span>
-				<input type="text" name="question" />
-				<label>Is ther a section where you'd expect to find an answer?</label>
-				<select name="section">
-					<% @departments.each do |key, value| %>
-						<option value="<%= value %>"><%= key %></option>
-					<% end %>
-				</select>
-				<label>Please list any search terms you used to help us improve GOV.UK.</label>
-				<span>Please don't include any personal or financial information</span>
-				<input type="text" name="searchterms" />
-			</fieldset>
-			<input type="submit" />
-		</form>
-	</div>
-	</article>
+  <article role="article" class="group">
+  <div class="inner">
+    <header>
+    <h1><span>Ask a Question</span></h1>
+    </header>
+    <% if @errors && (not @errors.empty?) %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@errors.count, "error") %> prohibited this post from being saved:</h2>
+        <ul>
+          <% @errors.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <form action="/ask-a-question" method="post">
+      <fieldset>
+        <label>Name</label>
+        <input type="text" name="name" id="name" />
+        <label>Email</label>
+        <input type="email" name="email" id="email" />
+        <label>Verify Email</label>
+        <input type="email" name="verifyemail" id="verify-email" />
+      </fieldset>
+      <fieldset>
+        <label>What can we help you with?</label>
+        <span>Please don't include any personal or financial information</span>
+        <input type="text" name="question" />
+        <label>Is ther a section where you'd expect to find an answer?</label>
+        <select name="section">
+          <% @departments.each do |key, value| %>
+            <option value="<%= value %>"><%= key %></option>
+          <% end %>
+        </select>
+        <label>Please list any search terms you used to help us improve GOV.UK.</label>
+        <span>Please don't include any personal or financial information</span>
+        <input type="text" name="searchterms" />
+      </fieldset>
+      <input type="submit" />
+    </form>
+  </div>
+  </article>
 </div>
 </section>
