@@ -3,13 +3,26 @@ label {
     float: left;
 }
 
+label.top {
+    display: block;
+    width: auto;
+}
+
+span.info {
+    display: block;
+    width: auto;
+    font-size: 0.7em;
+    font-style: italic;
+    color: #a9a9a9;
+}
+
 section#userdetails, section#zendesk {
     border: 1px solid black;
     margin-bottom: 5px;
     margin-top: 5px;
 }
 
-section#content input {
+section#content input[type="text"], section#content input[type="email"], section#content select {
     line-height: 1.5em;
     font-size: 1.1875em;
     color: black;
@@ -27,5 +40,9 @@ fieldset legend {
     line-height: 1.5em;
     color: #2E3191;
     width: 100%;
+}
 
+input.submit {
+   background-color: #008270;
+   color: white;
 }
