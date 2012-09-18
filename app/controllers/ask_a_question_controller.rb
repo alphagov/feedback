@@ -1,7 +1,8 @@
 require 'ticket_client_connection'
+require 'ask_a_question_validator'
 
-class AskAQuestionController < ApplicationController
   @@ticket_client = TicketClientConnection.get_client
+class AskAQuestionController < ApplicationController
   @@QUESTION_TITLE = "[Question]"
   @@SEARCH_ITEMS_TITLE = "[Search Items]"
 
@@ -10,8 +11,7 @@ class AskAQuestionController < ApplicationController
   end
 
   def submit
-    @errors = Validator.validate('ask_a_question', params)
-    puts @errors
+    @errors = AskAQuestionValidator.validate(params)
     if @errors.empty?
       description = format_description params
       result = @@ticket_client.raise_ticket({
@@ -23,33 +23,13 @@ class AskAQuestionController < ApplicationController
         description: description});
         render :action => "thankyou"
     else
+      @old = params
       @departments = @@ticket_client.get_departments
       render :action => "landing"
     end
   end
 
   private
-
-  def validate_form(params)
-  end
-
-  class Validator
-    @@required = { 'ask_a_question' => ['name', 'email']}
-
-    def self.validate(form_name, params)
-      errors = []
-      errors = validate_required form_name, params, errors
-    end
-
-    def self.validate_required(form_name, params, errors)
-      @@required[form_name].each do |key|
-        if params[key].blank?
-          errors << "#{key} is blank"
-        end
-      end
-      errors
-    end
-  end
 
   def format_description(params)
     description = @@QUESTION_TITLE + "\n" + params[:question]

@@ -17,11 +17,23 @@
     <fieldset>
       <legend>Your Details</legend>
       <label for="name">Name</label>
-      <input type="text" name="name" id="name" required aria-required="true"/>
+      <input type="text" value="<%= @old ? @old[:name] : '' %>"
+      name="name" id="name" required aria-required="true"/>
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" required aria-required="true"/>
+      <input type="email" value="<%= @old ? @old[:email] : '' %>" name="email" id="email" required aria-required="true"/>
       <label for="verify-email">Verify Email</label>
-      <input type="email" name="verifyemail" id="verify-email" required aria-required="true"/>
+      <input type="email" name="verifyemail" id="verify-email"
+      required aria-required="true"
+      oninput='checkEmail(this)'/>
+      <script>
+        function checkEmail(input) {
+          if (input.value != document.getElementById('email').value) {
+            input.setCustomValidity('The two email addresses must match.');
+            } else {
+            input.setCustomValidity('');
+          }
+        }
+      </script>
     </fieldset>
   </section>
 
@@ -31,14 +43,14 @@
       <label for="question" class="top">What can we help you with?</label>
       <br/>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" name="question" id="question" required aria-required="true"/>
+      <input type="text" maxlength="1200" value="<%= @old ? @old[:question]  : '' %>" name="question" id="question" required aria-required="true"/>
       <label for="section" class="top">Is there a section where you'd expect to find an answer?</label>
-      <select name="section" id="section">
+      <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
         <% @departments.each do |key, value| %>
           <option value="<%= value %>"><%= key %></option>
         <% end %>
       </select>
-      <label for="search-terms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
+      <label for="search-terms" value="<%= @old ? @old[:searchterms]  : '' %>" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <br/>
       <span class="info">Please don't include any personal or financial information</span>
       <input type="text" name="searchterms" id="search-terms"/>
