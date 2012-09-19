@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeedbackController do
+describe ReportAProblemController do
   describe "GET 'index'" do
     it "returns http success" do
       get :index

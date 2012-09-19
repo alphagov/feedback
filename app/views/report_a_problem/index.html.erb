@@ -1,0 +1,25 @@
+<% content_for :title, @header %>
+
+<form action="/report-a-problem" method="post">
+  <%= render "shared/form_errors" %>
+  <section id="zendesk">
+  <fieldset>
+    <div>Help us improve GOV.UK by telling us:</div>
+    <label for="what_doing" class="top">What you were doing?</label>
+    <input type="text"
+    maxlength="1200"
+    value="<%= @old ? @old[:what_doing] : '' %>"
+    name="what_doing" id="what_doing"
+    required aria-required="true" />
+    <label for="what_wrong" class="top">What is wrong?</label>
+    <input type="text" name="what_wrong" id="what_wrong"
+    maxlength="1200"
+    value="<%= @old ? @old[:what_wrong] : '' %>"
+    required aria-required="true" />
+    <label for="url" class="top">What page did you have problems with?</label>
+    <input type="url" name="url" id="url"
+    value="<%= @old ? @old[:url] : '' %>" />
+  </fieldset>
+  </section>
+  <input type="submit" class="button"/>
+</form>

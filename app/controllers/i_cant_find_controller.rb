@@ -1,20 +1,20 @@
-require 'ask_a_question_validator'
+require 'i_cant_find_validator'
 
-class AskAQuestionController < ApplicationController
-  @@TITLE = "Ask a Question"
-  @@TAGS = ['ask_question']
-  @@QUESTION_TITLE = "[Question]"
+class ICantFindController < ApplicationController
+  @@TITLE = "I Can't Find"
+  @@TAGS = ['i_cant_find']
+  @@LOOKING_FOR_TITLE = "[Looking For]"
   @@SEARCH_ITEMS_TITLE = "[Search Items]"
   @@HEADER = @@TITLE + @@MASTER_HEADER
 
   def index
-    @title = @@TITLE
     @header = @@HEADER
+    @title = @@TITLE
     @departments = @@ticket_client.get_departments
   end
 
   def submit
-    validator = AskAQuestionValidator.new params
+    validator = ICantFindValidator.new params
     @errors = validator.validate
     if @errors.empty?
       description = format_description params
@@ -35,10 +35,8 @@ class AskAQuestionController < ApplicationController
     end
   end
 
-  private
-
   def format_description(params)
-    description = @@QUESTION_TITLE + "\n" + params[:question]
+    description = @@LOOKING_FOR_TITLE + "\n" + params[:lookingfor]
     unless params[:searchterms].blank?
       description += "\n" + @@SEARCH_ITEMS_TITLE + "\n" + params[:searchterms]
     end

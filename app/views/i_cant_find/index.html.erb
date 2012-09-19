@@ -1,0 +1,36 @@
+<% content_for :title, @header %>
+
+<form action="/i-cant-find" method="post">
+  <%= render "shared/form_errors" %>
+  <%= render "shared/user_details_fieldset" %>
+
+  <section id="zendesk">
+    <fieldset>
+      <label for="question" class="top">What are you looking for?</label>
+      <br/>
+      <span class="info">Please don't include any personal or financial information</span>
+      <input type="text"
+      maxlength="1200"
+      value="<%= @old ? @old[:lookingfor]  : '' %>"
+      name="lookingfor" id="lookingfor" required aria-required="true"/>
+      <label for="section" class="top">Where would you expect to ﬁnd it?</label>
+      <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
+        <% @departments.each do |key, value| %>
+          <option value="<%= value %>"><%= key %></option>
+        <% end %>
+      </select>
+      <label for="link"
+        value="<%= @old ? @old[:link]  : '' %>"
+        class="top">If you normally use a link to access the above information, please list it here.</label>
+      <br/>
+      <input type="url" name="link" id="link"/>
+      <label for="search-terms"
+        value="<%= @old ? @old[:searchterms]  : '' %>"
+        class="top">Please list any search terms you used to help us improve GOV.UK.</label>
+      <br/>
+      <span class="info">Please don't include any personal or financial information</span>
+      <input type="text" name="searchterms" id="search-terms"/>
+    </fieldset>
+  </section>
+  <input type="submit" class="button"/>
+</form>

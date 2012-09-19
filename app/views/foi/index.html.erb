@@ -1,0 +1,22 @@
+<% content_for :title, @header %>
+
+<form action="/foi" method="post">
+  <%= render "shared/form_errors" %>
+  <%= render "shared/user_details_fieldset" %>
+
+  <section id="info">
+  <div>Blurb about FOI requests- only relate to GOV.UK, etc.</div>
+  </section>
+  <section id="zendesk">
+  <fieldset>
+    <label for="foi" class="top">Provide a detailed description about the information you're seeking</label>
+    <br/>
+    <span class="info">Please don't include any personal or financial information</span>
+    <input type="text"
+    maxlength="1200"
+    value="<%= @old ? @old[:foi]  : '' %>"
+    name="foi" id="foi" required aria-required="true"/>
+  </fieldset>
+  </section>
+  <input type="submit" class="button"/>
+</form>

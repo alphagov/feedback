@@ -24,20 +24,6 @@ class TicketClient
       departments_hash
     end
 
-    def report_a_problem(params)
-      description = <<-EOT
-url: #{params[:url]}
-what_doing: #{params[:what_doing]}
-what_wrong: #{params[:what_wrong]}
-EOT
-result = client.tickets.create(
-  :subject => path_for_url(params[:url]),
-  :description => description,
-  :tags => ['report_a_problem']
-)
-!! result
-    end
-
     def client 
       @@client ||= build_client
     end
@@ -53,14 +39,5 @@ result = client.tickets.create(
         config.logger = Rails.logger
       end
     end
-
-    def path_for_url(url)
-      uri = URI.parse(url)
-      uri.path
-    rescue URI::InvalidURIError
-      "Unknown page"
-    end
-
-  end # << self
-
+  end
 end

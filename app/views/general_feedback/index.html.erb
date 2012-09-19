@@ -1,0 +1,22 @@
+<% content_for :title, @header %>
+
+<form action="/general-feedback" method="post">
+  <%= render "shared/form_errors" %>
+  <%= render "shared/user_details_fieldset" %>
+
+  <section id="zendesk">
+    <fieldset>
+      <label for="feedback" class="top">How can we improve GOV.UK?</label>
+      <br/>
+      <span class="info">Please don't include any personal or financial information</span>
+      <input type="text" maxlength="1200" value="<%= @old ? @old[:feedback]  : '' %>" name="feedback" id="feedback" required aria-required="true"/>
+      <label for="section" class="top">Is there a section your feedback relates to?</label>
+      <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
+        <% @departments.each do |key, value| %>
+          <option value="<%= value %>"><%= key %></option>
+        <% end %>
+      </select>
+    </fieldset>
+  </section>
+  <input type="submit" class="button"/>
+</form>

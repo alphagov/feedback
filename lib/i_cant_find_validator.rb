@@ -1,6 +1,6 @@
 require 'base_validator'
 
-class AskAQuestionValidator < BaseValidator
+class ICantFindValidator < BaseValidator
 
   def initialize(params)
     super params
@@ -8,9 +8,9 @@ class AskAQuestionValidator < BaseValidator
 
   def validate
     validate_user_details
-    validate_existance :question
+    validate_existance :lookingfor
     validate_max_length :searchterms
-    validate_max_length :question
+    validate_max_length :lookingfor
     errors
   end
 end

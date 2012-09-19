@@ -1,0 +1,23 @@
+<section id="userdetails">
+<fieldset>
+  <legend>Your Details</legend>
+  <label for="name">Name</label>
+  <input type="text" value="<%= @old ? @old[:name] : '' %>"
+  name="name" id="name" required aria-required="true"/>
+  <label for="email">Email</label>
+  <input type="email" value="<%= @old ? @old[:email] : '' %>" name="email" id="email" required aria-required="true"/>
+  <label for="verify-email">Verify Email</label>
+  <input type="email" name="verifyemail" id="verify-email"
+  required aria-required="true"
+  oninput='checkEmail(this)'/>
+  <script>
+    function checkEmail(input) {
+      if (input.value != document.getElementById('email').value) {
+        input.setCustomValidity('The two email addresses must match.');
+        } else {
+        input.setCustomValidity('');
+      }
+    }
+  </script>
+</fieldset>
+</section>

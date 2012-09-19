@@ -18,9 +18,5 @@ class TicketClientDummy
         'Test Department Two' => 'test_department_two'
       }
     end
-
-    def report_a_problem(zendesk)
-      raise_ticket(zendesk)
-    end
   end
 end

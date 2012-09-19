@@ -16,7 +16,7 @@ span.info {
     color: #a9a9a9;
 }
 
-section#userdetails, section#zendesk {
+section#userdetails, section#zendesk, section#info {
     border: 1px solid black;
     margin-bottom: 5px;
     margin-top: 5px;
