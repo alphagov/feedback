@@ -28,6 +28,4 @@ Feedback::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  config.slimmer.asset_host = "http://static.preview.alphagov.co.uk"
 end
