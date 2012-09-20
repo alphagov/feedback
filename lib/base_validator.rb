@@ -42,7 +42,7 @@ class BaseValidator
     unless @params[:email] ==  @params[:verifyemail]
       add_error :email, 'The two email addresses must match'
     end
-    unless @params[:email] =~ /^.+@.+/
+    unless @params[:email] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
       add_error :email, 'Invalid email address'
     end
     validate_max_length :email
