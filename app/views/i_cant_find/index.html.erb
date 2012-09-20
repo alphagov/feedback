@@ -1,7 +1,7 @@
 <% content_for :title, "I Can't Find | Feedback | GOV.UK" %>
 <% content_for :heading, "I Can't Find" %>
 
-<form action="/i-cant-find" method="post">
+<form action="/feedback/i-cant-find" method="post">
   <%= render "shared/user_details_fieldset" %>
 
   <section id="zendesk">
@@ -36,5 +36,5 @@
 
     </fieldset>
   </section>
-  <input type="submit" class="button"/>
+  <input id="submit" type="submit" class="button"/>
 </form>

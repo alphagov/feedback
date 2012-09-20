@@ -1,7 +1,7 @@
 <% content_for :title, "Freedom Of Information | Feedback | GOV.UK" %>
 <% content_for :heading, "Freedom Of Information" %>
 
-<form action="/foi" method="post">
+<form action="/feedback/foi" method="post">
   <%= render "shared/user_details_fieldset" %>
 
   <section id="info">
@@ -24,5 +24,5 @@
 
   </fieldset>
   </section>
-  <input type="submit" class="button"/>
+  <input id="submit" type="submit" class="button"/>
 </form>

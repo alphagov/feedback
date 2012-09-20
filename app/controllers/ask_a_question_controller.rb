@@ -1,36 +1,29 @@
 require 'ask_a_question_validator'
 
 class AskAQuestionController < ApplicationController
-  @@TITLE = "Ask a Question"
-  @@TAGS = ['ask_question']
-  @@QUESTION_TITLE = "[Question]"
-  @@SEARCH_ITEMS_TITLE = "[Search Items]"
-  @@HEADER = @@TITLE + @@MASTER_HEADER
 
   def index
-    @title = @@TITLE
-    @header = @@HEADER
-    @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
+    ticket_client = TicketClientConnection.get_client
+    @departments = @@EMPTY_DEPARTMENT.merge ticket_client.get_departments
   end
 
   def submit
     validator = AskAQuestionValidator.new params
     @errors = validator.validate
+    ticket_client = TicketClientConnection.get_client
     if @errors.empty?
       description = format_description params
-      result = @@ticket_client.raise_ticket({
-        subject: @@TITLE,
-        tags: @@TAGS,
+      result = ticket_client.raise_ticket({
+        subject: "Ask a Question",
+        tags: ["ask_question"],
         name: params[:name],
         email: params[:email],
         department: params[:section],
         description: description});
         handle_done result
     else
-      @header = @@HEADER
-      @title = @@TITLE
       @old = params
-      @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
+      @departments = @@EMPTY_DEPARTMENT.merge ticket_client.get_departments
       render :action => "index"
     end
   end
@@ -38,9 +31,9 @@ class AskAQuestionController < ApplicationController
   private
 
   def format_description(params)
-    description = @@QUESTION_TITLE + "\n" + params[:question]
+    description = "[Question]\n" + params[:question]
     unless params[:searchterms].blank?
-      description += "\n" + @@SEARCH_ITEMS_TITLE + "\n" + params[:searchterms]
+      description += "\n[Search Terms]\n" + params[:searchterms]
     end
     description
   end
