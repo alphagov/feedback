@@ -1,24 +1,24 @@
 <% content_for :title, @header %>
 
 <form action="/report-a-problem" method="post">
-  <%= render "shared/form_errors" %>
   <section id="zendesk">
   <fieldset>
-    <div>Help us improve GOV.UK by telling us:</div>
+    <legend>Help us improve GOV.UK by telling us:</legend>
     <label for="what_doing" class="top">What you were doing?</label>
-    <input type="text"
-    maxlength="1200"
-    value="<%= @old ? @old[:what_doing] : '' %>"
-    name="what_doing" id="what_doing"
-    required aria-required="true" />
+    <input type="text" maxlength="1200" name="what_doing" id="what_doing" required aria-required="true"
+           value="<%= @old ? @old[:what_doing]  : '' %>" />
+    <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_doing"}%>
+
     <label for="what_wrong" class="top">What is wrong?</label>
-    <input type="text" name="what_wrong" id="what_wrong"
-    maxlength="1200"
-    value="<%= @old ? @old[:what_wrong] : '' %>"
-    required aria-required="true" />
+    <input type="text" maxlength="1200" name="what_wrong" id="what_wrong" required aria-required="true"
+           value="<%= @old ? @old[:what_wrong]  : '' %>" />
+    <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_wrong"}%>
+
     <label for="url" class="top">What page did you have problems with?</label>
-    <input type="url" name="url" id="url"
-    value="<%= @old ? @old[:url] : '' %>" />
+    <input type="url" maxlength="1200" name="url" id="url" required aria-required="true"
+           value="<%= @old ? @old[:url]  : '' %>" />
+    <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "url"}%>
+
   </fieldset>
   </section>
   <input type="submit" class="button"/>

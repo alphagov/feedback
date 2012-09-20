@@ -2,14 +2,21 @@
 <fieldset>
   <legend>Your Details</legend>
   <label for="name">Name</label>
-  <input type="text" value="<%= @old ? @old[:name] : '' %>"
-  name="name" id="name" required aria-required="true"/>
+  <input type="text" maxlength="1200" name="name" id="name" required aria-required="true"
+         value="<%= @old ? @old[:name]  : '' %>" />
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
+
   <label for="email">Email</label>
-  <input type="email" value="<%= @old ? @old[:email] : '' %>" name="email" id="email" required aria-required="true"/>
-  <label for="verify-email">Verify Email</label>
-  <input type="email" name="verifyemail" id="verify-email"
-  required aria-required="true"
-  oninput='checkEmail(this)'/>
+  <input type="text" maxlength="1200" name="email" id="email" required aria-required="true"
+         value="<%= @old ? @old[:email]  : '' %>" />
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
+
+  <label for="verifyemail">Verify Email</label>
+  <input type="text" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
+         value="<%= @old ? @old[:verifyemail]  : '' %>"
+         oninput='checkEmail(this)'/>
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
+
   <script>
     function checkEmail(input) {
       if (input.value != document.getElementById('email').value) {

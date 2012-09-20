@@ -1,7 +1,6 @@
 <% content_for :title, @header %>
 
 <form action="/foi" method="post">
-  <%= render "shared/form_errors" %>
   <%= render "shared/user_details_fieldset" %>
 
   <section id="info">
@@ -9,13 +8,13 @@
   </section>
   <section id="zendesk">
   <fieldset>
+    <legend>Please specify</legend>
     <label for="foi" class="top">Provide a detailed description about the information you're seeking</label>
-    <br/>
     <span class="info">Please don't include any personal or financial information</span>
-    <input type="text"
-    maxlength="1200"
-    value="<%= @old ? @old[:foi]  : '' %>"
-    name="foi" id="foi" required aria-required="true"/>
+    <input type="text" maxlength="1200" name="lookingfor" id="lookingfor" required aria-required="true"
+           value="<%= @old ? @old[:foi]  : '' %>" />
+    <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "foi"}%>
+
   </fieldset>
   </section>
   <input type="submit" class="button"/>

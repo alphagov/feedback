@@ -2,28 +2,30 @@
 
 
 <form action="/ask-a-question" method="post">
-  <%= render "shared/form_errors" %>
   <%= render "shared/user_details_fieldset" %>
 
   <section id="zendesk">
     <fieldset>
+      <legend>Please specify</legend>
       <label for="question" class="top">What can we help you with?</label>
-      <br/>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text"
-      maxlength="1200"
-      value="<%= @old ? @old[:question]  : '' %>"
-      name="question" id="question" required aria-required="true"/>
+      <input type="text" maxlength="1200" name="question" id="question" required aria-required="true"
+             value="<%= @old ? @old[:question]  : '' %>" />
+      <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "question"}%>
+
       <label for="section" class="top">Is there a section where you'd expect to find an answer?</label>
       <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
         <% @departments.each do |key, value| %>
           <option value="<%= value %>"><%= key %></option>
         <% end %>
       </select>
-      <label for="search-terms" value="<%= @old ? @old[:searchterms]  : '' %>" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
-      <br/>
+      <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
+
+      <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" name="searchterms" id="search-terms"/>
+      <input type="url" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
+      <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
+
     </fieldset>
   </section>
   <input type="submit" class="button"/>
