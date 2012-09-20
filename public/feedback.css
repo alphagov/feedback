@@ -1,3 +1,11 @@
+.article-container {
+    margin-right: 0;
+}
+
+header.page-header hgroup {
+    margin-right: 0;
+}
+
 label {
     width: 25%;
     float: left;
@@ -33,7 +41,7 @@ section#content input[type="text"], section#content input[type="email"], section
     margin-top: 5px;
     margin-left: 0;
     margin-right: 0;
-    width: 15em;
+    width: 25em;
     padding: 0;
     border: 1px solid #BBB;
 }
