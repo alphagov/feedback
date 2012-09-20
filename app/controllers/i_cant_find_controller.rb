@@ -23,6 +23,7 @@ class ICantFindController < ApplicationController
         handle_done result
     else
       @old = params
+      ticket_client = TicketClientConnection.get_client
       @departments = @@EMPTY_DEPARTMENT.merge ticket_client.get_departments
       render :action => "index"
     end

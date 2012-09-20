@@ -18,7 +18,7 @@
     <legend>Please specify</legend>
     <label for="foi" class="top">Provide a detailed description about the information you're seeking</label>
     <span class="info">Please don't include any personal or financial information</span>
-    <input type="text" maxlength="1200" name="lookingfor" id="lookingfor" required aria-required="true"
+    <input type="text" maxlength="1200" name="foi" id="foi" required aria-required="true"
            value="<%= @old ? @old[:foi]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "foi"}%>
 

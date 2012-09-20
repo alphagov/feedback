@@ -13,7 +13,7 @@
              value="<%= @old ? @old[:lookingfor]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "lookingfor"}%>
 
-      <label for="section" class="top">Where would you expect to ﬁnd it?</label>
+      <label for="section" class="top">Where would you expect to find it?</label>
       <select name="section" maxlength="1200" id="section">
         <% @departments.each do |key, value| %>
           <% if @old && value == @old[:section] %>
