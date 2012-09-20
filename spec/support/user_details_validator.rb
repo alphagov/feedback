@@ -5,7 +5,7 @@ shared_examples_for BaseValidator do
     test_data = {
       name: "test name",
       email: "a@a.com",
-      verifyemail: "a@a.com",
+      verifyemail: "a@a.com"
     }
     test_data = test_data.merge @valid_details
     validator = @validator_class.new test_data
@@ -17,7 +17,7 @@ shared_examples_for BaseValidator do
     test_data = {
       name: "test name",
       email: "a",
-      verifyemail: "a@a",
+      verifyemail: "a@a"
     }
     test_data = test_data.merge @valid_details
     validator = @validator_class.new test_data
@@ -29,7 +29,7 @@ shared_examples_for BaseValidator do
     test_data = {
       name: "test name",
       email: "",
-      verifyemail: "a@a",
+      verifyemail: "a@a"
     }
     test_data = test_data.merge @valid_details
     validator = @validator_class.new test_data
@@ -41,7 +41,7 @@ shared_examples_for BaseValidator do
     test_data = {
       name: "test name",
       email: "a@a",
-      verifyemail: "a@b",
+      verifyemail: "a@b"
     }
     test_data = test_data.merge @valid_details
     validator = @validator_class.new test_data
@@ -53,7 +53,7 @@ shared_examples_for BaseValidator do
     test_data = {
       name: "",
       email: "a@a",
-      verifyemail: "a@a",
+      verifyemail: "a@a"
     }
     test_data = test_data.merge @valid_details
     validator = @validator_class.new test_data
