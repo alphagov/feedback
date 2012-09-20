@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
     "<p>We have other ways for you to provide feedback on the "\
     "<a href='/feedback'>support page</a>.</p>"
 
+  @@EMPTY_DEPARTMENT = {"Select Department" => ""}
+
   before_filter :set_cache_control, :only => [:landing]
 
   private

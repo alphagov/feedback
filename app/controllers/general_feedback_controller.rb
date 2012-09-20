@@ -8,7 +8,7 @@ class GeneralFeedbackController < ApplicationController
   def index
     @header = @@HEADER
     @title = @@TITLE
-    @departments = @@ticket_client.get_departments
+    @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
   end
 
   def submit
@@ -27,7 +27,7 @@ class GeneralFeedbackController < ApplicationController
       @header = @@HEADER
       @title = @@TITLE
       @old = params
-      @departments = @@ticket_client.get_departments
+      @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
       render :action => "index"
     end
   end

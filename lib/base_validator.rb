@@ -45,6 +45,9 @@ class BaseValidator
     unless @params[:email] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
       add_error :email, 'Invalid email address'
     end
+    unless @params[:verifyemail] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
+      add_error :verifyemail, 'Invalid email address'
+    end
     validate_max_length :email
   end
 

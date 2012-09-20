@@ -10,7 +10,7 @@ class AskAQuestionController < ApplicationController
   def index
     @title = @@TITLE
     @header = @@HEADER
-    @departments = @@ticket_client.get_departments
+    @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
   end
 
   def submit
@@ -30,7 +30,7 @@ class AskAQuestionController < ApplicationController
       @header = @@HEADER
       @title = @@TITLE
       @old = params
-      @departments = @@ticket_client.get_departments
+      @departments = @@EMPTY_DEPARTMENT.merge @@ticket_client.get_departments
       render :action => "index"
     end
   end

@@ -14,8 +14,10 @@
 
       <label for="section" class="top">Is there a section your feedback relates to?</label>
       <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
-        <% @departments.each do |key, value| %>
-          <option value="<%= value %>"><%= key %></option>
+        <% if value == @old[:section] %>
+          <option selected="selected" value="<%= value %>"><%= key %> </option>
+        <% else %>
+          <option value="<%= value %>"><%= key %> </option>
         <% end %>
       </select>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
