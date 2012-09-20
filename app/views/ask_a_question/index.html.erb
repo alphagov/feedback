@@ -14,9 +14,9 @@
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "question"}%>
 
       <label for="section" class="top">Is there a section where you'd expect to find an answer?</label>
-      <select name="section" maxlength="1200" value="<%= @old ? @old[:section]  : '' %>" id="section">
+      <select name="section" maxlength="1200" id="section">
         <% @departments.each do |key, value| %>
-          <% if value == @old[:section] %>
+          <% if @old && value == @old[:section] %>
             <option selected="selected" value="<%= value %>"><%= key %> </option>
           <% else %>
             <option value="<%= value %>"><%= key %> </option>
