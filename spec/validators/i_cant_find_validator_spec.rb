@@ -1,27 +1,23 @@
 require 'spec_helper'
 
-RSpec.configure do |c|
-  c.include ValidatorHelper
-end
-
-describe AskAQuestionValidator do
+describe ICantFindValidator do
   before :each do
-    @validator_class = AskAQuestionValidator
-    @valid_details = {question: "test question"}
+    @validator_class = ICantFindValidator
+    @valid_details = {lookingfor: "test lookingfor"}
   end
 
   it_should_behave_like BaseValidator
 
-  it "should return question error with empty question" do
+  it "should return lookingfor error with empty lookingfor" do
     test_data = {
       name: "test name",
       email: "a@a",
       verifyemail: "a@a",
-      question: ""
+      lookingfor: ""
     }
     validator = @validator_class.new test_data
     errors = validator.validate
-    errors[:question].should_not be_nil
+    errors[:lookingfor].should_not be_nil
   end
 
   it "should return searchterms error with too long searchterms" do
@@ -37,16 +33,16 @@ describe AskAQuestionValidator do
     errors[:searchterms].should_not be_nil
   end
 
-  it "should return question error with too long question" do
-    question = build_random_string 1201
+  it "should return lookingfor error with too long lookingfor" do
+    lookingfor = build_random_string 1201
     test_data = {
       name: "test name",
       email: "a@a",
       verifyemail: "a@a",
-      question: question
+      lookingfor: lookingfor
     }
     validator = @validator_class.new test_data
     errors = validator.validate
-    errors[:question].should_not be_nil
+    errors[:lookingfor].should_not be_nil
   end
 end
