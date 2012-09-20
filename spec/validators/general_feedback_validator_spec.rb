@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'general_feedback_validator'
 
 describe GeneralFeedbackValidator do
   before :each do

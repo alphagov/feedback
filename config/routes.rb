@@ -5,18 +5,18 @@ Feedback::Application.routes.draw do
 
   # See how all your routes lay out with "rake routes"
 
-  get "/feedback/ask-a-question", :to => "ask_a_question#index"
-  post "/feedback/ask-a-question", :to => "ask_a_question#submit"
-  get "/feedback/general-feedback", :to => "general_feedback#index"
-  post "/feedback/general-feedback", :to => "general_feedback#submit"
-  get "/feedback/foi", :to => "foi#index"
-  post "/feedback/foi", :to => "foi#submit"
-  get "/feedback/i-cant-find", :to => "i_cant_find#index"
-  post "/feedback/i-cant-find", :to => "i_cant_find#submit"
+  get "/feedback/ask-a-question", :to => "feedback#ask_a_question"
+  post "/feedback/ask-a-question", :to => "feedback#ask_a_question_submit"
+  get "/feedback/general-feedback", :to => "feedback#general_feedback"
+  post "/feedback/general-feedback", :to => "feedback#general_feedback_submit"
+  get "/feedback/foi", :to => "feedback#foi"
+  post "/feedback/foi", :to => "feedback#foi_submit"
+  get "/feedback/i-cant-find", :to => "feedback#i_cant_find"
+  post "/feedback/i-cant-find", :to => "feedback#i_cant_find_submit"
   get "/feedback", :to => "feedback#index"
-  post "/feedback", :to => "report_a_problem#submit_without_validation"
-  get "/feedback/report-a-problem", :to => "report_a_problem#index"
-  post "/feedback/report-a-problem", :to => "report_a_problem#submit"
+  post "/feedback", :to => "feedback#report_a_problem_submit_without_validation"
+  get "/feedback/report-a-problem", :to => "feedback#report_a_problem"
+  post "/feedback/report-a-problem", :to => "feedback#report_a_problem_submit"
 
   root :to => redirect("/feedback", :status => 302)
 

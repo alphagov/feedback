@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ask_a_question_validator'
 
 RSpec.configure do |c|
   c.include ValidatorHelper

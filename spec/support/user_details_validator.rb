@@ -1,3 +1,5 @@
+require 'base_validator'
+
 shared_examples_for BaseValidator do
   it "should return no errors on valid params" do
     test_data = {

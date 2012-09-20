@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'foi_validator'
 
 describe FoiValidator do
   before :each do

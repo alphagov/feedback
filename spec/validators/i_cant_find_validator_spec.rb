@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'i_cant_find_validator'
 
 describe ICantFindValidator do
   before :each do

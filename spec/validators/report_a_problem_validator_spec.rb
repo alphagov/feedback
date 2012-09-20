@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'report_a_problem_validator'
 
 describe ReportAProblemValidator do
   before :each do
