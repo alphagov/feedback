@@ -7,8 +7,8 @@ class ReportAProblemValidator < BaseValidator
   end
 
   def validate
-    validate_existance :what_wrong
-    validate_existance :what_doing
+    validate_existence :what_wrong
+    validate_existence :what_doing
     validate_max_length :what_wrong
     validate_max_length :what_doing
     errors

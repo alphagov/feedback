@@ -7,7 +7,7 @@ class FoiValidator < BaseValidator
 
   def validate
     validate_user_details
-    validate_existance :foi
+    validate_existence :foi
     validate_max_length :foi
     errors
   end

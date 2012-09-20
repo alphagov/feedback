@@ -8,7 +8,7 @@ class AskAQuestionValidator < BaseValidator
 
   def validate
     validate_user_details
-    validate_existance :question
+    validate_existence :question
     validate_max_length :searchterms
     validate_max_length :question
     errors

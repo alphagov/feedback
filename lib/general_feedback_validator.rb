@@ -7,7 +7,7 @@ class GeneralFeedbackValidator < BaseValidator
 
   def validate
     validate_user_details
-    validate_existance :feedback
+    validate_existence :feedback
     validate_max_length :feedback
     errors
   end

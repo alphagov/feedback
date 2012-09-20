@@ -24,7 +24,7 @@ class BaseValidator
     end
   end
 
-  def validate_existance(field)
+  def validate_existence(field)
     if @params[field].blank?
       add_error field, @@BLANK_ERROR_MESSAGE
     end
@@ -33,9 +33,9 @@ class BaseValidator
   def validate_user_details
     validate_name
     validate_email
-    validate_existance :email
-    validate_existance :name
-    validate_existance :verifyemail
+    validate_existence :email
+    validate_existence :name
+    validate_existence :verifyemail
   end
 
   def validate_email

@@ -8,7 +8,7 @@ class ICantFindValidator < BaseValidator
 
   def validate
     validate_user_details
-    validate_existance :lookingfor
+    validate_existence :lookingfor
     validate_max_length :searchterms
     validate_max_length :lookingfor
     errors
