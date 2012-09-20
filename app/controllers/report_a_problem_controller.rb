@@ -2,35 +2,28 @@ require 'ticket_client_connection'
 require 'report_a_problem_validator'
 
 class ReportAProblemController < ApplicationController
-  @@ticket_client = TicketClientConnection.get_client
-  @@TAGS = ['report_a_problem']
-  @@TITLE = 'Report a Problem'
-  @@HEADER = @@TITLE + @@MASTER_HEADER
-
-  def index
-    @header = @@HEADER
-    @title = @@TITLE
-  end
 
   def submit
     validator = ReportAProblemValidator.new params
     @errors = validator.validate
     if @errors.empty?
-      submit_without_validation(params)
+      handle_submit(params)
     else
-      @title = @@TITLE
-      @header = @@HEADER
       @old = params
       render :action => "index"
     end
   end
 
   def submit_without_validation
+    handle_submit params
+  end
+
+  def handle_submit(params)
     description = format_description params
-    client = TicketClientConnection.get_client
-    result = @@ticket_client.raise_ticket({
+    ticket_client = TicketClientConnection.get_client
+    result = ticket_client.raise_ticket({
       subject: path_for_url(params[:url]),
-      tags: @@TAGS,
+      tags: ['report_a_problem'],
       description: description})
       handle_done result
   end
@@ -47,7 +40,7 @@ class ReportAProblemController < ApplicationController
   def format_description(params)
     description = \
       "url: #{params[:url]}\n"\
-    "what_doing: #{params[:what_doing]}"\
+    "what_doing: #{params[:what_doing]}\n"\
     "what_wrong: #{params[:what_wrong]}"
   end
 end

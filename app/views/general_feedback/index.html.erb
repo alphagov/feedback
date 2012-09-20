@@ -1,7 +1,7 @@
 <% content_for :title, "General Feedback | Feedback | GOV.UK" %>
 <% content_for :heading, "General Feedback" %>
 
-<form action="/general-feedback" method="post">
+<form action="/feedback/general-feedback" method="post">
   <%= render "shared/user_details_fieldset" %>
 
   <section id="zendesk">
@@ -25,5 +25,5 @@
 
     </fieldset>
   </section>
-  <input type="submit" class="button"/>
+  <input id="submit" type="submit" class="button"/>
 </form>
