@@ -132,6 +132,7 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit_without_validation
+    @return_path = true
     report_a_problem_handle_submit params
   end
 
