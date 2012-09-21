@@ -24,4 +24,23 @@ describe "General Feedback" do
       :description => expected_description,
       :tags => ['general_feedback']
   end
+
+  it "should not proceed if the user hasn't filled in all required general feedback fields" do
+    visit "/feedback/general-feedback"
+
+    fill_in "Name", :with => "test name"
+    fill_in "Email", :with => "a@a.com"
+    fill_in "Verify email", :with => "a@a.com"
+    select "Test Department", :from => "Is there a section your feedback relates to?"
+    click_on "submit"
+
+    i_should_be_on "/feedback/general-feedback"
+
+    find_field('Name').value.should eq 'test name'
+    find_field('Email').value.should eq 'a@a.com'
+    find_field('Verify email').value.should eq 'a@a.com'
+
+    zendesk_should_not_have_ticket
+  end
+
 end
