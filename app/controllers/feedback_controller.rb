@@ -1,6 +1,8 @@
 require 'ticket_client_connection'
+require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
+  include Slimmer::Headers
   DONE_OK_TEXT = \
     "<p>Thank you for your help.</p> "\
     "<p>If you have more extensive feedback, "\
@@ -11,7 +13,19 @@ class FeedbackController < ApplicationController
     "<a href='/feedback'>support page</a>.</p>"
   EMPTY_DEPARTMENT = {"Select Department" => ""}
 
-  before_filter :set_cache_control
+  before_filter :set_cache_control, :only => [
+    :general_feedback,
+    :ask_a_question,
+    :foi,
+    :i_cant_find,
+    :report_a_problem,
+    :landing
+  ]
+
+  before_filter :setup_slimmer_artefact
+
+  def landing
+  end
 
   def general_feedback
     ticket_client = TicketClientConnection.get_client
@@ -132,7 +146,7 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit_without_validation
-    @return_path = true
+    @return_path = params[:url]
     report_a_problem_handle_submit params
   end
 
@@ -200,5 +214,9 @@ class FeedbackController < ApplicationController
     @return_path << "?#{uri.query}" if uri.query.present?
       @return_path
   rescue URI::InvalidURIError
+  end
+
+  def setup_slimmer_artefact
+    set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
   end
 end

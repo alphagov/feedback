@@ -5,6 +5,8 @@ Feedback::Application.routes.draw do
 
   # See how all your routes lay out with "rake routes"
 
+  get "/feedback", :to => "feedback#landing"
+  post "/feedback", :to => "feedback#report_a_problem_submit_without_validation"
   get "/feedback/ask-a-question", :to => "feedback#ask_a_question"
   post "/feedback/ask-a-question", :to => "feedback#ask_a_question_submit"
   get "/feedback/general-feedback", :to => "feedback#general_feedback"
@@ -13,8 +15,6 @@ Feedback::Application.routes.draw do
   post "/feedback/foi", :to => "feedback#foi_submit"
   get "/feedback/i-cant-find", :to => "feedback#i_cant_find"
   post "/feedback/i-cant-find", :to => "feedback#i_cant_find_submit"
-  get "/feedback", :to => "feedback#index"
-  post "/feedback", :to => "feedback#report_a_problem_submit_without_validation"
   get "/feedback/report-a-problem", :to => "feedback#report_a_problem"
   post "/feedback/report-a-problem", :to => "feedback#report_a_problem_submit"
 
