@@ -12,9 +12,10 @@
       <input type="text" maxlength="1200" name="lookingfor" id="lookingfor" required aria-required="true"
              value="<%= @old ? @old[:lookingfor]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "lookingfor"}%>
+      <label id='lookingforcounter' class='top'></label>
 
       <label for="section" class="top">Where would you expect to find it?</label>
-      <select name="section" maxlength="1200" id="section">
+      <select name="section" id="section">
         <% @departments.each do |key, value| %>
           <% if @old && value == @old[:section] %>
             <option selected="selected" value="<%= value %>"><%= key %> </option>
@@ -28,13 +29,20 @@
       <label for="link" class="top">If you normally use a link to access the above information, please list it here.</label>
       <input type="url" maxlength="1200" name="link" id="link" value="<%= @old ? @old[:link]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "link"}%>
+      <label id='linkcounter' class='top'></label>
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
       <input type="text" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
+      <label id='searchtermscounter' class='top'></label>
 
     </fieldset>
   </section>
   <input id="submit" type="submit" class="button"/>
 </form>
+<script>
+  textFieldCounter('lookingfor', 'lookingforcounter');
+  textFieldCounter('searchterms', 'searchtermscounter');
+  textFieldCounter('link', 'linkcounter');
+</script>

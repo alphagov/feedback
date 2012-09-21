@@ -11,9 +11,10 @@
       <span class="info">Please don't include any personal or financial information</span>
       <input type="text" maxlength="1200" value="<%= @old ? @old[:feedback]  : '' %>" name="feedback" id="feedback" required aria-required="true"/>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "feedback"}%>
+      <label id='feedbackcounter' class='top'></label>
 
       <label for="section" class="top">Is there a section your feedback relates to?</label>
-      <select name="section" maxlength="1200" id="section">
+      <select name="section" id="section">
         <% @departments.each do |key, value| %>
           <% if @old && value == @old[:section] %>
             <option selected="selected" value="<%= value %>"><%= key %> </option>
@@ -27,3 +28,6 @@
   </section>
   <input id="submit" type="submit" class="button"/>
 </form>
+<script>
+  textFieldCounter('feedback', 'feedbackcounter');
+</script>

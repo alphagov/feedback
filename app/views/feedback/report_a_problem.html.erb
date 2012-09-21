@@ -9,18 +9,26 @@
     <input type="text" maxlength="1200" name="what_doing" id="what_doing" required aria-required="true"
            value="<%= @old ? @old[:what_doing]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_doing"}%>
+    <label id='what_doingcounter' class='top'></label>
 
     <label for="what_wrong" class="top">What is wrong?</label>
     <input type="text" maxlength="1200" name="what_wrong" id="what_wrong" required aria-required="true"
            value="<%= @old ? @old[:what_wrong]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_wrong"}%>
+    <label id='what_wrongcounter' class='top'></label>
 
     <label for="url" class="top">What page did you have problems with?</label>
     <input type="url" maxlength="1200" name="url" id="url"
            value="<%= @old ? @old[:url]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "url"}%>
+    <label id='urlcounter' class='top'></label>
 
   </fieldset>
   </section>
   <input id="submit" type="submit" class="button"/>
+<script>
+  textFieldCounter('what_wrong', 'what_wrongcounter');
+  textFieldCounter('what_doing', 'what_doingcounter');
+  textFieldCounter('url', 'urlcounter');
+</script>
 </form>
