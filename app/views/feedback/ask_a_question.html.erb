@@ -27,7 +27,7 @@
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="url" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
+      <input type="text" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
 
     </fieldset>

@@ -3,6 +3,7 @@ require 'ask_a_question_validator'
 require 'foi_validator'
 require 'general_feedback_validator'
 require 'i_cant_find_validator'
+require 'report_a_problem_validator'
 require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
