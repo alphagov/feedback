@@ -1,4 +1,8 @@
 require 'ticket_client_connection'
+require 'ask_a_question_validator'
+require 'foi_validator'
+require 'general_feedback_validator'
+require 'i_cant_find_validator'
 require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
