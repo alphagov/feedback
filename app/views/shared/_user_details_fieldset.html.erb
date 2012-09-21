@@ -8,12 +8,12 @@
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
 
   <label for="email">Email</label>
-  <input type="text" maxlength="1200" name="email" id="email" required aria-required="true"
+  <input type="email" maxlength="1200" name="email" id="email" required aria-required="true"
          value="<%= @old ? @old[:email]  : '' %>" />
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
 
   <label for="verifyemail">Verify email</label>
-  <input type="text" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
+  <input type="email" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
          value="<%= @old ? @old[:verifyemail]  : '' %>"
          oninput='checkEmail(this)'/>
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
