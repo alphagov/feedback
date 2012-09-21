@@ -17,7 +17,7 @@
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_wrong"}%>
 
     <label for="url" class="top">What page did you have problems with?</label>
-    <input type="url" maxlength="1200" name="url" id="url" required aria-required="true"
+    <input type="url" maxlength="1200" name="url" id="url"
            value="<%= @old ? @old[:url]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "url"}%>
 
