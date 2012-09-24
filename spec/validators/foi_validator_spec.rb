@@ -2,12 +2,14 @@ require 'spec_helper'
 require 'foi_validator'
 
 describe FoiValidator do
+  include ValidatorHelper
+
   before :each do
     @validator_class = FoiValidator
     @valid_details = {foi: "test foi"}
   end
 
-  it_should_behave_like BaseValidator
+  it_should_behave_like "user details validation"
 
   it "should return foi error with empty foi" do
     test_data = {

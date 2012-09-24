@@ -1,17 +1,15 @@
 require 'spec_helper'
 require 'ask_a_question_validator'
 
-RSpec.configure do |c|
-  c.include ValidatorHelper
-end
-
 describe AskAQuestionValidator do
+  include ValidatorHelper
+
   before :each do
     @validator_class = AskAQuestionValidator
     @valid_details = {question: "test question"}
   end
 
-  it_should_behave_like BaseValidator
+  it_should_behave_like "user details validation"
 
   it "should return question error with empty question" do
     test_data = {

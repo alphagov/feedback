@@ -2,12 +2,14 @@ require 'spec_helper'
 require 'i_cant_find_validator'
 
 describe ICantFindValidator do
+  include ValidatorHelper
+
   before :each do
     @validator_class = ICantFindValidator
     @valid_details = {lookingfor: "test lookingfor"}
   end
 
-  it_should_behave_like BaseValidator
+  it_should_behave_like "user details validation"
 
   it "should return lookingfor error with empty lookingfor" do
     test_data = {

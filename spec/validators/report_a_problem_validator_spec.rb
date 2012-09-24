@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'report_a_problem_validator'
 
 describe ReportAProblemValidator do
+  include ValidatorHelper
+
   before :each do
     @validator_class = ReportAProblemValidator
   end

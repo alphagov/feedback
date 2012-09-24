@@ -2,12 +2,14 @@ require 'spec_helper'
 require 'general_feedback_validator'
 
 describe GeneralFeedbackValidator do
+  include ValidatorHelper
+
   before :each do
     @validator_class = GeneralFeedbackValidator
     @valid_details = {feedback: "feedback"}
   end
 
-  it_should_behave_like BaseValidator
+  it_should_behave_like "user details validation"
 
   it "should return feedback error with empty feedback" do
     test_data = {
