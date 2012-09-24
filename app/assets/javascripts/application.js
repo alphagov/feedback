@@ -1,6 +1,3 @@
-//= require jquery
-//= require jquery_ujs
-
 var GOVUK = GOVUK || {};
 
 GOVUK.feedback = {};
@@ -14,12 +11,16 @@ GOVUK.feedback.checkEmail = function (input) {
 };
 
 GOVUK.feedback.checkOnInputEmail = function () {
+  alert('hej');
   this.onkeydown = null;
   GOVUK.feedback.checkEmail(this);
+  alert('hej2');
 };
 
 GOVUK.feedback.checkOnKeyDownEmail = function () {
+  alert('hopp');
   GOVUK.feedback.checkEmail(this);
+  alert('hopp2');
 };
 
 GOVUK.feedback.initUserDetails = function () {
