@@ -7,18 +7,18 @@
     <legend>Help us improve GOV.UK by telling us:</legend>
     <label for="what_doing" class="top">What were you doing?</label>
     <%= text_field_tag 'what_doing', (@old ? @old[:what_doing] : ''),
-      :maxlength => 1200, :required => true %>
+      :maxlength => 1200, :required => true, :class => :counted %>
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_doing"}%>
     <label id='what_doingcounter' class='top'></label>
 
     <label for="what_wrong" class="top">What is wrong?</label>
     <%= text_field_tag 'what_wrong', (@old ? @old[:what_wrong] : ''),
-      :maxlength => 1200, :required => true %>
+      :maxlength => 1200, :required => true, :class => :counted %>
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_wrong"}%>
     <label id='what_wrongcounter' class='top'></label>
 
     <label for="url" class="top">What page did you have problems with?</label>
-    <input type="url" maxlength="1200" name="url" id="url"
+    <input type="url" class="counted" maxlength="1200" name="url" id="url"
            value="<%= @old ? @old[:url]  : '' %>" />
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "url"}%>
     <label id='urlcounter' class='top'></label>
@@ -26,9 +26,4 @@
   </fieldset>
   </section>
   <input id="submit" type="submit" class="button"/>
-<script>
-  textFieldCounter('what_wrong', 'what_wrongcounter');
-  textFieldCounter('what_doing', 'what_doingcounter');
-  textFieldCounter('url', 'urlcounter');
-</script>
 </form>

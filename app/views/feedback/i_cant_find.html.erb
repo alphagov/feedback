@@ -10,7 +10,7 @@
       <label for="lookingfor" class="top">What are you looking for?</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'lookingfor', (@old ? @old[:lookingfor] : ''),
-        :maxlength => 1200, :required => true %>
+        :maxlength => 1200, :required => true, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "lookingfor"}%>
       <label id='lookingforcounter' class='top'></label>
 
@@ -21,14 +21,14 @@
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
       <label for="link" class="top">If you normally use a link to access the above information, please list it here.</label>
-      <input type="url" maxlength="1200" name="link" id="link" value="<%= @old ? @old[:link]  : '' %>" />
+      <input type="url" maxlength="1200" class="counted" name="link" id="link" value="<%= @old ? @old[:link]  : '' %>" />
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "link"}%>
       <label id='linkcounter' class='top'></label>
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'searchterms', (@old ? @old[:searchterms] : ''),
-        :maxlength => 1200 %>
+        :maxlength => 1200, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
       <label id='searchtermscounter' class='top'></label>
 
@@ -36,8 +36,3 @@
   </section>
   <input id="submit" type="submit" class="button"/>
 </form>
-<script>
-  textFieldCounter('lookingfor', 'lookingforcounter');
-  textFieldCounter('searchterms', 'searchtermscounter');
-  textFieldCounter('link', 'linkcounter');
-</script>

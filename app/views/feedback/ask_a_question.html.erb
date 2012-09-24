@@ -10,7 +10,7 @@
       <label for="question" class="top">What can we help you with?</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'question', (@old ? @old[:question] : ''),
-        :maxlength => 1200, :required => true%>
+        :maxlength => 1200, :required => true, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "question"}%>
 
       <label id='questioncounter' class='top'></label>
@@ -23,15 +23,11 @@
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'searchterms', (@old ? @old[:searchterms] : ''),
-        :maxlength => 1200 %>
+        :maxlength => 1200, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
       <label id='searchtermscounter' class='top'></label>
     </fieldset>
     </section>
   <input id="submit" type="submit" class="button"/>
 </form>
-<script>
-  textFieldCounter('searchterms', 'searchtermscounter');
-  textFieldCounter('question', 'questioncounter');
-</script>
 

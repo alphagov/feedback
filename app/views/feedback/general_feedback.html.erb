@@ -10,7 +10,7 @@
       <label for="feedback" class="top">How can we improve GOV.UK?</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'feedback', (@old ? @old[:feedback] : ''),
-        :maxlength => 1200, :required => true %>
+        :maxlength => 1200, :required => true, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "feedback"}%>
       <label id='feedbackcounter' class='top'></label>
 
@@ -22,6 +22,3 @@
   </section>
   <input id="submit" type="submit" class="button"/>
 </form>
-<script>
-  textFieldCounter('feedback', 'feedbackcounter');
-</script>

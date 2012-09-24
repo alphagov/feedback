@@ -18,13 +18,10 @@
       <label for="foi" class="top">Provide a detailed description about the information you're seeking</label>
       <span class="info">Please don't include any personal or financial information</span>
       <%= text_field_tag 'foi', (@old ? @old[:foi] : ''),
-        :maxlength => 1200, :required => true %>
+        :maxlength => 1200, :required => true, :class => :counted %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "foi"}%>
       <label id='foicounter' class='top'></label>
     </fieldset>
   </section>
   <input id="submit" type="submit" class="button"/>
 </form>
-<script>
-  textFieldCounter('foi', 'foicounter');
-</script>

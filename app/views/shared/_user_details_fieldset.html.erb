@@ -14,18 +14,8 @@
 
   <label for="verifyemail">Verify email</label>
   <input type="email" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
-         value="<%= @old ? @old[:verifyemail]  : '' %>"
-         oninput='checkEmail(this)'/>
+    value="<%= @old ? @old[:verifyemail]  : '' %>" />
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
 
-  <script>
-    function checkEmail(input) {
-      if (input.value != document.getElementById('email').value) {
-        input.setCustomValidity('The two email addresses must match.');
-        } else {
-        input.setCustomValidity('');
-      }
-    }
-  </script>
 </fieldset>
 </section>
