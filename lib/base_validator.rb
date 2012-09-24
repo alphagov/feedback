@@ -1,7 +1,7 @@
 class BaseValidator
-  @@MAX_LENGTH = 1200
-  @@LENGTH_ERROR_MESSAGE = "Can be max #{@@MAX_LENGTH} characters"
-  @@BLANK_ERROR_MESSAGE = "Above field cannot be empty"
+  MAX_LENGTH = 1200
+  LENGTH_ERROR_MESSAGE = "Can be max #{MAX_LENGTH} characters"
+  BLANK_ERROR_MESSAGE = "Above field cannot be empty"
 
   def initialize(params)
     @params = params
@@ -18,15 +18,15 @@ class BaseValidator
 
   def validate_max_length(field)
     unless @params[field].blank?
-      if @params[field].length > @@MAX_LENGTH
-        add_error field, @@LENGTH_ERROR_MESSAGE
+      if @params[field].length > MAX_LENGTH
+        add_error field, LENGTH_ERROR_MESSAGE
       end
     end
   end
 
   def validate_existence(field)
     if @params[field].blank?
-      add_error field, @@BLANK_ERROR_MESSAGE
+      add_error field, BLANK_ERROR_MESSAGE
     end
   end
 
