@@ -16,7 +16,8 @@ class FeedbackController < ApplicationController
     "<p>Sorry, we're unable to receive your message right now.</p> "\
     "<p>We have other ways for you to provide feedback on the "\
     "<a href='/feedback'>support page</a>.</p>"
-  EMPTY_DEPARTMENT = {"Select Department" => ""}
+
+  before_filter :set_ticket_client
 
   before_filter :set_cache_control, :only => [
     :general_feedback,
@@ -33,16 +34,14 @@ class FeedbackController < ApplicationController
   end
 
   def general_feedback
-    ticket_client = TicketClientConnection.get_client
-    @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+    @departments = @ticket_client.get_departments
   end
 
   def general_feedback_submit
     validator = GeneralFeedbackValidator.new params
     @errors = validator.validate
-    ticket_client = TicketClientConnection.get_client
     if @errors.empty?
-      result = ticket_client.raise_ticket({
+      result = @ticket_client.raise_ticket({
         subject: "General Feedback",
         tags: ["general_feedback"],
         name: params[:name],
@@ -52,23 +51,21 @@ class FeedbackController < ApplicationController
         handle_done result
     else
       @old = params
-      ticket_client = TicketClientConnection.get_client
-      @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+      @departments = @ticket_client.get_departments
       render :action => "general_feedback"
     end
   end
+
   def ask_a_question
-    ticket_client = TicketClientConnection.get_client
-    @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+    @departments = @ticket_client.get_departments
   end
 
   def ask_a_question_submit
     validator = AskAQuestionValidator.new params
     @errors = validator.validate
-    ticket_client = TicketClientConnection.get_client
     if @errors.empty?
       description = ask_a_question_format_description params
-      result = ticket_client.raise_ticket({
+      result = @ticket_client.raise_ticket({
         subject: "Ask a Question",
         tags: ["ask_question"],
         name: params[:name],
@@ -78,7 +75,7 @@ class FeedbackController < ApplicationController
         handle_done result
     else
       @old = params
-      @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+      @departments = @ticket_client.get_departments
       render :action => "ask_a_question"
     end
   end
@@ -87,8 +84,7 @@ class FeedbackController < ApplicationController
     validator = FoiValidator.new params
     @errors = validator.validate
     if @errors.empty?
-      ticket_client = TicketClientConnection.get_client
-      result = ticket_client.raise_ticket({
+      result = @ticket_client.raise_ticket({
         subject: "FOI",
         tags: ["FOI_request"],
         name: params[:name],
@@ -102,17 +98,15 @@ class FeedbackController < ApplicationController
   end
 
   def i_cant_find
-    ticket_client = TicketClientConnection.get_client
-    @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+    @departments = @ticket_client.get_departments
   end
 
   def i_cant_find_submit
     validator = ICantFindValidator.new params
     @errors = validator.validate
-    ticket_client = TicketClientConnection.get_client
     if @errors.empty?
       description = i_cant_find_format_description params
-      result = ticket_client.raise_ticket({
+      result = @ticket_client.raise_ticket({
         subject: "I can't find",
         tags: ["i_cant_find"],
         name: params[:name],
@@ -122,8 +116,7 @@ class FeedbackController < ApplicationController
         handle_done result
     else
       @old = params
-      ticket_client = TicketClientConnection.get_client
-      @departments = EMPTY_DEPARTMENT.merge ticket_client.get_departments
+      @departments = @ticket_client.get_departments
       render :action => "i_cant_find"
     end
   end
@@ -159,8 +152,7 @@ class FeedbackController < ApplicationController
 
   def report_a_problem_handle_submit(params)
     description = report_a_problem_format_description params
-    ticket_client = TicketClientConnection.get_client
-    result = ticket_client.raise_ticket({
+    result = @ticket_client.raise_ticket({
       subject: path_for_url(params[:url]),
       tags: ['report_a_problem'],
       description: description})
@@ -223,5 +215,9 @@ class FeedbackController < ApplicationController
 
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+  end
+
+  def set_ticket_client
+    @ticket_client = TicketClientConnection.get_client
   end
 end

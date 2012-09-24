@@ -9,26 +9,21 @@
       <legend>Please specify</legend>
       <label for="question" class="top">What can we help you with?</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" maxlength="1200" name="question" id="question" required aria-required="true"
-        value="<%= @old ? @old[:question]  : '' %>" />
+      <%= text_field_tag 'question', (@old ? @old[:question] : ''),
+        :maxlength => 1200, :required => true%>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "question"}%>
 
       <label id='questioncounter' class='top'></label>
       <label for="section" class="top">Is there a section where you'd expect to find an answer?</label>
-      <select name="section" id="section">
-        <% @departments.each do |key, value| %>
-          <% if @old && value == @old[:section] %>
-            <option selected="selected" value="<%= value %>"><%= key %> </option>
-          <% else %>
-            <option value="<%= value %>"><%= key %> </option>
-          <% end %>
-        <% end %>
-      </select>
+      <%= select_tag "section",
+        options_for_select(@departments, (@old ? @old[:section] : '')),
+        :prompt => "Select department" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
+      <%= text_field_tag 'searchterms', (@old ? @old[:searchterms] : ''),
+        :maxlength => 1200 %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
       <label id='searchtermscounter' class='top'></label>
     </fieldset>

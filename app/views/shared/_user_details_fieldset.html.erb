@@ -3,8 +3,8 @@
   <legend>Your details</legend>
   <br/>
   <label for="name">Name</label>
-  <input type="text" maxlength="1200" name="name" id="name" required aria-required="true"
-         value="<%= @old ? @old[:name]  : '' %>" />
+  <%= text_field_tag 'name', (@old ? @old[:name] : ''),
+    :maxlength => 1200, :required => true %>
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
 
   <label for="email">Email</label>

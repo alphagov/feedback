@@ -9,19 +9,13 @@
       <legend>Please specify</legend>
       <label for="feedback" class="top">How can we improve GOV.UK?</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" maxlength="1200" value="<%= @old ? @old[:feedback]  : '' %>" name="feedback" id="feedback" required aria-required="true"/>
+      <%= text_field_tag 'feedback', (@old ? @old[:feedback] : ''),
+        :maxlength => 1200, :required => true %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "feedback"}%>
       <label id='feedbackcounter' class='top'></label>
 
       <label for="section" class="top">Is there a section your feedback relates to?</label>
-      <select name="section" id="section">
-        <% @departments.each do |key, value| %>
-          <% if @old && value == @old[:section] %>
-            <option selected="selected" value="<%= value %>"><%= key %> </option>
-          <% else %>
-            <option value="<%= value %>"><%= key %> </option>
-          <% end %>
-        <% end %>      </select>
+      <%= select_tag "section", options_for_select(@departments, (@old ? @old[:section] : '')), :prompt => "Select department" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
     </fieldset>

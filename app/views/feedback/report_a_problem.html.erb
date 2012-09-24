@@ -6,14 +6,14 @@
   <fieldset>
     <legend>Help us improve GOV.UK by telling us:</legend>
     <label for="what_doing" class="top">What were you doing?</label>
-    <input type="text" maxlength="1200" name="what_doing" id="what_doing" required aria-required="true"
-           value="<%= @old ? @old[:what_doing]  : '' %>" />
+    <%= text_field_tag 'what_doing', (@old ? @old[:what_doing] : ''),
+      :maxlength => 1200, :required => true %>
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_doing"}%>
     <label id='what_doingcounter' class='top'></label>
 
     <label for="what_wrong" class="top">What is wrong?</label>
-    <input type="text" maxlength="1200" name="what_wrong" id="what_wrong" required aria-required="true"
-           value="<%= @old ? @old[:what_wrong]  : '' %>" />
+    <%= text_field_tag 'what_wrong', (@old ? @old[:what_wrong] : ''),
+      :maxlength => 1200, :required => true %>
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "what_wrong"}%>
     <label id='what_wrongcounter' class='top'></label>
 

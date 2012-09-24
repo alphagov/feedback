@@ -9,21 +9,15 @@
       <legend>Please specify</legend>
       <label for="lookingfor" class="top">What are you looking for?</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" maxlength="1200" name="lookingfor" id="lookingfor" required aria-required="true"
-             value="<%= @old ? @old[:lookingfor]  : '' %>" />
+      <%= text_field_tag 'lookingfor', (@old ? @old[:lookingfor] : ''),
+        :maxlength => 1200, :required => true %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "lookingfor"}%>
       <label id='lookingforcounter' class='top'></label>
 
       <label for="section" class="top">Where would you expect to find it?</label>
-      <select name="section" id="section">
-        <% @departments.each do |key, value| %>
-          <% if @old && value == @old[:section] %>
-            <option selected="selected" value="<%= value %>"><%= key %> </option>
-          <% else %>
-            <option value="<%= value %>"><%= key %> </option>
-          <% end %>
-        <% end %>
-      </select>
+      <%= select_tag "section",
+        options_for_select(@departments, (@old ? @old[:section] : '')),
+        :prompt => "Select department" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
       <label for="link" class="top">If you normally use a link to access the above information, please list it here.</label>
@@ -33,7 +27,8 @@
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>
       <span class="info">Please don't include any personal or financial information</span>
-      <input type="text" maxlength="1200" name="searchterms" id="searchterms" value="<%= @old ? @old[:searchterms]  : '' %>" />
+      <%= text_field_tag 'searchterms', (@old ? @old[:searchterms] : ''),
+        :maxlength => 1200 %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "searchterms"}%>
       <label id='searchtermscounter' class='top'></label>
 
