@@ -2,38 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <%=  stylesheet_link_tag 'feedback' %>
+    <%=  javascript_include_tag 'application' %>
     <title><%= yield :title %></title>
-
     <%= yield :section_meta_tags %>
   </head>
-
   <body class="mainstream">
-    
-
     <div id="wrapper">
-
-    <section id="content" role="main" class="group ancillary">
-    <div class="article-container">
-
+      <section id="content" role="main" class="group multi-page">
       <header class="page-header group">
-        <hgroup>
-          <h1>Feedback</h1>
-        </hgroup>
+      <hgroup>
+      <h1><%= yield :heading %></h1>
+      </hgroup>
       </header>
-
-      <article role="article" class="group">
+      <div class="article-container group">
+        <aside>
         <div class="inner">
-
+          <%= render "shared/menu" %>
+        </div>
+        </aside>
+        <article role="article" class="group">
+        <div class="inner">
           <div class="intro">
             <%= yield %>
           </div>
-
         </div>
-      </article>
+        </article>
+      </div>
+      </section>
     </div>
-  </section>
-
-
-  </div>
   </body>
 </html>

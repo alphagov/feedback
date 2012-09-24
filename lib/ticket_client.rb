@@ -1,21 +1,34 @@
 class TicketClient
+  DEPARTMENT_FIELD = 21494928
 
   class << self
-    def report_a_problem(params)
-      description = <<-EOT
-url: #{params[:url]}
-what_doing: #{params[:what_doing]}
-what_wrong: #{params[:what_wrong]}
-      EOT
+
+    def raise_ticket(zendesk)
+      tags = zendesk[:tags] << "public_form"
       result = client.tickets.create(
-        :subject => path_for_url(params[:url]),
-        :description => description,
-        :tags => ['report_a_problem']
+        :subject => zendesk[:subject],
+        :tags => tags,
+        :requester => {name: zendesk[:name], email: zendesk[:email]},
+        :fields => [{id: DEPARTMENT_FIELD, value: zendesk[:department]}],
+        :description => zendesk[:description]
       )
       !! result
     end
 
-    def client
+    def get_departments
+      departments_hash = {}
+      unless client.nil?
+        department_field = client.ticket_fields.find(:id => DEPARTMENT_FIELD)
+        unless department_field.nil?
+          department_field.custom_field_options.each do |tf| 
+            departments_hash[tf.name] = tf.value
+          end
+        end
+      end
+      departments_hash
+    end
+
+    def client 
       @client ||= build_client
     end
 
@@ -23,41 +36,12 @@ what_wrong: #{params[:what_wrong]}
 
     def build_client
       details = YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
-      if details["development_mode"]
-        DummyClient.new
-      else
-        ZendeskAPI::Client.new do |config|
-          config.url = details["url"]
-          config.username = details["username"]
-          config.password = details["password"]
-          config.logger = Rails.logger
-        end
+      @client = ZendeskAPI::Client.new do |config|
+        config.url = details["url"]
+        config.username = details["username"]
+        config.password = details["password"]
+        config.logger = Rails.logger
       end
-    end
-
-    def path_for_url(url)
-      uri = URI.parse(url)
-      uri.path
-    rescue URI::InvalidURIError
-      "Unknown page"
-    end
-  end # << self
-
-  class DummyClient
-    class Tickets
-      def self.create(attrs)
-        if attrs[:description] =~ /break_zendesk/
-          Rails.logger.info "Simulating Zendesk ticket creation fail for: #{attrs.inspect}"
-          nil
-        else
-          Rails.logger.info "Zendesk ticket created: #{attrs.inspect}"
-          attrs
-        end
-      end
-    end
-
-    def tickets
-      Tickets
     end
   end
 end

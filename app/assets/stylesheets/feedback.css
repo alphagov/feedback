@@ -1,0 +1,70 @@
+.article-container {
+    margin-right: 0;
+}
+
+header.page-header hgroup {
+    margin-right: 0;
+}
+
+label {
+    width: 25%;
+    float: left;
+}
+
+label.top {
+    float: none;
+    display: block;
+    width: auto;
+    padding-top: 1em;
+}
+
+span.info {
+    display: block;
+    width: auto;
+    font-size: 0.7em;
+    font-style: italic;
+    color: #a9a9a9;
+}
+
+section#userdetails, section#zendesk, section#info {
+    margin-bottom: 2rem;
+    margin-top: 5px;
+}
+
+section#content input[type="text"], section#content input[type="email"], section#content input[type="url"], section#content select {
+    line-height: 1.5em;
+    font-size: 1.1875em;
+    color: black;
+    background: transparent;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 25em;
+    padding: 0;
+    border: 1px solid #BBB;
+}
+
+section#content select {
+    font-size: 1em;
+    font-weight: 100;
+}
+
+fieldset legend {
+    font-size: 3.4rem;
+    line-height: 1.25;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding-top: 1.2rem;
+    padding-bottom: 0.2rem;
+}
+
+input.submit {
+   background-color: #008270;
+   color: white;
+}
+
+span.error_msg {
+    color: red;
+}

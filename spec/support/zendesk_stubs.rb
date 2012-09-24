@@ -1,26 +1,41 @@
 require 'ticket_client'
 
 module ZendeskStubs
-  class MockTicketCollection
+  class MockTicketClient
     def initialize
+      @fail = false
       @tickets = []
     end
 
-    attr_accessor :tickets
+    attr_accessor :tickets, :fail
 
-    def create(params)
-      @tickets << params
-      params
+    def get_departments
+      {"Test Department" =>"test_department"}
+    end
+
+    def raise_ticket(params)
+      if @fail
+        @tickets << params
+        nil
+      else
+        @tickets << params
+        params
+      end
     end
   end
 
   def setup_zendesk_stubs
-    @zendesk_tickets = MockTicketCollection.new
-    TicketClient.stub(:client).and_return( double("ZendeskClient", :tickets => @zendesk_tickets) )
+    @zendesk_client = MockTicketClient.new
+    TicketClientConnection.stub(:get_client).and_return(@zendesk_client)
+  end
+
+  def zendesk_should_not_have_ticket
+    ticket = @zendesk_client.tickets.last
+    ticket.should be_nil
   end
 
   def zendesk_should_have_ticket(params)
-    ticket = @zendesk_tickets.tickets.last
+    ticket = @zendesk_client.tickets.last
     ticket.should_not be_nil
     params.each do |k,v|
       ticket[k].should == v
@@ -28,7 +43,7 @@ module ZendeskStubs
   end
 
   def given_zendesk_ticket_creation_fails
-    @zendesk_tickets.stub(:create).and_return(nil)
+    @zendesk_client.fail = true
   end
 end
 

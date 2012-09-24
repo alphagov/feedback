@@ -2,6 +2,59 @@ require 'spec_helper'
 
 describe FeedbackController do
 
+  include ZendeskStubs
+  before :each do
+    setup_zendesk_stubs
+  end
+
+  describe "GET 'landing'" do
+    it "should set cache control headers for 10 mins" do
+      get :landing
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
+  describe "GET 'ask_a_question'" do
+    it "should set cache control headers for 10 mins" do
+      get :ask_a_question
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
+  describe "GET 'foi'" do
+    it "should set cache control headers for 10 mins" do
+      get :foi
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
+  describe "GET 'general_feedback'" do
+    it "should set cache control headers for 10 mins" do
+      get :general_feedback
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
+  describe "GET 'i_cant_find'" do
+    it "should set cache control headers for 10 mins" do
+      get :i_cant_find
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
+  describe "GET 'report_a_problem'" do
+    it "should set cache control headers for 10 mins" do
+      get :report_a_problem
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+  end
+
   describe "GET 'landing'" do
     it "returns http success" do
       get :landing
@@ -20,14 +73,11 @@ describe FeedbackController do
   end
 
   describe "POST 'submit'" do
-    before :each do
-      TicketClient.stub(:report_a_problem).and_return(true)
-    end
 
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
-          post :submit, {
+          post :report_a_problem_submit_without_validation, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -35,13 +85,11 @@ describe FeedbackController do
         end
 
         it "should submit a ticket to zendesk" do
-          TicketClient.should_receive(:report_a_problem).with(
-            :url => "http://www.example.com/somewhere",
-            :what_doing => "Nothing",
-            :what_wrong => "Something"
-          )
-
           do_submit
+          expected_description = "url: http://www.example.com/somewhere\nwhat_doing: Nothing\nwhat_wrong: Something"
+          zendesk_should_have_ticket :subject => "/somewhere",
+            :description => expected_description,
+            :tags => ['report_a_problem']
         end
 
         describe "assigning the return url" do
@@ -70,7 +118,7 @@ describe FeedbackController do
 
         context "when ticket creation fails" do
           before :each do
-            TicketClient.stub(:report_a_problem).and_return(false)
+            given_zendesk_ticket_creation_fails
           end
 
           it "should render the thankyou template assigning the message string" do
@@ -89,7 +137,7 @@ describe FeedbackController do
 
       context "ajax submission" do
         def do_submit(attrs = {})
-          xhr :post, :submit, {
+          xhr :post, :report_a_problem_submit_without_validation, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -97,13 +145,12 @@ describe FeedbackController do
         end
 
         it "should submit a ticket to zendesk" do
-          TicketClient.should_receive(:report_a_problem).with(
-            :url => "http://www.example.com/somewhere",
-            :what_doing => "Nothing",
-            :what_wrong => "Something"
-          )
 
           do_submit
+          expected_description = "url: http://www.example.com/somewhere\n"\
+            "what_doing: Nothing\n"\
+            "what_wrong: Something"
+          zendesk_should_have_ticket :subject => "/somewhere", :description => expected_description, :tags => ['report_a_problem']
         end
 
         it "should return json indicating success" do
@@ -113,12 +160,12 @@ describe FeedbackController do
         end
 
         it "should return json indicating failure when ticket creation fails"  do
-          TicketClient.stub(:report_a_problem).and_return(false)
+          given_zendesk_ticket_creation_fails
           do_submit
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
         end
-      end # AJAX
-    end # valid report_a_problem
-  end # POST 'submit'
+      end
+    end
+  end
 end

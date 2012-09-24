@@ -1,0 +1,21 @@
+<section id="userdetails">
+<fieldset>
+  <legend>Your details</legend>
+  <br/>
+  <label for="name">Name</label>
+  <%= text_field_tag 'name', (@old ? @old[:name] : ''),
+    :maxlength => 1200, :required => true %>
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
+
+  <label for="email">Email</label>
+  <input type="email" maxlength="1200" name="email" id="email" required aria-required="true"
+         value="<%= @old ? @old[:email]  : '' %>" />
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
+
+  <label for="verifyemail">Verify email</label>
+  <input type="email" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
+    value="<%= @old ? @old[:verifyemail]  : '' %>" />
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
+
+</fieldset>
+</section>
