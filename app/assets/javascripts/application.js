@@ -4,7 +4,7 @@ GOVUK.feedback = {};
 
 GOVUK.feedback.checkEmail = function (input) {
   if (input.setCustomValidity) {
-    if (input.value != $('email').val()) {
+    if (input.value != $('#email').val()) {
       input.setCustomValidity('The two email addresses must match.');
     } else {
       input.setCustomValidity('');
