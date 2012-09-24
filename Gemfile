@@ -33,4 +33,3 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3'
   gem 'webmock', '1.8.9', :require => false
 end
-gem "jquery-rails"
