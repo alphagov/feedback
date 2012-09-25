@@ -1,5 +1,5 @@
 class TicketClient
-  DEPARTMENT_FIELD = 21494928
+  DEPARTMENT_FIELD = 21649362
 
   class << self
 
