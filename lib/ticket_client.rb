@@ -5,14 +5,14 @@ class TicketClient
 
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
-      result = client.tickets.create(
+      unless client.tickets.create(
         :subject => zendesk[:subject],
         :tags => tags,
         :requester => {name: zendesk[:name], email: zendesk[:email]},
         :fields => [{id: DEPARTMENT_FIELD, value: zendesk[:department]}],
-        :description => zendesk[:description]
-      )
-      !! result
+        :description => zendesk[:description])
+        raise StandardError
+      end
     end
 
     def get_departments
@@ -20,7 +20,7 @@ class TicketClient
       unless client.nil?
         department_field = client.ticket_fields.find(:id => DEPARTMENT_FIELD)
         unless department_field.nil?
-          department_field.custom_field_options.each do |tf| 
+          department_field.custom_field_options.each do |tf|
             departments_hash[tf.name] = tf.value
           end
         end
@@ -28,7 +28,7 @@ class TicketClient
       departments_hash
     end
 
-    def client 
+    def client
       @client ||= build_client
     end
 

@@ -16,7 +16,7 @@ module ZendeskStubs
     def raise_ticket(params)
       if @fail
         @tickets << params
-        nil
+        raise StandardError
       else
         @tickets << params
         params

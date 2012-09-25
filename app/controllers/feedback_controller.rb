@@ -1,9 +1,11 @@
 require 'ticket_client_connection'
 require 'ask_a_question_validator'
 require 'foi_validator'
+require 'true_validator'
 require 'general_feedback_validator'
 require 'i_cant_find_validator'
 require 'report_a_problem_validator'
+require 'exception_mailer'
 require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
@@ -38,22 +40,13 @@ class FeedbackController < ApplicationController
   end
 
   def general_feedback_submit
-    validator = GeneralFeedbackValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      result = @ticket_client.raise_ticket({
-        subject: "General Feedback",
-        tags: ["general_feedback"],
-        name: params[:name],
-        email: params[:email],
-        department: params[:section],
-        description: params[:feedback]});
-        handle_done result
-    else
-      @old = params
-      @departments = @ticket_client.get_departments
-      render :action => "general_feedback"
-    end
+    submit(GeneralFeedbackValidator, {
+        :subject => "General Feedback",
+        :tags => ["general_feedback"],
+        :name => params[:name],
+        :email => params[:email],
+        :department => params[:section],
+        :description => params[:feedback]}, "general_feedback")
   end
 
   def ask_a_question
@@ -61,40 +54,23 @@ class FeedbackController < ApplicationController
   end
 
   def ask_a_question_submit
-    validator = AskAQuestionValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      description = ask_a_question_format_description params
-      result = @ticket_client.raise_ticket({
+    description = ask_a_question_format_description params
+    submit(AskAQuestionValidator, {
         subject: "Ask a Question",
         tags: ["ask_question"],
         name: params[:name],
         email: params[:email],
         department: params[:section],
-        description: description});
-        handle_done result
-    else
-      @old = params
-      @departments = @ticket_client.get_departments
-      render :action => "ask_a_question"
-    end
+        description: description}, "ask_a_question")
   end
 
    def foi_submit
-    validator = FoiValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      result = @ticket_client.raise_ticket({
-        subject: "FOI",
-        tags: ["FOI_request"],
-        name: params[:name],
-        email: params[:email],
-        description: params[:foi]});
-        handle_done result
-    else
-      @old = params
-      render :action => "foi"
-    end
+     submit(FoiValidator, {
+         subject: "FOI",
+         tags: ["FOI_request"],
+         name: params[:name],
+         email: params[:email],
+         description: params[:foi]}, "foi")
   end
 
   def i_cant_find
@@ -102,23 +78,14 @@ class FeedbackController < ApplicationController
   end
 
   def i_cant_find_submit
-    validator = ICantFindValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      description = i_cant_find_format_description params
-      result = @ticket_client.raise_ticket({
+    description = i_cant_find_format_description params
+    submit(ICantFindValidator, {
         subject: "I can't find",
         tags: ["i_cant_find"],
         name: params[:name],
         email: params[:email],
         department: params[:section],
-        description: description});
-        handle_done result
-    else
-      @old = params
-      @departments = @ticket_client.get_departments
-      render :action => "i_cant_find"
-    end
+        description: description}, "i_cant_find")
   end
 
   def i_cant_find_format_description(params)
@@ -133,31 +100,24 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
-    validator = ReportAProblemValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      report_a_problem_handle_submit(params)
-    else
-      @old = params
-      render :action => "report_a_problem"
-    end
+    description = report_a_problem_format_description params
+    submit(ReportAProblemValidator, {
+        subject: path_for_url(params[:url]),
+        tags: ['report_a_problem'],
+        description: description}, "report_a_problem")
   end
 
   def report_a_problem_submit_without_validation
     @return_path = params[:url]
-    report_a_problem_handle_submit params
+    description = report_a_problem_format_description params
+    submit(TrueValidator, {
+        subject: path_for_url(params[:url]),
+        tags: ['report_a_problem'],
+        description: description}, "report_a_problem")
   end
 
   private
 
-  def report_a_problem_handle_submit(params)
-    description = report_a_problem_format_description params
-    result = @ticket_client.raise_ticket({
-      subject: path_for_url(params[:url]),
-      tags: ['report_a_problem'],
-      description: description})
-      handle_done result
-  end
 
   def path_for_url(url)
     uri = URI.parse(url)
@@ -173,8 +133,8 @@ class FeedbackController < ApplicationController
     end
     description
   end
-  def report_a_problem_format_description(params)
 
+  def report_a_problem_format_description(params)
     description = \
       "url: #{params[:url]}\n"\
     "what_doing: #{params[:what_doing]}\n"\
@@ -220,4 +180,39 @@ class FeedbackController < ApplicationController
   def set_ticket_client
     @ticket_client = TicketClientConnection.get_client
   end
+
+  def submit(validator_class, ticket, action)
+    validator = validator_class.new params
+    @errors = validator.validate
+    result = 'success'
+    if @errors.empty?
+      begin
+        @ticket_client.raise_ticket(ticket);
+        @message = DONE_OK_TEXT.html_safe
+      rescue
+        @message = DONE_NOT_OK_TEXT.html_safe
+        result = 'error'
+        ExceptionMailer.deliver_exception_notification("Feedback: error creating ticket. Please refer to log.")
+      end
+
+      respond_to do |format|
+        format.js do
+          render :json => {
+              "status" => (result),
+              "message" => @message
+          }
+        end
+        format.html do
+          extract_return_path(params[:url])
+          render "shared/thankyou"
+        end
+      end
+
+    else
+      @old = params
+      @departments = @ticket_client.get_departments
+      render :action => action
+    end
+  end
+
 end

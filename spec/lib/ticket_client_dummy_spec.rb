@@ -31,7 +31,7 @@ describe TicketClientDummy do
     }
     Rails.logger.should_receive(:info).
       with("Zendesk ticket creation fail for: #{details}")
-    @client.raise_ticket(details).should == nil
+    expect {@client.raise_ticket(details)}.to raise_error(StandardError)
   end
 
   it 'should simulate returning available departments' do
