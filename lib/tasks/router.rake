@@ -15,7 +15,7 @@ namespace :router do
   end
 
   task :register_routes => :router_environment do
-    @router.create_route "feedback", "full", "feedback"
+    @router.create_route "feedback", "prefix", "feedback"
   end
 
   desc "Register feedback application and routes with the router (run this task on server in cluster)"
