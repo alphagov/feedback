@@ -98,6 +98,7 @@ class FeedbackController < ApplicationController
   end
 
   def i_cant_find
+    @old = { :link => "https://" }
     @departments = @ticket_client.get_departments
   end
 
@@ -130,6 +131,10 @@ class FeedbackController < ApplicationController
       description += "\n[Search Terms]\n" + params[:searchterms]
     end
     description
+  end
+
+  def report_a_problem
+    @old = { :url => "https://" }
   end
 
   def report_a_problem_submit

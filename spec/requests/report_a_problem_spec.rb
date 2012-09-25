@@ -25,6 +25,7 @@ describe "Report a problem" do
 
     fill_in "What were you doing?", :with => "test what was done"
     fill_in "What is wrong?", :with => "test what is wrong"
+    fill_in "What page did you have problems with?", :with => ""
     click_on "submit"
 
     i_should_be_on "/feedback/report-a-problem"
