@@ -17,7 +17,7 @@
       <label for="section" class="top">Is there a section where you'd expect to find an answer?</label>
       <%= select_tag "section",
         options_for_select(@departments, (@old ? @old[:section] : '')),
-        :prompt => "Select department" %>
+        :prompt => "Select section" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
       <label for="searchterms" class="top">Please list any search terms you used to help us improve GOV.UK.</label>

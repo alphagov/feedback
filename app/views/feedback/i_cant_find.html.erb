@@ -17,7 +17,7 @@
       <label for="section" class="top">Where would you expect to find it?</label>
       <%= select_tag "section",
         options_for_select(@departments, (@old ? @old[:section] : '')),
-        :prompt => "Select department" %>
+        :prompt => "Select section" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
       <label for="link" class="top">If you normally use a link to access the above information, please list it here.</label>

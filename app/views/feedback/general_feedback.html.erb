@@ -15,7 +15,7 @@
       <label id='feedbackcounter' class='top'></label>
 
       <label for="section" class="top">Is there a section your feedback relates to?</label>
-      <%= select_tag "section", options_for_select(@departments, (@old ? @old[:section] : '')), :prompt => "Select department" %>
+      <%= select_tag "section", options_for_select(@departments, (@old ? @old[:section] : '')), :prompt => "Select section" %>
       <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "section"}%>
 
     </fieldset>
