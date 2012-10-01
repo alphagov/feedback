@@ -33,9 +33,6 @@ header.page-header hgroup {
   }
 }
 #location {
-  p{
-    padding-bottom: 0;
-  }
   input[type="text"]{
     margin-left: 1.5em;
     width: 31em;
@@ -44,3 +41,5 @@ header.page-header hgroup {
     margin-left: 0.5em;
   }
 }
+
+.contact-form textarea.full-size{width: 95%; height: 15em;}

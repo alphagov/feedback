@@ -49,7 +49,7 @@ class BaseValidator
   end
 
   def validate_email_match
-    unless @params[:email] ==  @params[:verifyemail]
+    unless @params[:email] == @params[:verifyemail]
       add_error :email, 'The two email addresses must match'
     end
     unless @params[:verifyemail] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/

@@ -6,6 +6,17 @@
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
+  <% if @errors %>
+    <div class="validation-summary">
+      <h1>Please check the form</h1>
+      <ul>
+        <% @errors.each do |key, value| %>
+          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 <fieldset>
   <legend>Why are you contacting us?</legend>
   <p class="option group" name="why" id="contact-why">
@@ -38,42 +49,74 @@
     </label>
   </p>
 
-  <p>
-    <label>
+
+  <% if @errors && @errors[:link] %>
+     <p class="validation group">
+      <span class="validation-message"><%= @errors[:link] %></span>
+  <% else %>
+    <p>
+  <% end %>
+
+  <label>
       <input type="radio" name="location" id="location-specific"
              value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
-      <input type="text" name="link" id="link" placeholder="Enter URL or name of page"
-        value=<%= (@old ? @old[:link] : '') %> >
+        <input type="text" name="link" id="link" placeholder="Enter URL or name of page"
+          value=<%= (@old ? @old[:link] : '') %> >
     </label>
-  </p>
-
+    </p>
 </fieldset>
 
 <fieldset>  
   <legend>Can you provide more detail?</legend>
   <div class="group">
     <p class="help">For example if you were searching for something, what did you type into the search box?</p>
+
+    <% if @errors && @errors[:textdetails] %>
+      <p class="validation group">
+        <span class="validation-message"><%= @errors[:textdetails] %></span>
+    <% end %>
+
     <textarea name='textdetails' class="full-size counted" id="textdetails"
               placeholder="Type here (please don't include any personal or financial information)"
               required aria-required="true">
       <%= (@old ? @old[:textdetails] : '') %>
     </textarea>
+
+    <% if @errors && @errors[:textdetails] %>
+      </p>
+    <% end %>
+
     <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
-    <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "textdetails"}%>
   </div>
 </fieldset>
 
 <fieldset id="contact-details">
   <legend>Do you want a reply?</legend>
   <p>If you'd like us to get back to you, please leave your details below.</p>
-  <p class="group">
+
+  <% if @errors && @errors[:name] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:name] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
     <label for="name">Your name</label>
     <input name="name" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
   </p>
-  <p class="group">
+
+
+  <% if @errors && @errors[:email] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:email] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
     <label for="email">Your email address</label>
     <input name="email" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
     <span class="help">We'll only use this to reply to your message</span>
+
   </p>
 </fieldset>
 
