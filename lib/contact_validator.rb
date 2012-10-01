@@ -10,8 +10,15 @@ class ContactValidator < BaseValidator
     validate_existence :textdetails
     validate_max_length :textdetails
     validate_max_length :name
-    validate_max_length :email
     validate_email
+    validate_link
     errors
+  end
+
+  def validate_link
+    if (@params[:location] == "specific") and @params[:link].blank?
+      add_error :link, 'Enter specific link'
+    end
+    validate_max_length :link
   end
 end
