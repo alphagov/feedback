@@ -1,14 +1,15 @@
 require 'base_validator'
 
-class FoiValidator < BaseValidator
+class ContactValidator < BaseValidator
+
   def initialize(params)
     super params
   end
 
   def validate
-    validate_user_details
     validate_existence :textdetails
     validate_max_length :textdetails
+    validate_max_length :name
     errors
   end
 end

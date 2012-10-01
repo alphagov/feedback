@@ -6,7 +6,7 @@ describe FoiValidator do
 
   before :each do
     @validator_class = FoiValidator
-    @valid_details = {foi: "test foi"}
+    @valid_details = {textdetails: "test foi"}
   end
 
   it_should_behave_like "user details validation"
@@ -16,23 +16,23 @@ describe FoiValidator do
       name: "test name",
       email: "a@a",
       verifyemail: "a@a",
-      foi: ""
+      textdetails: ""
     }
     validator = @validator_class.new test_data
     errors = validator.validate
-    errors[:foi].should_not be_nil
+    errors[:textdetails].should_not be_nil
   end
 
   it "should return foi error with empty foi" do
-    foi = build_random_string 1201
+    textdetails = build_random_string 1201
     test_data = {
       name: "test name",
       email: "a@a",
       verifyemail: "a@a",
-      foi: foi
+      textdetails: textdetails
     }
     validator = @validator_class.new test_data
     errors = validator.validate
-    errors[:foi].should_not be_nil
+    errors[:textdetails].should_not be_nil
   end
 end

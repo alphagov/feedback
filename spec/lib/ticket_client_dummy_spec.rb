@@ -36,7 +36,7 @@ describe TicketClientDummy do
 
   it 'should simulate returning available departments' do
     Rails.logger.should_receive(:info).
-      with('Zendesk get departments')
-    @client.get_departments.should_not be_empty
+      with('Zendesk get sections')
+    @client.get_sections.should_not be_empty
   end
 end

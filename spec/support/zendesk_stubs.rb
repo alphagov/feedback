@@ -9,8 +9,8 @@ module ZendeskStubs
 
     attr_accessor :tickets, :fail
 
-    def get_departments
-      {"Test Department" =>"test_department"}
+    def get_sections
+      {"Test Section" =>"test_section"}
     end
 
     def raise_ticket(params)

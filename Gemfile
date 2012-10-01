@@ -22,7 +22,9 @@ gem "zendesk_api", '0.1.2'
 group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
+  gem 'sass'
+  gem 'sass-rails'
+  gem 'bootstrap-sass'
   gem 'uglifier', '>= 1.0.3'
 end
 

@@ -1,27 +1,35 @@
 <% content_for :title, "Freedom of information | Feedback | GOV.UK" %>
-<% content_for :heading, "Freedom of information" %>
+<% content_for :heading, "Make a Freedom of information request" %>
 
-<form action="/feedback/foi" method="post">
+<p>If you're thinking of making a Freedom of Information (FOI) request please read our guide to
+  <a href="https://www.gov.uk/make-a-freedom-of-information-request/the-freedom-of-information-act">
+    Freedom of Information Requests
+  </a>
+  first. The guide also explains how you can find out whether someone has already requested the
+  information you need.
+</p>
+
+<p>If you'd like to make a new FOI request, use the form below.</p>
+
+<form class="contact-form" action="/feedback/foi" method="post">
+
   <%= render "shared/user_details_fieldset" %>
 
-  <section id="info">
-    <p>
-    If you’re thinking of making a freedom of information request, please read our guide to
-    <a href="https://www.gov.uk/make-a-freedom-of-information-request/the-freedom-of-information-act">freedom of information requests<a/>.
-        The guide also tells you how to find out whether someone’s already requested the information you need.
-    </p>
+<fieldset>
+  <legend>Your request</legend>
+  <div class="group">
+    <label for="textdetails">Provide a detailed description of the infomation you're seeking</label>
+    <textarea name='textdetails' class="full-size counted" id='textdetails'
+              placeholder="Type here (please don't include any personal or financial information)"
+              required aria-required="true">
+      <%= (@old ? @old[:textdetails] : '') %>
+    </textarea>
+    <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
+  </div>
+  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "textdetails"}%>
+</fieldset>
 
-    </section>
-    <section id="zendesk">
-    <fieldset>
-      <legend>Please specify</legend>
-      <label for="foi" class="top">Provide a detailed description about the information you're seeking</label>
-      <span class="info">Please don't include any personal or financial information</span>
-      <%= text_field_tag 'foi', (@old ? @old[:foi] : ''),
-        :maxlength => 1200, :required => true, :class => :counted %>
-      <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "foi"}%>
-      <label id='foicounter' class='top'></label>
-    </fieldset>
-  </section>
-  <input id="submit" type="submit" class="button"/>
+<p class="action group">
+  <input type="submit" value="Submit Freedom of Information request" class="button">
+</p>
 </form>

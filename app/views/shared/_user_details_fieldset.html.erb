@@ -1,21 +1,24 @@
-<section id="userdetails">
 <fieldset>
-  <legend>Your details</legend>
-  <br/>
-  <label for="name">Name</label>
-  <%= text_field_tag 'name', (@old ? @old[:name] : ''),
-    :maxlength => 1200, :required => true %>
+  <legend>Your contact details</legend>
+
+  <p class="group">
+    <label for="name">Your name</label>
+    <input type="name" maxlength="1200" name="name" class="full-name" id="name" required aria-required="true"
+           value="<%= @old ? @old[:name]  : '' %>" />
+  </p>
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
 
-  <label for="email">Email</label>
-  <input type="email" maxlength="1200" name="email" id="email" required aria-required="true"
+  <p class="group">
+    <label for="email">Your email address</label>
+    <input type="email" maxlength="1200" name="email" class="email" id="email" required aria-required="true"
          value="<%= @old ? @old[:email]  : '' %>" />
+  </p>
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
 
-  <label for="verifyemail">Verify email</label>
-  <input type="email" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
-    value="<%= @old ? @old[:verifyemail]  : '' %>" />
+  <p class="group">
+    <label for="verifyemail">Confirm your email address</label>
+    <input type="email" maxlength="1200" name="verifyemail" class="email" id="verifyemail" required aria-required="true"
+      value="<%= @old ? @old[:verifyemail]  : '' %>" />
+  </p>
   <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
-
 </fieldset>
-</section>

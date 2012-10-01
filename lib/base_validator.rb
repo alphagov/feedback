@@ -33,22 +33,26 @@ class BaseValidator
   def validate_user_details
     validate_name
     validate_email
+    validate_email_match
     validate_existence :email
     validate_existence :name
     validate_existence :verifyemail
   end
 
   def validate_email
-    unless @params[:email] ==  @params[:verifyemail]
-      add_error :email, 'The two email addresses must match'
-    end
     unless @params[:email] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
       add_error :email, 'Invalid email address'
+    end
+    validate_max_length :email
+  end
+
+  def validate_email_match
+    unless @params[:email] ==  @params[:verifyemail]
+      add_error :email, 'The two email addresses must match'
     end
     unless @params[:verifyemail] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
       add_error :verifyemail, 'Invalid email address'
     end
-    validate_max_length :email
   end
 
   def validate_name
