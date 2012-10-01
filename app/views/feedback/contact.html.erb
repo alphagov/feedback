@@ -9,10 +9,14 @@
 <fieldset>
   <legend>Why are you contacting us?</legend>
   <p class="option group" name="why" id="contact-why">
-    <label><input type="radio" name="query-type"  value="cant-find" id="cant-find" checked> I can't find what I'm looking for</label>
-    <label><input type="radio" name="query-type"  value="report-problem" id="report-problem"> I want to report a problem</label>
-    <label><input type="radio" name="query-type"  value="ask-question" id="ask-question"> I want to ask a question</label>
-    <label><input type="radio" name="query-type"  value="make-suggestion" id="make-suggestion"> I want to make a suggestion</label>
+    <label><input type="radio" name="query-type"  value="cant-find" id="cant-find"
+                  <%= @old ? (@old["query-type"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
+    <label><input type="radio" name="query-type"  value="report-problem" id="report-problem"
+                  <%= @old ? (@old["query-type"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
+    <label><input type="radio" name="query-type"  value="ask-question" id="ask-question"
+                  <%= @old ? (@old["query-type"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
+    <label><input type="radio" name="query-type"  value="make-suggestion" id="make-suggestion"
+                  <%= @old ? (@old["query-type"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
   </p>
 </fieldset>
 
@@ -20,22 +24,26 @@
   <legend>What's it to do with?</legend>
   <p>
     <label>
-      <input type="radio" name="location" value="all" checked> The whole site
+      <input type="radio" name="location" id="location-all" value="all"
+             <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
     </label>
   </p>
 
   <p>
-    <label id="section-label"></label>
-    <input type="radio" name="location" id="section-radio" value="section"> A specific section
-    <%= select_tag "section",
-                   options_for_select(@sections, (@old ? @old[:section] : '')),
-                   :prompt => "Select section" %>
+    <label>
+      <input type="radio" name="location" id="location-section" value="section"
+             <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
+      <%= select_tag "section",
+                   options_for_select(@sections, (@old ? @old[:section] : '')) %>
+    </label>
   </p>
 
   <p>
     <label>
-      <input type="radio" name="location" id="specific-location-radio" value="specific"> A specific page
-        <input type="text" name="link" id="link" placeholder="Enter URL or name of page">
+      <input type="radio" name="location" id="location-specific"
+             value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
+      <input type="text" name="link" id="link" placeholder="Enter URL or name of page"
+        value=<%= (@old ? @old[:link] : '') %> >
     </label>
   </p>
 
@@ -45,7 +53,11 @@
   <legend>Can you provide more detail?</legend>
   <div class="group">
     <p class="help">For example if you were searching for something, what did you type into the search box?</p>
-    <textarea name='textdetails' class="full-size counted" id="textdetails" placeholder="Type here (please don't include any personal or financial information)" required aria-required="true"></textarea>
+    <textarea name='textdetails' class="full-size counted" id="textdetails"
+              placeholder="Type here (please don't include any personal or financial information)"
+              required aria-required="true">
+      <%= (@old ? @old[:textdetails] : '') %>
+    </textarea>
     <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
     <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "textdetails"}%>
   </div>
@@ -55,12 +67,12 @@
   <legend>Do you want a reply?</legend>
   <p>If you'd like us to get back to you, please leave your details below.</p>
   <p class="group">
-    <label>Your name</label>
-    <input name="name" type="text" class="full-name">
+    <label for="name">Your name</label>
+    <input name="name" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
   </p>
   <p class="group">
-    <label>Your email address</label>
-    <input name="email" type="text" class="email">
+    <label for="email">Your email address</label>
+    <input name="email" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
     <span class="help">We'll only use this to reply to your message</span>
   </p>
 </fieldset>

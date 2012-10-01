@@ -37,7 +37,7 @@ describe FeedbackController do
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
-          post :report_a_problem_submit_without_validation, {
+          post :report_a_problem_submit, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -97,7 +97,7 @@ describe FeedbackController do
 
       context "ajax submission" do
         def do_submit(attrs = {})
-          xhr :post, :report_a_problem_submit_without_validation, {
+          xhr :post, :report_a_problem_submit, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",

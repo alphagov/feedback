@@ -10,6 +10,8 @@ class ContactValidator < BaseValidator
     validate_existence :textdetails
     validate_max_length :textdetails
     validate_max_length :name
+    validate_max_length :email
+    validate_email
     errors
   end
 end

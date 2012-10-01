@@ -23,6 +23,29 @@ describe "FOI" do
       :tags => ['FOI_request']
   end
 
+  it "should show an error message when the zendesk connection fails" do
+
+    given_zendesk_ticket_creation_fails
+    visit "/feedback/foi"
+
+    fill_in "Your name", :with => "test name"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "Confirm your email address", :with => "a@a.com"
+    fill_in "Provide a detailed description of the infomation you're seeking", :with => "test foi request"
+    click_on "Submit Freedom of Information request"
+
+    i_should_be_on "/feedback/foi"
+
+    page.should have_content("Sorry, we're unable to receive your message right now")
+
+    expected_description = "[Name]\ntest name\n[Details]\ntest foi request"
+    zendesk_should_have_ticket :subject => "FOI",
+                               :name => "test name",
+                               :email => "a@a.com",
+                               :description => expected_description,
+                               :tags => ['FOI_request']
+  end
+
   it "should not proceed if the user hasn't filled in all required FOI fields" do
     visit "/feedback/foi"
 

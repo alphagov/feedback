@@ -45,38 +45,26 @@ GOVUK.feedback.initCounters = function () {
     });
 }
 
+GOVUK.feedback.checkRadio = function () {
+    if ($('#location-section').is(':checked')) {
+        $('#section').removeAttr('disabled');
+    } else {
+        $('#section').attr('disabled', 'disabled')
+    }
+    if ($('#location-specific').is(':checked')) {
+        $('#link').removeAttr('disabled');
+    } else {
+        $('#link').attr('disabled', 'disabled')
+    }
+}
+
 GOVUK.feedback.init = function () {
     GOVUK.feedback.initCounters();
     GOVUK.feedback.initUserDetails();
+    GOVUK.feedback.checkRadio();
 
-    // -----------------------
-    // Minor form enhancements
-
-    // Initialise
-    $('#section option:selected').remove();
-    $('#section').attr('disabled', 'disabled')
-
-    // Enable / disable section list
     $('#location input').change(function () {
-        if ($('#section-radio').is(':checked')) {
-            $('#section').removeAttr('disabled');
-        } else {
-            $('#section').attr('disabled', 'disabled')
-        }
-        if ($('#specific-location-radio').is(':checked')) {
-            $('#link').removeAttr('disabled');
-        } else {
-            $('#link').attr('disabled', 'disabled')
-        }
-    });
-
-    // Remove contact details fields if user selects 'report a problem'
-    $('#contact-why input').change(function () {
-        if ($('#report-problem').is(':checked')) {
-            $('#contact-details').hide();
-        } else {
-            $('#contact-details').show();
-        }
+        GOVUK.feedback.checkRadio();
     });
 }
 
