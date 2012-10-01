@@ -13,20 +13,41 @@
 
 <form class="contact-form" action="/feedback/foi" method="post">
 
+  <% if @errors %>
+    <div class="validation-summary">
+      <h1>Please check the form</h1>
+      <ul>
+        <% @errors.each do |key, value| %>
+          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <%= render "shared/user_details_fieldset" %>
 
 <fieldset>
   <legend>Your request</legend>
   <div class="group">
     <label for="textdetails">Provide a detailed description of the infomation you're seeking</label>
+
+    <% if @errors && @errors[:textdetails] %>
+      <p class="validation group">
+        <span class="validation-message"><%= @errors[:textdetails] %></span>
+    <% end %>
+
     <textarea name='textdetails' class="full-size counted" id='textdetails'
               placeholder="Type here (please don't include any personal or financial information)"
               required aria-required="true">
       <%= (@old ? @old[:textdetails] : '') %>
     </textarea>
+
+    <% if @errors && @errors[:textdetails] %>
+      </p>
+    <% end %>
+
     <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
   </div>
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "textdetails"}%>
 </fieldset>
 
 <p class="action group">

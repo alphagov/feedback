@@ -1,7 +1,7 @@
 class BaseValidator
   MAX_LENGTH = 1200
   LENGTH_ERROR_MESSAGE = "Can be max #{MAX_LENGTH} characters"
-  BLANK_ERROR_MESSAGE = "Above field cannot be empty"
+  BLANK_ERROR_MESSAGE = "Field cannot be empty"
 
   def initialize(params)
     @params = params

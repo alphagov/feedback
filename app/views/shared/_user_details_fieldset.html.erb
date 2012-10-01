@@ -1,24 +1,43 @@
 <fieldset>
   <legend>Your contact details</legend>
 
-  <p class="group">
+  <% if @errors && @errors[:name] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:name] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
     <label for="name">Your name</label>
     <input type="name" maxlength="1200" name="name" class="full-name" id="name" required aria-required="true"
            value="<%= @old ? @old[:name]  : '' %>" />
-  </p>
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
 
-  <p class="group">
+  </p>
+
+  <% if @errors && @errors[:email] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:email] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
     <label for="email">Your email address</label>
     <input type="email" maxlength="1200" name="email" class="email" id="email" required aria-required="true"
          value="<%= @old ? @old[:email]  : '' %>" />
-  </p>
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
 
-  <p class="group">
+  </p>
+
+
+  <% if @errors && @errors[:verifyemail] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:verifyemail] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
     <label for="verifyemail">Confirm your email address</label>
     <input type="email" maxlength="1200" name="verifyemail" class="email" id="verifyemail" required aria-required="true"
       value="<%= @old ? @old[:verifyemail]  : '' %>" />
+
   </p>
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
 </fieldset>
