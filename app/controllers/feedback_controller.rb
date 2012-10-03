@@ -1,7 +1,6 @@
 require 'ticket_client_connection'
 require 'contact_validator'
 require 'foi_validator'
-require 'exception_mailer'
 require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
@@ -44,9 +43,9 @@ class FeedbackController < ApplicationController
         ticket = contact_ticket(params)
         ticket_client.raise_ticket(ticket)
         @message = DONE_OK_TEXT.html_safe
-      rescue
+      rescue => e
         @message = DONE_NOT_OK_TEXT.html_safe
-        ExceptionMailer.deliver_exception_notification("Feedback: error creating ticket. Please refer to log.")
+        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
       end
 
       render "shared/thankyou"
@@ -72,9 +71,9 @@ class FeedbackController < ApplicationController
         ticket_client = TicketClientConnection.get_client
         ticket_client.raise_ticket(ticket)
         @message = DONE_OK_TEXT.html_safe
-      rescue
+      rescue => e
         @message = DONE_NOT_OK_TEXT.html_safe
-        ExceptionMailer.deliver_exception_notification("Feedback: error creating ticket. Please refer to log.")
+        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
       end
       render "shared/thankyou"
     else
@@ -96,10 +95,10 @@ class FeedbackController < ApplicationController
           :description => description}
       ticket_client = TicketClientConnection.get_client
       ticket_client.raise_ticket(ticket)
-    rescue
+    rescue => e
       @message = DONE_NOT_OK_TEXT.html_safe
       result = 'error'
-      ExceptionMailer.deliver_exception_notification("Feedback: error creating ticket. Please refer to log.")
+      ExceptionNotifier::Notifier.background_exception_notification(e).deliver
     end
 
     respond_to do |format|
