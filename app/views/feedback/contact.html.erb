@@ -78,9 +78,7 @@
 
     <textarea name='textdetails' class="full-size counted" id="textdetails"
               placeholder="Type here (please don't include any personal or financial information)"
-              required aria-required="true">
-      <%= (@old ? @old[:textdetails] : '') %>
-    </textarea>
+              required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
 
     <% if @errors && @errors[:textdetails] %>
       </p>

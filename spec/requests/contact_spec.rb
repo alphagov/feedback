@@ -24,6 +24,26 @@ describe "Contact" do
       :tags => ['ask_question']
   end
 
+  it "should let the user submit an 'ask a question' request without name and email" do
+    visit "/feedback/contact"
+
+    choose "location-all"
+    choose "ask-question"
+    fill_in "textdetails", :with => "test text details"
+    click_on "Send message"
+
+    i_should_be_on "/feedback/contact"
+
+    page.should have_content("Thank you for your help.")
+
+    expected_description = "[Location]\nall\n[Details]\ntest text details"
+    zendesk_should_have_ticket :subject => "Ask a question",
+      :name => "",
+      :email => "",
+      :description => expected_description,
+      :tags => ['ask_question']
+  end
+
   it "should let the user submit an 'I can't find' request" do
     visit "/feedback/contact"
 
@@ -136,4 +156,37 @@ describe "Contact" do
     zendesk_should_not_have_ticket
   end
 
+  it "should not let the user submit a request with email without name" do
+    visit "/feedback/contact"
+
+    choose "location-all"
+    choose "ask-question"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "textdetails", :with => "test text details"
+    click_on "Send message"
+
+    i_should_be_on "/feedback/contact"
+
+    find_field('Your email address').value.should eq 'a@a.com'
+    find_field('textdetails').value.should eq 'test text details'
+
+    zendesk_should_not_have_ticket
+  end
+
+  it "should not let the user submit a request with name without email" do
+    visit "/feedback/contact"
+
+    choose "location-all"
+    choose "ask-question"
+    fill_in "Your name", :with => "test name"
+    fill_in "textdetails", :with => "test text details"
+    click_on "Send message"
+
+    i_should_be_on "/feedback/contact"
+
+    find_field('Your name').value.should eq 'test name'
+    find_field('textdetails').value.should eq 'test text details'
+
+    zendesk_should_not_have_ticket
+  end
 end

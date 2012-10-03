@@ -30,8 +30,8 @@ class BaseValidator
 
   def validate_user_details
     validate_name
-    validate_email
     validate_email_match
+    validate_email
     validate_existence :email, "The email field cannot be empty"
     validate_existence :name, "The name field cannot be empty"
   end
