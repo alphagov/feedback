@@ -86,6 +86,7 @@ describe FeedbackController do
             response.should render_template('thankyou')
             assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
             assigns[:message].should be_html_safe
+            ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           end
 
           it "should still assign the return_path" do
@@ -122,6 +123,7 @@ describe FeedbackController do
         it "should return json indicating failure when ticket creation fails"  do
           given_zendesk_ticket_creation_fails
           do_submit
+          ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
         end

@@ -117,7 +117,7 @@ describe "Contact" do
                                :email => "a@a.com",
                                :description => expected_description,
                                :tags => ['general_feedback']
-
+    ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
