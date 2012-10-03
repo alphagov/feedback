@@ -16,7 +16,7 @@ class BaseValidator
 
   def validate_max_length(field, message)
     unless @params[field].blank?
-      if @params[field].length > MAX_LENGTH
+      if (@params[field].delete "\r").length > MAX_LENGTH
         add_error field, message
       end
     end
