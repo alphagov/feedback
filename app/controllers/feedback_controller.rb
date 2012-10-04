@@ -15,16 +15,16 @@ class FeedbackController < ApplicationController
     "<a href='/feedback'>support page</a>.</p>"
 
   REASON_HASH = {
-      "cant-find" => {:subject => "I can't find", :tag => "i_cant_find"},
-      "ask-question" => {:subject => "Ask a question", :tag => "ask_question"},
-      "report-problem" => {:subject => "Report a problem", :tag => "report_a_problem_public"},
-      "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
+    "cant-find" => {:subject => "I can't find", :tag => "i_cant_find"},
+    "ask-question" => {:subject => "Ask a question", :tag => "ask_question"},
+    "report-problem" => {:subject => "Report a problem", :tag => "report_a_problem_public"},
+    "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
   }
 
   before_filter :set_cache_control, :only => [
-      :foi,
-      :report_a_problem_submit,
-      :contact
+    :foi,
+    :report_a_problem_submit,
+    :contact
   ]
 
   before_filter :setup_slimmer_artefact
@@ -63,11 +63,12 @@ class FeedbackController < ApplicationController
       begin
         description = foi_ticket_description params
         ticket = {
-            :subject => "FOI",
-            :tags => ["FOI_request"],
-            :name => params[:name],
-            :email => params[:email],
-            :description => description}
+          :subject => "FOI",
+          :tags => ["FOI_request"],
+          :name => params[:name],
+          :email => params[:email],
+          :description => description
+        }
         ticket_client = TicketClientConnection.get_client
         ticket_client.raise_ticket(ticket)
         @message = DONE_OK_TEXT.html_safe
@@ -90,9 +91,10 @@ class FeedbackController < ApplicationController
     begin
       description = report_a_problem_format_description params
       ticket = {
-          :subject => path_for_url(params[:url]),
-          :tags => ['report_a_problem'],
-          :description => description}
+        :subject => path_for_url(params[:url]),
+        :tags => ['report_a_problem'],
+        :description => description
+      }
       ticket_client = TicketClientConnection.get_client
       ticket_client.raise_ticket(ticket)
     rescue => e
@@ -104,8 +106,8 @@ class FeedbackController < ApplicationController
     respond_to do |format|
       format.js do
         render :json => {
-            "status" => (result),
-            "message" => @message
+          "status" => (result),
+          "message" => @message
         }
       end
       format.html do
@@ -115,80 +117,81 @@ class FeedbackController < ApplicationController
     end
   end
 
-private
+  private
 
-def contact_ticket(params)
-  ticket = {}
-  if REASON_HASH[params["query-type"]]
-    description = contact_ticket_description params
-    subject = REASON_HASH[params["query-type"]][:subject]
-    tag = REASON_HASH[params["query-type"]][:tag]
-    ticket = {
+  def contact_ticket(params)
+    ticket = {}
+    if REASON_HASH[params["query-type"]]
+      description = contact_ticket_description params
+      subject = REASON_HASH[params["query-type"]][:subject]
+      tag = REASON_HASH[params["query-type"]][:tag]
+      ticket = {
         :subject => subject,
         :tags => [tag],
         :name => params[:name],
         :email => params[:email],
         :section => params[:section],
-        :description => description}
-  end
-  ticket
-end
-
-def contact_ticket_description(params)
-  description = "[Location]\n" + params[:location]
-  if (params[:location] == "specific") and (not params[:link].blank?)
-    description += "\n[Link]\n" + params[:link]
-  end
-  unless params[:name].blank?
-    description += "\n[Name]\n" + params[:name]
+        :description => description
+      }
+    end
+    ticket
   end
 
-  unless params[:textdetails].blank?
-    description += "\n[Details]\n" + params[:textdetails]
-  end
-  description
-end
+  def contact_ticket_description(params)
+    description = "[Location]\n" + params[:location]
+    if (params[:location] == "specific") and (not params[:link].blank?)
+      description += "\n[Link]\n" + params[:link]
+    end
+    unless params[:name].blank?
+      description += "\n[Name]\n" + params[:name]
+    end
 
-def foi_ticket_description(params)
-  description = ""
-  unless params[:name].blank?
-    description += "[Name]\n" + params[:name] + "\n"
+    unless params[:textdetails].blank?
+      description += "\n[Details]\n" + params[:textdetails]
+    end
+    description
   end
-  unless params[:textdetails].blank?
-    description += "[Details]\n" + params[:textdetails]
-  end
-  description
-end
 
-def report_a_problem_format_description(params)
-  description = \
+  def foi_ticket_description(params)
+    description = ""
+    unless params[:name].blank?
+      description += "[Name]\n" + params[:name] + "\n"
+    end
+    unless params[:textdetails].blank?
+      description += "[Details]\n" + params[:textdetails]
+    end
+    description
+  end
+
+  def report_a_problem_format_description(params)
+    description = \
       "url: #{params[:url]}\n"\
     "what_doing: #{params[:what_doing]}\n"\
     "what_wrong: #{params[:what_wrong]}"
-end
+  end
 
 
-def path_for_url(url)
-  uri = URI.parse(url)
-  uri.path.presence || "Unknown page"
-rescue URI::InvalidURIError
-  "Unknown page"
-end
+  def path_for_url(url)
+    uri = URI.parse(url)
+    uri.path.presence || "Unknown page"
+  rescue URI::InvalidURIError
+    "Unknown page"
+  end
 
-def set_cache_control
-  expires_in 10.minutes, :public => true unless Rails.env.development?
-end
+  def set_cache_control
+    expires_in 10.minutes, :public => true unless Rails.env.development?
+  end
 
-def extract_return_path(url)
-  uri = URI.parse(url)
-  @return_path = uri.path
-  @return_path << "?#{uri.query}" if uri.query.present?
-  @return_path
-rescue URI::InvalidURIError
-end
+  def extract_return_path(url)
+    uri = URI.parse(url)
+    @return_path = uri.path
+    @return_path << "?#{uri.query}" if uri.query.present?
+    @return_path
+  rescue URI::InvalidURIError
+  end
 
-def setup_slimmer_artefact
-  set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
-end
+  def setup_slimmer_artefact
+    set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+  end
 
 end
