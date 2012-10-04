@@ -5,13 +5,11 @@ require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
   include Slimmer::Headers
-  DONE_OK_TEXT = \
-    "<p>Thank you for your help.</p> "\
-    "<p>If you have more extensive feedback, "\
+  DONE_OK_TEXT = "<p>Thank you for your help.</p> " +
+    "<p>If you have more extensive feedback, " +
     "please visit the <a href='/feedback'>support page</a>.</p>"
-  DONE_NOT_OK_TEXT = \
-    "<p>Sorry, we're unable to receive your message right now.</p> "\
-    "<p>We have other ways for you to provide feedback on the "\
+  DONE_NOT_OK_TEXT = "<p>Sorry, we're unable to receive your message right now.</p> " +
+    "<p>We have other ways for you to provide feedback on the " +
     "<a href='/feedback'>support page</a>.</p>"
 
   REASON_HASH = {
@@ -106,7 +104,7 @@ class FeedbackController < ApplicationController
     respond_to do |format|
       format.js do
         render :json => {
-          "status" => (result),
+          "status" => result,
           "message" => @message
         }
       end
@@ -164,9 +162,8 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_format_description(params)
-    description = \
-      "url: #{params[:url]}\n"\
-    "what_doing: #{params[:what_doing]}\n"\
+    description = "url: #{params[:url]}\n" +
+    "what_doing: #{params[:what_doing]}\n" +
     "what_wrong: #{params[:what_wrong]}"
   end
 

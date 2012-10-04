@@ -108,8 +108,8 @@ describe FeedbackController do
         it "should submit a ticket to zendesk" do
 
           do_submit
-          expected_description = "url: http://www.example.com/somewhere\n"\
-            "what_doing: Nothing\n"\
+          expected_description = "url: http://www.example.com/somewhere\n" +
+            "what_doing: Nothing\n" +
             "what_wrong: Something"
           zendesk_should_have_ticket :subject => "/somewhere", :description => expected_description, :tags => ['report_a_problem']
         end
