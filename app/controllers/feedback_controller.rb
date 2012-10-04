@@ -79,7 +79,6 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
-    @return_path = params[:url]
     result = 'success'
     @message = DONE_OK_TEXT.html_safe
 
