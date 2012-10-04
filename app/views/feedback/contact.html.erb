@@ -1,0 +1,124 @@
+<% content_for :title, "Contact GOV.UK - Feedback - GOV.UK" %>
+<% content_for :heading, "Contact GOV.UK" %>
+
+<p>Our support pages have answers to the most common questions about this website.</p>
+<p>Alternatively, you can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+
+<form class="contact-form" action="/feedback/contact" method="post">
+
+  <% if @errors %>
+    <div class="validation-summary">
+      <h1>Please check the form</h1>
+      <ul>
+        <% @errors.each do |key, value| %>
+          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<fieldset>
+  <legend>Why are you contacting us?</legend>
+  <p class="option group" name="why" id="contact-why">
+    <label><input type="radio" name="query-type"  value="cant-find" id="cant-find"
+                  <%= @old ? (@old["query-type"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
+    <label><input type="radio" name="query-type"  value="report-problem" id="report-problem"
+                  <%= @old ? (@old["query-type"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
+    <label><input type="radio" name="query-type"  value="ask-question" id="ask-question"
+                  <%= @old ? (@old["query-type"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
+    <label><input type="radio" name="query-type"  value="make-suggestion" id="make-suggestion"
+                  <%= @old ? (@old["query-type"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
+  </p>
+</fieldset>
+
+<fieldset id="location">  
+  <legend>What's it to do with?</legend>
+  <p>
+    <label>
+      <input type="radio" name="location" id="location-all" value="all"
+             <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
+    </label>
+  </p>
+
+  <p>
+    <label>
+      <input type="radio" name="location" id="location-section" value="section"
+             <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
+      <%= select_tag "section",
+                   options_for_select(@sections, (@old ? @old[:section] : '')) %>
+    </label>
+  </p>
+
+
+  <% if @errors && @errors[:link] %>
+     <p class="validation group">
+      <span class="validation-message"><%= @errors[:link] %></span>
+  <% else %>
+    <p>
+  <% end %>
+
+  <label>
+      <input type="radio" name="location" id="location-specific"
+             value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
+        <input type="text" name="link" id="link" placeholder="Enter URL or name of page"
+          value=<%= (@old ? @old[:link] : '') %> >
+    </label>
+    </p>
+</fieldset>
+
+<fieldset>  
+  <legend>Can you provide more detail?</legend>
+  <div class="group">
+    <p class="help">For example if you were searching for something, what did you type into the search box?</p>
+
+    <% if @errors && @errors[:textdetails] %>
+      <p class="validation group">
+        <span class="validation-message"><%= @errors[:textdetails] %></span>
+    <% end %>
+
+    <textarea name='textdetails' class="full-size counted" id="textdetails"
+              placeholder="Type here (please don't include any personal or financial information)"
+              required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
+
+    <% if @errors && @errors[:textdetails] %>
+      </p>
+    <% end %>
+
+    <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
+  </div>
+</fieldset>
+
+<fieldset id="contact-details">
+  <legend>Do you want a reply?</legend>
+  <p>If you'd like us to get back to you, please leave your details below.</p>
+
+  <% if @errors && @errors[:name] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:name] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
+    <label for="name">Your name</label>
+    <input name="name" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
+  </p>
+
+
+  <% if @errors && @errors[:email] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:email] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
+    <label for="email">Your email address</label>
+    <input name="email" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
+    <span class="help">We'll only use this to reply to your message</span>
+
+  </p>
+</fieldset>
+
+<p class="action group">
+  <input type="submit" value="Send message" class="button">
+</p>
+</form>

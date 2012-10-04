@@ -1,34 +1,34 @@
 class TicketClient
-  DEPARTMENT_FIELD = 21649362
+  SECTION_FIELD = 21649362
 
   class << self
 
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
-      result = client.tickets.create(
+      unless client.tickets.create(
         :subject => zendesk[:subject],
         :tags => tags,
         :requester => {name: zendesk[:name], email: zendesk[:email]},
-        :fields => [{id: DEPARTMENT_FIELD, value: zendesk[:department]}],
-        :description => zendesk[:description]
-      )
-      !! result
+        :fields => [{id: SECTION_FIELD, value: zendesk[:section]}],
+        :description => zendesk[:description])
+        raise "Failed to create Zendesk ticket"
+      end
     end
 
-    def get_departments
-      departments_hash = {}
+    def get_sections
+      sections_hash = {}
       unless client.nil?
-        department_field = client.ticket_fields.find(:id => DEPARTMENT_FIELD)
-        unless department_field.nil?
-          department_field.custom_field_options.each do |tf| 
-            departments_hash[tf.name] = tf.value
+        section_field = client.ticket_fields.find(:id => SECTION_FIELD)
+        unless section_field.nil?
+          section_field.custom_field_options.each do |tf|
+            sections_hash[tf.name] = tf.value
           end
         end
       end
-      departments_hash
+      sections_hash
     end
 
-    def client 
+    def client
       @client ||= build_client
     end
 

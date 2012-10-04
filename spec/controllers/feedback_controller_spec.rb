@@ -7,22 +7,6 @@ describe FeedbackController do
     setup_zendesk_stubs
   end
 
-  describe "GET 'landing'" do
-    it "should set cache control headers for 10 mins" do
-      get :landing
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-  end
-
-  describe "GET 'ask_a_question'" do
-    it "should set cache control headers for 10 mins" do
-      get :ask_a_question
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-  end
-
   describe "GET 'foi'" do
     it "should set cache control headers for 10 mins" do
       get :foi
@@ -31,53 +15,29 @@ describe FeedbackController do
     end
   end
 
-  describe "GET 'general_feedback'" do
-    it "should set cache control headers for 10 mins" do
-      get :general_feedback
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-  end
-
-  describe "GET 'i_cant_find'" do
-    it "should set cache control headers for 10 mins" do
-      get :i_cant_find
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-  end
-
-  describe "GET 'report_a_problem'" do
-    it "should set cache control headers for 10 mins" do
-      get :report_a_problem
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-  end
-
-  describe "GET 'landing'" do
+  describe "GET 'contact'" do
     it "returns http success" do
-      get :landing
+      get :contact
       response.should be_success
     end
 
     it "should set cache control headers for 10 mins" do
-      get :landing
+      get :contact
       response.headers["Cache-Control"].should == "max-age=600, public"
     end
 
     it "should send a dummy artefact to slimmer with a Feedback section" do
       controller.should_receive(:set_slimmer_dummy_artefact).with(:section_name => "Feedback", :section_link => "/feedback")
-      get :landing
+      get :contact
     end
   end
 
-  describe "POST 'submit'" do
+  describe "POST 'report_a_problem_submit'" do
 
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
-          post :report_a_problem_submit_without_validation, {
+          post :report_a_problem_submit, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -103,6 +63,11 @@ describe FeedbackController do
             assigns[:return_path].should == "/somewhere?foo=bar&baz=1"
           end
 
+          it "should assign nil if an invalid url is provided" do
+            do_submit :url => "b[]laaaaaargh!"
+            assigns[:return_path].should == nil
+          end
+
           it "should assign nil if no url is provided" do
             do_submit :url => nil
             assigns[:return_path].should == nil
@@ -126,6 +91,7 @@ describe FeedbackController do
             response.should render_template('thankyou')
             assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
             assigns[:message].should be_html_safe
+            ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           end
 
           it "should still assign the return_path" do
@@ -137,7 +103,7 @@ describe FeedbackController do
 
       context "ajax submission" do
         def do_submit(attrs = {})
-          xhr :post, :report_a_problem_submit_without_validation, {
+          xhr :post, :report_a_problem_submit, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -147,8 +113,8 @@ describe FeedbackController do
         it "should submit a ticket to zendesk" do
 
           do_submit
-          expected_description = "url: http://www.example.com/somewhere\n"\
-            "what_doing: Nothing\n"\
+          expected_description = "url: http://www.example.com/somewhere\n" +
+            "what_doing: Nothing\n" +
             "what_wrong: Something"
           zendesk_should_have_ticket :subject => "/somewhere", :description => expected_description, :tags => ['report_a_problem']
         end
@@ -162,6 +128,7 @@ describe FeedbackController do
         it "should return json indicating failure when ticket creation fails"  do
           given_zendesk_ticket_creation_fails
           do_submit
+          ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
         end

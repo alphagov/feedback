@@ -4,18 +4,18 @@ class TicketClientDummy
     def raise_ticket(zendesk)
       if zendesk[:description] =~ /break_zendesk/
         Rails.logger.info "Zendesk ticket creation fail for: #{zendesk.inspect}"
-        nil
+        raise "Failed to create Zendesk ticket"
       else
         Rails.logger.info "Zendesk ticket created: #{zendesk.inspect}"
         zendesk
       end
     end
 
-    def get_departments
-      Rails.logger.info 'Zendesk get departments'
+    def get_sections
+      Rails.logger.info 'Zendesk get sections'
       {
-        'Test Department One' => 'test_department_one',
-        'Test Department Two' => 'test_department_two'
+        'Test Section One' => 'test_section_one',
+        'Test Section Two' => 'test_section_two'
       }
     end
   end
