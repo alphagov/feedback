@@ -32,7 +32,7 @@ describe FeedbackController do
     end
   end
 
-  describe "POST 'submit'" do
+  describe "POST 'report_a_problem_submit'" do
 
     context "with a valid report_a_problem submission" do
       context "html request" do
@@ -61,6 +61,11 @@ describe FeedbackController do
           it "should retain the query_string from the given URL" do
             do_submit :url => "http://www.example.com/somewhere?foo=bar&baz=1"
             assigns[:return_path].should == "/somewhere?foo=bar&baz=1"
+          end
+
+          it "should assign nil if an invalid url is provided" do
+            do_submit :url => "b[]laaaaaargh!"
+            assigns[:return_path].should == nil
           end
 
           it "should assign nil if no url is provided" do
