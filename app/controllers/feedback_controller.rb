@@ -28,12 +28,10 @@ class FeedbackController < ApplicationController
   before_filter :setup_slimmer_artefact
 
   def contact
-    ticket_client = TicketClientConnection.get_client
     @sections = ticket_client.get_sections
   end
 
   def contact_submit
-    ticket_client = TicketClientConnection.get_client
     validator = ContactValidator.new params
     @errors = validator.validate
     if @errors.empty?
@@ -67,7 +65,6 @@ class FeedbackController < ApplicationController
           :email => params[:email],
           :description => description
         }
-        ticket_client = TicketClientConnection.get_client
         ticket_client.raise_ticket(ticket)
         @message = DONE_OK_TEXT.html_safe
       rescue => e
@@ -93,7 +90,6 @@ class FeedbackController < ApplicationController
         :tags => ['report_a_problem'],
         :description => description
       }
-      ticket_client = TicketClientConnection.get_client
       ticket_client.raise_ticket(ticket)
     rescue => e
       @message = DONE_NOT_OK_TEXT.html_safe
@@ -116,6 +112,10 @@ class FeedbackController < ApplicationController
   end
 
   private
+
+  def ticket_client
+    @ticket_client ||= TicketClientConnection.get_client
+  end
 
   def contact_ticket(params)
     ticket = {}
