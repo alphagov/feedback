@@ -1,0 +1,22 @@
+@import "design-patterns/forms.scss";
+
+/* Extend page header for wide format page */
+header.page-header hgroup { margin-right: 0 }
+
+.contact-form {
+  @include form();
+ }
+#location {
+  input[type="text"] {
+    margin-left: 1.5em;
+    width: 31em;
+  }
+  select {
+    margin-left: 0.5em;
+  }
+}
+
+.contact-form textarea.full-size {
+  width: 95%;
+  height: 15em;
+}

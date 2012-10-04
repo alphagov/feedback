@@ -1,7 +1,5 @@
 class BaseValidator
   MAX_LENGTH = 1200
-  LENGTH_ERROR_MESSAGE = "Can be max #{MAX_LENGTH} characters"
-  BLANK_ERROR_MESSAGE = "Above field cannot be empty"
 
   def initialize(params)
     @params = params
@@ -16,42 +14,44 @@ class BaseValidator
     @errors
   end
 
-  def validate_max_length(field)
+  def validate_max_length(field, message)
     unless @params[field].blank?
-      if @params[field].length > MAX_LENGTH
-        add_error field, LENGTH_ERROR_MESSAGE
+      if (@params[field].delete "\r").length > MAX_LENGTH
+        add_error field, message
       end
     end
   end
 
-  def validate_existence(field)
+  def validate_existence(field, message)
     if @params[field].blank?
-      add_error field, BLANK_ERROR_MESSAGE
+      add_error field, message
     end
   end
 
   def validate_user_details
     validate_name
+    validate_email_match
     validate_email
-    validate_existence :email
-    validate_existence :name
-    validate_existence :verifyemail
+    validate_existence :email, "The email field cannot be empty"
+    validate_existence :name, "The name field cannot be empty"
   end
 
   def validate_email
-    unless @params[:email] ==  @params[:verifyemail]
+    if @params[:email] && (not @params[:email].blank?)
+      unless @params[:email] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
+        add_error :email, 'The email address must be valid'
+      end
+      validate_max_length :email, "The email field can be max 1200 characters"
+    end
+  end
+
+  def validate_email_match
+    unless @params[:email] == @params[:verifyemail]
       add_error :email, 'The two email addresses must match'
     end
-    unless @params[:email] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
-      add_error :email, 'Invalid email address'
-    end
-    unless @params[:verifyemail] =~/^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/
-      add_error :verifyemail, 'Invalid email address'
-    end
-    validate_max_length :email
   end
 
   def validate_name
-    validate_max_length :name
+    validate_max_length :name, "The name field can be max 1200 characters"
   end
 end

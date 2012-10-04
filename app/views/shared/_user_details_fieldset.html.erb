@@ -1,21 +1,43 @@
-<section id="userdetails">
 <fieldset>
-  <legend>Your details</legend>
-  <br/>
-  <label for="name">Name</label>
-  <%= text_field_tag 'name', (@old ? @old[:name] : ''),
-    :maxlength => 1200, :required => true %>
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "name"}%>
+  <legend>Your contact details</legend>
 
-  <label for="email">Email</label>
-  <input type="email" maxlength="1200" name="email" id="email" required aria-required="true"
+  <% if @errors && @errors[:name] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:name] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
+    <label for="name">Your name</label>
+    <input type="name" maxlength="1200" name="name" class="full-name" id="name" required aria-required="true"
+           value="<%= @old ? @old[:name]  : '' %>" />
+
+  </p>
+
+  <% if @errors && @errors[:email] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:email] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
+    <label for="email">Your email address</label>
+    <input type="email" maxlength="1200" name="email" class="email" id="email" required aria-required="true"
          value="<%= @old ? @old[:email]  : '' %>" />
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "email"}%>
 
-  <label for="verifyemail">Verify email</label>
-  <input type="email" maxlength="1200" name="verifyemail" id="verifyemail" required aria-required="true"
-    value="<%= @old ? @old[:verifyemail]  : '' %>" />
-  <%= render :partial => "shared/form_errors",  :locals => {:fieldname => "verifyemail"}%>
+  </p>
 
+
+  <% if @errors && @errors[:verifyemail] %>
+    <p class="validation group">
+      <span class="validation-message"><%= @errors[:verifyemail] %></span>
+  <% else %>
+    <p class="group">
+  <% end %>
+
+    <label for="verifyemail">Confirm your email address</label>
+    <input type="email" maxlength="1200" name="verifyemail" class="email" id="verifyemail" required aria-required="true"
+      value="<%= @old ? @old[:verifyemail]  : '' %>" />
+
+  </p>
 </fieldset>
-</section>
