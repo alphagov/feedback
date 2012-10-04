@@ -41,28 +41,19 @@ class FeedbackController < ApplicationController
   end
 
   def foi_submit
-    validator = FoiValidator.new params
-    @errors = validator.validate
-    if @errors.empty?
-      begin
-        description = foi_ticket_description params
-        ticket = {
-          :subject => "FOI",
-          :tags => ["FOI_request"],
-          :name => params[:name],
-          :email => params[:email],
-          :description => description
-        }
-        ticket_client.raise_ticket(ticket)
-        @message = DONE_OK_TEXT.html_safe
-      rescue => e
-        @message = DONE_NOT_OK_TEXT.html_safe
-        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-      end
-      render "shared/thankyou"
+    ticket = FoiTicket.new params
+
+    if ticket.save
+      render "shared/formok"
     else
-      @old = params
-      render :action => "foi"
+      if ticket.errors[:connection]
+        render "shared/formerror"
+      else
+        @sections = ticket_client.get_sections
+        @old = params
+        @errors = ticket.errors
+        render :action => "foi"
+      end
     end
   end
 
@@ -102,17 +93,6 @@ class FeedbackController < ApplicationController
 
   def ticket_client
     @ticket_client ||= TicketClientConnection.get_client
-  end
-
-  def foi_ticket_description(params)
-    description = ""
-    unless params[:name].blank?
-      description += "[Name]\n" + params[:name] + "\n"
-    end
-    unless params[:textdetails].blank?
-      description += "[Details]\n" + params[:textdetails]
-    end
-    description
   end
 
   def report_a_problem_format_description(params)
