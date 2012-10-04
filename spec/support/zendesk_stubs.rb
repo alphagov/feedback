@@ -16,7 +16,7 @@ module ZendeskStubs
     def raise_ticket(params)
       if @fail
         @tickets << params
-        raise StandardError
+        raise "Failed to create Zendesk ticket"
       else
         @tickets << params
         params

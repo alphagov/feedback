@@ -11,7 +11,7 @@ class TicketClient
         :requester => {name: zendesk[:name], email: zendesk[:email]},
         :fields => [{id: SECTION_FIELD, value: zendesk[:section]}],
         :description => zendesk[:description])
-        raise StandardError
+        raise "Failed to create Zendesk ticket"
       end
     end
 
