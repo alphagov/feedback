@@ -1,5 +1,10 @@
-<% if @errors && (not @errors.empty?) %>
-  <div id="error_explanation">
-    <span class="error_msg"><%= @errors["#{fieldname}".to_sym] %></span>
+<% if @errors %>
+  <div class="validation-summary">
+    <h1>Please check the form</h1>
+    <ul>
+      <% @errors.each do |key, value| %>
+        <li><a href="<%= '#error-' + key.to_s %>"><%= value %></a></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>

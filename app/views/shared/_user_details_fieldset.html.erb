@@ -3,7 +3,7 @@
 
   <% if @errors && @errors[:name] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:name] %></span>
+      <span class="validation-message"  id="error-name"><%= @errors[:name] %></span>
   <% else %>
     <p class="group">
   <% end %>
@@ -16,7 +16,7 @@
 
   <% if @errors && @errors[:email] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:email] %></span>
+      <span class="validation-message"  id="error-email"><%= @errors[:email] %></span>
   <% else %>
     <p class="group">
   <% end %>
@@ -30,7 +30,7 @@
 
   <% if @errors && @errors[:verifyemail] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:verifyemail] %></span>
+      <span class="validation-message"  id="error-verifyemail"><%= @errors[:verifyemail] %></span>
   <% else %>
     <p class="group">
   <% end %>

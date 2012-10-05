@@ -6,18 +6,9 @@
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
-  <% if @errors %>
-    <div class="validation-summary">
-      <h1>Please check the form</h1>
-      <ul>
-        <% @errors.each do |key, value| %>
-          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= render "shared/form_errors" %>
 
-<fieldset>
+  <fieldset>
   <legend>Why are you contacting us?</legend>
   <p class="option group" name="why" id="contact-why">
     <label><input type="radio" name="query-type"  value="cant-find" id="cant-find"
@@ -52,7 +43,7 @@
 
   <% if @errors && @errors[:link] %>
      <p class="validation group">
-      <span class="validation-message"><%= @errors[:link] %></span>
+      <span class="validation-message" id="error-link"><%= @errors[:link] %></span>
   <% else %>
     <p>
   <% end %>
@@ -73,7 +64,7 @@
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
-        <span class="validation-message"><%= @errors[:textdetails] %></span>
+        <span class="validation-message" id="error-textdetails"><%= @errors[:textdetails] %></span>
     <% end %>
 
     <textarea name='textdetails' class="full-size counted" id="textdetails"
@@ -94,7 +85,7 @@
 
   <% if @errors && @errors[:name] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:name] %></span>
+      <span class="validation-message"  id="error-name"><%= @errors[:name] %></span>
   <% else %>
     <p class="group">
   <% end %>
@@ -106,7 +97,7 @@
 
   <% if @errors && @errors[:email] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:email] %></span>
+      <span class="validation-message"  id="error-email"><%= @errors[:email] %></span>
   <% else %>
     <p class="group">
   <% end %>
