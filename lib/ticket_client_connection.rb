@@ -1,6 +1,3 @@
-require 'ticket_client'
-require 'ticket_client_dummy'
-
 class TicketClientConnection
   class << self
     def get_client

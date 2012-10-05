@@ -1,6 +1,3 @@
-require 'ticket_client_connection'
-require 'contact_validator'
-
 class ContactTicket
   def initialize(params)
     @params = params

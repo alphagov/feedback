@@ -1,6 +1,3 @@
-require 'ticket_client_connection'
-require 'foi_validator'
-
 class FoiTicket
   def initialize(params)
     @params = params

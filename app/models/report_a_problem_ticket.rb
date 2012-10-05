@@ -1,5 +1,3 @@
-require 'ticket_client_connection'
-
 class ReportAProblemTicket
   def initialize(params)
     @params = params

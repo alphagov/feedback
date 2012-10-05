@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require 'ostruct'
-
 describe TicketClientDummy do
 
   before :each do

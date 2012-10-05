@@ -1,5 +1,3 @@
-require 'ticket_client'
-
 module ZendeskStubs
   class MockTicketClient
     def initialize
