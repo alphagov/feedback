@@ -1,5 +1,3 @@
-require 'ticket_client_connection'
-require 'foi_validator'
 require 'slimmer/headers'
 
 class FeedbackController < ApplicationController
@@ -58,21 +56,13 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
+    ticket = ReportAProblemTicket.new params
     result = 'success'
     @message = DONE_OK_TEXT.html_safe
 
-    begin
-      description = report_a_problem_format_description params
-      ticket = {
-        :subject => path_for_url(params[:url]),
-        :tags => ['report_a_problem'],
-        :description => description
-      }
-      ticket_client.raise_ticket(ticket)
-    rescue => e
-      @message = DONE_NOT_OK_TEXT.html_safe
+    unless ticket.save
       result = 'error'
-      ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+      @message = DONE_NOT_OK_TEXT.html_safe
     end
 
     respond_to do |format|
@@ -93,20 +83,6 @@ class FeedbackController < ApplicationController
 
   def ticket_client
     @ticket_client ||= TicketClientConnection.get_client
-  end
-
-  def report_a_problem_format_description(params)
-    description = "url: #{params[:url]}\n" +
-    "what_doing: #{params[:what_doing]}\n" +
-    "what_wrong: #{params[:what_wrong]}"
-  end
-
-
-  def path_for_url(url)
-    uri = URI.parse(url)
-    uri.path.presence || "Unknown page"
-  rescue URI::InvalidURIError
-    "Unknown page"
   end
 
   def set_cache_control
