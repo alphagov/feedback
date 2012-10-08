@@ -28,7 +28,7 @@
     <% end %>
 
     <label for="name">Your name</label>
-    <input type="name" maxlength="1200" name="name" class="full-name" id="name" required aria-required="true"
+    <input type="name" maxlength="1200" name="foi[name]" class="full-name" id="name" required aria-required="true"
     value="<%= @old ? @old[:name]  : '' %>" />
 
     </p>
@@ -43,7 +43,7 @@
     <% end %>
 
     <label for="email">Your email address</label>
-    <input type="email" maxlength="1200" name="email" class="email" id="email" required aria-required="true"
+    <input type="email" maxlength="1200" name="foi[email]" class="email" id="email" required aria-required="true"
     value="<%= @old ? @old[:email]  : '' %>" />
 
     </p>
@@ -58,7 +58,7 @@
     <% end %>
 
     <label for="email_confirmation">Confirm your email address</label>
-    <input type="email" maxlength="1200" name="email_confirmation" class="email" id="email_confirmation" required aria-required="true"
+    <input type="email" maxlength="1200" name="foi[email_confirmation]" class="email" id="email_confirmation" required aria-required="true"
     value="<%= @old ? @old[:email_confirmation]  : '' %>" />
 
     </p>
@@ -76,7 +76,7 @@
       <% end %>
     <% end %>
 
-    <textarea name='textdetails' class="full-size counted" id='textdetails'
+    <textarea name='foi[textdetails]' class="full-size counted" id='textdetails'
               placeholder="Type here (please don't include any personal or financial information)"
               required aria-required="true">
       <%= (@old ? @old[:textdetails] : '') %>

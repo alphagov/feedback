@@ -39,7 +39,7 @@ class FeedbackController < ApplicationController
   end
 
   def foi_submit
-    ticket = FoiTicket.new params
+    ticket = FoiTicket.new params[:foi]
 
     if ticket.save
       render "shared/formok"
@@ -49,7 +49,7 @@ class FeedbackController < ApplicationController
       else
         @errors = ticket.errors.to_hash
         @sections = ticket_client.get_sections
-        @old = params
+        @old = params[:foi]
         render :action => "foi"
       end
     end
