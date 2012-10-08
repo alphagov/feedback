@@ -18,7 +18,7 @@
       <h1>Please check the form</h1>
       <ul>
         <% @errors.each do |key, value| %>
-          <% @errors[key].each do |error| %>
+          <% value.each do |error| %>
             <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
           <% end %>
         <% end %>
