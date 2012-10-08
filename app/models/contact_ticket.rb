@@ -1,6 +1,6 @@
 class ContactTicket < Ticket
 
-  attr_accessor :query, :location, :link, :textdetails, :section, :name, :email, :controller, :action
+  attr_accessor :query, :location, :link, :textdetails, :section, :name, :email
 
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_format_of :email, :with => /^$|^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/, :message => "The email address must be valid"

@@ -22,7 +22,7 @@ class FeedbackController < ApplicationController
   end
 
   def contact_submit
-    ticket = ContactTicket.new params
+    ticket = ContactTicket.new params[:contact]
 
     if ticket.save
       render "shared/formok"
@@ -32,7 +32,7 @@ class FeedbackController < ApplicationController
       else
         @errors = ticket.errors.to_hash
         @sections = ticket_client.get_sections
-        @old = params
+        @old = params[:contact]
         render :action => "contact"
       end
     end
