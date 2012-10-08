@@ -69,7 +69,7 @@ class FeedbackController < ApplicationController
       @contact_provided = (not data[:email].blank?)
       render "shared/formok"
     else
-      if ticket.errors.has_key? :connection
+      if ticket.errors[:connection] && ticket.errors[:connection].any?
         render "shared/formerror"
       else
         @errors = ticket.errors.to_hash
