@@ -47,9 +47,9 @@ GOVUK.feedback.initCounters = function () {
 
 GOVUK.feedback.checkRadio = function () {
     if ($('#location-section').is(':checked')) {
-        $('#section').removeAttr('disabled');
+        $('#contact_section').removeAttr('disabled');
     } else {
-        $('#section').attr('disabled', 'disabled')
+        $('#contact_section').attr('disabled', 'disabled')
     }
     if ($('#location-specific').is(':checked')) {
         $('#link').removeAttr('disabled');
