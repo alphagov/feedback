@@ -1,5 +1,3 @@
-require 'base_validator'
-
 class FoiValidator < BaseValidator
   def initialize(params)
     super params

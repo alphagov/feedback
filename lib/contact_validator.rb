@@ -1,5 +1,3 @@
-require 'base_validator'
-
 class ContactValidator < BaseValidator
 
   def initialize(params)
