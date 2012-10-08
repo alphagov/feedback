@@ -3,7 +3,9 @@
 
   <% if @errors && @errors[:name] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:name] %></span>
+    <% @errors[:name].each do |error| %>
+     <span class="validation-message" id="nameerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p class="group">
   <% end %>
@@ -16,7 +18,9 @@
 
   <% if @errors && @errors[:email] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:email] %></span>
+    <% @errors[:email].each do |error| %>
+     <span class="validation-message" id="emailerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p class="group">
   <% end %>
@@ -27,17 +31,18 @@
 
   </p>
 
-
-  <% if @errors && @errors[:verifyemail] %>
+  <% if @errors && @errors[:email_confirmation] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:verifyemail] %></span>
+    <% @errors[:email_confirmation].each do |error| %>
+     <span class="validation-message" id="email_confirmationerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p class="group">
   <% end %>
 
-    <label for="verifyemail">Confirm your email address</label>
-    <input type="email" maxlength="1200" name="verifyemail" class="email" id="verifyemail" required aria-required="true"
-      value="<%= @old ? @old[:verifyemail]  : '' %>" />
+    <label for="email_confirmation">Confirm your email address</label>
+    <input type="email" maxlength="1200" name="email_confirmation" class="email" id="email_confirmation" required aria-required="true"
+      value="<%= @old ? @old[:email_confirmation]  : '' %>" />
 
   </p>
 </fieldset>

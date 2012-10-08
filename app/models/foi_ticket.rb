@@ -1,56 +1,53 @@
-require 'ticket_client_connection'
-require 'foi_validator'
+class FoiTicket < Ticket
 
-class FoiTicket
-  def initialize(params)
-    @params = params
-    @errors = {}
+  attr_accessor :textdetails, :name, :email, :verifyemail, :controller, :action
+
+  validates_presence_of :textdetails, :message => "The message field cannot be empty"
+  validates_presence_of :email, :message => "The email field cannot be empty"
+  validates_presence_of :name, :message => "The name field cannot be empty"
+  validates_format_of :email, :with => /^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/, :message => "The email address must be valid"
+  validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
+  validates_confirmation_of :email, :message => "The two email addresses must match"
+
+  def initialize(attributes = {})
+    attributes.each do |key, value|
+      send("#{key}=", value)
+    end
+    valid?
   end
 
   def save
-    validator = FoiValidator.new @params
-    @errors = validator.validate
-    if @errors.empty?
+    ticket = nil
+    if valid?
       begin
-        ticket = foi_ticket @params
+        ticket = foi_ticket
         ticket_client.raise_ticket(ticket)
-        true
       rescue => e
-        @errors[:connection] = "Connection error"
+        ticket = nil
+        @errors.add :connection, "Connection error"
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-        false
       end
     end
-  end
-
-  def errors
-    @errors
+    ticket
   end
 
   private
 
-  def ticket_client
-    @ticket_client ||= TicketClientConnection.get_client
-  end
-
-  def foi_ticket_description(params)
+  def foi_ticket_description
     description = ""
-    unless params[:name].blank?
-      description += "[Name]\n" + params[:name] + "\n"
+    unless name.blank?
+      description += "[Name]\n" + name + "\n"
     end
-    unless params[:textdetails].blank?
-      description += "[Details]\n" + params[:textdetails]
-    end
-    description
+    description += "[Details]\n" + textdetails
   end
 
-  def foi_ticket(params)
-    description = foi_ticket_description params
+  def foi_ticket
+    description = foi_ticket_description
     ticket = {
       :subject => "FOI",
       :tags => ["FOI_request"],
-      :name => params[:name],
-      :email => params[:email],
+      :name => name,
+      :email => email,
       :description => description
     }
   end
