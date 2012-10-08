@@ -1,8 +1,8 @@
 <% content_for :title, "Contact GOV.UK - Feedback - GOV.UK" %>
 <% content_for :heading, "Contact GOV.UK" %>
 
-<p>Our support pages have answers to the most common questions about this website.</p>
-<p>Alternatively, you can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+<p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+<p>Remember, our support pages have answers to the most common questions about GOV.UK.</p>
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
@@ -63,6 +63,7 @@
   <legend>Can you provide more detail?</legend>
   <div class="group">
     <p class="help">For example if you were searching for something, what did you type into the search box?</p>
+    <p class="help">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
@@ -72,7 +73,6 @@
     <% end %>
 
     <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
-              placeholder="Type here (please don't include any personal or financial information)"
               required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
 
     <% if @errors && @errors[:textdetails] %>
@@ -112,7 +112,7 @@
 
     <label for="email">Your email address</label>
     <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
-    <span class="help">We'll only use this to reply to your message</span>
+    <span class="help">We'll only use this to reply to your message.</span>
 
   </p>
 </fieldset>

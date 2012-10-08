@@ -68,6 +68,7 @@
   <legend>Your request</legend>
   <div class="group">
     <label for="textdetails">Provide a detailed description of the infomation you're seeking</label>
+    <p class="help">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
@@ -77,7 +78,6 @@
     <% end %>
 
     <textarea name='foi[textdetails]' class="full-size counted" id='textdetails'
-              placeholder="Type here (please don't include any personal or financial information)"
               required aria-required="true">
       <%= (@old ? @old[:textdetails] : '') %>
     </textarea>
