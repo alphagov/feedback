@@ -6,18 +6,7 @@
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
-  <% if @errors %>
-    <div class="validation-summary">
-      <h1>Please check the form</h1>
-      <ul>
-        <% @errors.each do |key, value| %>
-          <% value.each do |error| %>
-            <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "shared/error_summary" %>
 
 <fieldset>
   <legend>Why are you contacting us?</legend>
