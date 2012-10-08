@@ -1,5 +1,7 @@
 <% if @errors && (not @errors.empty?) %>
   <div id="error_explanation">
-    <span class="error_msg"><%= @errors["#{fieldname}".to_sym] %></span>
+    <% @errors[fieldname].each do |error| %>
+    <span class="error_msg" id="<%="#{fieldname}error"%>"><%= error %></span>
+    <% end %>
   </div>
 <% end %>

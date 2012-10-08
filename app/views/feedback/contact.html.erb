@@ -11,7 +11,9 @@
       <h1>Please check the form</h1>
       <ul>
         <% @errors.each do |key, value| %>
-          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
+          <% value.each do |error| %>
+            <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
@@ -20,14 +22,14 @@
 <fieldset>
   <legend>Why are you contacting us?</legend>
   <p class="option group" name="why" id="contact-why">
-    <label><input type="radio" name="query-type"  value="cant-find" id="cant-find"
-                  <%= @old ? (@old["query-type"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
-    <label><input type="radio" name="query-type"  value="report-problem" id="report-problem"
-                  <%= @old ? (@old["query-type"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
-    <label><input type="radio" name="query-type"  value="ask-question" id="ask-question"
-                  <%= @old ? (@old["query-type"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
-    <label><input type="radio" name="query-type"  value="make-suggestion" id="make-suggestion"
-                  <%= @old ? (@old["query-type"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
+    <label><input type="radio" name="query"  value="cant-find" id="cant-find"
+                  <%= @old ? (@old["query"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
+    <label><input type="radio" name="query"  value="report-problem" id="report-problem"
+                  <%= @old ? (@old["query"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
+    <label><input type="radio" name="query"  value="ask-question" id="ask-question"
+                  <%= @old ? (@old["query"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
+    <label><input type="radio" name="query"  value="make-suggestion" id="make-suggestion"
+                  <%= @old ? (@old["query"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
   </p>
 </fieldset>
 
@@ -51,8 +53,10 @@
 
 
   <% if @errors && @errors[:link] %>
-     <p class="validation group">
-      <span class="validation-message"><%= @errors[:link] %></span>
+    <p class="validation group">
+    <% @errors[:link].each do |error| %>
+      <span class="validation-message" id="linkerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p>
   <% end %>
@@ -66,14 +70,16 @@
     </p>
 </fieldset>
 
-<fieldset>  
+<fieldset>
   <legend>Can you provide more detail?</legend>
   <div class="group">
     <p class="help">For example if you were searching for something, what did you type into the search box?</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
-        <span class="validation-message"><%= @errors[:textdetails] %></span>
+      <% @errors[:textdetails].each do |error| %>
+        <span class="validation-message" id="textdetailserror"><%= error %></span>
+      <% end %>
     <% end %>
 
     <textarea name='textdetails' class="full-size counted" id="textdetails"
@@ -94,7 +100,9 @@
 
   <% if @errors && @errors[:name] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:name] %></span>
+    <% @errors[:name].each do |error| %>
+      <span class="validation-message" id="nameerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p class="group">
   <% end %>
@@ -106,7 +114,9 @@
 
   <% if @errors && @errors[:email] %>
     <p class="validation group">
-      <span class="validation-message"><%= @errors[:email] %></span>
+    <% @errors[:email].each do |error| %>
+      <span class="validation-message" id="emailerror"><%= error %></span>
+    <% end %>
   <% else %>
     <p class="group">
   <% end %>
