@@ -1,27 +1,35 @@
-class ContactTicket
-  def initialize(params)
-    @params = params
-    @errors = {}
+class ContactTicket < Ticket
+
+  attr_accessor :query, :location, :link, :textdetails, :section, :name, :email, :controller, :action
+
+  validates_presence_of :textdetails, :message => "The message field cannot be empty"
+  validates_format_of :email, :with => /^$|^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/, :message => "The email address must be valid"
+  validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
+  validates_length_of :name, :maximum => 1200, :message => "The message field can be max 1200 characters"
+  validates_length_of :email, :maximum => 1200, :message => "The message field can be max 1200 characters"
+  validates_length_of :link, :maximum => 1200, :message => "The page field can be max 1200 characters"
+  validate :validate_mail_name_connection, :validate_link
+
+  def initialize(attributes = {})
+    attributes.each do |key, value|
+      send("#{key}=", value)
+    end
+    valid?
   end
 
   def save
-    validator = ContactValidator.new @params
-    @errors = validator.validate
-    if @errors.empty?
+    ticket = nil
+    if valid?
       begin
-        ticket = contact_ticket(@params)
+        ticket = contact_ticket
         ticket_client.raise_ticket(ticket)
-        true
       rescue => e
-        @errors[:connection] = "Connection error"
+        ticket = nil
+        @errors.add :connection, "Connection error"
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-        false
       end
     end
-  end
-
-  def errors
-    @errors
+    ticket
   end
 
   private
@@ -33,40 +41,51 @@ class ContactTicket
     "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
   }
 
-  def ticket_client
-    @ticket_client ||= TicketClientConnection.get_client
-  end
-
-  def contact_ticket_description(params)
-    description = "[Location]\n" + params[:location]
-    if (params[:location] == "specific") and (not params[:link].blank?)
-      description += "\n[Link]\n" + params[:link]
+  def contact_ticket_description
+    description = "[Location]\n" + location
+    if (location == "specific") and (not link.blank?)
+      description += "\n[Link]\n" + link
     end
-    unless params[:name].blank?
-      description += "\n[Name]\n" + params[:name]
+    unless name.blank?
+      description += "\n[Name]\n" + name
     end
 
-    unless params[:textdetails].blank?
-      description += "\n[Details]\n" + params[:textdetails]
+    unless textdetails.blank?
+      description += "\n[Details]\n" + textdetails
     end
     description
   end
 
-  def contact_ticket(params)
+  def contact_ticket
     ticket = {}
-    if REASON_HASH[params["query-type"]]
-      description = contact_ticket_description params
-      subject = REASON_HASH[params["query-type"]][:subject]
-      tag = REASON_HASH[params["query-type"]][:tag]
+    if REASON_HASH[query]
+      description = contact_ticket_description
+      subject = REASON_HASH[query][:subject]
+      tag = REASON_HASH[query][:tag]
       ticket = {
         :subject => subject,
         :tags => [tag],
-        :name => params[:name],
-        :email => params[:email],
-        :section => params[:section],
+        :name => name,
+        :email => email,
+        :section => section,
         :description => description
       }
     end
     ticket
+  end
+
+  def validate_mail_name_connection
+    if name.blank? and not email.blank?
+      @errors.add :name, 'The name field cannot be empty'
+    end
+    if email.blank? and not name.blank?
+      @errors.add :email, 'The email field cannot be empty'
+    end
+  end
+
+  def validate_link
+    if (location == "specific") and link.blank?
+      @errors.add :link, 'The link field cannot be empty'
+    end
   end
 end

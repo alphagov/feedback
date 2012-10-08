@@ -27,12 +27,12 @@ class FeedbackController < ApplicationController
     if ticket.save
       render "shared/formok"
     else
-      if ticket.errors[:connection]
+      if ticket.errors.has_key? :connection
         render "shared/formerror"
       else
+        @errors = ticket.errors.to_hash
         @sections = ticket_client.get_sections
         @old = params
-        @errors = ticket.errors
         render :action => "contact"
       end
     end
