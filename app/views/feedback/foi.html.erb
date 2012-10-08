@@ -18,7 +18,9 @@
       <h1>Please check the form</h1>
       <ul>
         <% @errors.each do |key, value| %>
-          <li><a href="<%= '#' + key.to_s %>"><%= value %></a></li>
+          <% value.each do |error| %>
+            <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
@@ -33,7 +35,9 @@
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
-        <span class="validation-message"><%= @errors[:textdetails] %></span>
+        <% @errors[:textdetails].each do |error| %>
+        <span class="validation-message" id="textdetailserror"><%= error %></span>
+      <% end %>
     <% end %>
 
     <textarea name='textdetails' class="full-size counted" id='textdetails'

@@ -1,44 +1,22 @@
-class ReportAProblemTicket
-  def initialize(params)
-    @params = params
-    @errors = {}
-  end
+class ReportAProblemTicket < Ticket
 
-  def save
-    begin
-      ticket = report_a_problem_ticket @params
-      ticket_client.raise_ticket(ticket)
-      true
-    rescue => e
-      @errors[:connection] = "Connection error"
-      ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-      false
-    end
-  end
-
-  def errors
-    @errors
-  end
+  attr_accessor :what_wrong, :what_doing, :url, :controller, :action
 
   private
 
-  def ticket_client
-    @ticket_client ||= TicketClientConnection.get_client
-  end
-
-  def report_a_problem_ticket(params)
-    description = report_a_problem_format_description params
+  def create_ticket
+    description = report_a_problem_format_description
     ticket = {
-      :subject => path_for_url(params[:url]),
+      :subject => path_for_url(url),
       :tags => ['report_a_problem'],
       :description => description
     }
   end
 
-  def report_a_problem_format_description(params)
-    description = "url: #{params[:url]}\n" +
-    "what_doing: #{params[:what_doing]}\n" +
-    "what_wrong: #{params[:what_wrong]}"
+  def report_a_problem_format_description
+    description = "url: #{url}\n" +
+    "what_doing: #{what_doing}\n" +
+    "what_wrong: #{what_wrong}"
   end
 
   def path_for_url(url)
