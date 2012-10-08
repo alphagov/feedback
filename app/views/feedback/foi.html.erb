@@ -13,25 +13,62 @@
 
 <form class="contact-form" action="/feedback/foi" method="post">
 
-  <% if @errors %>
-    <div class="validation-summary">
-      <h1>Please check the form</h1>
-      <ul>
-        <% @errors.each do |key, value| %>
-          <% value.each do |error| %>
-            <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "shared/error_summary" %>
 
-  <%= render "shared/user_details_fieldset" %>
+  <fieldset>
+    <legend>Your contact details</legend>
+
+    <% if @errors && @errors[:name] %>
+      <p class="validation group">
+      <% @errors[:name].each do |error| %>
+        <span class="validation-message" id="nameerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="name">Your name</label>
+    <input type="name" maxlength="1200" name="foi[name]" class="full-name" id="name" required aria-required="true"
+    value="<%= @old ? @old[:name]  : '' %>" />
+
+    </p>
+
+    <% if @errors && @errors[:email] %>
+      <p class="validation group">
+      <% @errors[:email].each do |error| %>
+        <span class="validation-message" id="emailerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="email">Your email address</label>
+    <input type="email" maxlength="1200" name="foi[email]" class="email" id="email" required aria-required="true"
+    value="<%= @old ? @old[:email]  : '' %>" />
+
+    </p>
+
+    <% if @errors && @errors[:email_confirmation] %>
+      <p class="validation group">
+      <% @errors[:email_confirmation].each do |error| %>
+        <span class="validation-message" id="email_confirmationerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="email_confirmation">Confirm your email address</label>
+    <input type="email" maxlength="1200" name="foi[email_confirmation]" class="email" id="email_confirmation" required aria-required="true"
+    value="<%= @old ? @old[:email_confirmation]  : '' %>" />
+
+    </p>
+  </fieldset>
 
 <fieldset>
   <legend>Your request</legend>
   <div class="group">
     <label for="textdetails">Provide a detailed description of the infomation you're seeking</label>
+    <p class="help">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
@@ -40,8 +77,7 @@
       <% end %>
     <% end %>
 
-    <textarea name='textdetails' class="full-size counted" id='textdetails'
-              placeholder="Type here (please don't include any personal or financial information)"
+    <textarea name='foi[textdetails]' class="full-size counted" id='textdetails'
               required aria-required="true">
       <%= (@old ? @old[:textdetails] : '') %>
     </textarea>

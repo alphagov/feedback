@@ -1,34 +1,23 @@
 <% content_for :title, "Contact GOV.UK - Feedback - GOV.UK" %>
 <% content_for :heading, "Contact GOV.UK" %>
 
-<p>Our support pages have answers to the most common questions about this website.</p>
-<p>Alternatively, you can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+<p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+<p>Remember, our support pages have answers to the most common questions about GOV.UK.</p>
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
-  <% if @errors %>
-    <div class="validation-summary">
-      <h1>Please check the form</h1>
-      <ul>
-        <% @errors.each do |key, value| %>
-          <% value.each do |error| %>
-            <li><a href="<%= "##{key.to_s}error" %>"><%= error %></a></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "shared/error_summary" %>
 
 <fieldset>
   <legend>Why are you contacting us?</legend>
-  <p class="option group" name="why" id="contact-why">
-    <label><input type="radio" name="query"  value="cant-find" id="cant-find"
+  <p class="option group" name="contact[why]" id="contact-why">
+    <label><input type="radio" name="contact[query]"  value="cant-find" id="cant-find"
                   <%= @old ? (@old["query"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
-    <label><input type="radio" name="query"  value="report-problem" id="report-problem"
+    <label><input type="radio" name="contact[query]"  value="report-problem" id="report-problem"
                   <%= @old ? (@old["query"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
-    <label><input type="radio" name="query"  value="ask-question" id="ask-question"
+    <label><input type="radio" name="contact[query]"  value="ask-question" id="ask-question"
                   <%= @old ? (@old["query"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
-    <label><input type="radio" name="query"  value="make-suggestion" id="make-suggestion"
+    <label><input type="radio" name="contact[query]"  value="make-suggestion" id="make-suggestion"
                   <%= @old ? (@old["query"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
   </p>
 </fieldset>
@@ -37,16 +26,16 @@
   <legend>What's it to do with?</legend>
   <p>
     <label>
-      <input type="radio" name="location" id="location-all" value="all"
+      <input type="radio" name="contact[location]" id="location-all" value="all"
              <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
     </label>
   </p>
 
   <p>
     <label>
-      <input type="radio" name="location" id="location-section" value="section"
+      <input type="radio" name="contact[location]" id="location-section" value="section"
              <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
-      <%= select_tag "section",
+      <%= select_tag "contact[section]",
                    options_for_select(@sections, (@old ? @old[:section] : '')) %>
     </label>
   </p>
@@ -62,9 +51,9 @@
   <% end %>
 
   <label>
-      <input type="radio" name="location" id="location-specific"
+      <input type="radio" name="contact[location]" id="location-specific"
              value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
-        <input type="text" name="link" id="link" placeholder="Enter URL or name of page"
+        <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
           value=<%= (@old ? @old[:link] : '') %> >
     </label>
     </p>
@@ -74,6 +63,7 @@
   <legend>Can you provide more detail?</legend>
   <div class="group">
     <p class="help">For example if you were searching for something, what did you type into the search box?</p>
+    <p class="help">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
@@ -82,8 +72,7 @@
       <% end %>
     <% end %>
 
-    <textarea name='textdetails' class="full-size counted" id="textdetails"
-              placeholder="Type here (please don't include any personal or financial information)"
+    <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
               required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
 
     <% if @errors && @errors[:textdetails] %>
@@ -108,7 +97,7 @@
   <% end %>
 
     <label for="name">Your name</label>
-    <input name="name" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
+    <input name="contact[name]" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
   </p>
 
 
@@ -122,8 +111,8 @@
   <% end %>
 
     <label for="email">Your email address</label>
-    <input name="email" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
-    <span class="help">We'll only use this to reply to your message</span>
+    <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
+    <span class="help">We'll only use this to reply to your message.</span>
 
   </p>
 </fieldset>

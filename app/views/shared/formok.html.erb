@@ -1,2 +1,10 @@
-<p>Thank you for your help.</p> <p>If you have more extensive feedback please visit the <a href='/feedback'>support page</a>.</p>
+<% content_for :title, "Thank you" %>
+<% content_for :heading, "Thank you" %>
 
+<% if @contact_provided %>
+  <p>Your message has been sent, and the team will get back to you to answer any questions as soon as possible.</p>
+<% else %>
+  <p>Your message has been sent.</p>
+<% end %>
+
+<p><a href="www.gov.uk">Return to GOV.UK home page</a>.</p>

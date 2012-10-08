@@ -1,6 +1,6 @@
 class FoiTicket < Ticket
 
-  attr_accessor :textdetails, :name, :email, :verifyemail, :controller, :action
+  attr_accessor :textdetails, :name, :email, :verifyemail
 
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_presence_of :email, :message => "The email field cannot be empty"
