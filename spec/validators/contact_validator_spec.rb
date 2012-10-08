@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'contact_validator'
 
 describe ContactValidator do
   include ValidatorHelper

@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-require 'ticket_client_connection'
-require 'ticket_client_dummy'
-require 'ticket_client'
-
 describe TicketClientConnection do
 
   it "should return a ticket client dummy when in development mode" do

@@ -23,6 +23,7 @@ module Feedback
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -72,7 +73,5 @@ module Feedback
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
-
-    config.slimmer.logger = Rails.logger
   end
 end
