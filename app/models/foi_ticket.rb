@@ -9,28 +9,6 @@ class FoiTicket < Ticket
   validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
   validates_confirmation_of :email, :message => "The two email addresses must match"
 
-  def initialize(attributes = {})
-    attributes.each do |key, value|
-      send("#{key}=", value)
-    end
-    valid?
-  end
-
-  def save
-    ticket = nil
-    if valid?
-      begin
-        ticket = foi_ticket
-        ticket_client.raise_ticket(ticket)
-      rescue => e
-        ticket = nil
-        @errors.add :connection, "Connection error"
-        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-      end
-    end
-    ticket
-  end
-
   private
 
   def foi_ticket_description
@@ -41,7 +19,7 @@ class FoiTicket < Ticket
     description += "[Details]\n" + textdetails
   end
 
-  def foi_ticket
+  def create_ticket
     description = foi_ticket_description
     ticket = {
       :subject => "FOI",
