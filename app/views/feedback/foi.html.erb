@@ -14,7 +14,55 @@
 <form class="contact-form" action="/feedback/foi" method="post">
 
   <%= render "shared/error_summary" %>
-  <%= render "shared/user_details_fieldset" %>
+
+  <fieldset>
+    <legend>Your contact details</legend>
+
+    <% if @errors && @errors[:name] %>
+      <p class="validation group">
+      <% @errors[:name].each do |error| %>
+        <span class="validation-message" id="nameerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="name">Your name</label>
+    <input type="name" maxlength="1200" name="name" class="full-name" id="name" required aria-required="true"
+    value="<%= @old ? @old[:name]  : '' %>" />
+
+    </p>
+
+    <% if @errors && @errors[:email] %>
+      <p class="validation group">
+      <% @errors[:email].each do |error| %>
+        <span class="validation-message" id="emailerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="email">Your email address</label>
+    <input type="email" maxlength="1200" name="email" class="email" id="email" required aria-required="true"
+    value="<%= @old ? @old[:email]  : '' %>" />
+
+    </p>
+
+    <% if @errors && @errors[:email_confirmation] %>
+      <p class="validation group">
+      <% @errors[:email_confirmation].each do |error| %>
+        <span class="validation-message" id="email_confirmationerror"><%= error %></span>
+      <% end %>
+    <% else %>
+      <p class="group">
+    <% end %>
+
+    <label for="email_confirmation">Confirm your email address</label>
+    <input type="email" maxlength="1200" name="email_confirmation" class="email" id="email_confirmation" required aria-required="true"
+    value="<%= @old ? @old[:email_confirmation]  : '' %>" />
+
+    </p>
+  </fieldset>
 
 <fieldset>
   <legend>Your request</legend>
