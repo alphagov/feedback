@@ -13,7 +13,7 @@ describe "FOI" do
 
     i_should_be_on "/feedback/foi"
 
-    page.should have_content("Thank you for your help.")
+    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
     expected_description = "[Name]\ntest name\n[Details]\ntest foi request"
     zendesk_should_have_ticket :subject => "FOI",
@@ -36,7 +36,7 @@ describe "FOI" do
 
     i_should_be_on "/feedback/foi"
 
-    page.should have_content("Sorry, we're unable to receive your message right now")
+    page.should have_content("Sorry, but we have been unable to send your message.")
 
     expected_description = "[Name]\ntest name\n[Details]\ntest foi request"
     zendesk_should_have_ticket :subject => "FOI",

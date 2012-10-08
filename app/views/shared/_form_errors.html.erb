@@ -1,7 +1,0 @@
-<% if @errors && (not @errors.empty?) %>
-  <div id="error_explanation">
-    <% @errors[fieldname].each do |error| %>
-    <span class="error_msg" id="<%="#{fieldname}error"%>"><%= error %></span>
-    <% end %>
-  </div>
-<% end %>

@@ -15,44 +15,19 @@ class FeedbackController < ApplicationController
     :contact
   ]
 
+  before_filter :get_sections, :only => [
+    :contact,
+    :contact_submit
+  ]
+
   before_filter :setup_slimmer_artefact
 
-  def contact
-    @sections = ticket_client.get_sections
-  end
-
   def contact_submit
-    ticket = ContactTicket.new params
-
-    if ticket.save
-      render "shared/formok"
-    else
-      if ticket.errors.has_key? :connection
-        render "shared/formerror"
-      else
-        @errors = ticket.errors.to_hash
-        @sections = ticket_client.get_sections
-        @old = params
-        render :action => "contact"
-      end
-    end
+    submit params, :contact
   end
 
   def foi_submit
-    ticket = FoiTicket.new params
-
-    if ticket.save
-      render "shared/formok"
-    else
-      if ticket.errors.has_key? :connection
-        render "shared/formerror"
-      else
-        @errors = ticket.errors.to_hash
-        @sections = ticket_client.get_sections
-        @old = params
-        render :action => "foi"
-      end
-    end
+    submit params, :foi
   end
 
   def report_a_problem_submit
@@ -81,6 +56,33 @@ class FeedbackController < ApplicationController
 
   private
 
+  TICKET_HASH = {
+    :contact => ContactTicket,
+    :foi => FoiTicket
+  }
+
+  def submit(params, type)
+    data = params[type]
+    ticket = TICKET_HASH[type].new data
+
+    if ticket.save
+      @contact_provided = (not data[:email].blank?)
+      render "shared/formok"
+    else
+      if ticket.errors.has_key? :connection
+        render "shared/formerror"
+      else
+        @errors = ticket.errors.to_hash
+        @old = data
+        render :action => type
+      end
+    end
+  end
+
+  def get_sections
+    @sections = ticket_client.get_sections
+  end
+
   def ticket_client
     @ticket_client ||= TicketClientConnection.get_client
   end
@@ -100,5 +102,4 @@ class FeedbackController < ApplicationController
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
   end
-
 end
