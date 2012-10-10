@@ -1,10 +1,9 @@
-<% content_for :title, "Freedom of information - Feedback - GOV.UK" %>
-<% content_for :heading, "Make a Freedom of information request" %>
+<% content_for :title, "Freedom of Information - Feedback - GOV.UK" %>
+<% content_for :heading, "Make a Freedom of Information request" %>
 
-<p>If you're thinking of making a Freedom of Information (FOI) request please read our guide to
+<p>If you're thinking of making a Freedom of Information (FOI) request please read the guide to
   <a href="https://www.gov.uk/make-a-freedom-of-information-request/the-freedom-of-information-act">
-    Freedom of Information Requests
-  </a>
+    Freedom of Information requests</a> 
   first. The guide also explains how you can find out whether someone has already requested the
   information you need.
 </p>
@@ -67,7 +66,7 @@
 <fieldset>
   <legend>Your request</legend>
   <div class="group">
-    <label for="textdetails">Provide a detailed description of the infomation you're seeking</label>
+    <label for="textdetails">Provide a detailed description of the information you're seeking</label>
     <p class="help">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
@@ -86,7 +85,7 @@
       </p>
     <% end %>
 
-    <p id="textdetailscounter" class="help">(Limit is 1200 characters)</p>
+    <p id="textdetailscounter" class="help" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
   </div>
 </fieldset>
 

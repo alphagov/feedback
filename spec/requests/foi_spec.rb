@@ -8,7 +8,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Provide a detailed description of the infomation you're seeking", :with => "test foi request"
+    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
     click_on "Submit Freedom of Information request"
 
     i_should_be_on "/feedback/foi"
@@ -31,7 +31,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Provide a detailed description of the infomation you're seeking", :with => "test foi request"
+    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
     click_on "Submit Freedom of Information request"
 
     i_should_be_on "/feedback/foi"
