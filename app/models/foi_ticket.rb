@@ -5,7 +5,7 @@ class FoiTicket < Ticket
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_presence_of :email, :message => "The email field cannot be empty"
   validates_presence_of :name, :message => "The name field cannot be empty"
-  validates_format_of :email, :with => /^[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*$/, :message => "The email address must be valid"
+  validates_format_of :email, :with => /\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
   validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
   validates_confirmation_of :email, :message => "The two email addresses must match"
 
