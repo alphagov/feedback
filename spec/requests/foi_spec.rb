@@ -23,6 +23,19 @@ describe "FOI" do
       :tags => ['FOI_request']
   end
 
+  it "should not accept request with val field filled in" do
+    visit "/feedback/foi"
+
+    fill_in "Your name", :with => "test name"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "Confirm your email address", :with => "a@a.com"
+    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
+    fill_in "val", :with => "test val"
+    click_on "Submit Freedom of Information request"
+
+    zendesk_should_not_have_ticket
+  end
+
   it "should show an error message when the zendesk connection fails" do
 
     given_zendesk_ticket_creation_fails

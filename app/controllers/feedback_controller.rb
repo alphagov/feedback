@@ -71,6 +71,8 @@ class FeedbackController < ApplicationController
     else
       if ticket.errors[:connection] && ticket.errors[:connection].any?
         render "shared/formerror"
+      elsif ticket.errors[:val] && ticket.errors[:val].any?
+        val_error
       else
         @errors = ticket.errors.to_hash
         @old = data
@@ -101,5 +103,9 @@ class FeedbackController < ApplicationController
 
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+  end
+
+  def val_error
+    render :nothing => true, :status => 444
   end
 end

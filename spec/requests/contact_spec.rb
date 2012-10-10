@@ -24,6 +24,20 @@ describe "Contact" do
       :tags => ['ask_question']
   end
 
+  it "should not accept request with val field filled in" do
+    visit "/feedback/contact"
+
+    choose "location-all"
+    choose "ask-question"
+    fill_in "Your name", :with => "test name"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "textdetails", :with => "test text details"
+    fill_in "val", :with => "test val"
+    click_on "Send message"
+
+    zendesk_should_not_have_ticket
+  end
+
   it "should let the user submit an 'ask a question' request without name and email" do
     visit "/feedback/contact"
 

@@ -1,5 +1,8 @@
 class Ticket
   include ActiveModel::Validations
+  attr_accessor :val
+
+  validate :validate_val
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -28,5 +31,12 @@ class Ticket
 
   def ticket_client
     @ticket_client ||= TicketClientConnection.get_client
+  end
+
+  def validate_val
+    # val is used as a naive bot-preventor
+    unless val.blank?
+      @errors.add :val
+    end
   end
 end
