@@ -3,7 +3,9 @@ class Ticket
 
   def initialize(attributes = {})
     attributes.each do |key, value|
-      send("#{key}=", value)
+      if respond_to? "#{key}="
+        send("#{key}=", value)
+      end
     end
     valid?
   end

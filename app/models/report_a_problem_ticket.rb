@@ -1,6 +1,6 @@
 class ReportAProblemTicket < Ticket
 
-  attr_accessor :what_wrong, :what_doing, :url, :controller, :action
+  attr_accessor :what_wrong, :what_doing, :url
 
   private
 
