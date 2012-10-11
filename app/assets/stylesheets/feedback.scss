@@ -1,7 +1,8 @@
 @import "design-patterns/forms.scss";
 
-/* Extend page header for wide format page */
-header.page-header hgroup { margin-right: 0 }
+.article-container {
+  padding-right: 15em;
+}
 
 .contact-form {
   @include form();
@@ -17,6 +18,5 @@ header.page-header hgroup { margin-right: 0 }
 }
 
 .contact-form textarea.full-size {
-  width: 95%;
   height: 15em;
 }

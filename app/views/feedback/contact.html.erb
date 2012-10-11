@@ -63,8 +63,8 @@
 <fieldset>
   <legend>Can you provide more detail?</legend>
   <div class="group">
-    <p class="help">For example if you were searching for something, what did you type into the search box?</p>
-    <p class="help">Please don't include any personal or financial information.</p>
+    <p class="hint">For example if you were searching for something, what did you type into the search box?</p>
+    <p class="hint">Please don't include any personal or financial information.</p>
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
@@ -80,7 +80,7 @@
       </p>
     <% end %>
 
-    <p id="textdetailscounter" class="help" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+    <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
   </div>
 </fieldset>
 
@@ -113,7 +113,7 @@
 
     <label for="email">Your email address</label>
     <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
-    <span class="help">We'll only use this to reply to your message.</span>
+    <span class="hint">We'll only use this to reply to your message.</span>
 
   </p>
 </fieldset>
