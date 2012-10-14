@@ -32,13 +32,13 @@
     </label>
   </p>
 
-  <p>
+  <p class="inline option group">
     <label>
       <input type="radio" name="contact[location]" id="location-section" value="section"
-             <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
-      <%= select_tag "contact[section]",
-                   options_for_select(@sections, (@old ? @old[:section] : '')) %>
+        <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
     </label>
+    <%= select_tag "contact[section]",
+      options_for_select(@sections, (@old ? @old[:section] : '')) %>
   </p>
 
 
@@ -52,11 +52,12 @@
   <% end %>
 
   <label>
-      <input type="radio" name="contact[location]" id="location-specific"
-             value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
-        <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
-          value=<%= (@old ? @old[:link] : '') %> >
-    </label>
+    <input type="radio" name="contact[location]" id="location-specific"
+     value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
+  </label>
+
+    <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
+    value=<%= (@old ? @old[:link] : '') %> >
     </p>
 </fieldset>
 
