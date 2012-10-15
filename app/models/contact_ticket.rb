@@ -2,13 +2,14 @@ class ContactTicket < Ticket
 
   attr_accessor :query, :location, :link, :textdetails, :section, :name, :email
 
+  validate :validate_link
+  validates_length_of :link, :maximum => 1200, :message => "The page field can be max 1200 characters"
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
-  validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
   validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
   validates_length_of :name, :maximum => 1200, :message => "The message field can be max 1200 characters"
+  validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
   validates_length_of :email, :maximum => 1200, :message => "The message field can be max 1200 characters"
-  validates_length_of :link, :maximum => 1200, :message => "The page field can be max 1200 characters"
-  validate :validate_mail_name_connection, :validate_link
+  validate :validate_mail_name_connection
 
   private
 
