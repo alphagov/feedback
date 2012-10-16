@@ -6,7 +6,6 @@ Feedback::Application.configure do
   end
 
   if Rails.env.development?
-    #config.slimmer.asset_host = ENV["STATIC_DEV"] || Plek.current.find('static')
-    config.slimmer.asset_host = "http://static.preview.alphagov.co.uk"
+    config.slimmer.asset_host = ENV["STATIC_DEV"] || Plek.current.find('static')
   end
 end
