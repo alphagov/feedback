@@ -1,5 +1,9 @@
-@import "design-patterns/forms.scss";
+// ===================================================
+// CONTACT FORM
+//
+
 @import "_conditionals";
+@import "design-patterns/forms.scss";
 
 .article-container {
   padding-right: 15em;
@@ -10,20 +14,22 @@
 
 }
 
-.contact-form {
+.contact-form{
   @include form();
- }
-
-#location {
-  input[type="text"] {
-    margin-left: 1.5em;
-    width: 31em;
-  }
-  select {
-    margin-left: 0.5em;
-  }
 }
 
+#location p {
+  padding-bottom: 0;
+  label{
+    width: 10em;
+    display: inline-block;
+    margin-right: 0;
+  }
+}
+#link{
+  width: 64%;
+  margin-left: -0.25em;
+}
 .contact-form textarea.full-size {
   height: 15em;
 }

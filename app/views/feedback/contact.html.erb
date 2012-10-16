@@ -2,7 +2,7 @@
 <% content_for :heading, "Contact GOV.UK" %>
 
 <p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
-<p>Remember, our support pages have answers to the most common questions about GOV.UK.</p>
+<p>Remember, our <a href="/support">support pages</a> have answers to the most common questions about GOV.UK.</p>
 
 <form class="contact-form" action="/feedback/contact" method="post">
 
@@ -37,8 +37,7 @@
       <input type="radio" name="contact[location]" id="location-section" value="section"
         <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
     </label>
-    <%= select_tag "contact[section]",
-      options_for_select(@sections, (@old ? @old[:section] : '')) %>
+    <%= select_tag "contact[section]", options_for_select(@sections, (@old ? @old[:section] : '')) %>
   </p>
 
 
