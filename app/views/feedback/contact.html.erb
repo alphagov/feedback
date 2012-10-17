@@ -44,9 +44,7 @@
 
   <% if @errors && @errors[:link] %>
     <p class="validation group">
-    <% @errors[:link].each do |error| %>
-      <span class="validation-message" id="linkerror"><%= error %></span>
-    <% end %>
+    <span class="validation-message" id="linkerror"><%= @errors[:link].first %></span>
   <% else %>
     <p>
   <% end %>
@@ -69,9 +67,7 @@
 
     <% if @errors && @errors[:textdetails] %>
       <p class="validation group">
-      <% @errors[:textdetails].each do |error| %>
-        <span class="validation-message" id="textdetailserror"><%= error %></span>
-      <% end %>
+      <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
     <% end %>
 
     <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
@@ -91,9 +87,7 @@
 
   <% if @errors && @errors[:name] %>
     <p class="validation group">
-    <% @errors[:name].each do |error| %>
-      <span class="validation-message" id="nameerror"><%= error %></span>
-    <% end %>
+    <span class="validation-message" id="nameerror"><%= @errors[:name].first %></span>
   <% else %>
     <p class="group">
   <% end %>
@@ -105,9 +99,7 @@
 
   <% if @errors && @errors[:email] %>
     <p class="validation group">
-    <% @errors[:email].each do |error| %>
-      <span class="validation-message" id="emailerror"><%= error %></span>
-    <% end %>
+    <span class="validation-message" id="emailerror"><%= @errors[:email].first %></span>
   <% else %>
     <p class="group">
   <% end %>
