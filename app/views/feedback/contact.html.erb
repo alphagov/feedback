@@ -37,8 +37,7 @@
       <input type="radio" name="contact[location]" id="location-section" value="section"
         <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
     </label>
-    <%= select_tag "contact[section]",
-      options_for_select(@sections, (@old ? @old[:section] : '')) %>
+    <%= select_tag "contact[section]", options_for_select(@sections, (@old ? @old[:section] : '')) %>
   </p>
 
 
