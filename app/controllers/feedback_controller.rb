@@ -11,7 +11,6 @@ class FeedbackController < ApplicationController
 
   before_filter :set_cache_control, :only => [
     :foi,
-    :report_a_problem_submit,
     :contact
   ]
 
