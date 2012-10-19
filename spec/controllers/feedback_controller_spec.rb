@@ -49,7 +49,8 @@ describe FeedbackController do
             with(hash_including(
               :url => "http://www.example.com/somewhere",
               :what_doing => "Nothing",
-              :what_wrong => "Something"
+              :what_wrong => "Something",
+              :user_agent => "Rails Testing"
             )).and_return(stub_ticket)
           stub_ticket.should_receive(:save).and_return(true)
 
@@ -119,7 +120,8 @@ describe FeedbackController do
             with(hash_including(
               :url => "http://www.example.com/somewhere",
               :what_doing => "Nothing",
-              :what_wrong => "Something"
+              :what_wrong => "Something",
+              :user_agent => "Rails Testing"
             )).and_return(stub_ticket)
           stub_ticket.should_receive(:save).and_return(true)
 

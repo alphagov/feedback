@@ -1,6 +1,6 @@
 class ReportAProblemTicket < Ticket
 
-  attr_accessor :what_wrong, :what_doing, :url
+  attr_accessor :what_wrong, :what_doing, :url, :user_agent
 
   private
 
@@ -14,9 +14,12 @@ class ReportAProblemTicket < Ticket
   end
 
   def report_a_problem_format_description
-    description = "url: #{url}\n" +
-    "what_doing: #{what_doing}\n" +
-    "what_wrong: #{what_wrong}"
+    description = <<-EOT
+url: #{url}
+what_doing: #{what_doing}
+what_wrong: #{what_wrong}
+user_agent: #{user_agent || 'unknown'}
+EOT
   end
 
   def path_for_url(url)
