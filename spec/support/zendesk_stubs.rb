@@ -33,11 +33,15 @@ module ZendeskStubs
   end
 
   def zendesk_should_have_ticket(params)
-    ticket = @zendesk_client.tickets.last
+    ticket = get_last_zendesk_ticket_details
     ticket.should_not be_nil
     params.each do |k,v|
       ticket[k].should == v
     end
+  end
+
+  def get_last_zendesk_ticket_details
+    @zendesk_client.tickets.last
   end
 
   def given_zendesk_ticket_creation_fails

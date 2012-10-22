@@ -11,7 +11,6 @@ class FeedbackController < ApplicationController
 
   before_filter :set_cache_control, :only => [
     :foi,
-    :report_a_problem_submit,
     :contact
   ]
 
@@ -31,11 +30,12 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
-    ticket = ReportAProblemTicket.new params
-    result = 'success'
-    @message = DONE_OK_TEXT.html_safe
+    ticket = ReportAProblemTicket.new params.merge(:user_agent => request.user_agent)
 
-    unless ticket.save
+    if ticket.save
+      result = 'success'
+      @message = DONE_OK_TEXT.html_safe
+    else
       result = 'error'
       @message = DONE_NOT_OK_TEXT.html_safe
     end

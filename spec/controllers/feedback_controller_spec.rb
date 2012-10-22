@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe FeedbackController do
 
-  include ZendeskStubs
   before :each do
-    setup_zendesk_stubs
+    ReportAProblemTicket.any_instance.stub(:save).and_return(true)
   end
 
   describe "GET 'foi'" do
@@ -45,11 +44,17 @@ describe FeedbackController do
         end
 
         it "should submit a ticket to zendesk" do
+          stub_ticket = stub("Ticket")
+          ReportAProblemTicket.should_receive(:new).
+            with(hash_including(
+              :url => "http://www.example.com/somewhere",
+              :what_doing => "Nothing",
+              :what_wrong => "Something",
+              :user_agent => "Rails Testing"
+            )).and_return(stub_ticket)
+          stub_ticket.should_receive(:save).and_return(true)
+
           do_submit
-          expected_description = "url: http://www.example.com/somewhere\nwhat_doing: Nothing\nwhat_wrong: Something"
-          zendesk_should_have_ticket :subject => "/somewhere",
-            :description => expected_description,
-            :tags => ['report_a_problem']
         end
 
         describe "assigning the return url" do
@@ -83,7 +88,7 @@ describe FeedbackController do
 
         context "when ticket creation fails" do
           before :each do
-            given_zendesk_ticket_creation_fails
+            ReportAProblemTicket.any_instance.stub(:save).and_return(false)
           end
 
           it "should render the thankyou template assigning the message string" do
@@ -91,7 +96,6 @@ describe FeedbackController do
             response.should render_template('thankyou')
             assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
             assigns[:message].should be_html_safe
-            ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           end
 
           it "should still assign the return_path" do
@@ -107,16 +111,23 @@ describe FeedbackController do
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
+            :javascript_enabled => "true",
           }.merge(attrs)
         end
 
         it "should submit a ticket to zendesk" do
+          stub_ticket = stub("Ticket")
+          ReportAProblemTicket.should_receive(:new).
+            with(hash_including(
+              :url => "http://www.example.com/somewhere",
+              :what_doing => "Nothing",
+              :what_wrong => "Something",
+              :user_agent => "Rails Testing",
+              :javascript_enabled => "true"
+            )).and_return(stub_ticket)
+          stub_ticket.should_receive(:save).and_return(true)
 
           do_submit
-          expected_description = "url: http://www.example.com/somewhere\n" +
-            "what_doing: Nothing\n" +
-            "what_wrong: Something"
-          zendesk_should_have_ticket :subject => "/somewhere", :description => expected_description, :tags => ['report_a_problem']
         end
 
         it "should return json indicating success" do
@@ -126,9 +137,8 @@ describe FeedbackController do
         end
 
         it "should return json indicating failure when ticket creation fails"  do
-          given_zendesk_ticket_creation_fails
+          ReportAProblemTicket.any_instance.stub(:save).and_return(false)
           do_submit
-          ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
         end
