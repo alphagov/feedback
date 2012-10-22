@@ -6,7 +6,7 @@ describe "Reporting a problem with this content/tool" do
     visit "/test_forms/report_a_problem"
 
     fill_in "What you were doing", :with => "I was doing something"
-    fill_in "What is wrong with this page", :with => "It didn't work"
+    fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
     i_should_be_on "/feedback"
@@ -46,7 +46,7 @@ user_agent: Shamfari/3.14159 (Fooey)
     visit "/test_forms/report_a_problem"
 
     fill_in "What you were doing", :with => "I was doing something"
-    fill_in "What is wrong with this page", :with => "It didn't work"
+    fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
     i_should_be_on "/feedback"
