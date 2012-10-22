@@ -23,6 +23,32 @@ user_agent: unknown
     zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
   end
 
+  it "should support ajax submission if available", :js => true do
+    visit "/test_forms/report_a_problem"
+
+    fill_in "What you were doing", :with => "I was doing something with javascript"
+    fill_in "What went wrong", :with => "It didn't work"
+    click_on "Send"
+
+    i_should_be_on "/test_forms/report_a_problem"
+
+    page.should have_content("Thank you for your help.")
+
+    ticket = get_last_zendesk_ticket_details
+    ticket.should_not be_nil
+
+    ticket_fields = ticket[:description].lines.each_with_object(Hash.new) do |line, fields|
+      next if line =~ /\A\s+\z/
+      key, value = line.split(': ', 2)
+      fields[key.to_sym] = value.chomp
+    end
+
+    ticket_fields[:what_doing].should == "I was doing something with javascript"
+    ticket_fields[:what_wrong].should == "It didn't work"
+    URI.parse(ticket_fields[:url]).path.should == "/test_forms/report_a_problem"
+    ticket_fields[:user_agent].should =~ /phantomjs/i
+  end
+
   it "should include the user_agent if available" do
     # Using Rack::Test instead of capybara to allow setting the user agent.
     post "/feedback", {
