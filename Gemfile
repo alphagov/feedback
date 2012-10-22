@@ -6,7 +6,7 @@ gem 'rails', '3.2.8'
 if ENV['SLIMMER_DEV']
   gem "slimmer", :path => '../slimmer'
 else
-  gem "slimmer", '3.3.2'
+  gem "slimmer", '3.8.0'
 end
 
 gem "unicorn", '4.3.1'
@@ -34,4 +34,5 @@ group :development, :test do
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
   gem 'webmock', '1.8.9', :require => false
+  gem 'poltergeist', '0.7.0'
 end
