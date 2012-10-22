@@ -1,6 +1,6 @@
 class ReportAProblemTicket < Ticket
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent
+  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled
 
   private
 
@@ -19,6 +19,7 @@ url: #{url}
 what_doing: #{what_doing}
 what_wrong: #{what_wrong}
 user_agent: #{user_agent || 'unknown'}
+javascript_enabled: #{javascript_enabled == "true"}
 EOT
   end
 

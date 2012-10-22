@@ -111,6 +111,7 @@ describe FeedbackController do
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
+            :javascript_enabled => "true",
           }.merge(attrs)
         end
 
@@ -121,7 +122,8 @@ describe FeedbackController do
               :url => "http://www.example.com/somewhere",
               :what_doing => "Nothing",
               :what_wrong => "Something",
-              :user_agent => "Rails Testing"
+              :user_agent => "Rails Testing",
+              :javascript_enabled => "true"
             )).and_return(stub_ticket)
           stub_ticket.should_receive(:save).and_return(true)
 

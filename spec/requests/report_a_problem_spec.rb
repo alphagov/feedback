@@ -19,6 +19,7 @@ url: http://www.example.com/test_forms/report_a_problem
 what_doing: I was doing something
 what_wrong: It didn't work
 user_agent: unknown
+javascript_enabled: false
     EOT
     zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
   end
@@ -47,6 +48,7 @@ user_agent: unknown
     ticket_fields[:what_wrong].should == "It didn't work"
     URI.parse(ticket_fields[:url]).path.should == "/test_forms/report_a_problem"
     ticket_fields[:user_agent].should =~ /phantomjs/i
+    ticket_fields[:javascript_enabled].should == "true"
   end
 
   it "should include the user_agent if available" do
@@ -62,6 +64,7 @@ url: http://www.example.com/test_forms/report_a_problem
 what_doing: I was doing something
 what_wrong: It didn't work
 user_agent: Shamfari/3.14159 (Fooey)
+javascript_enabled: false
     EOT
     zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
   end
