@@ -34,4 +34,5 @@ group :development, :test do
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
   gem 'webmock', '1.8.9', :require => false
+  gem 'poltergeist', '0.7.0'
 end
