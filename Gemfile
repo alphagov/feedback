@@ -17,6 +17,8 @@ gem "plek", "0.3.0" # Used in exception_notification config
 
 gem "zendesk_api", '0.1.2'
 
+gem "airbrake", '3.1.5'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
