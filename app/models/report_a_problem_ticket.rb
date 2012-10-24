@@ -2,6 +2,9 @@ class ReportAProblemTicket < Ticket
 
   attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled
 
+  validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
+  validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
+
   private
 
   def create_ticket
