@@ -96,4 +96,14 @@ describe ContactTicket do
 
     ticket.javascript_enabled.should eq false
   end
+
+  it "should set user agent to 'unknown' when none given" do
+    test_data = {
+      name: "test name",
+      email: "test@test.com",
+      textdetails: build_random_string(100),
+    }
+    ticket = ContactTicket.new test_data
+    ticket.user_agent.should eq "unknown"
+  end
 end

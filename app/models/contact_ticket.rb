@@ -17,6 +17,10 @@ class ContactTicket < Ticket
     @javascript_enabled || false
   end
 
+  def user_agent
+    @user_agent || "unknown"
+  end
+
   private
 
   REASON_HASH = {
