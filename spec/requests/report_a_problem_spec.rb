@@ -84,4 +84,31 @@ javascript_enabled: false
     page.should have_link("support page", :href => "/feedback")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
   end
+
+  describe "for html requests" do
+    it "should show the error notification if both fields are empty" do
+      visit "/test_forms/report_a_problem"
+
+      fill_in "What you were doing", :with => ""
+      fill_in "What went wrong", :with => ""
+      click_on "Send"
+
+      i_should_be_on "/feedback"
+
+      page.should have_content("Sorry, we're unable to send your message")
+    end
+  end
+
+  describe "for json requests" do
+    it "should show the error notification if both fields are empty", :js => true  do
+      visit "/test_forms/report_a_problem"
+
+      fill_in "What you were doing", :with => ""
+      fill_in "What went wrong", :with => ""
+      click_on "Send"
+
+      i_should_be_on "/test_forms/report_a_problem"
+      page.should have_content("Please enter details of what you were doing")
+    end
+  end
 end
