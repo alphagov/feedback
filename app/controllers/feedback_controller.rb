@@ -8,6 +8,8 @@ class FeedbackController < ApplicationController
   DONE_NOT_OK_TEXT = "<p>Sorry, we're unable to receive your message right now.</p> " +
     "<p>We have other ways for you to provide feedback on the " +
     "<a href='/feedback'>support page</a>.</p>"
+  DONE_INVALID_TEXT = "<p>Sorry, we're unable to send your message as you haven't given us any information.</p> "+
+    "<p>Please tell us what you were doing or what went wrong.</p>"
 
   before_filter :set_cache_control, :only => [
     :foi,
@@ -32,24 +34,30 @@ class FeedbackController < ApplicationController
   def report_a_problem_submit
     ticket = ReportAProblemTicket.new params.merge(:user_agent => request.user_agent)
 
-    if ticket.save
-      result = 'success'
-      @message = DONE_OK_TEXT.html_safe
-    else
-      result = 'error'
-      @message = DONE_NOT_OK_TEXT.html_safe
-    end
-
     respond_to do |format|
-      format.js do
-        render :json => {
-          "status" => result,
-          "message" => @message
-        }
+      if ticket.valid?
+        if ticket.save
+          @message = DONE_OK_TEXT.html_safe
+          @status = 'success'
+        else
+          @message = DONE_NOT_OK_TEXT.html_safe
+          @status = 'error'
+        end
+      else
+        @status = 'invalid'
+        @message = DONE_INVALID_TEXT.html_safe
+        @errors = ticket.errors.full_messages
       end
+
       format.html do
         extract_return_path(params[:url])
         render "shared/thankyou"
+      end
+      format.js do
+        response = { :message => @message, :status => @status }
+        response[:errors] = @errors unless @errors.nil?
+
+        render :json => response, :status => status_codes[@status]
       end
     end
   end
@@ -103,6 +111,14 @@ class FeedbackController < ApplicationController
 
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+  end
+
+  def status_codes
+    {
+      'success' => 201,
+      'invalid' => 422,
+      'error'   => 500
+    }
   end
 
   def val_error

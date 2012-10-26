@@ -52,6 +52,7 @@ describe FeedbackController do
               :what_wrong => "Something",
               :user_agent => "Rails Testing"
             )).and_return(stub_ticket)
+          stub_ticket.should_receive(:valid?).and_return(true)
           stub_ticket.should_receive(:save).and_return(true)
 
           do_submit
@@ -125,6 +126,7 @@ describe FeedbackController do
               :user_agent => "Rails Testing",
               :javascript_enabled => "true"
             )).and_return(stub_ticket)
+          stub_ticket.should_receive(:valid?).and_return(true)
           stub_ticket.should_receive(:save).and_return(true)
 
           do_submit
