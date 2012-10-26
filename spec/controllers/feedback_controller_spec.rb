@@ -32,7 +32,6 @@ describe FeedbackController do
   end
 
   describe "POST 'report_a_problem_submit'" do
-
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
