@@ -24,11 +24,11 @@ class FeedbackController < ApplicationController
   before_filter :setup_slimmer_artefact
 
   def contact_submit
-    submit params, :contact
+    submit params[:contact].merge({:user_agent => (request.user_agent)}), :contact
   end
 
   def foi_submit
-    submit params, :foi
+    submit params[:foi], :foi
   end
 
   def report_a_problem_submit
@@ -69,8 +69,7 @@ class FeedbackController < ApplicationController
     :foi => FoiTicket
   }
 
-  def submit(params, type)
-    data = params[type]
+  def submit(data, type)
     ticket = TICKET_HASH[type].new data
 
     if ticket.save

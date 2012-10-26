@@ -42,6 +42,10 @@ class ContactTicket < Ticket
     unless textdetails.blank?
       description += "\n[Details]\n" + textdetails
     end
+
+    description += "\n[User Agent]\n#{user_agent}"
+    description += "\n[JavaScript Enabled]\n#{javascript_enabled}"
+
     description
   end
 

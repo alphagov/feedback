@@ -31,6 +31,23 @@ describe FeedbackController do
     end
   end
 
+  describe "POST 'contact'" do
+    context "with a valid contact submission" do
+      def do_contact_submit(attrs = {})
+        post :contact, {
+          :name => "Joe Bloggs",
+          :email => "test@test.com",
+          :textdetails => "Testing, testing, 1, 2, 3...",
+        }.merge(attrs)
+      end
+
+      it "should create a contact ticket" do
+        do_contact_submit
+        response.should be_success
+      end
+    end
+  end
+
   describe "POST 'report_a_problem_submit'" do
     context "with a valid report_a_problem submission" do
       context "html request" do
