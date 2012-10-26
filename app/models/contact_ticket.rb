@@ -1,6 +1,8 @@
 class ContactTicket < Ticket
 
-  attr_accessor :query, :location, :link, :textdetails, :section, :name, :email
+  attr_accessor :query, :location, :link, :textdetails,
+                :section, :name, :email, :user_agent,
+                :javascript_enabled
 
   validate :validate_link
   validates_length_of :link, :maximum => 1200, :message => "The page field can be max 1200 characters"
@@ -10,6 +12,10 @@ class ContactTicket < Ticket
   validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
   validates_length_of :email, :maximum => 1200, :message => "The email field can be max 1200 characters"
   validate :validate_mail_name_connection
+
+  def javascript_enabled
+    @javascript_enabled || false
+  end
 
   private
 
