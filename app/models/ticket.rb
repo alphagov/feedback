@@ -22,7 +22,7 @@ class Ticket
       rescue => e
         ticket = nil
         @errors.add :connection, "Connection error"
-        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+        Airbrake.notify(e)
       end
     end
     ticket
