@@ -16,7 +16,7 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent")
 
-    expected_description = "[Location]\nall\n[Name]\ntest name\n[Details]\ntest text details"
+    expected_description = "[Location]\nall\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
       :name => "test name",
       :email => "a@a.com",
@@ -50,7 +50,7 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent")
 
-    expected_description = "[Location]\nall\n[Details]\ntest text details"
+    expected_description = "[Location]\nall\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
       :name => "",
       :email => "",
@@ -72,7 +72,7 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
-    expected_description = "[Location]\nsection\n[Name]\ntest name\n[Details]\ntest text details"
+    expected_description = "[Location]\nsection\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "I can't find",
                                :name => "test name",
                                :email => "a@a.com",
@@ -96,7 +96,7 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details"
+    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Report a problem",
                                :name => "test name",
                                :email => "a@a.com",
@@ -119,7 +119,7 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details"
+    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "General feedback",
                                :name => "test name",
                                :email => "a@a.com",
@@ -145,7 +145,7 @@ describe "Contact" do
 
     page.should have_content("Sorry, but we have been unable to send your message.")
 
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details"
+    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "General feedback",
                                :name => "test name",
                                :email => "a@a.com",
@@ -202,5 +202,76 @@ describe "Contact" do
     find_field('textdetails').value.should eq 'test text details'
 
     zendesk_should_not_have_ticket
+  end
+
+  it "should let the user submit a 'report a problem' request" do
+    visit "/feedback/contact"
+
+    choose "location-specific"
+    choose "report-problem"
+    fill_in "Your name", :with => "test name"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "textdetails", :with => "test text details"
+    fill_in "link", :with => "some url"
+    click_on "Send message"
+
+    i_should_be_on "/feedback/contact"
+
+    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
+
+    expected_description = <<-EOT
+[Location]
+specific
+[Link]
+some url
+[Name]
+test name
+[Details]
+test text details
+[User Agent]
+unknown
+[JavaScript Enabled]
+false
+EOT
+    zendesk_should_have_ticket :subject => "Report a problem",
+                               :name => "test name",
+                               :email => "a@a.com",
+                               :description => expected_description.strip!,
+                               :tags => ['report_a_problem_public']
+  end
+
+  it "should include the user agent if available" do
+    # Using Rack::Test to allow setting the user agent.
+    post "/feedback/contact", {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details"
+      }
+    }, {"HTTP_USER_AGENT" => "T1000 (Bazinga)"}
+
+    expected_description = <<-EOT
+[Location]
+specific
+[Link]
+www.test.com
+[Name]
+test name
+[Details]
+test text details
+[User Agent]
+T1000 (Bazinga)
+[JavaScript Enabled]
+false
+EOT
+
+    zendesk_should_have_ticket :subject => "Report a problem",
+                               :name => "test name",
+                               :email => "test@test.com",
+                               :description => expected_description.strip!,
+                               :tags => ['report_a_problem_public']
   end
 end
