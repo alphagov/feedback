@@ -33,12 +33,12 @@ GOVUK.feedback.handleCounter = function (counted) {
 
 
 GOVUK.feedback.initCounters = function () {
-
     $('.counted').each(function (index) {
         this.oninput = function () {
             this.onkeydown = null;
             GOVUK.feedback.handleCounter(this);
         };
+
         this.onkeydown = function () {
             GOVUK.feedback.handleCounter(this);
         };
@@ -66,6 +66,8 @@ GOVUK.feedback.init = function () {
     $('#location input').change(function () {
         GOVUK.feedback.checkRadio();
     });
+
+    $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
 }
 
 $(GOVUK.feedback.init);
