@@ -41,7 +41,7 @@ describe FeedbackController do
         }.merge(attrs)
       end
 
-      it "should create a contact ticket" do
+      it "should respond successfully when POSTing a contact" do
         do_contact_submit
         response.should be_success
       end
