@@ -34,7 +34,7 @@ describe FeedbackController do
   describe "POST 'contact'" do
     context "with a valid contact submission" do
       def do_contact_submit(attrs = {})
-        post :contact, {
+        post :contact_submit, :contact => {
           :name => "Joe Bloggs",
           :email => "test@test.com",
           :textdetails => "Testing, testing, 1, 2, 3...",
@@ -43,6 +43,22 @@ describe FeedbackController do
 
       it "should respond successfully when POSTing a contact" do
         do_contact_submit
+        response.should be_success
+      end
+
+      it "should create a ContactTicket object" do
+        stub_ticket = stub("Ticket")
+        stub_ticket.should_receive(:save).and_return(true)
+
+        ContactTicket.should_receive(:new).
+          with(hash_including(
+            :name => "Joe Bloggs",
+            :email => "test@test.com",
+            :textdetails => "Testing, testing, 1, 2, 3...",
+          )).and_return(stub_ticket)
+
+        do_contact_submit
+
         response.should be_success
       end
     end
