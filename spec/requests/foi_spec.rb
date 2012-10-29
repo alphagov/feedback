@@ -57,7 +57,6 @@ describe "FOI" do
                                :email => "a@a.com",
                                :description => expected_description,
                                :tags => ['FOI_request']
-    ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
   end
 
   it "should not proceed if the user hasn't filled in all required FOI fields" do

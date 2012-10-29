@@ -80,4 +80,17 @@ describe FoiTicket do
     ticket = FoiTicket.new test_data
     (ticket.errors.has_key? :textdetails).should eq true
   end
+
+  it "should notify airbrake if zendesk ticket creation fails" do
+    test_data = {
+         name: "test name",
+         email: "a@a.com",
+         email_confirmation: "a@a.com",
+         textdetails: "test foi"
+     }
+     ticket = FoiTicket.new test_data
+     ticket.stub(:ticket_client).and_raise('some error')
+     Airbrake.should_receive(:notify)
+     ticket.save
+  end
 end
