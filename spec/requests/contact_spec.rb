@@ -239,4 +239,39 @@ EOT
                                :description => expected_description.strip!,
                                :tags => ['report_a_problem_public']
   end
+
+  it "should include the user agent if available" do
+    # Using Rack::Test to allow setting the user agent.
+    post "/feedback/contact", {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details"
+      }
+    }, {"HTTP_USER_AGENT" => "T1000 (Bazinga)"}
+
+    expected_description = <<-EOT
+[Location]
+specific
+[Link]
+www.test.com
+[Name]
+test name
+[Details]
+test text details
+[User Agent]
+T1000 (Bazinga)
+[JavaScript Enabled]
+false
+EOT
+
+    zendesk_should_have_ticket :subject => "Report a problem",
+                               :name => "test name",
+                               :email => "test@test.com",
+                               :description => expected_description.strip!,
+                               :tags => ['report_a_problem_public']
+  end
 end
