@@ -14,7 +14,7 @@ class ContactTicket < Ticket
   validate :validate_mail_name_connection
 
   def javascript_enabled
-    @javascript_enabled || false
+    !! @javascript_enabled
   end
 
   def user_agent
