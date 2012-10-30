@@ -3,7 +3,7 @@
     <h1>Please check the form</h1>
     <ul>
       <% @errors.keys.each do |key| %>
-          <li><a href="<%= "##{key.to_s}error" %>"><%= @errors[key].first %></a></li>
+        <li><a href="<%= "##{key.to_s}error" %>"><%= @errors[key].first %></a></li>
       <% end %>
     </ul>
   </div>
