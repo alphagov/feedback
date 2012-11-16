@@ -69,7 +69,7 @@ module Feedback
     config.assets.prefix = 'feedback' # this has to match the path configured in puppet and deploy scripts.
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w(feedback.js feedback.css)
+    config.assets.precompile += %w(feedback.js feedback.css feedback-ie6.css)
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
