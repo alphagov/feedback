@@ -11,3 +11,10 @@ This is read from config/zendesk.yml. By default this sets development_mode to t
 In development mode ticket details will simply be echoed to the Rails log, and not actually submitted to zendesk.  Additionally, if the ticket description contains the string 'break_zendesk', it will simulate a failure creating a ticket.
 
 To test actually submitting tickets to zendesk in development, copy `zendesk_example.yml` over the top of `zendesk.yml`, and add your own Zendesk credentials to the file.   **DO NOT COMMIT THIS FILE**
+
+### Testing
+
+To run unit tests, execute the following:
+
+    bundle exec rake GOVUK_APP_DOMAIN=dev.gov.uk 
+
