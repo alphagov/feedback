@@ -1,3 +1,4 @@
 # In development mode, ticket details are logged to the Rails log
 # but not actually sent to Zendesk
 development_mode: true
+fallback_requester_email_address: api_user@example.com
