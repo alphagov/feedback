@@ -1,4 +1,5 @@
 require 'zendesk_error'
+require 'zendesk_config'
 
 class TicketClient
   SECTION_FIELD = 21649362
@@ -7,10 +8,11 @@ class TicketClient
 
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
+      email = zendesk[:email].presence || fallback_requester_email_address
       unless client.tickets.create(
         :subject => zendesk[:subject],
         :tags => tags,
-        :requester => {name: zendesk[:name], email: zendesk[:email]},
+        :requester => {name: zendesk[:name], email: email},
         :fields => [{id: SECTION_FIELD, value: zendesk[:section]}],
         :description => zendesk[:description])
         raise "Failed to create Zendesk ticket"
@@ -36,8 +38,12 @@ class TicketClient
 
     private
 
+    def fallback_requester_email_address
+      @fallback_requester_email_address ||= ZendeskConfig.fallback_requester_email_address
+    end
+
     def build_client
-      details = YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
+      details = ZendeskConfig.details
       @client = ZendeskAPI::Client.new do |config|
         config.url = details["url"]
         config.username = details["username"]
