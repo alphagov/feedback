@@ -1,8 +1,9 @@
+require 'zendesk_config'
+
 class TicketClientConnection
   class << self
     def get_client
-      details = YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
-      if details["development_mode"]
+      if ZendeskConfig.in_development_mode?
         TicketClientDummy
       else
         TicketClient
