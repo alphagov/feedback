@@ -39,7 +39,7 @@ class TicketClient
     private
 
     def fallback_requester_email_address
-      @fallback_requester_email_address ||= ZendeskConfig.fallback_requester_email_address
+      ZendeskConfig.fallback_requester_email_address
     end
 
     def build_client

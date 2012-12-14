@@ -14,7 +14,7 @@ class ZendeskConfig
     end
 
     def details
-      YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
+      @details ||= YAML.load_file(Rails.root.join('config', 'zendesk.yml'))
     end
   end
 end
