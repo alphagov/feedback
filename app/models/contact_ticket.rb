@@ -5,12 +5,12 @@ class ContactTicket < Ticket
                 :javascript_enabled
 
   validate :validate_link
-  validates_length_of :link, :maximum => 1200, :message => "The page field can be max 1200 characters"
+  validates_length_of :link, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
-  validates_length_of :textdetails, :maximum => 1200, :message => "The message field can be max 1200 characters"
-  validates_length_of :name, :maximum => 1200, :message => "The name field can be max 1200 characters"
+  validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates_length_of :name, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
-  validates_length_of :email, :maximum => 1200, :message => "The email field can be max 1200 characters"
+  validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :validate_mail_name_connection
 
   def javascript_enabled
