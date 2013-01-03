@@ -14,7 +14,7 @@ describe ContactTicket do
   end
 
   it "should return contact error with too long name" do
-    name = build_random_string 1201
+    name = build_random_string 1251
     test_data = {
         name: name,
         email: "a@a",
@@ -36,7 +36,7 @@ describe ContactTicket do
   end
 
   it "should return contact error with too long email" do
-    email = (build_random_string 1201) + "@a.com"
+    email = (build_random_string 1251) + "@a.com"
     test_data = {
         name: "test name",
         email: email,
@@ -47,7 +47,7 @@ describe ContactTicket do
   end
 
   it "should return contact error with location specific but without link" do
-    textdetails = build_random_string 1201
+    textdetails = build_random_string 1251
     test_data = {
       name: "test name",
       email: "a@a",
@@ -59,7 +59,7 @@ describe ContactTicket do
   end
 
   it "should return contact error with too long textdetails" do
-    textdetails = build_random_string 1201
+    textdetails = build_random_string 1251
     test_data = {
       name: "test name",
       email: "a@a",

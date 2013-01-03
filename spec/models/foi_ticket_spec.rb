@@ -70,7 +70,7 @@ describe FoiTicket do
   end
 
   it "should return foi error with too long foi text" do
-    textdetails = build_random_string 1201
+    textdetails = build_random_string 1251
     test_data = {
         name: "test name",
         email: "a@a",

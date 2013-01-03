@@ -2,6 +2,12 @@ class Ticket
   include ActiveModel::Validations
   attr_accessor :val
 
+  # This is deliberately higher than the max character count
+  # in the front-end (javascript and maxlength in the markup),
+  # because certain browsers treat "\r\n" incorrectly as
+  # 1 character long.
+  FIELD_MAXIMUM_CHARACTER_COUNT = 1250
+
   validate :validate_val
 
   def initialize(attributes = {})
