@@ -6,13 +6,13 @@ gem 'rails', '3.2.8'
 if ENV['SLIMMER_DEV']
   gem "slimmer", :path => '../slimmer'
 else
-  gem "slimmer", '3.8.0'
+  gem "slimmer", '3.9.5'
 end
 
 gem "unicorn", '4.3.1'
 gem "router-client", '3.1.0', :require => false
 gem "aws-ses", :require => 'aws/ses'
-gem "plek", "0.3.0" # Used in exception_notification config
+gem "plek", "1.0.0" # Used in exception_notification config
 
 gem "zendesk_api", '0.1.2'
 
