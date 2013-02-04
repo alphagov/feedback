@@ -12,7 +12,7 @@ end
 gem "unicorn", '4.3.1'
 gem "router-client", '3.1.0', :require => false
 gem "aws-ses", :require => 'aws/ses'
-gem "plek", "1.0.0" # Used in exception_notification config
+gem "plek", "1.1.0" # Used in exception_notification config
 
 gem "zendesk_api", '0.1.2'
 
