@@ -1,5 +1,4 @@
 require 'slimmer/headers'
-require 'uri'
 
 class FeedbackController < ApplicationController
   include Slimmer::Headers
@@ -130,6 +129,6 @@ class FeedbackController < ApplicationController
   end
 
   def referring_url_within_govuk?
-    request.referer and URI(request.referer).host =~ /(gov[.]uk|alphagov[.]co[.]uk)$/
+    request.referer and request.referer.starts_with?(ENV['GOVUK_WEBSITE_ROOT'])
   end
 end
