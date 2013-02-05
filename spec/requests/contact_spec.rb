@@ -14,6 +14,13 @@ end
 
 describe "Contact" do
 
+  it "should prepopulate the URL field with the referer (if coming from gov.uk)" do
+    Capybara.current_session.driver.header 'Referer', "https://www.dev.gov.uk/something"
+
+    visit "/feedback/contact"
+    find('#link').value.should == "https://www.dev.gov.uk/something"
+  end
+
   it "should let the user submit an 'ask a question' request" do
     visit "/feedback/contact"
 
