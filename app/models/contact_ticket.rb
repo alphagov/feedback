@@ -2,7 +2,7 @@ class ContactTicket < Ticket
 
   attr_accessor :query, :location, :link, :textdetails,
                 :section, :name, :email, :user_agent,
-                :javascript_enabled
+                :javascript_enabled, :referer
 
   validate :validate_link
   validates_length_of :link, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
@@ -44,6 +44,7 @@ class ContactTicket < Ticket
     end
 
     description += "\n[User Agent]\n#{user_agent}"
+    description += "\n[Referer]\n#{referer}" unless referer.blank?
     description += "\n[JavaScript Enabled]\n#{javascript_enabled}"
 
     description
