@@ -1,5 +1,4 @@
 #!/bin/bash -xe
-export GOVUK_APP_DOMAIN=dev.gov.uk
 export GOVUK_ASSET_ROOT=http://static.dev.gov.uk
 export RAILS_ENV=test
 
