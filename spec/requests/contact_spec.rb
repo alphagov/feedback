@@ -258,7 +258,7 @@ EOT
                                :tags => ['report_a_problem_public']
   end
 
-  it "should include the user agent if available" do
+  it "should include the referer if available" do
     # Using Rack::Test to allow setting the user agent.
     post "/feedback/contact", {
       contact: {
