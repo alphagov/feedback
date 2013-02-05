@@ -1,5 +1,17 @@
 require 'spec_helper'
 
+def fill_in_valid_contact_details_and_description
+  fill_in "Your name", :with => "test name"
+  fill_in "Your email address", :with => "a@a.com"
+  fill_in "textdetails", :with => "test text details"
+end
+
+def submit_contact_successfully
+  click_on "Send message"
+  i_should_be_on "/feedback/contact"
+  page.should have_content("Your message has been sent")
+end
+
 describe "Contact" do
 
   it "should let the user submit an 'ask a question' request" do
@@ -7,14 +19,8 @@ describe "Contact" do
 
     choose "location-all"
     choose "ask-question"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
-    click_on "Send message"
-
-    i_should_be_on "/feedback/contact"
-
-    page.should have_content("Your message has been sent")
+    fill_in_valid_contact_details_and_description
+    submit_contact_successfully
 
     expected_description = "[Location]\nall\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
@@ -29,9 +35,7 @@ describe "Contact" do
 
     choose "location-all"
     choose "ask-question"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in_valid_contact_details_and_description
     fill_in "val", :with => "test val"
     click_on "Send message"
 
@@ -44,11 +48,7 @@ describe "Contact" do
     choose "location-all"
     choose "ask-question"
     fill_in "textdetails", :with => "test text details"
-    click_on "Send message"
-
-    i_should_be_on "/feedback/contact"
-
-    page.should have_content("Your message has been sent")
+    submit_contact_successfully
 
     expected_description = "[Location]\nall\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
@@ -63,12 +63,8 @@ describe "Contact" do
 
     choose "location-section"
     choose "cant-find"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
-    click_on "Send message"
-
-    i_should_be_on "/feedback/contact"
+    fill_in_valid_contact_details_and_description
+    submit_contact_successfully
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -86,13 +82,9 @@ describe "Contact" do
 
     choose "location-specific"
     choose "report-problem"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
-    click_on "Send message"
-
-    i_should_be_on "/feedback/contact"
+    submit_contact_successfully
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -109,13 +101,9 @@ describe "Contact" do
 
     choose "location-specific"
     choose "make-suggestion"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
-    click_on "Send message"
-
-    i_should_be_on "/feedback/contact"
+    submit_contact_successfully
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -135,9 +123,7 @@ describe "Contact" do
 
     choose "location-specific"
     choose "make-suggestion"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
 
@@ -208,9 +194,7 @@ describe "Contact" do
 
     choose "location-specific"
     choose "report-problem"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
 
