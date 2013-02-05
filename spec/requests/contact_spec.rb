@@ -6,7 +6,7 @@ def fill_in_valid_contact_details_and_description
   fill_in "textdetails", :with => "test text details"
 end
 
-def submit_contact_successfully
+def contact_submission_should_be_successful
   click_on "Send message"
   i_should_be_on "/feedback/contact"
   page.should have_content("Your message has been sent")
@@ -20,7 +20,7 @@ describe "Contact" do
     choose "location-all"
     choose "ask-question"
     fill_in_valid_contact_details_and_description
-    submit_contact_successfully
+    contact_submission_should_be_successful
 
     expected_description = "[Location]\nall\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
@@ -48,7 +48,7 @@ describe "Contact" do
     choose "location-all"
     choose "ask-question"
     fill_in "textdetails", :with => "test text details"
-    submit_contact_successfully
+    contact_submission_should_be_successful
 
     expected_description = "[Location]\nall\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "Ask a question",
@@ -64,7 +64,7 @@ describe "Contact" do
     choose "location-section"
     choose "cant-find"
     fill_in_valid_contact_details_and_description
-    submit_contact_successfully
+    contact_submission_should_be_successful
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -84,7 +84,7 @@ describe "Contact" do
     choose "report-problem"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
-    submit_contact_successfully
+    contact_submission_should_be_successful
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -103,7 +103,7 @@ describe "Contact" do
     choose "make-suggestion"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
-    submit_contact_successfully
+    contact_submission_should_be_successful
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
