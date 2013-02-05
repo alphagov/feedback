@@ -1,4 +1,5 @@
 require 'slimmer/headers'
+require 'uri'
 
 class FeedbackController < ApplicationController
   include Slimmer::Headers
@@ -24,7 +25,7 @@ class FeedbackController < ApplicationController
   before_filter :setup_slimmer_artefact
 
   def contact
-    @referer = request.referer
+    @referer = request.referer if referring_url_within_govuk?
   end
 
   def contact_submit
@@ -126,5 +127,9 @@ class FeedbackController < ApplicationController
 
   def val_error
     render :nothing => true, :status => 444
+  end
+
+  def referring_url_within_govuk?
+    request.referer and URI(request.referer).host =~ /(gov[.]uk|alphagov[.]co[.]uk)$/
   end
 end
