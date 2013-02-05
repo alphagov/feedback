@@ -23,6 +23,10 @@ class FeedbackController < ApplicationController
 
   before_filter :setup_slimmer_artefact
 
+  def contact
+    @referer = request.referer
+  end
+
   def contact_submit
     submit params[:contact].merge({:user_agent => (request.user_agent)}), :contact
   end

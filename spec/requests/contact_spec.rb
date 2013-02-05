@@ -257,4 +257,21 @@ EOT
                                :description => expected_description.strip!,
                                :tags => ['report_a_problem_public']
   end
+
+  it "should include the user agent if available" do
+    # Using Rack::Test to allow setting the user agent.
+    post "/feedback/contact", {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details",
+        referer: "http://referring_url"
+      }
+    }
+
+    get_last_zendesk_ticket_details[:description].should include("http://referring_url")
+  end
 end
