@@ -23,10 +23,6 @@ class FeedbackController < ApplicationController
 
   before_filter :setup_slimmer_artefact
 
-  def contact
-    @referer = request.referer if referring_url_within_govuk?
-  end
-
   def contact_submit
     submit params[:contact].merge({:user_agent => (request.user_agent)}), :contact
   end
@@ -126,9 +122,5 @@ class FeedbackController < ApplicationController
 
   def val_error
     render :nothing => true, :status => 444
-  end
-
-  def referring_url_within_govuk?
-    request.referer and request.referer.starts_with?(ENV['GOVUK_WEBSITE_ROOT'])
   end
 end
