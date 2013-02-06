@@ -44,7 +44,7 @@ class ContactTicket < Ticket
     end
 
     description += "\n[User Agent]\n#{user_agent}"
-    description += "\n[Referrer]\n#{referrer + ENV['GOVUK_WEBSITE_ROOT']}" if referring_url_within_govuk?
+    description += "\n[Referrer]\n#{referrer}" if referring_url_within_govuk?
     description += "\n[JavaScript Enabled]\n#{javascript_enabled}"
 
     description
