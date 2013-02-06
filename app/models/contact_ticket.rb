@@ -2,7 +2,7 @@ class ContactTicket < Ticket
 
   attr_accessor :query, :location, :link, :textdetails,
                 :section, :name, :email, :user_agent,
-                :javascript_enabled, :referer
+                :javascript_enabled, :referrer
 
   validate :validate_link
   validates_length_of :link, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
@@ -44,7 +44,7 @@ class ContactTicket < Ticket
     end
 
     description += "\n[User Agent]\n#{user_agent}"
-    description += "\n[Referer]\n#{referer}" unless referer.blank?
+    description += "\n[Referrer]\n#{referrer + ENV['GOVUK_WEBSITE_ROOT']}" if referring_url_within_govuk?
     description += "\n[JavaScript Enabled]\n#{javascript_enabled}"
 
     description
@@ -81,5 +81,9 @@ class ContactTicket < Ticket
     if (location == "specific") and link.blank?
       @errors.add :link, 'The link field cannot be empty'
     end
+  end
+
+  def referring_url_within_govuk?
+    @referrer and @referrer.starts_with?(ENV['GOVUK_WEBSITE_ROOT'])
   end
 end
