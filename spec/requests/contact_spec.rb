@@ -13,14 +13,6 @@ def contact_submission_should_be_successful
 end
 
 describe "Contact" do
-
-  it "should prepopulate the URL field with the referer (if coming from gov.uk)" do
-    Capybara.current_session.driver.header 'Referer', "https://www.dev.gov.uk/something"
-
-    visit "/feedback/contact"
-    find('#link').value.should == "https://www.dev.gov.uk/something"
-  end
-
   it "should let the user submit an 'ask a question' request" do
     visit "/feedback/contact"
 
@@ -275,10 +267,10 @@ EOT
         name: "test name",
         email: "test@test.com",
         textdetails: "test text details",
-        referer: "http://referring_url"
+        referrer: "https://www.dev.gov.uk/referring_url"
       }
     }
 
-    get_last_zendesk_ticket_details[:description].should include("http://referring_url")
+    get_last_zendesk_ticket_details[:description].should include("https://www.dev.gov.uk/referring_url")
   end
 end

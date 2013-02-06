@@ -54,7 +54,7 @@
   </label>
 
     <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
-    value=<%= (@old ? @old[:link] : @referer || '') %> >
+    value=<%= (@old ? @old[:link] : '') %> >
     </p>
 </fieldset>
 
@@ -112,8 +112,6 @@
 
   </p>
 </fieldset>
-
-<%= hidden_field_tag 'contact[referer]', @referer unless @referer.nil? %>
 
 <p class="action group">
   <button type="submit" class="button">Send message</button>

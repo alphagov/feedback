@@ -58,16 +58,22 @@ GOVUK.feedback.checkRadio = function () {
     }
 }
 
+GOVUK.feedback.prepopulateLinkWithReferrer = function () {
+    $('#link').val(document.referrer);
+}
+
 GOVUK.feedback.init = function () {
     GOVUK.feedback.initCounters();
     GOVUK.feedback.initUserDetails();
     GOVUK.feedback.checkRadio();
+    GOVUK.feedback.prepopulateLinkWithReferrer();
 
     $('#location input').change(function () {
         GOVUK.feedback.checkRadio();
     });
 
     $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
+    $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>');
 }
 
 $(GOVUK.feedback.init);
