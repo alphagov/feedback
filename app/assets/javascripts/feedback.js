@@ -68,6 +68,10 @@ GOVUK.feedback.init = function () {
     GOVUK.feedback.checkRadio();
     GOVUK.feedback.prepopulateLinkWithReferrer();
 
+    $('form.contact-form').on("submit", function() {
+        $('button.button').attr('disabled', 'disabled');
+    });
+
     $('#location input').change(function () {
         GOVUK.feedback.checkRadio();
     });
