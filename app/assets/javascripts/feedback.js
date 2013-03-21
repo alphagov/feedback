@@ -71,7 +71,6 @@ GOVUK.feedback.init = function () {
     GOVUK.feedback.initCounters();
     GOVUK.feedback.initUserDetails();
     GOVUK.feedback.checkRadio();
-    GOVUK.feedback.prepopulateFormBasedOnReferrer();
 
     $('button.button').click(function() {
         $(this).attr('disabled', 'disabled');
@@ -82,6 +81,7 @@ GOVUK.feedback.init = function () {
         GOVUK.feedback.checkRadio();
     });
 
+    GOVUK.feedback.prepopulateFormBasedOnReferrer();
     $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
     $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>');
 }
