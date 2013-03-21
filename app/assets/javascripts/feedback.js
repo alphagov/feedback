@@ -58,15 +58,20 @@ GOVUK.feedback.checkRadio = function () {
     }
 }
 
-GOVUK.feedback.prepopulateLinkWithReferrer = function () {
+GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
     $('#link').val(document.referrer);
+    // special handling for the service manual as it's not strictly a section on GOV.UK
+    if (document.referrer.indexOf("service-manual") >= 0) {
+        $('#location-section').click();
+        $('#contact_section').val("dbdss");
+    }
 }
 
 GOVUK.feedback.init = function () {
     GOVUK.feedback.initCounters();
     GOVUK.feedback.initUserDetails();
     GOVUK.feedback.checkRadio();
-    GOVUK.feedback.prepopulateLinkWithReferrer();
+    GOVUK.feedback.prepopulateFormBasedOnReferrer();
 
     $('button.button').click(function() {
         $(this).attr('disabled', 'disabled');
