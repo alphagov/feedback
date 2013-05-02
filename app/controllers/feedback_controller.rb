@@ -32,7 +32,10 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
-    ticket = ReportAProblemTicket.new params.merge(:user_agent => request.user_agent)
+    attributes = params.merge(:user_agent => request.user_agent)
+    attributes = attributes.merge(:url => request.referer) unless params.has_key? :url
+
+    ticket = ReportAProblemTicket.new attributes
 
     respond_to do |format|
       if ticket.valid?
