@@ -145,6 +145,7 @@ describe FeedbackController do
             :what_doing => "Nothing",
             :what_wrong => "Something",
             :javascript_enabled => "true",
+            :referrer => "https://www.gov.uk/some-url/"
           }.merge(attrs)
         end
 
