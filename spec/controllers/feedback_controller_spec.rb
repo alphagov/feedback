@@ -136,6 +136,23 @@ describe FeedbackController do
             assigns[:return_path].should == "/somewhere"
           end
         end
+
+        describe "no 'url' value explicitly set" do
+          it "should use the referrer URL to set the 'url' for the model" do
+            stub_ticket = stub("Ticket")
+            ReportAProblemTicket.should_receive(:new).
+              with(hash_including(:url => "http://www.gov.uk/referral-city")).
+              and_return(stub_ticket)
+            stub_ticket.should_receive(:valid?).and_return(true)
+            stub_ticket.should_receive(:save).and_return(true)
+
+            @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
+            post :report_a_problem_submit, {
+              :what_doing => "Nothing",
+              :what_wrong => "Something",
+            }
+          end
+        end
       end # html
 
       context "ajax submission" do
