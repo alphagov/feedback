@@ -1,6 +1,6 @@
 class ReportAProblemTicket < Ticket
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled
+  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
@@ -22,6 +22,7 @@ url: #{url}
 what_doing: #{what_doing}
 what_wrong: #{what_wrong}
 user_agent: #{user_agent || 'unknown'}
+referrer: #{referrer || 'unknown'}
 javascript_enabled: #{javascript_enabled == "true"}
 EOT
   end

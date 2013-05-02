@@ -19,6 +19,7 @@ url: http://www.example.com/test_forms/report_a_problem
 what_doing: I was doing something
 what_wrong: It didn't work
 user_agent: unknown
+referrer: unknown
 javascript_enabled: false
     EOT
     zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
@@ -64,6 +65,7 @@ url: http://www.example.com/test_forms/report_a_problem
 what_doing: I was doing something
 what_wrong: It didn't work
 user_agent: Shamfari/3.14159 (Fooey)
+referrer: unknown
 javascript_enabled: false
     EOT
     zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
