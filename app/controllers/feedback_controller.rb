@@ -32,7 +32,15 @@ class FeedbackController < ApplicationController
   end
 
   def report_a_problem_submit
-    ticket = ReportAProblemTicket.new params.merge(:user_agent => request.user_agent)
+    attributes = params.merge(:user_agent => request.user_agent)
+
+    # Where the 'url' parameter isn't explicitly provided, obtain it
+    # from the HTTP referer. This is an edge case in the app as there
+    # should only be a finite number of places where this occurs.
+    # Specifially, the 40X pages on GOV.UK.
+    attributes = attributes.merge(:url => request.referer) unless params.has_key? :url
+
+    ticket = ReportAProblemTicket.new attributes
 
     respond_to do |format|
       if ticket.valid?
