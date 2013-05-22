@@ -9,13 +9,15 @@ class TicketClient
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
       email = zendesk[:email].presence || fallback_requester_email_address
-      unless client.tickets.create(
-        :subject => zendesk[:subject],
-        :tags => tags,
-        :requester => {name: zendesk[:name], email: email},
-        :fields => [{id: SECTION_FIELD, value: zendesk[:section]}],
-        :description => zendesk[:description])
-        raise "Failed to create Zendesk ticket"
+      ticket_details = {
+        subject: zendesk[:subject],
+        tags: tags,
+        requester: {name: zendesk[:name], email: email},
+        fields: [{id: SECTION_FIELD, value: zendesk[:section]}],
+        description: zendesk[:description]
+      }
+      unless client.tickets.create(ticket_details)
+        raise ZendeskError, "Failed to create Zendesk ticket: #{ticket_details.inspect}"
       end
     end
 

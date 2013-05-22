@@ -49,7 +49,7 @@ describe "FOI" do
 
     i_should_be_on "/feedback/foi"
 
-    page.should have_content("Sorry, but we have been unable to send your message.")
+    page.status_code.should == 503
 
     expected_description = "[Name]\ntest name\n[Details]\ntest foi request"
     zendesk_should_have_ticket :subject => "FOI",

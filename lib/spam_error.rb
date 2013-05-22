@@ -1,0 +1,1 @@
+class SpamError < StandardError; end

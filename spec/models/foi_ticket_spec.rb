@@ -81,7 +81,7 @@ describe FoiTicket do
     (ticket.errors.has_key? :textdetails).should eq true
   end
 
-  it "should send an exception email if zendesk ticket creation fails" do
+  it "should raise an exception if zendesk ticket creation fails" do
     test_data = {
          name: "test name",
          email: "a@a.com",
@@ -90,8 +90,6 @@ describe FoiTicket do
      }
      ticket = FoiTicket.new test_data
      ticket.stub(:ticket_client).and_raise('some error')
-     ticket.save
-     ActionMailer::Base.deliveries.last.to.should == ["govuk-exceptions@digital.cabinet-office.gov.uk"]
-     ActionMailer::Base.deliveries.last.body.should =~ /some error/
+     lambda { ticket.save }.should raise_error('some error')
   end
 end
