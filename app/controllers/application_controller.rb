@@ -3,12 +3,12 @@ require 'spam_error'
 
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :error_444
-  rescue_from Exception, with: :error_503
+  rescue_from ZendeskError, with: :zendesk_error
 
 protected
   def error_444; render nothing: true, status: 444; end
 
-  def error_503(exception)
+  def zendesk_error(exception)
     if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
       ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
     end
