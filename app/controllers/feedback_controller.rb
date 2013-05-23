@@ -5,9 +5,6 @@ class FeedbackController < ApplicationController
   DONE_OK_TEXT = "<p>Thank you for your help.</p> " +
     "<p>If you have more extensive feedback, " +
     "please visit the <a href='/feedback'>support page</a>.</p>"
-  DONE_NOT_OK_TEXT = "<p>Sorry, we're unable to receive your message right now.</p> " +
-    "<p>We have other ways for you to provide feedback on the " +
-    "<a href='/feedback'>support page</a>.</p>"
   DONE_INVALID_TEXT = "<p>Sorry, we're unable to send your message as you haven't given us any information.</p> "+
     "<p>Please tell us what you were doing or what went wrong.</p>"
 
@@ -42,30 +39,28 @@ class FeedbackController < ApplicationController
 
     ticket = ReportAProblemTicket.new attributes
 
-    respond_to do |format|
-      if ticket.valid?
-        if ticket.save
-          @message = DONE_OK_TEXT.html_safe
-          @status = 'success'
-        else
-          @message = DONE_NOT_OK_TEXT.html_safe
-          @status = 'error'
-        end
-      else
-        @status = 'invalid'
-        @message = DONE_INVALID_TEXT.html_safe
-        @errors = ticket.errors.full_messages
-      end
+    if ticket.valid?
+      ticket.save
 
+      @message = DONE_OK_TEXT.html_safe
+      status = 201
+      status_text = "success"
+    else
+      @message = DONE_INVALID_TEXT.html_safe
+      status = 422
+      status_text = "error"
+    end
+
+    respond_to do |format|
       format.html do
-        extract_return_path(params[:url])
+        @return_path = extract_return_path(params[:url])
         render "shared/thankyou"
       end
       format.js do
-        response = { :message => @message, :status => @status }
-        response[:errors] = @errors unless @errors.nil?
+        response = { message: @message, status: status_text }
+        response[:errors] = ticket.errors.full_messages unless ticket.valid?
 
-        render :json => response, :status => status_codes[@status]
+        render json: response, status: status
       end
     end
   end
@@ -80,19 +75,16 @@ class FeedbackController < ApplicationController
   def submit(data, type)
     ticket = TICKET_HASH[type].new data
 
-    if ticket.save
+    if not ticket.valid?
+      raise SpamError if ticket.spam?
+
+      @errors = ticket.errors.to_hash
+      @old = data
+      render :action => type
+    else
+      ticket.save
       @contact_provided = (not data[:email].blank?)
       render "shared/formok"
-    else
-      if ticket.errors[:connection] && ticket.errors[:connection].any?
-        render "shared/formerror"
-      elsif ticket.errors[:val] && ticket.errors[:val].any?
-        val_error
-      else
-        @errors = ticket.errors.to_hash
-        @old = data
-        render :action => type
-      end
     end
   end
 
@@ -110,25 +102,14 @@ class FeedbackController < ApplicationController
 
   def extract_return_path(url)
     uri = URI.parse(url)
-    @return_path = uri.path
-    @return_path << "?#{uri.query}" if uri.query.present?
-    @return_path
+    return_path = uri.path
+    return_path << "?#{uri.query}" if uri.query.present?
+    return_path
   rescue URI::InvalidURIError
+    nil
   end
 
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
-  end
-
-  def status_codes
-    {
-      'success' => 201,
-      'invalid' => 422,
-      'error'   => 500
-    }
-  end
-
-  def val_error
-    render :nothing => true, :status => 444
   end
 end

@@ -29,7 +29,7 @@ describe "Contact" do
       :tags => ['ask_question']
   end
 
-  it "should not accept request with val field filled in" do
+  it "should not accept spam (ie a request with val field filled in)" do
     visit "/feedback/contact"
 
     choose "location-all"
@@ -39,6 +39,8 @@ describe "Contact" do
     click_on "Send message"
 
     zendesk_should_not_have_ticket
+
+    page.status_code.should == 444
   end
 
   it "should let the user submit an 'ask a question' request without name and email" do
@@ -128,7 +130,7 @@ describe "Contact" do
 
     i_should_be_on "/feedback/contact"
 
-    page.should have_content("Sorry, but we have been unable to send your message.")
+    page.status_code.should == 503
 
     expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
     zendesk_should_have_ticket :subject => "General feedback",

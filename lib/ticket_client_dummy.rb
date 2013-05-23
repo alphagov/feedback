@@ -4,7 +4,7 @@ class TicketClientDummy
     def raise_ticket(zendesk)
       if zendesk[:description] =~ /break_zendesk/
         Rails.logger.info "Zendesk ticket creation fail for: #{zendesk.inspect}"
-        raise "Failed to create Zendesk ticket"
+        raise ZendeskError, "Failed to create Zendesk ticket"
       else
         Rails.logger.info "Zendesk ticket created: #{zendesk.inspect}"
         zendesk
