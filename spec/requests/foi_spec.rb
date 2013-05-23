@@ -23,7 +23,7 @@ describe "FOI" do
       :tags => ['FOI_request']
   end
 
-  it "should not accept request with val field filled in" do
+  it "should not accept spam (ie requests with val field filled in)" do
     visit "/feedback/foi"
 
     fill_in "Your name", :with => "test name"
@@ -34,6 +34,8 @@ describe "FOI" do
     click_on "Submit Freedom of Information request"
 
     zendesk_should_not_have_ticket
+
+    page.status_code.should == 444
   end
 
   it "should show an error message when the zendesk connection fails" do

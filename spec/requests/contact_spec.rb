@@ -29,7 +29,7 @@ describe "Contact" do
       :tags => ['ask_question']
   end
 
-  it "should not accept request with val field filled in" do
+  it "should not accept spam (ie a request with val field filled in)" do
     visit "/feedback/contact"
 
     choose "location-all"
@@ -39,6 +39,8 @@ describe "Contact" do
     click_on "Send message"
 
     zendesk_should_not_have_ticket
+
+    page.status_code.should == 444
   end
 
   it "should let the user submit an 'ask a question' request without name and email" do
