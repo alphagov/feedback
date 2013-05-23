@@ -22,19 +22,17 @@ class Ticket
   def save
     ticket = nil
     if valid?
-      begin
-        ticket = create_ticket
-        ticket_client.raise_ticket(ticket)
-      rescue => e
-        ticket = nil
-        @errors.add :connection, "Connection error"
-        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-      end
+      ticket = create_ticket
+      ticket_client.raise_ticket(ticket)
     end
     ticket
   end
-  private
 
+  def spam?
+    errors[:val] && errors[:val].any?
+  end
+
+  private
   def ticket_client
     @ticket_client ||= TicketClientConnection.get_client
   end

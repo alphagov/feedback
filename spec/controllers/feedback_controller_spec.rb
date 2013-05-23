@@ -47,7 +47,7 @@ describe FeedbackController do
       end
 
       it "should create a ContactTicket object" do
-        stub_ticket = stub("Ticket")
+        stub_ticket = stub("Ticket", valid?: true)
         stub_ticket.should_receive(:save).and_return(true)
 
         ContactTicket.should_receive(:new).
@@ -121,19 +121,12 @@ describe FeedbackController do
 
         context "when ticket creation fails" do
           before :each do
-            ReportAProblemTicket.any_instance.stub(:save).and_return(false)
+            ReportAProblemTicket.any_instance.stub(:save).and_raise(ZendeskError)
           end
 
           it "should render the thankyou template assigning the message string" do
             do_submit
-            response.should render_template('thankyou')
-            assigns[:message].should == "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"
-            assigns[:message].should be_html_safe
-          end
-
-          it "should still assign the return_path" do
-            do_submit
-            assigns[:return_path].should == "/somewhere"
+            response.response_code.should == 503
           end
         end
 
@@ -176,7 +169,7 @@ describe FeedbackController do
               :user_agent => "Rails Testing",
               :javascript_enabled => "true"
             )).and_return(stub_ticket)
-          stub_ticket.should_receive(:valid?).and_return(true)
+          stub_ticket.stub!(:valid?).and_return(true)
           stub_ticket.should_receive(:save).and_return(true)
 
           do_submit
@@ -189,7 +182,7 @@ describe FeedbackController do
         end
 
         it "should return json indicating failure when ticket creation fails"  do
-          ReportAProblemTicket.any_instance.stub(:save).and_return(false)
+          ReportAProblemTicket.any_instance.stub(:save).and_raise(ZendeskError)
           do_submit
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
