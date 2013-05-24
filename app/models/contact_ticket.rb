@@ -1,4 +1,10 @@
 class ContactTicket < Ticket
+  REASON_HASH = {
+    "cant-find" => {:subject => "I can't find", :tag => "i_cant_find"},
+    "ask-question" => {:subject => "Ask a question", :tag => "ask_question"},
+    "report-problem" => {:subject => "Report a problem", :tag => "report_a_problem_public"},
+    "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
+  }
 
   attr_accessor :query, :location, :link, :textdetails,
                 :section, :name, :email, :user_agent,
@@ -12,6 +18,7 @@ class ContactTicket < Ticket
   validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
   validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :validate_mail_name_connection
+  validates :query, inclusion: { in: REASON_HASH.keys, message: "Please pick a valid reason for contacting us" }
 
   def javascript_enabled
     !! @javascript_enabled
@@ -22,14 +29,6 @@ class ContactTicket < Ticket
   end
 
   private
-
-  REASON_HASH = {
-    "cant-find" => {:subject => "I can't find", :tag => "i_cant_find"},
-    "ask-question" => {:subject => "Ask a question", :tag => "ask_question"},
-    "report-problem" => {:subject => "Report a problem", :tag => "report_a_problem_public"},
-    "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
-  }
-
   def contact_ticket_description
     description = "[Location]\n" + location
     if (location == "specific") and (not link.blank?)

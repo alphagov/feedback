@@ -76,4 +76,10 @@ describe ContactTicket do
   it "should set user agent to 'unknown' when none given" do
     anon_ticket.user_agent.should == "unknown"
   end
+
+  it "should validate that an allowed contact reason is present" do
+    anon_ticket_with(query: "non-existent").errors.should have_key(:query)
+    anon_ticket_with(query: "").errors.should have_key(:query)
+    anon_ticket_with(query: nil).errors.should have_key(:query)
+  end
 end
