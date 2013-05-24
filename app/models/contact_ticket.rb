@@ -19,6 +19,7 @@ class ContactTicket < Ticket
   validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :validate_mail_name_connection
   validates :query, inclusion: { in: REASON_HASH.keys, message: "Please pick a valid reason for contacting us" }
+  validates_presence_of :location, message: "Please tell us what your contact is to do with"
 
   def javascript_enabled
     !! @javascript_enabled

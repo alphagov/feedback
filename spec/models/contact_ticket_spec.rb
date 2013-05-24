@@ -6,7 +6,8 @@ describe ContactTicket do
   def valid_anonymous_ticket_details
     {
       textdetails: "some text",
-      query: "cant-find"
+      query: "cant-find",
+      location: "all"
     }
   end
 
@@ -81,5 +82,10 @@ describe ContactTicket do
     anon_ticket_with(query: "non-existent").errors.should have_key(:query)
     anon_ticket_with(query: "").errors.should have_key(:query)
     anon_ticket_with(query: nil).errors.should have_key(:query)
+  end
+
+  it "should make sure that a location is present" do
+    anon_ticket_with(location: "").errors.should have_key(:location)
+    anon_ticket_with(location: nil).errors.should have_key(:location)
   end
 end
