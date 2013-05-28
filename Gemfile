@@ -16,7 +16,8 @@ gem "exception_notification", '3.0.1'
 gem "aws-ses", :require => 'aws/ses'
 gem "plek", "1.1.0" # Used in exception_notification config
 
-gem "zendesk_api", '0.1.2'
+# using an unreleased version to pick up better error handling that should be released with 0.3.7
+gem "zendesk_api", git: "https://github.com/zendesk/zendesk_api_client_rb.git", ref: "f8bf948a56"
 
 # Gems used only for assets and not required
 # in production environments by default.

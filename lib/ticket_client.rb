@@ -16,7 +16,7 @@ class TicketClient
         fields: [{id: SECTION_FIELD, value: zendesk[:section]}],
         description: zendesk[:description]
       }
-      unless client.tickets.create(ticket_details)
+      unless client.tickets.create!(ticket_details)
         raise ZendeskError, "Failed to create Zendesk ticket: #{ticket_details.inspect}"
       end
     end
@@ -46,24 +46,12 @@ class TicketClient
 
     def build_client
       details = ZendeskConfig.details
-      @client = ZendeskAPI::Client.new do |config|
+      ZendeskAPI::Client.new do |config|
         config.url = details["url"]
         config.username = details["username"]
         config.password = details["password"]
         config.logger = Rails.logger
       end
-
-      @client.insert_callback do |env|
-        Rails.logger.info env
-        
-        status_401 = env[:status].to_s.start_with? "401"
-        too_many_login_attempts = env[:body].to_s.start_with? "Too many failed login attempts"
-        
-        raise ZendeskError, "Authentication Error: #{env.inspect}" if status_401 || too_many_login_attempts
-        
-        raise ZendeskError, "Error creating ticket: #{env.inspect}" if env[:body]["error"]
-      end
-      @client
     end
   end
 end

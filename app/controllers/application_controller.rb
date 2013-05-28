@@ -1,9 +1,10 @@
+require 'zendesk_api/error'
 require 'zendesk_error'
 require 'spam_error'
 
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :error_444
-  rescue_from ZendeskError, with: :zendesk_error
+  rescue_from ZendeskError, ZendeskAPI::Error::ClientError, with: :zendesk_error
 
 protected
   def error_444; render nothing: true, status: 444; end
