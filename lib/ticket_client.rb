@@ -17,7 +17,7 @@ class TicketClient
         description: zendesk[:description]
       }
       unless client.tickets.create!(ticket_details)
-        raise ZendeskError, "Failed to create Zendesk ticket: #{ticket_details.inspect}"
+        raise ZendeskDidntCreateTicketError, "Failed to create Zendesk ticket: #{ticket_details.inspect}"
       end
     end
 

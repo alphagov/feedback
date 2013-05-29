@@ -1,1 +1,1 @@
-class ZendeskError < StandardError; end
+class ZendeskDidntCreateTicketError < StandardError; end
