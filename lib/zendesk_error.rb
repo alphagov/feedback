@@ -1,1 +1,0 @@
-class ZendeskError < StandardError; end

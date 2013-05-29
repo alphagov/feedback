@@ -3,7 +3,7 @@ require 'spec_helper'
 class DummyZendeskTicketsStub
   attr_accessor :raised_ticket
 
-  def create(ticket_info)
+  def create!(ticket_info)
     @raised_ticket = ticket_info
   end
 end

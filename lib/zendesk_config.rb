@@ -1,5 +1,3 @@
-require 'zendesk_error'
-
 class ZendeskConfig
   class << self
     def in_development_mode?
@@ -8,7 +6,7 @@ class ZendeskConfig
 
     def fallback_requester_email_address
       email = details["fallback_requester_email_address"]
-      raise ZendeskError, "No fallback email provided in zendesk.yml. This is needed 
+      raise ArgumentError, "No fallback email provided in zendesk.yml. This is needed 
         when the request is anonymous because Zendesk rejects tickets without an email address" if email.blank?
       email
     end
