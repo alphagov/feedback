@@ -1,5 +1,3 @@
-require 'zendesk_error'
-
 class ZendeskConfig
   class << self
     def in_development_mode?

@@ -1,5 +1,5 @@
 require 'zendesk_api/error'
-require 'zendesk_error'
+require 'zendesk_didnt_create_ticket_error'
 require 'spam_error'
 
 class ApplicationController < ActionController::Base

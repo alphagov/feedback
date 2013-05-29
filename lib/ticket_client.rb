@@ -1,4 +1,4 @@
-require 'zendesk_error'
+require 'zendesk_didnt_create_ticket_error'
 require 'zendesk_config'
 
 class TicketClient
