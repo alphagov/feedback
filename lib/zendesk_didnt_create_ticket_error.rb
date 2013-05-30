@@ -1,0 +1,1 @@
+class ZendeskDidntCreateTicketError < StandardError; end
