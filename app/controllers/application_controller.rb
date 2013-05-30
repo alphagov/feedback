@@ -11,7 +11,12 @@ protected
 
   def zendesk_error(exception)
     if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
-      ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
+      if exception.respond_to?(:errors)
+        message = { data: { message: "Zendesk errors: #{exception.errors}" } }
+        ExceptionNotifier::Notifier.exception_notification(request.env, exception, message).deliver
+      else
+        ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
+      end
     end
 
     respond_to do |format|
