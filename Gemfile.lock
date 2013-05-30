@@ -179,6 +179,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    valid_email (0.0.4)
+      activemodel
+      mail
     webmock (1.8.9)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
@@ -214,5 +217,6 @@ DEPENDENCIES
   slimmer (= 3.9.5)
   uglifier (>= 1.0.3)
   unicorn (= 4.3.1)
+  valid_email (= 0.0.4)
   webmock (= 1.8.9)
   zendesk_api (= 0.4.0.rc1)
