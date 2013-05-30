@@ -47,6 +47,10 @@ describe ContactTicket do
     named_ticket_with(email: build_random_string(12)).errors.should have_key(:email)
   end
 
+  it "should not be valid if the email contains spaces" do
+    named_ticket_with(email: "abc @d.com").errors.should have_key(:email)
+  end
+
   it "should return contact error with too long email" do
     named_ticket_with(email: (build_random_string 1251) + "@a.com").errors.should have_key(:email)
   end

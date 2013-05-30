@@ -17,6 +17,7 @@ gem "aws-ses", :require => 'aws/ses'
 gem "plek", "1.1.0" # Used in exception_notification config
 
 gem "zendesk_api", "0.4.0.rc1"
+gem "valid_email", "0.0.4"
 
 # Gems used only for assets and not required
 # in production environments by default.

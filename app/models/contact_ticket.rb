@@ -15,7 +15,7 @@ class ContactTicket < Ticket
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates_length_of :name, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validates_format_of :email, :with => /\A\z|\A[\w\d]+[^@]*@[\w\d]+[^@]*\.[\w\d]+[^@]*\z/, :message => "The email address must be valid"
+  validates :email, email: { message: "The email address must be valid" }, allow_blank: true
   validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :validate_mail_name_connection
   validates :query, inclusion: { in: REASON_HASH.keys, message: "Please pick a valid reason for contacting us" }
