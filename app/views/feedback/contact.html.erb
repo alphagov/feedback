@@ -37,6 +37,7 @@
       <input type="radio" name="contact[location]" id="location-section" value="section"
         <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
     </label>
+    <label for="contact_section" class="visuallyhidden">Section</label>
     <%= select_tag "contact[section]", options_for_select(@sections, (@old ? @old[:section] : '')) %>
   </p>
 
@@ -72,6 +73,7 @@
       <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
     <% end %>
 
+    <label for="textdetails" class="visuallyhidden">Detail</label>
     <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
               required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
 
