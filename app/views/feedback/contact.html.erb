@@ -54,6 +54,7 @@
      value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
   </label>
 
+    <label for="link" class="visuallyhidden">Enter URL or name of page</label>
     <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
     value=<%= (@old ? @old[:link] : '') %> >
     </p>
