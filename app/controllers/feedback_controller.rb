@@ -45,10 +45,12 @@ class FeedbackController < ApplicationController
       @message = DONE_OK_TEXT.html_safe
       status = 201
       status_text = "success"
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.report_a_problem.successful_submission")
     else
       @message = DONE_INVALID_TEXT.html_safe
       status = 422
       status_text = "error"
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.report_a_problem.invalid_submission")
     end
 
     respond_to do |format|
@@ -76,6 +78,7 @@ class FeedbackController < ApplicationController
     ticket = TICKET_HASH[type].new data
 
     if not ticket.valid?
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash
@@ -83,6 +86,7 @@ class FeedbackController < ApplicationController
       render :action => type
     else
       ticket.save
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
       @contact_provided = (not data[:email].blank?)
       render "shared/formok"
     end
