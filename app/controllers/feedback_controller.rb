@@ -77,18 +77,18 @@ class FeedbackController < ApplicationController
   def submit(data, type)
     ticket = TICKET_HASH[type].new data
 
-    if not ticket.valid?
+    if ticket.valid?
+      ticket.save
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
+      @contact_provided = (not data[:email].blank?)
+      render "shared/formok"
+    else
       Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash
       @old = data
       render :action => type
-    else
-      ticket.save
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
-      @contact_provided = (not data[:email].blank?)
-      render "shared/formok"
     end
   end
 
