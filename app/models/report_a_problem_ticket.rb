@@ -1,9 +1,14 @@
 class ReportAProblemTicket < Ticket
+  SOURCE_WHITELIST = %w(citizen government)
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer
+  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
+
+  def tags
+    ['report_a_problem', source_tag].compact
+  end
 
   private
 
@@ -11,7 +16,7 @@ class ReportAProblemTicket < Ticket
     description = report_a_problem_format_description
     ticket = {
       :subject => path_for_url,
-      :tags => ['report_a_problem'],
+      :tags => tags,
       :description => description
     }
   end
@@ -25,6 +30,10 @@ user_agent: #{user_agent || 'unknown'}
 referrer: #{referrer || 'unknown'}
 javascript_enabled: #{javascript_enabled == "true"}
 EOT
+  end
+
+  def source_tag
+    source if SOURCE_WHITELIST.include?(source)
   end
 
   def path_for_url
