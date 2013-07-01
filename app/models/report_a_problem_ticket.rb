@@ -10,7 +10,7 @@ class ReportAProblemTicket < Ticket
   def create_ticket
     description = report_a_problem_format_description
     ticket = {
-      :subject => path_for_url(url),
+      :subject => path_for_url,
       :tags => ['report_a_problem'],
       :description => description
     }
@@ -27,7 +27,7 @@ javascript_enabled: #{javascript_enabled == "true"}
 EOT
   end
 
-  def path_for_url(url)
+  def path_for_url
     uri = URI.parse(url)
     uri.path.presence || "Unknown page"
   rescue URI::InvalidURIError
