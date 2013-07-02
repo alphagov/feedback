@@ -1,5 +1,5 @@
 class ReportAProblemTicket < Ticket
-  SOURCE_WHITELIST = %w(citizen government specialist)
+  SOURCE_WHITELIST = %w(citizen government specialist page_not_found)
 
   attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source, :page_owner
 

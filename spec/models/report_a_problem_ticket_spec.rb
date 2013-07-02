@@ -10,6 +10,7 @@ describe ReportAProblemTicket do
     ticket(source: 'government').tags.should eq(['report_a_problem', 'government'])
     ticket(source: 'citizen').tags.should eq(['report_a_problem', 'citizen'])
     ticket(source: 'specialist').tags.should eq(['report_a_problem', 'specialist'])
+    ticket(source: 'page_not_found').tags.should eq(['report_a_problem', 'page_not_found'])
     ticket(source: 'random').tags.should eq(['report_a_problem'])
   end
 
