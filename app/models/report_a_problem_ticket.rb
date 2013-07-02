@@ -1,13 +1,13 @@
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w(citizen government specialist)
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source
+  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source, :page_owner
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
 
   def tags
-    ['report_a_problem', source_tag].compact
+    ['report_a_problem', source_tag, page_owner_tag].compact
   end
 
   private
@@ -34,6 +34,10 @@ EOT
 
   def source_tag
     source if SOURCE_WHITELIST.include?(source)
+  end
+
+  def page_owner_tag
+    "page_owner/#{page_owner}" if page_owner && page_owner.match(/^[a-zA-Z0-9_]*$/)
   end
 
   def path_for_url
