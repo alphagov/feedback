@@ -7,9 +7,8 @@ describe ReportAProblemTicket do
 
   it "should add a tag identifying the whitelisted source" do
     ticket.tags.should eq(['report_a_problem'])
-    ticket(source: 'government').tags.should eq(['report_a_problem', 'government'])
-    ticket(source: 'citizen').tags.should eq(['report_a_problem', 'citizen'])
-    ticket(source: 'specialist').tags.should eq(['report_a_problem', 'specialist'])
+    ticket(source: 'inside_government').tags.should eq(['report_a_problem', 'inside_government'])
+    ticket(source: 'mainstream').tags.should eq(['report_a_problem', 'mainstream'])
     ticket(source: 'page_not_found').tags.should eq(['report_a_problem', 'page_not_found'])
     ticket(source: 'random').tags.should eq(['report_a_problem'])
   end
@@ -17,7 +16,7 @@ describe ReportAProblemTicket do
   it "should add a tag identifying the page owner" do
     ticket(page_owner: 'hmrc').tags.should eq(['report_a_problem', 'page_owner/hmrc'])
     ticket(page_owner: 'number_10').tags.should eq(['report_a_problem', 'page_owner/number_10'])
-    ticket(page_owner: 'home_office', source: 'government').tags.should eq(['report_a_problem', 'government', 'page_owner/home_office'])
+    ticket(page_owner: 'home_office', source: 'inside_government').tags.should eq(['report_a_problem', 'inside_government', 'page_owner/home_office'])
   end
 
   it "ignores the page owner if it contains any non-alphanumeric characters, other than underscore" do
