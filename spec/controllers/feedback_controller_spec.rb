@@ -1,5 +1,41 @@
 require 'spec_helper'
 
+shared_examples_for "a contact resource" do
+  context "on GET" do
+    it "returns http success" do
+      get resource_name
+      response.should be_success
+    end
+
+    it "should set cache control headers for 10 mins" do
+      get resource_name
+      response.headers["Cache-Control"].should == "max-age=600, public"
+      response.should be_success
+    end
+
+    it "should return 406 when text/html isn't acceptable" do
+      request.env['HTTP_ACCEPT'] = 'nothing'
+      get resource_name
+
+      response.code.should eq("406")
+    end
+
+    it "should send a dummy artefact to slimmer with a Feedback section" do
+      controller.should_receive(:set_slimmer_dummy_artefact).with(section_name: "Feedback", section_link: "/feedback")
+      get resource_name
+    end
+  end
+
+  context "on POST" do
+    it "should return 406 when text/html isn't acceptable" do
+      request.env['HTTP_ACCEPT'] = 'nothing'
+      post resource_name, valid_params
+
+      response.code.should eq("406")
+    end
+  end
+end
+
 describe FeedbackController do
 
   before :each do
@@ -7,28 +43,34 @@ describe FeedbackController do
   end
 
   describe "GET 'foi'" do
-    it "should set cache control headers for 10 mins" do
-      get :foi
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
+    let(:resource_name) { :foi }
+    let(:valid_params) do
+      { 
+        foi: {
+          name: "test name",
+          email: "a@a.com",
+          email_confirmation: "a@a.com",
+          textdetails: "test foi"
+        }
+      }
     end
+
+    it_behaves_like "a contact resource"
   end
 
   describe "GET 'contact'" do
-    it "returns http success" do
-      get :contact
-      response.should be_success
+    let(:resource_name) { :contact }
+    let(:valid_params) do
+      {
+        contact: {
+          name: "Joe Bloggs",
+          email: "test@test.com",
+          textdetails: "Testing, testing, 1, 2, 3...",
+        }
+      }
     end
 
-    it "should set cache control headers for 10 mins" do
-      get :contact
-      response.headers["Cache-Control"].should == "max-age=600, public"
-    end
-
-    it "should send a dummy artefact to slimmer with a Feedback section" do
-      controller.should_receive(:set_slimmer_dummy_artefact).with(:section_name => "Feedback", :section_link => "/feedback")
-      get :contact
-    end
+    it_behaves_like "a contact resource"
   end
 
   describe "POST 'contact'" do

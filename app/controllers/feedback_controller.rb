@@ -20,6 +20,14 @@ class FeedbackController < ApplicationController
 
   before_filter :setup_slimmer_artefact
 
+  def contact
+    get(:contact)
+  end
+
+  def foi
+    get(:foi)
+  end
+
   def contact_submit
     submit params[:contact].merge({:user_agent => (request.user_agent)}), :contact
   end
@@ -74,6 +82,17 @@ class FeedbackController < ApplicationController
     :foi => FoiTicket
   }
 
+  def get(type)
+    respond_to do |format|
+      format.html do
+        render type
+      end
+      format.any do
+        render nothing: true, status: 406
+      end
+    end
+  end
+
   def submit(data, type)
     ticket = TICKET_HASH[type].new data
 
@@ -81,14 +100,24 @@ class FeedbackController < ApplicationController
       ticket.save
       Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
       @contact_provided = (not data[:email].blank?)
-      render "shared/formok"
+
+      respond_to do |format|
+        format.html do
+          render "shared/formok"
+        end
+      end
     else
       Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash
       @old = data
-      render :action => type
+
+      respond_to do |format|
+        format.html do
+          render :action => type
+        end
+      end
     end
   end
 
