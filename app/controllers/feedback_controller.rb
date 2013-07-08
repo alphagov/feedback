@@ -1,7 +1,10 @@
 require 'slimmer/headers'
+require 'utf8_cleaner'
 
 class FeedbackController < ApplicationController
   include Slimmer::Headers
+  include UTF8Cleaner
+
   DONE_OK_TEXT = "<p>Thank you for your help.</p> " +
     "<p>If you have more extensive feedback, " +
     "please visit the <a href='/feedback'>support page</a>.</p>"
@@ -21,11 +24,11 @@ class FeedbackController < ApplicationController
   before_filter :setup_slimmer_artefact
 
   def contact_submit
-    submit params[:contact].merge({:user_agent => (request.user_agent)}), :contact
+    submit sanitised(params[:contact].merge(user_agent: request.user_agent)), :contact
   end
 
   def foi_submit
-    submit params[:foi], :foi
+    submit sanitised(params[:foi]), :foi
   end
 
   def report_a_problem_submit
@@ -37,7 +40,7 @@ class FeedbackController < ApplicationController
     # Specifially, the 40X pages on GOV.UK.
     attributes = attributes.merge(:url => request.referer) unless params.has_key? :url
 
-    ticket = ReportAProblemTicket.new attributes
+    ticket = ReportAProblemTicket.new sanitised(attributes)
 
     if ticket.valid?
       ticket.save
