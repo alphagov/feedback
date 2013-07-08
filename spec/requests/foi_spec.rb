@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe "FOI" do
+  def fill_in_valid_credentials
+    fill_in "Your name", :with => "test name"
+    fill_in "Your email address", :with => "a@a.com"
+    fill_in "Confirm your email address", :with => "a@a.com"
+  end
 
   it "should let the user submit a FOI request" do
     visit "/feedback/foi"
@@ -21,6 +26,18 @@ describe "FOI" do
       :email => "a@a.com",
       :description => expected_description,
       :tags => ['FOI_request']
+  end
+
+  it "recreate non-UTF-char bug" do
+    visit "/feedback/foi"
+
+    fill_in_valid_credentials
+    fill_in "Provide a detailed description of the information you're seeking", :with => "\xFF\xFEother data"
+    click_on "Submit Freedom of Information request"
+
+    i_should_be_on "/feedback/foi"
+
+    zendesk_should_have_ticket description: "[Name]\ntest name\n[Details]\nother data"
   end
 
   it "should not accept spam (ie requests with val field filled in)" do
