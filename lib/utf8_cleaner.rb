@@ -22,11 +22,6 @@ module UTF8Cleaner
   private
   def utf8clean(string)
     # Force it to UTF-8, throwing out invalid bits
-    if RUBY_VERSION >= "1.9.3"
-      # These converters don't exist in 1.9.2
-      string.encode('UTF-16', 'UTF-8', invalid: :replace, replace: '').encode('UTF-8', 'UTF-16')
-    else
-      string.chars.select{|i| i.valid_encoding?}.join
-    end
+    string.encode('UTF-16', 'UTF-8', invalid: :replace, replace: '').encode('UTF-8', 'UTF-16')
   end
 end
