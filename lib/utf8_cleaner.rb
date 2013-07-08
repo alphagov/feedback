@@ -1,7 +1,8 @@
 module UTF8Cleaner
   def sanitised(params)
+    # `dup` is used here instead of `inject` because the params could be a ActiveSupport::HashWithIndifferentAccess
     sanitised_params = params.dup
-    sanitised_params.each_key {|key, value| sanitised_params[key] = sanitise(sanitised_params[key])}
+    sanitised_params.each_key {|key| sanitised_params[key] = sanitise(sanitised_params[key])}
   end
 
   def sanitise(string)
