@@ -34,9 +34,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.11.0'
-  gem 'capybara', '1.1.2'
+  gem 'capybara', '2.1.0'
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
   gem 'webmock', '1.8.9', :require => false
-  gem 'poltergeist', '0.7.0'
+  gem 'poltergeist', '1.3.0'
 end
