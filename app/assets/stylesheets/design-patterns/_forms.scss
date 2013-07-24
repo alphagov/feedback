@@ -12,7 +12,7 @@
 @import "shims";
 @import "design-patterns/show-hide";
 
-@mixin form($label-alignment: top, $label-width: 8em, $legend-colour: $charcoal-grey) {
+@mixin form($label-alignment: top, $label-width: 8em, $legend-colour: $text-colour) {
 
   // FORM ELEMENT STYLES
 
@@ -33,7 +33,7 @@
   select[size],
   textarea {
       background-color: #f9f9f9;
-      border: 1px inset $grey-88; // Remove this if we can get the border style removed from core.css
+      border: 1px inset $border-colour; // Remove this if we can get the border style removed from core.css
       font-size: 1em;
       line-height: 1.2;
       padding: 0.3em 0 0.1em 0.4em;
@@ -46,7 +46,7 @@
 
   // Labels
   label{
-    color: $charcoal-grey;
+    color: $text-colour;
     @include core-19;
   }
   // Checkboxes and radio buttons
@@ -118,7 +118,7 @@
       margin-top: 0;
       legend {
         @include core-19;
-        color: $charcoal-grey;
+        color: $text-colour;
       }
       // Shift controls up
       .inline .group,
@@ -386,10 +386,10 @@
   }
   .emphasised label.radio:hover,
   .emphasised label.checkbox:hover{
-    background-color: $grey-95;
+    background-color: $text-colour;
   }
   .checked{
-    background-color: $grey-95;
+    background-color: $text-colour;
   }
 
 }
@@ -399,7 +399,7 @@
   @include button($green);
 }
 .btn-secondary{
-  @include button($grey-88);
+  @include button($grey-3);
 }
 
 .btn-warning{
