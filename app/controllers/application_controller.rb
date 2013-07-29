@@ -24,7 +24,9 @@ protected
 
     respond_to do |format|
       format.html do
-        render text: "", status: 503
+        # no content needed here, will display the default 503 page
+        headers[Slimmer::Headers::SKIP_HEADER] = "1"
+        render nothing: true, status: 503
       end
       format.js do
         response = "<p>Sorry, we're unable to receive your message right now.</p> " +
