@@ -40,7 +40,7 @@ describe "Contact" do
 
     zendesk_should_not_have_ticket
 
-    page.status_code.should == 444
+    page.status_code.should == 400
   end
 
   it "should let the user submit an 'ask a question' request without name and email" do

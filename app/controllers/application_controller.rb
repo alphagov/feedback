@@ -3,11 +3,14 @@ require 'zendesk_didnt_create_ticket_error'
 require 'spam_error'
 
 class ApplicationController < ActionController::Base
-  rescue_from SpamError, with: :error_444
+  rescue_from SpamError, with: :robot_script_submission_detected
   rescue_from ZendeskDidntCreateTicketError, ZendeskAPI::Error::ClientError, with: :zendesk_error
 
 protected
-  def error_444; render nothing: true, status: 444; end
+  def robot_script_submission_detected
+    headers[Slimmer::Headers::SKIP_HEADER] = "1"
+    render nothing: true, status: 400
+  end
 
   def zendesk_error(exception)
     if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
