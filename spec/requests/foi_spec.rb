@@ -52,7 +52,7 @@ describe "FOI" do
 
     zendesk_should_not_have_ticket
 
-    page.status_code.should == 444
+    page.status_code.should == 400
   end
 
   it "should show an error message when the zendesk connection fails" do
