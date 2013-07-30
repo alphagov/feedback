@@ -89,7 +89,7 @@ describe FeedbackController do
       end
 
       it "should create a ContactTicket object" do
-        stub_ticket = stub("Ticket", valid?: true)
+        stub_ticket = double("Ticket", valid?: true)
         stub_ticket.should_receive(:save).and_return(true)
 
         ContactTicket.should_receive(:new).
@@ -118,7 +118,7 @@ describe FeedbackController do
         end
 
         it "should submit a ticket to zendesk" do
-          stub_ticket = stub("Ticket")
+          stub_ticket = double("Ticket")
           ReportAProblemTicket.should_receive(:new).
             with(hash_including(
               :url => "http://www.example.com/somewhere",
@@ -174,7 +174,7 @@ describe FeedbackController do
 
         describe "no 'url' value explicitly set" do
           it "should use the referrer URL to set the 'url' for the model" do
-            stub_ticket = stub("Ticket")
+            stub_ticket = double("Ticket")
             ReportAProblemTicket.should_receive(:new).
               with(hash_including(:url => "http://www.gov.uk/referral-city")).
               and_return(stub_ticket)
@@ -202,7 +202,7 @@ describe FeedbackController do
         end
 
         it "should submit a ticket to zendesk" do
-          stub_ticket = stub("Ticket")
+          stub_ticket = double("Ticket")
           ReportAProblemTicket.should_receive(:new).
             with(hash_including(
               :url => "http://www.example.com/somewhere",
@@ -211,7 +211,7 @@ describe FeedbackController do
               :user_agent => "Rails Testing",
               :javascript_enabled => "true"
             )).and_return(stub_ticket)
-          stub_ticket.stub!(:valid?).and_return(true)
+          stub_ticket.stub(:valid?).and_return(true)
           stub_ticket.should_receive(:save).and_return(true)
 
           do_submit

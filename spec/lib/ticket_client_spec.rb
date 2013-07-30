@@ -13,7 +13,7 @@ describe TicketClient do
     ZendeskConfig.stub(:fallback_requester_email_address).and_return("a@b.com")
 
     stub_tickets = DummyZendeskTicketsStub.new
-    stub_client = stub(ZendeskAPI::Client, insert_callback: nil, tickets: stub_tickets)
+    stub_client = double(ZendeskAPI::Client, insert_callback: nil, tickets: stub_tickets)
     ZendeskAPI::Client.stub(:new).and_return(stub_client)
 
     TicketClient.raise_ticket(tags: [], email: "")

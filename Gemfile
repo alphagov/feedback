@@ -33,7 +33,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails', '2.14.0'
   gem 'capybara', '2.1.0'
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
