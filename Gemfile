@@ -12,9 +12,9 @@ end
 gem "unicorn", '4.3.1'
 gem "router-client", '3.1.0', :require => false
 
-gem "exception_notification", '3.0.1'
+gem "exception_notification", '4.0.0'
 gem "aws-ses", :require => 'aws/ses'
-gem "plek", "1.1.0" # Used in exception_notification config
+gem "plek", "1.4.0" # Used in exception_notification config
 
 gem "zendesk_api", "0.4.0.rc1"
 gem "valid_email", "0.0.4"
@@ -26,17 +26,17 @@ gem "statsd-ruby", "1.2.1", require: "statsd"
 group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '2.1.2'
   gem 'govuk_frontend_toolkit', '0.32.2'
   gem 'sass', '3.2.1'
   gem 'sass-rails', "  ~> 3.2.3"
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails', '2.14.0'
   gem 'capybara', '2.1.0'
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
-  gem 'webmock', '1.8.9', :require => false
+  gem 'webmock', '1.13.0', :require => false
   gem 'poltergeist', '1.3.0'
 end
