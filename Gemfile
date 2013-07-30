@@ -26,7 +26,7 @@ gem "statsd-ruby", "1.2.1", require: "statsd"
 group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '2.1.2'
   gem 'govuk_frontend_toolkit', '0.32.2'
   gem 'sass', '3.2.1'
   gem 'sass-rails', "  ~> 3.2.3"
