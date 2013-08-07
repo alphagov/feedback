@@ -6,3 +6,5 @@ rvm:
 branches:
   except:
     - release
+notifications:
+  email: false
