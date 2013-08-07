@@ -14,7 +14,7 @@ gem "router-client", '3.1.0', :require => false
 
 gem "exception_notification", '4.0.0'
 gem "aws-ses", :require => 'aws/ses'
-gem "plek", "1.4.0" # Used in exception_notification config
+gem "plek", "1.4.0"
 
 gem "zendesk_api", "0.4.0.rc1"
 gem "valid_email", "0.0.4"
