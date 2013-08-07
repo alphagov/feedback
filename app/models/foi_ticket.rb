@@ -9,24 +9,12 @@ class FoiTicket < Ticket
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
 
-  private
-
-  def foi_ticket_description
-    description = ""
-    unless name.blank?
-      description += "[Name]\n" + name + "\n"
-    end
-    description += "[Details]\n" + textdetails
+  def save
+    TicketClient.raise_foi_request(create_ticket) if valid?
   end
 
+  private
   def create_ticket
-    description = foi_ticket_description
-    ticket = {
-      :subject => "FOI",
-      :tags => ["FOI_request"],
-      :name => name,
-      :email => email,
-      :description => description
-    }
+    { requester: { name: name, email: email }, details: textdetails }
   end
 end

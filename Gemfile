@@ -20,6 +20,7 @@ gem "zendesk_api", "0.4.0.rc1"
 gem "valid_email", "0.0.4"
 
 gem "statsd-ruby", "1.2.1", require: "statsd"
+gem "rest-client", "1.6.7"
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,10 +1,17 @@
 require 'zendesk_didnt_create_ticket_error'
 require 'zendesk_config'
+require 'rest_client'
 
 class TicketClient
   SECTION_FIELD = 21649362
 
   class << self
+    def raise_foi_request(request_details)
+      options = { "Authorization" => "Bearer #{SUPPORT_API[:bearer_token]}", content_type: :json, accept: :json }
+      url = SUPPORT_API[:url] + "/foi_requests"
+      response = RestClient.post url, {"foi_request" => request_details}, options
+      raise "response status code from support app is #{response.code}, expected: 201" unless response.code == 201
+    end
 
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"

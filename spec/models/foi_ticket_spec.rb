@@ -45,8 +45,7 @@ describe FoiTicket do
   end
 
   it "should raise an exception if zendesk ticket creation fails" do
-    ticket = foi_request
-    ticket.stub(:ticket_client).and_raise('some error')
-    lambda { ticket.save }.should raise_error('some error')
+    TicketClient.stub(:raise_foi_request).and_raise('some error')
+    lambda { foi_request.save }.should raise_error('some error')
   end
 end
