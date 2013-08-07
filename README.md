@@ -16,5 +16,5 @@ To test actually submitting tickets to zendesk in development, copy `zendesk_exa
 
 To run unit tests, execute the following:
 
-    bundle exec rake GOVUK_APP_DOMAIN=dev.gov.uk 
+    bundle exec rake
 
