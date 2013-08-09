@@ -1,3 +1,5 @@
+require 'gds_api/support'
+
 class FoiTicket < Ticket
 
   attr_accessor :textdetails, :name, :email, :verifyemail
@@ -10,11 +12,14 @@ class FoiTicket < Ticket
   validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
 
   def save
-    TicketClient.raise_foi_request(create_ticket) if valid?
+    if valid?
+      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
+      support_api.create_foi_request(ticket_details)
+    end
   end
 
   private
-  def create_ticket
+  def ticket_details
     { requester: { name: name, email: email }, details: textdetails }
   end
 end

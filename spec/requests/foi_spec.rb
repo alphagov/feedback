@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 
 describe "FOI" do
+  include GdsApi::TestHelpers::Support
+
   def fill_in_valid_credentials
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
@@ -8,7 +11,7 @@ describe "FOI" do
   end
 
   it "should let the user submit a FOI request" do
-    assuming_successful_support_app_foi_request("test name", "a@a.com", "test foi request")
+    stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
 
     visit "/feedback/foi"
 
@@ -24,7 +27,7 @@ describe "FOI" do
   end
 
   it "recreate non-UTF-char bug" do
-    assuming_successful_support_app_foi_request("test name", "a@a.com", "other data")
+    stub_support_foi_request_creation
 
     visit "/feedback/foi"
 
@@ -49,7 +52,7 @@ describe "FOI" do
   end
 
   it "should show an error message when the zendesk connection fails" do
-    assuming_failed_support_app_foi_request("test name", "a@a.com", "test foi request")
+    support_isnt_available
 
     visit "/feedback/foi"
 

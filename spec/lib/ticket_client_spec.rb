@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'support/support_app_stubs'
 
 class DummyZendeskTicketsStub
   attr_accessor :raised_ticket
@@ -10,8 +9,6 @@ class DummyZendeskTicketsStub
 end
 
 describe TicketClient do
-  include SupportAppStubs
-
   it "should specify a fallback email if none is provided" do
     ZendeskConfig.stub(:fallback_requester_email_address).and_return("a@b.com")
 
@@ -21,11 +18,5 @@ describe TicketClient do
 
     TicketClient.raise_ticket(tags: [], email: "")
     stub_tickets.raised_ticket[:requester][:email].should eq("a@b.com")
-  end
-
-  it "should raise a RuntimeError if it gets anything apart from 201 from the support app" do
-    stub_request(:post,  /.*?\/foi_requests/).to_return(status: 200)
-
-    lambda { TicketClient.raise_foi_request({}) }.should raise_error(RuntimeError)
   end
 end
