@@ -36,31 +36,35 @@ describe ContactTicket do
   end
 
   it "should return contact error with empty textdetails" do
-    anon_ticket_with(textdetails: "").errors.should have_key(:textdetails)
+    anon_ticket_with(textdetails: "").should have(1).error_on(:textdetails)
   end
 
   it "should return contact error with too long name" do
-    named_ticket_with(name: build_random_string(1251)).errors.should have_key(:name)
+    named_ticket_with(name: build_random_string(1251)).should have(1).error_on(:name)
   end
 
   it "should return contact error with bad email" do
-    named_ticket_with(email: build_random_string(12)).errors.should have_key(:email)
+    named_ticket_with(email: build_random_string(12)).should have(1).error_on(:email)
   end
 
   it "should not be valid if the email contains spaces" do
-    named_ticket_with(email: "abc @d.com").errors.should have_key(:email)
+    named_ticket_with(email: "abc @d.com").should have(1).error_on(:email)
+  end
+
+  it "should not be valid if the email has a dot at the end" do
+    named_ticket_with(email: "abc@d.com.").should have(1).error_on(:email)
   end
 
   it "should return contact error with too long email" do
-    named_ticket_with(email: (build_random_string 1251) + "@a.com").errors.should have_key(:email)
+    named_ticket_with(email: (build_random_string 1251) + "@a.com").should have(1).error_on(:email)
   end
 
   it "should return contact error with location specific but without link" do
-    anon_ticket_with(location: "specific").errors.should have_key(:link)
+    anon_ticket_with(location: "specific").should have(1).error_on(:link)
   end
 
   it "should return contact error with too long textdetails" do
-    anon_ticket_with(textdetails: build_random_string(1251)).errors.should have_key(:textdetails)
+    anon_ticket_with(textdetails: build_random_string(1251)).should have(1).error_on(:textdetails)
   end
 
   it "should save the user agent and javascript state" do
@@ -83,13 +87,13 @@ describe ContactTicket do
   end
 
   it "should validate that an allowed contact reason is present" do
-    anon_ticket_with(query: "non-existent").errors.should have_key(:query)
-    anon_ticket_with(query: "").errors.should have_key(:query)
-    anon_ticket_with(query: nil).errors.should have_key(:query)
+    anon_ticket_with(query: "non-existent").should have(1).error_on(:query)
+    anon_ticket_with(query: "").should have(1).error_on(:query)
+    anon_ticket_with(query: nil).should have(1).error_on(:query)
   end
 
   it "should make sure that a location is present" do
-    anon_ticket_with(location: "").errors.should have_key(:location)
-    anon_ticket_with(location: nil).errors.should have_key(:location)
+    anon_ticket_with(location: "").should have(1).error_on(:location)
+    anon_ticket_with(location: nil).should have(1).error_on(:location)
   end
 end
