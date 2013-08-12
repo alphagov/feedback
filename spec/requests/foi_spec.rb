@@ -11,7 +11,7 @@ describe "FOI" do
   end
 
   it "should let the user submit a FOI request" do
-    stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
+    stub_post = stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
 
     visit "/feedback/foi"
 
@@ -24,6 +24,7 @@ describe "FOI" do
     i_should_be_on "/feedback/foi"
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
+    assert_requested(stub_post)
   end
 
   it "recreate non-UTF-char bug" do
