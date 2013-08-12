@@ -18,3 +18,22 @@ To run unit tests, execute the following:
 
     bundle exec rake
 
+### Testing with a mock `signon` strategy
+
+Launch using `bowl` from the `development` directory:
+
+    development> bowl feedback
+
+### Testing with a instance of `signon`
+
+In order to raise tickets in Zendesk, the `feedback` app submits data to the `support` app. As the relevant `support` app endpoints are behind `signon`, `feedback` needs a bearer token for authorisation. To get this set up:
+
+1. Create an API user within `signon`:
+
+        signonotron2> bundle exec rake "api_clients:create[Feedback app,feedback@alphagov.co.uk,support,api_users]"
+
+2. Copy the resulting bearer token into `config/initializers/support_app.rb`.
+
+To start with a "real" `signon`:
+
+    development> GDS_SSO_STRATEGY=real bowl signon feedback

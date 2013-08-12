@@ -1,7 +1,9 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 
 describe FoiTicket do
   include ValidatorHelper
+  include GdsApi::TestHelpers::Support
 
   def valid_foi_request_defaults
     {
@@ -45,8 +47,7 @@ describe FoiTicket do
   end
 
   it "should raise an exception if zendesk ticket creation fails" do
-    ticket = foi_request
-    ticket.stub(:ticket_client).and_raise('some error')
-    lambda { ticket.save }.should raise_error('some error')
+    support_isnt_available
+    lambda { foi_request.save }.should raise_error(GdsApi::BaseError)
   end
 end

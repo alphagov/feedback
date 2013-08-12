@@ -1,3 +1,5 @@
+require 'gds_api/support'
+
 class FoiTicket < Ticket
 
   attr_accessor :textdetails, :name, :email, :verifyemail
@@ -9,24 +11,15 @@ class FoiTicket < Ticket
   validates_presence_of :textdetails, :message => "The message field cannot be empty"
   validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
 
-  private
-
-  def foi_ticket_description
-    description = ""
-    unless name.blank?
-      description += "[Name]\n" + name + "\n"
+  def save
+    if valid?
+      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
+      support_api.create_foi_request(ticket_details)
     end
-    description += "[Details]\n" + textdetails
   end
 
-  def create_ticket
-    description = foi_ticket_description
-    ticket = {
-      :subject => "FOI",
-      :tags => ["FOI_request"],
-      :name => name,
-      :email => email,
-      :description => description
-    }
+  private
+  def ticket_details
+    { requester: { name: name, email: email }, details: textdetails }
   end
 end
