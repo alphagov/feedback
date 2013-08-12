@@ -20,7 +20,6 @@ gem "zendesk_api", "0.4.0.rc1"
 gem "valid_email", "0.0.4"
 
 gem "statsd-ruby", "1.2.1", require: "statsd"
-gem "rest-client", "1.6.7"
 
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
