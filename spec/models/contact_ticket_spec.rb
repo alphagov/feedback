@@ -51,6 +51,10 @@ describe ContactTicket do
     named_ticket_with(email: "abc @d.com").should have(1).error_on(:email)
   end
 
+  it "should not be valid if the email has a dot at the end" do
+    named_ticket_with(email: "abc@d.com.").should have(1).error_on(:email)
+  end
+
   it "should return contact error with too long email" do
     named_ticket_with(email: (build_random_string 1251) + "@a.com").should have(1).error_on(:email)
   end
