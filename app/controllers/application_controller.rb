@@ -1,10 +1,12 @@
 require 'zendesk_api/error'
 require 'zendesk_didnt_create_ticket_error'
 require 'spam_error'
+require 'gds_api/exceptions'
 
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :robot_script_submission_detected
-  rescue_from ZendeskDidntCreateTicketError, ZendeskAPI::Error::ClientError, with: :zendesk_error
+  rescue_from ZendeskDidntCreateTicketError, ZendeskAPI::Error::ClientError, with: :unable_to_create_ticket_error
+  rescue_from GdsApi::BaseError, with: :unable_to_create_ticket_error
 
 protected
   def robot_script_submission_detected
@@ -12,7 +14,7 @@ protected
     render nothing: true, status: 400
   end
 
-  def zendesk_error(exception)
+  def unable_to_create_ticket_error(exception)
     if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
       if exception.respond_to?(:errors)
         message = { data: { message: "Zendesk errors: #{exception.errors}" } }

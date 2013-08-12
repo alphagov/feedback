@@ -21,6 +21,12 @@ gem "valid_email", "0.0.4"
 
 gem "statsd-ruby", "1.2.1", require: "statsd"
 
+if ENV['API_DEV']
+  gem "gds-api-adapters", :path => '../gds-api-adapters'
+else
+  gem "gds-api-adapters", "7.3.0"
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -5,7 +5,6 @@ class TicketClient
   SECTION_FIELD = 21649362
 
   class << self
-
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
       email = zendesk[:email].presence || fallback_requester_email_address
