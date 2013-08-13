@@ -16,10 +16,9 @@ protected
 
   def unable_to_create_ticket_error(exception)
     if exception.respond_to?(:errors)
-      message = { data: { message: "Zendesk errors: #{exception.errors}" } }
-      ExceptionNotifier::Notifier.exception_notification(request.env, exception, message).deliver
+      ExceptionNotifier.notify_exception(exception, env: request.env, data: { message: "Zendesk errors: #{exception.errors}" })
     else
-      ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
+      ExceptionNotifier.notify_exception(exception, env: request.env)
     end
 
     respond_to do |format|
