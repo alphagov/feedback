@@ -15,13 +15,11 @@ protected
   end
 
   def unable_to_create_ticket_error(exception)
-    if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
-      if exception.respond_to?(:errors)
-        message = { data: { message: "Zendesk errors: #{exception.errors}" } }
-        ExceptionNotifier::Notifier.exception_notification(request.env, exception, message).deliver
-      else
-        ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
-      end
+    if exception.respond_to?(:errors)
+      message = { data: { message: "Zendesk errors: #{exception.errors}" } }
+      ExceptionNotifier::Notifier.exception_notification(request.env, exception, message).deliver
+    else
+      ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
     end
 
     respond_to do |format|
