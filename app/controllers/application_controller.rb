@@ -21,6 +21,8 @@ protected
       ExceptionNotifier.notify_exception(exception, env: request.env)
     end
 
+    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception")
+
     respond_to do |format|
       format.html do
         # no content needed here, will display the default 503 page
