@@ -23,5 +23,6 @@ describe ReportAProblemTicket do
     ticket(page_owner: 'spaces not allowed').tags.should eq(['report_a_problem'])
     ticket(page_owner: '<hax>').tags.should eq(['report_a_problem'])
     ticket(page_owner: 'S&P').tags.should eq(['report_a_problem'])
+    ticket(page_owner: '').tags.should eq(['report_a_problem'])
   end
 end

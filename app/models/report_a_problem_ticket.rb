@@ -37,7 +37,7 @@ EOT
   end
 
   def page_owner_tag
-    "page_owner/#{page_owner}" if page_owner && page_owner.match(/^[a-zA-Z0-9_]*$/)
+    "page_owner/#{page_owner}" if page_owner && page_owner.match(/^[a-zA-Z0-9_]+$/)
   end
 
   def path_for_url
