@@ -7,7 +7,7 @@ class ReportAProblemTicket < Ticket
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
 
   def tags
-    ['report_a_problem', source_tag, page_owner_tag].compact
+    ['report_a_problem', source, page_owner_tag].compact
   end
 
   private
@@ -15,7 +15,7 @@ class ReportAProblemTicket < Ticket
   def create_ticket
     description = report_a_problem_format_description
     ticket = {
-      :subject => path_for_url,
+      :subject => path_for_url || "Unknown page",
       :tags => tags,
       :description => description
     }
@@ -28,22 +28,30 @@ what_doing: #{what_doing}
 what_wrong: #{what_wrong}
 user_agent: #{user_agent || 'unknown'}
 referrer: #{referrer || 'unknown'}
-javascript_enabled: #{javascript_enabled == "true"}
+javascript_enabled: #{javascript_enabled}
 EOT
   end
 
-  def source_tag
-    source if SOURCE_WHITELIST.include?(source)
+  def source
+    @source if SOURCE_WHITELIST.include?(@source)
   end
 
   def page_owner_tag
-    "page_owner/#{page_owner}" if page_owner && page_owner.match(/^[a-zA-Z0-9_]+$/)
+    "page_owner/#{page_owner}" if page_owner
+  end
+
+  def page_owner
+    @page_owner && @page_owner.match(/^[a-zA-Z0-9_]+$/) ? @page_owner : nil
+  end
+
+  def javascript_enabled
+    @javascript_enabled == "true"
   end
 
   def path_for_url
     uri = URI.parse(url)
-    uri.path.presence || "Unknown page"
+    uri.path.presence
   rescue URI::InvalidURIError
-    "Unknown page"
+    nil
   end
 end
