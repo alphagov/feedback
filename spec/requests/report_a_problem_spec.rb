@@ -1,8 +1,20 @@
 require 'spec_helper'
 
 describe "Reporting a problem with this content/tool" do
+  include GdsApi::TestHelpers::Support
 
-  it "should let the user submit a response to zendesk" do
+  it "should submit the problem report through the support API" do
+    stub_post = stub_support_problem_report_creation(
+      url: "http://www.example.com/test_forms/report_a_problem",
+      what_doing: "I was doing something",
+      what_wrong: "It didn't work",
+      user_agent: nil,
+      referrer: nil,
+      source: nil,
+      page_owner: nil,
+      javascript_enabled: false
+    )
+
     visit "/test_forms/report_a_problem"
 
     fill_in "What you were doing", :with => "I was doing something"
@@ -14,18 +26,12 @@ describe "Reporting a problem with this content/tool" do
     page.should have_content("Thank you for your help.")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
 
-    expected_description = <<-EOT
-url: http://www.example.com/test_forms/report_a_problem
-what_doing: I was doing something
-what_wrong: It didn't work
-user_agent: unknown
-referrer: unknown
-javascript_enabled: false
-    EOT
-    zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
+    assert_requested(stub_post)
   end
 
   it "should support ajax submission if available", :js => true do
+    stub_post = stub_support_problem_report_creation
+
     visit "/test_forms/report_a_problem"
 
     fill_in "What you were doing", :with => "I was doing something with javascript"
@@ -36,23 +42,18 @@ javascript_enabled: false
 
     page.should have_content("Thank you for your help.")
 
-    ticket = get_last_zendesk_ticket_details
-    ticket.should_not be_nil
-
-    ticket_fields = ticket[:description].lines.each_with_object(Hash.new) do |line, fields|
-      next if line =~ /\A\s+\z/
-      key, value = line.split(': ', 2)
-      fields[key.to_sym] = value.chomp
+    assert_requested(:post, %r{/problem_reports}) do |request|
+      response = JSON.parse(request.body)["problem_report"]
+      response["what_doing"] == "I was doing something with javascript" &&
+        response["what_wrong"] == "It didn't work" &&
+        response["javascript_enabled"] == true &&
+        response["url"] =~ %r{/test_forms/report_a_problem}
     end
-
-    ticket_fields[:what_doing].should == "I was doing something with javascript"
-    ticket_fields[:what_wrong].should == "It didn't work"
-    URI.parse(ticket_fields[:url]).path.should == "/test_forms/report_a_problem"
-    ticket_fields[:user_agent].should =~ /phantomjs/i
-    ticket_fields[:javascript_enabled].should == "true"
   end
 
   it "should include the user_agent if available" do
+    stub_support_problem_report_creation
+
     # Using Rack::Test instead of capybara to allow setting the user agent.
     post "/feedback", {
       :url => "http://www.example.com/test_forms/report_a_problem",
@@ -60,19 +61,13 @@ javascript_enabled: false
       :what_wrong => "It didn't work"
     }, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
 
-    expected_description = <<-EOT
-url: http://www.example.com/test_forms/report_a_problem
-what_doing: I was doing something
-what_wrong: It didn't work
-user_agent: Shamfari/3.14159 (Fooey)
-referrer: unknown
-javascript_enabled: false
-    EOT
-    zendesk_should_have_ticket :subject => "/test_forms/report_a_problem", :description => expected_description, :tags => ['report_a_problem']
+    assert_requested(:post, %r{/problem_reports}) do |request|
+      JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+    end
   end
 
-  it "should handle errors submitting tickets to zendesk" do
-    given_zendesk_ticket_creation_fails
+  it "should handle errors when submitting problem reports" do
+    support_isnt_available
 
     visit "/test_forms/report_a_problem"
 
