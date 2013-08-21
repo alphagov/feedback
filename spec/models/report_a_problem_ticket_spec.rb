@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe ReportAProblemTicket do
@@ -5,24 +6,50 @@ describe ReportAProblemTicket do
     ReportAProblemTicket.new(params)
   end
 
-  it "should add a tag identifying the whitelisted source" do
-    ticket.tags.should eq(['report_a_problem'])
-    ticket(source: 'inside_government').tags.should eq(['report_a_problem', 'inside_government'])
-    ticket(source: 'mainstream').tags.should eq(['report_a_problem', 'mainstream'])
-    ticket(source: 'page_not_found').tags.should eq(['report_a_problem', 'page_not_found'])
-    ticket(source: 'random').tags.should eq(['report_a_problem'])
+  it "should validate the presence of 'what_wrong'" do
+    ticket(what_wrong: '').should have(1).error_on(:what_wrong)
   end
 
-  it "should add a tag identifying the page owner" do
-    ticket(page_owner: 'hmrc').tags.should eq(['report_a_problem', 'page_owner/hmrc'])
-    ticket(page_owner: 'number_10').tags.should eq(['report_a_problem', 'page_owner/number_10'])
-    ticket(page_owner: 'home_office', source: 'inside_government').tags.should eq(['report_a_problem', 'inside_government', 'page_owner/home_office'])
+  it "should validate the presence of 'what_doing'" do
+    ticket(what_doing: '').should have(1).error_on(:what_doing)
   end
 
-  it "ignores the page owner if it contains any non-alphanumeric characters, other than underscore" do
-    ticket(page_owner: 'spaces not allowed').tags.should eq(['report_a_problem'])
-    ticket(page_owner: '<hax>').tags.should eq(['report_a_problem'])
-    ticket(page_owner: 'S&P').tags.should eq(['report_a_problem'])
-    ticket(page_owner: '').tags.should eq(['report_a_problem'])
+  it "should filter 'javascript_enabled'" do
+    ticket(javascript_enabled: 'true').javascript_enabled.should be_true
+
+    ticket(javascript_enabled: 'false').javascript_enabled.should be_false
+    ticket(javascript_enabled: 'xxx').javascript_enabled.should be_false
+    ticket(javascript_enabled: '').javascript_enabled.should be_false
   end
+
+  it "should filter 'page_owner'" do
+    ticket(page_owner: 'abc').page_owner.should eq('abc')
+    ticket(page_owner: 'number_10').page_owner.should eq('number_10')
+
+    ticket(page_owner: nil).page_owner.should be_nil
+    ticket(page_owner: '').page_owner.should be_nil
+    ticket(page_owner: 'spaces not allowed').page_owner.should be_nil
+    ticket(page_owner: '<hax>').page_owner.should be_nil
+    ticket(page_owner: 'S&P').page_owner.should be_nil
+  end
+
+  it "should filter 'source'" do
+    ticket(source: 'mainstream').source.should eq('mainstream')
+    ticket(source: 'page_not_found').source.should eq('page_not_found')
+    ticket(source: 'inside_government').source.should eq('inside_government')
+
+    ticket(source: 'xxx').source.should be_nil
+  end
+
+  it "should filter 'url' to either nil or a valid URL" do
+    ticket(url: "https://www.gov.uk").url.should eq('https://www.gov.uk')
+    ticket(url: "http://bla.example.org:9292/méh/fào?bar").url.should be_nil
+    ticket(url: nil).url.should be_nil
+  end
+
+  it "should filter 'referrer' to either nil or a valid URL" do
+    ticket(referrer: "https://www.gov.uk").referrer.should eq('https://www.gov.uk')
+    ticket(referrer: "http://bla.example.org:9292/méh/fào?bar").referrer.should be_nil
+    ticket(referrer: nil).referrer.should be_nil
+  end  
 end

@@ -25,7 +25,7 @@ gem "logstasher", "0.2.5"
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
 else
-  gem "gds-api-adapters", "7.3.0"
+  gem "gds-api-adapters", "7.4.0"
 end
 
 # Gems used only for assets and not required
