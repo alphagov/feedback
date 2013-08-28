@@ -9,20 +9,6 @@
   <input type="text" id="val" name="contact[val]" style="display:none"/>
   <%= render "shared/error_summary" %>
 
-<fieldset>
-  <legend>Why are you contacting us?</legend>
-  <p class="option_group" name="contact[why]" id="contact-why">
-    <label><input type="radio" name="contact[query]"  value="cant-find" id="cant-find"
-                  <%= @old ? (@old["query"] == "cant-find" ? "checked" : "" ) : "checked" %>> I can't find what I'm looking for</label>
-    <label><input type="radio" name="contact[query]"  value="report-problem" id="report-problem"
-                  <%= @old ? (@old["query"] == "report-problem" ? "checked" : "" ) : "" %>> I want to report a problem</label>
-    <label><input type="radio" name="contact[query]"  value="ask-question" id="ask-question"
-                  <%= @old ? (@old["query"] == "ask-question" ? "checked" : "" ) : "" %>> I want to ask a question</label>
-    <label><input type="radio" name="contact[query]"  value="make-suggestion" id="make-suggestion"
-                  <%= @old ? (@old["query"] == "make-suggestion" ? "checked" : "" ) : "" %>> I want to make a suggestion</label>
-  </p>
-</fieldset>
-
 <fieldset id="location">  
   <legend>What's it to do with?</legend>
   <p>

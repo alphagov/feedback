@@ -13,11 +13,10 @@ def contact_submission_should_be_successful
 end
 
 describe "Contact" do
-  it "should let the user submit an 'ask a question' request" do
+  it "should let the user submit a request with contact details" do
     visit "/feedback/contact"
 
     choose "location-all"
-    choose "ask-question"
     fill_in_valid_contact_details_and_description
     contact_submission_should_be_successful
 
@@ -26,14 +25,13 @@ describe "Contact" do
       :name => "test name",
       :email => "a@a.com",
       :description => expected_description,
-      :tags => ['ask_question']
+      :subject => "Named contact"
   end
 
   it "should not accept spam (ie a request with val field filled in)" do
     visit "/feedback/contact"
 
     choose "location-all"
-    choose "ask-question"
     fill_in_valid_contact_details_and_description
     fill_in "val", :with => "test val"
     click_on "Send message"
@@ -43,11 +41,10 @@ describe "Contact" do
     page.status_code.should == 400
   end
 
-  it "should let the user submit an 'ask a question' request without name and email" do
+  it "should let the user submit an anonymous request" do
     visit "/feedback/contact"
 
     choose "location-all"
-    choose "ask-question"
     fill_in "textdetails", :with => "test text details"
     contact_submission_should_be_successful
 
@@ -56,64 +53,7 @@ describe "Contact" do
       :name => "",
       :email => "",
       :description => expected_description,
-      :tags => ['ask_question']
-  end
-
-  it "should let the user submit an 'I can't find' request" do
-    visit "/feedback/contact"
-
-    choose "location-section"
-    choose "cant-find"
-    fill_in_valid_contact_details_and_description
-    contact_submission_should_be_successful
-
-    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
-
-    expected_description = "[Location]\nsection\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "I can't find",
-                               :name => "test name",
-                               :email => "a@a.com",
-                               :section => "test_section",
-                               :description => expected_description,
-                               :tags => ['i_cant_find']
-  end
-
-  it "should let the user submit a 'report a problem' request" do
-    visit "/feedback/contact"
-
-    choose "location-specific"
-    choose "report-problem"
-    fill_in_valid_contact_details_and_description
-    fill_in "link", :with => "some url"
-    contact_submission_should_be_successful
-
-    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
-
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "Report a problem",
-                               :name => "test name",
-                               :email => "a@a.com",
-                               :description => expected_description,
-                               :tags => ['report_a_problem_public']
-  end
-
-  it "should let the user submit a 'make suggestion' request" do
-    visit "/feedback/contact"
-
-    choose "location-specific"
-    choose "make-suggestion"
-    fill_in_valid_contact_details_and_description
-    fill_in "link", :with => "some url"
-    contact_submission_should_be_successful
-
-    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
-
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "General feedback",
-                               :name => "test name",
-                               :email => "a@a.com",
-                               :description => expected_description,
-                               :tags => ['general_feedback']
+      :subject => "Anonymous contact"
   end
 
   it "should show an error message when the zendesk connection fails" do
@@ -123,7 +63,6 @@ describe "Contact" do
     visit "/feedback/contact"
 
     choose "location-specific"
-    choose "make-suggestion"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
@@ -133,11 +72,9 @@ describe "Contact" do
     page.status_code.should == 503
 
     expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "General feedback",
-                               :name => "test name",
+    zendesk_should_have_ticket :name => "test name",
                                :email => "a@a.com",
-                               :description => expected_description,
-                               :tags => ['general_feedback']
+                               :description => expected_description
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
@@ -160,7 +97,6 @@ describe "Contact" do
     visit "/feedback/contact"
 
     choose "location-all"
-    choose "ask-question"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "textdetails", :with => "test text details"
     click_on "Send message"
@@ -177,7 +113,6 @@ describe "Contact" do
     visit "/feedback/contact"
 
     choose "location-all"
-    choose "ask-question"
     fill_in "Your name", :with => "test name"
     fill_in "textdetails", :with => "test text details"
     click_on "Send message"
@@ -190,11 +125,10 @@ describe "Contact" do
     zendesk_should_not_have_ticket
   end
 
-  it "should let the user submit a 'report a problem' request" do
+  it "should let the user submit a request with a link" do
     visit "/feedback/contact"
 
     choose "location-specific"
-    choose "report-problem"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
@@ -217,11 +151,9 @@ unknown
 [JavaScript Enabled]
 false
 EOT
-    zendesk_should_have_ticket :subject => "Report a problem",
-                               :name => "test name",
+    zendesk_should_have_ticket :name => "test name",
                                :email => "a@a.com",
-                               :description => expected_description.strip!,
-                               :tags => ['report_a_problem_public']
+                               :description => expected_description.strip!
   end
 
   it "should include the user agent if available" do
@@ -252,11 +184,9 @@ T1000 (Bazinga)
 false
 EOT
 
-    zendesk_should_have_ticket :subject => "Report a problem",
-                               :name => "test name",
+    zendesk_should_have_ticket :name => "test name",
                                :email => "test@test.com",
-                               :description => expected_description.strip!,
-                               :tags => ['report_a_problem_public']
+                               :description => expected_description.strip!
   end
 
   it "should include the referer if available" do

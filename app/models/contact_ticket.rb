@@ -1,12 +1,5 @@
 class ContactTicket < Ticket
-  REASON_HASH = {
-    "cant-find" => {:subject => "I can't find", :tag => "i_cant_find"},
-    "ask-question" => {:subject => "Ask a question", :tag => "ask_question"},
-    "report-problem" => {:subject => "Report a problem", :tag => "report_a_problem_public"},
-    "make-suggestion" => {:subject => "General feedback", :tag => "general_feedback"}
-  }
-
-  attr_accessor :query, :location, :link, :textdetails,
+  attr_accessor :location, :link, :textdetails,
                 :section, :name, :email, :user_agent,
                 :javascript_enabled, :referrer
 
@@ -19,7 +12,6 @@ class ContactTicket < Ticket
   validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :invalidate_trailing_dot_in_email
   validate :validate_mail_name_connection
-  validates :query, inclusion: { in: REASON_HASH.keys, message: "Please pick a valid reason for contacting us" }
   validates_presence_of :location, message: "Please tell us what your contact is to do with"
 
   def javascript_enabled
@@ -28,6 +20,10 @@ class ContactTicket < Ticket
 
   def user_agent
     @user_agent || "unknown"
+  end
+
+  def subject
+    anonymous? ? "Anonymous contact" : "Named contact"
   end
 
   private
@@ -52,21 +48,18 @@ class ContactTicket < Ticket
   end
 
   def create_ticket
-    ticket = {}
-    if REASON_HASH[query]
-      description = contact_ticket_description
-      subject = REASON_HASH[query][:subject]
-      tag = REASON_HASH[query][:tag]
-      ticket = {
-        :subject => subject,
-        :tags => [tag],
-        :name => name,
-        :email => email,
-        :section => section,
-        :description => description
-      }
-    end
-    ticket
+    {
+      subject: subject,
+      tags: [],
+      name: name,
+      email: email,
+      section: section,
+      description: contact_ticket_description
+    }
+  end
+
+  def anonymous?
+    name.blank? and email.blank?
   end
 
   def validate_mail_name_connection
