@@ -21,6 +21,7 @@ gem "valid_email", "0.0.4"
 
 gem "statsd-ruby", "1.2.1", require: "statsd"
 gem "logstasher", "0.2.5"
+gem 'rack_strip_client_ip', '0.0.1'
 
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
