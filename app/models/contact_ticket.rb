@@ -1,6 +1,6 @@
 class ContactTicket < Ticket
   attr_accessor :location, :link, :textdetails,
-                :section, :name, :email, :user_agent,
+                :section, :name, :email,
                 :javascript_enabled, :referrer
 
   validate :validate_link

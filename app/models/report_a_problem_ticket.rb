@@ -1,7 +1,7 @@
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w(mainstream inside_government page_not_found)
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source, :page_owner
+  attr_accessor :what_wrong, :what_doing, :url, :javascript_enabled, :referrer, :source, :page_owner
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
