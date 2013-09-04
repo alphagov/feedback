@@ -21,7 +21,8 @@ protected
       ExceptionNotifier.notify_exception(exception, env: request.env)
     end
 
-    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception")
+    exception_class_name = exception.class.name.demodulize.downcase
+    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")
 
     respond_to do |format|
       format.html do
