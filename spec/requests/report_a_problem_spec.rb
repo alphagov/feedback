@@ -51,18 +51,33 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
-  it "should include the user_agent if available" do
-    stub_support_problem_report_creation
-
-    # Using Rack::Test instead of capybara to allow setting the user agent.
-    post "/feedback", {
+  def valid_params
+    {
       :url => "http://www.example.com/test_forms/report_a_problem",
       :what_doing => "I was doing something",
       :what_wrong => "It didn't work"
-    }, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
+    }
+  end
+
+  it "should include the user_agent if available" do
+    stub_support_problem_report_creation
+
+    # Using Rack::Test instead of capybara to allow setting headers.
+    post "/feedback", valid_params, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
 
     assert_requested(:post, %r{/problem_reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+    end
+  end
+
+  it "should pass the varnish ID through to the support app if set" do
+    stub_support_problem_report_creation
+
+    # Using Rack::Test instead of capybara to allow setting headers.
+    post "/feedback", valid_params, {"HTTP_X_VARNISH" => "12345"}
+
+    assert_requested(:post, %r{/problem_reports}) do |request|
+      request.headers["X-Varnish"] == "12345"
     end
   end
 

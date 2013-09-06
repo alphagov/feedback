@@ -1,6 +1,6 @@
 class Ticket
   include ActiveModel::Validations
-  attr_accessor :val
+  attr_accessor :val, :user_agent, :varnish_id
 
   # This is deliberately higher than the max character count
   # in the front-end (javascript and maxlength in the markup),

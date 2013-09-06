@@ -1,7 +1,7 @@
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w(mainstream inside_government page_not_found)
 
-  attr_accessor :what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source, :page_owner
+  attr_accessor :what_wrong, :what_doing, :url, :javascript_enabled, :referrer, :source, :page_owner
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
@@ -9,7 +9,7 @@ class ReportAProblemTicket < Ticket
   def save
     if valid?
       support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
-      support_api.create_problem_report(ticket_details)
+      support_api.create_problem_report(ticket_details, headers: { "X-Varnish" => varnish_id })
     end
   end
 

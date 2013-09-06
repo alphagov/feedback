@@ -32,15 +32,15 @@ class FeedbackController < ApplicationController
   end
 
   def contact_submit
-    submit sanitised(params[:contact].merge(user_agent: request.user_agent)), :contact
+    submit sanitised(params[:contact].merge(technical_attributes)), :contact
   end
 
   def foi_submit
-    submit sanitised(params[:foi]), :foi
+    submit sanitised(params[:foi].merge(technical_attributes)), :foi
   end
 
   def report_a_problem_submit
-    attributes = params.merge(:user_agent => request.user_agent)
+    attributes = params.merge(technical_attributes)
 
     # Where the 'url' parameter isn't explicitly provided, obtain it
     # from the HTTP referer. This is an edge case in the app as there
@@ -147,5 +147,9 @@ class FeedbackController < ApplicationController
 
   def setup_slimmer_artefact
     set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+  end
+
+  def technical_attributes
+    { user_agent: request.user_agent, varnish_id: request.env["HTTP_X_VARNISH"] }
   end
 end
