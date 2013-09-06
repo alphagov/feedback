@@ -5,10 +5,10 @@ class FeedbackController < ApplicationController
   include Slimmer::Headers
   include UTF8Cleaner
 
-  DONE_OK_TEXT = "<p>Thank you for your help.</p> " +
+  DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
     "<p>If you have more extensive feedback, " +
     "please visit the <a href='/feedback'>support page</a>.</p>"
-  DONE_INVALID_TEXT = "<p>Sorry, we're unable to send your message as you haven't given us any information.</p> "+
+  DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> "+
     "<p>Please tell us what you were doing or what went wrong.</p>"
 
   before_filter :set_cache_control, :only => [
