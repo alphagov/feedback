@@ -43,4 +43,4 @@ In order to raise tickets in Zendesk, the `feedback` app submits data to the `su
 
 4. To start with real authentication using `signon` and `support`:
 
-    development> GDS_SSO_STRATEGY=real bowl signon support feedback
+        development> GDS_SSO_STRATEGY=real bowl signon support feedback
