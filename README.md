@@ -24,16 +24,23 @@ Launch using `bowl` from the `development` directory:
 
     development> bowl feedback
 
-### Testing with a instance of `signon`
+### Testing with real authorisation
 
-In order to raise tickets in Zendesk, the `feedback` app submits data to the `support` app. As the relevant `support` app endpoints are behind `signon`, `feedback` needs a bearer token for authorisation. To get this set up:
+In order to raise tickets in Zendesk, the `feedback` app submits data to the `support` app. As the relevant `support` app endpoints are behind `signon`, `feedback` needs a bearer token for authorisation. To get this working after an import of signon data from preview:
 
-1. Create an API user within `signon`:
+1. Copy the token from the [support app initializer](config/initializers/support_app.rb).
 
-        signonotron2> bundle exec rake "api_clients:create[Feedback app,feedback@alphagov.co.uk,support,api_users]"
+2. Start a rails console session within `signon`:
 
-2. Copy the resulting bearer token into `config/initializers/support_app.rb`.
+        signonotron2> bundle exec rails c
 
-To start with a "real" `signon`:
+3. Execute the following (to update the token):
 
-    development> GDS_SSO_STRATEGY=real bowl signon feedback
+    u = User.find_by_email('feedback@alphagov.co.uk')
+    a = u.authorisations.first
+    a.token = "<PLACE TOKEN HERE>"
+    a.save
+
+4. To start with real authentication using `signon` and `support`:
+
+    development> GDS_SSO_STRATEGY=real bowl signon support feedback
