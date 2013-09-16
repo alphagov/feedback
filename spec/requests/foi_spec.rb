@@ -51,6 +51,12 @@ describe "FOI" do
     i_should_be_on "/feedback/foi"
   end
 
+  it "should still work even if the request doesn't have correct form params" do
+    post "/feedback/foi", {}
+
+    response.body.should include("Please check the form")
+  end
+
   it "should not accept spam (ie requests with val field filled in)" do
     visit "/feedback/foi"
 

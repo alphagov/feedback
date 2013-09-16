@@ -32,11 +32,11 @@ class FeedbackController < ApplicationController
   end
 
   def contact_submit
-    submit sanitised(params[:contact].merge(technical_attributes)), :contact
+    submit sanitised((params[:contact] || {}).merge(technical_attributes)), :contact
   end
 
   def foi_submit
-    submit sanitised(params[:foi].merge(technical_attributes)), :foi
+    submit sanitised((params[:foi] || {}).merge(technical_attributes)), :foi
   end
 
   def report_a_problem_submit
