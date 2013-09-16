@@ -36,10 +36,10 @@ In order to raise tickets in Zendesk, the `feedback` app submits data to the `su
 
 3. Execute the following (to update the token):
 
-    u = User.find_by_email('feedback@alphagov.co.uk')
-    a = u.authorisations.first
-    a.token = "<PLACE TOKEN HERE>"
-    a.save
+        u = User.find_by_email('feedback@alphagov.co.uk')
+        a = u.authorisations.first
+        a.token = "<PLACE TOKEN HERE>"
+        a.save
 
 4. To start with real authentication using `signon` and `support`:
 
