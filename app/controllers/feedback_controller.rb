@@ -67,6 +67,9 @@ class FeedbackController < ApplicationController
     respond_to do |format|
       format.html do
         @return_path = extract_return_path(params[:url])
+        # not returning the strictly correct status code here because
+        # nginx is currently configured to intercept 4XX errors
+        # and replace what the app sends back with a standard error page
         render "shared/thankyou"
       end
       format.js do
