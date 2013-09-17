@@ -81,6 +81,12 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
+  it "should still work even if the request doesn't have correct form params" do
+    post "/feedback", {}
+
+    response.body.should include("we're unable to send your message")
+  end
+
   it "should handle errors when submitting problem reports" do
     support_isnt_available
 

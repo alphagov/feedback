@@ -77,6 +77,12 @@ describe "Contact" do
                                :description => expected_description
   end
 
+  it "should still work even if the request doesn't have correct form params" do
+    post "/feedback/contact", {}
+
+    response.body.should include("Please check the form")
+  end
+
   it "should not proceed if the user hasn't filled in all required fields" do
     visit "/feedback/contact"
 
