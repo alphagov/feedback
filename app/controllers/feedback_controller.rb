@@ -16,11 +16,6 @@ class FeedbackController < ApplicationController
     :contact
   ]
 
-  before_filter :get_sections, :only => [
-    :contact,
-    :contact_submit
-  ]
-
   before_filter :setup_slimmer_artefact
 
   def contact
@@ -125,10 +120,6 @@ class FeedbackController < ApplicationController
         end
       end
     end
-  end
-
-  def get_sections
-    @sections = ticket_client.get_sections
   end
 
   def ticket_client

@@ -2,8 +2,6 @@ require 'zendesk_didnt_create_ticket_error'
 require 'zendesk_config'
 
 class TicketClient
-  SECTION_FIELD = 21649362
-
   class << self
     def raise_ticket(zendesk)
       tags = zendesk[:tags] << "public_form"
@@ -12,25 +10,11 @@ class TicketClient
         subject: zendesk[:subject],
         tags: tags,
         requester: {name: zendesk[:name], email: email},
-        fields: [{id: SECTION_FIELD, value: zendesk[:section]}],
         description: zendesk[:description]
       }
       unless client.tickets.create!(ticket_details)
         raise ZendeskDidntCreateTicketError, "Failed to create Zendesk ticket: #{ticket_details.inspect}"
       end
-    end
-
-    def get_sections
-      sections_hash = {}
-      unless client.nil?
-        section_field = client.ticket_fields.find(:id => SECTION_FIELD)
-        unless section_field.nil?
-          section_field.custom_field_options.each do |tf|
-            sections_hash[tf.name] = tf.value
-          end
-        end
-      end
-      sections_hash
     end
 
     def client
