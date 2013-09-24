@@ -46,11 +46,6 @@ GOVUK.feedback.initCounters = function () {
 }
 
 GOVUK.feedback.checkRadio = function () {
-    if ($('#location-section').is(':checked')) {
-        $('#contact_section').removeAttr('disabled');
-    } else {
-        $('#contact_section').attr('disabled', 'disabled')
-    }
     if ($('#location-specific').is(':checked')) {
         $('#link').removeAttr('disabled');
     } else {
@@ -60,11 +55,6 @@ GOVUK.feedback.checkRadio = function () {
 
 GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
     $('#link').val(document.referrer);
-    // special handling for the service manual as it's not strictly a section on GOV.UK
-    if (document.referrer.indexOf("service-manual") >= 0) {
-        $('#location-section').click();
-        $('#contact_section').val("dbdss");
-    }
 }
 
 GOVUK.feedback.init = function () {

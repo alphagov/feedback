@@ -31,10 +31,4 @@ describe TicketClientDummy do
       with("Zendesk ticket creation fail for: #{details}")
     expect {@client.raise_ticket(details)}.to raise_error("Failed to create Zendesk ticket")
   end
-
-  it 'should simulate returning available departments' do
-    Rails.logger.should_receive(:info).
-      with('Zendesk get sections')
-    @client.get_sections.should_not be_empty
-  end
 end
