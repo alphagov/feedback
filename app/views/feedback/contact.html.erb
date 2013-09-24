@@ -18,16 +18,6 @@
     </label>
   </p>
 
-  <p class="inline option group">
-    <label>
-      <input type="radio" name="contact[location]" id="location-section" value="section"
-        <%= @old ? (@old[:location] == "section" ? "checked" : "" ) : "" %> > A specific section
-    </label>
-    <label for="contact_section" class="visuallyhidden">Section</label>
-    <%= select_tag "contact[section]", options_for_select(@sections, (@old ? @old[:section] : '')) %>
-  </p>
-
-
   <% if @errors && @errors[:link] %>
     <p class="validation group">
     <span class="validation-message" id="linkerror"><%= @errors[:link].first %></span>

@@ -1,6 +1,6 @@
 class ContactTicket < Ticket
   attr_accessor :location, :link, :textdetails,
-                :section, :name, :email,
+                :name, :email,
                 :javascript_enabled, :referrer
 
   validate :validate_link
@@ -53,7 +53,6 @@ class ContactTicket < Ticket
       tags: [],
       name: name,
       email: email,
-      section: section,
       description: contact_ticket_description
     }
   end
