@@ -39,10 +39,6 @@ module ZendeskStubs
   def get_last_zendesk_ticket_details
     @zendesk_client.tickets.last
   end
-
-  def given_zendesk_ticket_creation_fails
-    @zendesk_client.fail = true
-  end
 end
 
 RSpec.configure do |config|
