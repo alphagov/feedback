@@ -1,11 +1,8 @@
-require 'zendesk_api/error'
-require 'zendesk_didnt_create_ticket_error'
 require 'spam_error'
 require 'gds_api/exceptions'
 
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :robot_script_submission_detected
-  rescue_from ZendeskDidntCreateTicketError, ZendeskAPI::Error::ClientError, with: :unable_to_create_ticket_error
   rescue_from GdsApi::BaseError, with: :unable_to_create_ticket_error
 
 protected
@@ -15,11 +12,7 @@ protected
   end
 
   def unable_to_create_ticket_error(exception)
-    if exception.respond_to?(:errors)
-      ExceptionNotifier.notify_exception(exception, env: request.env, data: { message: "Zendesk errors: #{exception.errors}" })
-    else
-      ExceptionNotifier.notify_exception(exception, env: request.env)
-    end
+    ExceptionNotifier.notify_exception(exception, env: request.env)
 
     exception_class_name = exception.class.name.demodulize.downcase
     Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")

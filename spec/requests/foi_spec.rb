@@ -70,7 +70,7 @@ describe "FOI" do
     page.status_code.should == 400
   end
 
-  it "should show an error message when the zendesk connection fails" do
+  it "should show an error message when the support app isn't available" do
     support_isnt_available
 
     visit "/feedback/foi"
@@ -100,7 +100,7 @@ describe "FOI" do
     find_field('Your email address').value.should eq 'a@a.com'
     find_field('Confirm your email address').value.should eq 'a@a.com'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
 end

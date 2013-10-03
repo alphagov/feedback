@@ -41,7 +41,7 @@ describe "Contact" do
     fill_in "val", :with => "test val"
     click_on "Send message"
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
 
     page.status_code.should == 400
   end
@@ -64,7 +64,7 @@ describe "Contact" do
     assert_requested(stub_post)
   end
 
-  it "should show an error message when the zendesk connection fails" do
+  it "should show an error message when the support app isn't available" do
     support_isnt_available
 
     visit "/feedback/contact"
@@ -98,7 +98,7 @@ describe "Contact" do
     find_field('Your name').value.should eq 'test name'
     find_field('Your email address').value.should eq 'a@a.com'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with email without name" do
@@ -114,7 +114,7 @@ describe "Contact" do
     find_field('Your email address').value.should eq 'a@a.com'
     find_field('textdetails').value.should eq 'test text details'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with name without email" do
@@ -130,7 +130,7 @@ describe "Contact" do
     find_field('Your name').value.should eq 'test name'
     find_field('textdetails').value.should eq 'test text details'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should let the user submit a request with a link" do
