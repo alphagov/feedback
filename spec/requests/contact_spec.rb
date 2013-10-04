@@ -13,19 +13,24 @@ def contact_submission_should_be_successful
 end
 
 describe "Contact" do
+  include GdsApi::TestHelpers::Support
   it "should let the user submit a request with contact details" do
+    stub_post = stub_support_named_contact_creation(
+      requester: { name: "test name", email: "a@a.com" },
+      details: "test text details",
+      link: nil,
+      javascript_enabled: false,
+      user_agent: nil,
+      referrer: nil
+    )
+
     visit "/feedback/contact"
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
     contact_submission_should_be_successful
 
-    expected_description = "[Location]\nall\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "Ask a question",
-      :name => "test name",
-      :email => "a@a.com",
-      :description => expected_description,
-      :subject => "Named contact"
+    assert_requested(stub_post)
   end
 
   it "should not accept spam (ie a request with val field filled in)" do
@@ -36,29 +41,31 @@ describe "Contact" do
     fill_in "val", :with => "test val"
     click_on "Send message"
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
 
     page.status_code.should == 400
   end
 
   it "should let the user submit an anonymous request" do
+    stub_post = stub_support_long_form_anonymous_contact_creation(
+      details: "test text details",
+      link: nil,
+      javascript_enabled: false,
+      user_agent: nil,
+      referrer: nil
+    )
+
     visit "/feedback/contact"
 
     choose "location-all"
     fill_in "textdetails", :with => "test text details"
     contact_submission_should_be_successful
 
-    expected_description = "[Location]\nall\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :subject => "Ask a question",
-      :name => "",
-      :email => "",
-      :description => expected_description,
-      :subject => "Anonymous contact"
+    assert_requested(stub_post)
   end
 
-  it "should show an error message when the zendesk connection fails" do
-
-    given_zendesk_ticket_creation_fails
+  it "should show an error message when the support app isn't available" do
+    support_isnt_available
 
     visit "/feedback/contact"
 
@@ -70,11 +77,6 @@ describe "Contact" do
     i_should_be_on "/feedback/contact"
 
     page.status_code.should == 503
-
-    expected_description = "[Location]\nspecific\n[Link]\nsome url\n[Name]\ntest name\n[Details]\ntest text details\n[User Agent]\nunknown\n[JavaScript Enabled]\nfalse"
-    zendesk_should_have_ticket :name => "test name",
-                               :email => "a@a.com",
-                               :description => expected_description
   end
 
   it "should still work even if the request doesn't have correct form params" do
@@ -96,7 +98,7 @@ describe "Contact" do
     find_field('Your name').value.should eq 'test name'
     find_field('Your email address').value.should eq 'a@a.com'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with email without name" do
@@ -112,7 +114,7 @@ describe "Contact" do
     find_field('Your email address').value.should eq 'a@a.com'
     find_field('textdetails').value.should eq 'test text details'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with name without email" do
@@ -128,10 +130,12 @@ describe "Contact" do
     find_field('Your name').value.should eq 'test name'
     find_field('textdetails').value.should eq 'test text details'
 
-    zendesk_should_not_have_ticket
+    no_web_calls_should_have_been_made
   end
 
   it "should let the user submit a request with a link" do
+    stub_support_named_contact_creation
+
     visit "/feedback/contact"
 
     choose "location-specific"
@@ -143,26 +147,15 @@ describe "Contact" do
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
-    expected_description = <<-EOT
-[Location]
-specific
-[Link]
-some url
-[Name]
-test name
-[Details]
-test text details
-[User Agent]
-unknown
-[JavaScript Enabled]
-false
-EOT
-    zendesk_should_have_ticket :name => "test name",
-                               :email => "a@a.com",
-                               :description => expected_description.strip!
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["link"] == "some url"
+    end
   end
 
   it "should include the user agent if available" do
+    stub_support_named_contact_creation
+
     # Using Rack::Test to allow setting the user agent.
     post "/feedback/contact", {
       contact: {
@@ -175,27 +168,15 @@ EOT
       }
     }, {"HTTP_USER_AGENT" => "T1000 (Bazinga)"}
 
-    expected_description = <<-EOT
-[Location]
-specific
-[Link]
-www.test.com
-[Name]
-test name
-[Details]
-test text details
-[User Agent]
-T1000 (Bazinga)
-[JavaScript Enabled]
-false
-EOT
-
-    zendesk_should_have_ticket :name => "test name",
-                               :email => "test@test.com",
-                               :description => expected_description.strip!
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["user_agent"] == "T1000 (Bazinga)"
+    end
   end
 
-  it "should include the referer if available" do
+  it "should include the referrer if available" do
+    stub_support_named_contact_creation
+
     # Using Rack::Test to allow setting the user agent.
     post "/feedback/contact", {
       contact: {
@@ -209,6 +190,9 @@ EOT
       }
     }
 
-    get_last_zendesk_ticket_details[:description].should include("https://www.dev.gov.uk/referring_url")
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["referrer"] == "https://www.dev.gov.uk/referring_url"
+    end
   end
 end

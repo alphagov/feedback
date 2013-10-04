@@ -117,7 +117,7 @@ describe FeedbackController do
           }.merge(attrs)
         end
 
-        it "should submit a ticket to zendesk" do
+        it "should save the ticket" do
           stub_ticket = double("Ticket")
           ReportAProblemTicket.should_receive(:new).
             with(hash_including(
@@ -163,7 +163,7 @@ describe FeedbackController do
 
         context "when ticket creation fails" do
           before :each do
-            ReportAProblemTicket.any_instance.stub(:save).and_raise(ZendeskDidntCreateTicketError)
+            ReportAProblemTicket.any_instance.stub(:save).and_raise(GdsApi::BaseError)
           end
 
           it "should render the thankyou template assigning the message string" do
@@ -201,7 +201,7 @@ describe FeedbackController do
           }.merge(attrs)
         end
 
-        it "should submit a ticket to zendesk" do
+        it "should save the ticket" do
           stub_ticket = double("Ticket")
           ReportAProblemTicket.should_receive(:new).
             with(hash_including(
@@ -224,7 +224,7 @@ describe FeedbackController do
         end
 
         it "should return json indicating failure when ticket creation fails"  do
-          ReportAProblemTicket.any_instance.stub(:save).and_raise(ZendeskDidntCreateTicketError)
+          ReportAProblemTicket.any_instance.stub(:save).and_raise(GdsApi::BaseError)
           do_submit
           data = JSON.parse(response.body)
           data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}

@@ -31,11 +31,6 @@ describe ContactTicket do
     named_ticket.should be_valid
   end
 
-  it "should contain whether the ticket is named or anonymous in the subject" do
-    anon_ticket.subject.should == "Anonymous contact"
-    named_ticket.subject.should == "Named contact"
-  end
-
   it "should return contact error with empty textdetails" do
     anon_ticket(textdetails: "").should have(1).error_on(:textdetails)
   end
@@ -81,10 +76,6 @@ describe ContactTicket do
 
   it "should set the javascript state to false by default" do
     anon_ticket.javascript_enabled.should be_false
-  end
-
-  it "should set user agent to 'unknown' when none given" do
-    anon_ticket.user_agent.should == "unknown"
   end
 
   it "should make sure that a location is present" do

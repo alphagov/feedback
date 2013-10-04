@@ -46,7 +46,7 @@ describe FoiTicket do
     foi_request(textdetails: build_random_string(1251)).should have(1).error_on(:textdetails)
   end
 
-  it "should raise an exception if zendesk ticket creation fails" do
+  it "should raise an exception if support isn't available" do
     support_isnt_available
     lambda { foi_request.save }.should raise_error(GdsApi::BaseError)
   end

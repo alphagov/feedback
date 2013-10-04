@@ -15,50 +15,43 @@ class ContactTicket < Ticket
   validates_presence_of :location, message: "Please tell us what your contact is to do with"
 
   def javascript_enabled
-    !! @javascript_enabled
+    !!@javascript_enabled
   end
 
-  def user_agent
-    @user_agent || "unknown"
+  def link
+    @link.present? ? @link : nil
   end
 
-  def subject
-    anonymous? ? "Anonymous contact" : "Named contact"
+  def save
+    if valid?      
+      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
+      if anonymous?
+        support_api.create_anonymous_long_form_contact(ticket_details, headers: { "X-Varnish" => varnish_id })
+      else
+        support_api.create_named_contact(ticket_details, headers: { "X-Varnish" => varnish_id })
+      end
+    end
   end
 
   private
-  def contact_ticket_description
-    description = "[Location]\n" + location
-    if (location == "specific") and (not link.blank?)
-      description += "\n[Link]\n" + link
-    end
-    unless name.blank?
-      description += "\n[Name]\n" + name
-    end
-
-    unless textdetails.blank?
-      description += "\n[Details]\n" + textdetails
-    end
-
-    description += "\n[User Agent]\n#{user_agent}"
-    description += "\n[Referrer]\n#{referrer}" if referring_url_within_govuk?
-    description += "\n[JavaScript Enabled]\n#{javascript_enabled}"
-
-    description
-  end
-
-  def create_ticket
-    {
-      subject: subject,
-      tags: [],
-      name: name,
-      email: email,
-      description: contact_ticket_description
+  def ticket_details
+    details = {
+      details: textdetails,
+      link: link,
+      user_agent: user_agent,
+      referrer: referrer,
+      javascript_enabled: javascript_enabled,
     }
+    details[:requester] = { name: name, email: email } unless anonymous?
+    details
   end
 
   def anonymous?
     name.blank? and email.blank?
+  end
+
+  def referrer
+    referring_url_within_govuk? ? @referrer : nil
   end
 
   def validate_mail_name_connection
