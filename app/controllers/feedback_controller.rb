@@ -26,6 +26,10 @@ class FeedbackController < ApplicationController
     get(:foi)
   end
 
+  def feedback
+    render "feedback/feedback"
+  end
+
   def contact_submit
     submit sanitised((params[:contact] || {}).merge(technical_attributes)), :contact
   end
