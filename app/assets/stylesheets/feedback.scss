@@ -2,17 +2,39 @@
 // CONTACT FORM
 //
 
-// govuk_frontend_toolkit mixins
 @import "_conditionals";
-@import "_typography";
-@import "_colours";
-@import "_css3";
 @import "design-patterns/forms.scss";
 
-// local styleguide includes
-//@import "styleguide/_conditionals.css.scss";
-//@import "styleguide/_colours.scss";
+.article-container {
+  padding-right: 15em;
 
-// View stylesheets
-@import "views/feedback";
-@import "views/contact";
+  @include media(mobile) {
+    padding-right: 0;
+  }
+
+}
+
+.contact-form{
+  @include form();
+}
+
+#location p {
+  padding-bottom: 0;
+  label{
+    width: 10em;
+    display: inline-block;
+    margin-right: 0;
+  }
+}
+#link{
+  width: 64%;
+  margin-left: -0.25em;
+  margin-right: 0;
+}
+.contact-form textarea.full-size {
+  height: 15em;
+
+  @include ie(6) {
+    margin-left: 1em;
+  }
+}

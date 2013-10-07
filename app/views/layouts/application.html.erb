@@ -10,8 +10,20 @@
   </head>
   <body class="mainstream full-width">
     <div id="wrapper">
-      <main id="content" role="main" class="group category-page">
-        <%= yield %>
+      <main id="content" role="main" class="group">
+      <header class="page-header group">
+      <div>
+        <span></span>
+        <h1><%= yield :heading %></h1>
+      </div>
+      </header>
+      <div class="article-container group">
+        <article role="article" class="group">
+        <div class="inner">
+            <%= yield %>
+        </div>
+        </article>
+      </div>
       </main>
     </div>
   </body>
