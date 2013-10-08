@@ -39,6 +39,15 @@
     min-height: 500px;
     padding: 0 30px 45px 30px;
 
+    .contact-form {
+      p {
+        @include core-19;
+      }
+      legend {
+        @include bold-24
+      }
+    }
+
     p {
       @include core-24;
       padding-bottom: 1em;
@@ -74,6 +83,17 @@
       li {
         list-style: none;
         margin-bottom: 30px;
+        &.contact-keyline {
+          border-top: 1px solid $border-colour;
+          padding-top: 3em;
+          margin-top: 3em;
+          p {
+            @include core-24;
+            // a {
+            //   text-decoration: none;
+            // }
+          }
+        }
 
         p {
           margin: 0;
