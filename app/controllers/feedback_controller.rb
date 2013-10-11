@@ -7,7 +7,7 @@ class FeedbackController < ApplicationController
 
   DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
     "<p>If you have more extensive feedback, " +
-    "please visit the <a href='/feedback'>support page</a>.</p>"
+    "please visit the <a href='/contact'>contact page</a>.</p>"
   DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> "+
     "<p>Please tell us what you were doing or what went wrong.</p>"
 
@@ -144,7 +144,7 @@ class FeedbackController < ApplicationController
   end
 
   def setup_slimmer_artefact
-    set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
+    set_slimmer_dummy_artefact(:section_name => "Contact", :section_link => "/contact")
   end
 
   def technical_attributes
