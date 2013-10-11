@@ -67,6 +67,10 @@
         padding: 0;
       }
 
+    .full-name {
+      font-weight: 400;
+    }
+
     @include media(mobile) {
       padding: 0 15px 30px 15px;
       min-height: auto;

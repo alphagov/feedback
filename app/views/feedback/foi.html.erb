@@ -1,89 +1,99 @@
-<% content_for :title, "Freedom of Information - Feedback - GOV.UK" %>
-<% content_for :heading, "Make a Freedom of Information request" %>
+<% content_for :title do %><%= @page_title %><% end %>
 
-<p>If you're thinking of making a Freedom of Information (FOI) request please read the guide to
-  <a href="/make-a-freedom-of-information-request/the-freedom-of-information-act">
-    Freedom of Information requests</a>
-  first. The guide also explains how you can find out whether someone has already requested the
-  information you need.
-</p>
-
-<p>If you'd like to make a new FOI request, use the form below.</p>
-
-<form class="contact-form" action="/feedback/foi" method="post">
-
-  <input type="text" id="val" name="foi[val]" style="display:none"/>
-  <%= render "shared/error_summary" %>
-
-  <fieldset>
-    <legend>Your contact details</legend>
-
-    <% if @errors && @errors[:name] %>
-      <p class="validation group">
-      <span class="validation-message" id="nameerror"><%= @errors[:name].first %></span>
-    <% else %>
-      <p class="group">
-    <% end %>
-
-    <label for="name">Your name</label>
-    <input type="name" maxlength="1200" name="foi[name]" class="full-name" id="name" required aria-required="true"
-           value="<%= @old ? @old[:name] : '' %>"/>
-
-    </p>
-
-    <% if @errors && @errors[:email] %>
-      <p class="validation group">
-      <span class="validation-message" id="emailerror"><%= @errors[:email].first %></span>
-    <% else %>
-      <p class="group">
-    <% end %>
-
-    <label for="email">Your email address</label>
-    <input type="email" maxlength="1200" name="foi[email]" class="email" id="email" required aria-required="true"
-           value="<%= @old ? @old[:email] : '' %>"/>
-
-    </p>
-
-    <% if @errors && @errors[:email_confirmation] %>
-      <p class="validation group">
-      <span class="validation-message" id="email_confirmationerror"><%= @errors[:email_confirmation].first %></span>
-    <% else %>
-      <p class="group">
-    <% end %>
-
-    <label for="email_confirmation">Confirm your email address</label>
-    <input type="email" maxlength="1200" name="foi[email_confirmation]" class="email" id="email_confirmation" required aria-required="true"
-           value="<%= @old ? @old[:email_confirmation] : '' %>"/>
-
-    </p>
-  </fieldset>
-
-  <fieldset>
-    <legend>Your request</legend>
-    <div class="group">
-      <label for="textdetails">Provide a detailed description of the information you're seeking</label>
-
-      <p class="help">Please don't include any personal or financial information.</p>
-
-      <% if @errors && @errors[:textdetails] %>
-        <p class="validation group">
-        <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
-      <% end %>
-
-      <textarea name='foi[textdetails]' class="full-size counted" id='textdetails'
-                required aria-required="true">
-        <%= (@old ? @old[:textdetails] : '') %>
-      </textarea>
-
-      <% if @errors && @errors[:textdetails] %>
-        </p>
-      <% end %>
-
-      <p id="textdetailscounter" class="help" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+ <header class="page-header group">
+    <div class="full-width">
+      <h1>Make a Freedom of Information request</h1>
     </div>
-  </fieldset>
+  </header>
 
-  <p class="action group">
-    <button type="submit" class="button">Submit Freedom of Information request</button>
-  </p>
-</form>
+  <div class="contact-container full-width group">
+   <div class="inner">
+
+     <p>If you're thinking of making a Freedom of Information (FOI) request please read the guide to
+       <a href="/make-a-freedom-of-information-request/the-freedom-of-information-act">
+         Freedom of Information requests</a>
+       first. The guide also explains how you can find out whether someone has already requested the
+       information you need.
+     </p>
+
+     <p>If you'd like to make a new FOI request, use the form below.</p>
+
+     <form class="contact-form" action="/feedback/foi" method="post">
+
+       <input type="text" id="val" name="foi[val]" style="display:none"/>
+       <%= render "shared/error_summary" %>
+
+       <fieldset>
+         <legend>Your contact details</legend>
+
+         <% if @errors && @errors[:name] %>
+           <p class="validation group">
+           <span class="validation-message" id="nameerror"><%= @errors[:name].first %></span>
+         <% else %>
+           <p class="group">
+         <% end %>
+
+         <label for="name">Your name</label>
+         <input type="text" maxlength="1200" name="foi[name]" class="full-name" id="name" required aria-required="true"
+                value="<%= @old ? @old[:name] : '' %>"/>
+
+         </p>
+
+         <% if @errors && @errors[:email] %>
+           <p class="validation group">
+           <span class="validation-message" id="emailerror"><%= @errors[:email].first %></span>
+         <% else %>
+           <p class="group">
+         <% end %>
+
+         <label for="email">Your email address</label>
+         <input type="email" maxlength="1200" name="foi[email]" class="email" id="email" required aria-required="true"
+                value="<%= @old ? @old[:email] : '' %>"/>
+
+         </p>
+
+         <% if @errors && @errors[:email_confirmation] %>
+           <p class="validation group">
+           <span class="validation-message" id="email_confirmationerror"><%= @errors[:email_confirmation].first %></span>
+         <% else %>
+           <p class="group">
+         <% end %>
+
+         <label for="email_confirmation">Confirm your email address</label>
+         <input type="email" maxlength="1200" name="foi[email_confirmation]" class="email" id="email_confirmation" required aria-required="true"
+                value="<%= @old ? @old[:email_confirmation] : '' %>"/>
+
+         </p>
+       </fieldset>
+
+       <fieldset>
+         <legend>Your request</legend>
+         <div class="group">
+           <label for="textdetails">Provide a detailed description of the information you're seeking</label>
+
+           <p class="help">Please don't include any personal or financial information.</p>
+
+           <% if @errors && @errors[:textdetails] %>
+             <p class="validation group">
+             <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
+           <% end %>
+
+           <textarea name='foi[textdetails]' class="full-size counted" id='textdetails'
+                     required aria-required="true">
+             <%= (@old ? @old[:textdetails] : '') %>
+           </textarea>
+
+           <% if @errors && @errors[:textdetails] %>
+             </p>
+           <% end %>
+
+           <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+         </div>
+       </fieldset>
+
+       <p class="action group">
+         <button type="submit" class="button">Submit Freedom of Information request</button>
+       </p>
+     </form>
+   </div>
+  </div>    
