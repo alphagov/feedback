@@ -6,11 +6,11 @@ Feedback::Application.routes.draw do
   # See how all your routes lay out with "rake routes"
 
   get "/feedback", :to => redirect("/feedback/contact"), :format => false
-  post "/feedback", :to => "feedback#report_a_problem_submit", :format => false
-  get "/feedback/contact", :to => "feedback#contact", :format => false
-  post "/feedback/contact", :to => "feedback#contact_submit", :format => false
-  get "/feedback/foi", :to => "feedback#foi", :format => false
-  post "/feedback/foi", :to => "feedback#foi_submit", :format => false
+  post "/feedback", :to => "contact/govuk/problem_reports#create", :format => false
+  get "/feedback/contact", :to => "contact/govuk#new", :format => false
+  post "/feedback/contact", :to => "contact/govuk#create", :format => false
+  get "/feedback/foi", :to => "contact/foi#new", :format => false
+  post "/feedback/foi", :to => "contact/foi#create", :format => false
 
   root :to => redirect("/feedback", :status => 302)
 
