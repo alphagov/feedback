@@ -122,10 +122,6 @@ class FeedbackController < ApplicationController
     end
   end
 
-  def ticket_client
-    @ticket_client ||= TicketClientConnection.get_client
-  end
-
   def set_cache_control
     expires_in 10.minutes, :public => true unless Rails.env.development?
   end
