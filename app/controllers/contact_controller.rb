@@ -5,8 +5,11 @@ class ContactController < ApplicationController
   include Slimmer::Headers
   include UTF8Cleaner
 
-  before_filter :set_cache_control, only: [ :new ]
+  before_filter :set_cache_control, only: [ :new, :index ]
   before_filter :setup_slimmer_artefact, only: :new
+
+  def index
+  end
 
   def new
     respond_to do |format|

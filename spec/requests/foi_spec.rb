@@ -13,7 +13,7 @@ describe "FOI" do
   it "should let the user submit a FOI request" do
     stub_post = stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
 
-    visit "/feedback/foi"
+    visit "/contact/foi"
 
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
@@ -21,7 +21,7 @@ describe "FOI" do
     fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
     click_on "Submit Freedom of Information request"
 
-    i_should_be_on "/feedback/foi"
+    i_should_be_on "/contact/foi"
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
     assert_requested(stub_post)
@@ -32,7 +32,7 @@ describe "FOI" do
     valid_params = { foi: { name: "A", email: "a@b.com", email_confirmation: "a@b.com", textdetails: "abc" } }
 
     # Using Rack::Test instead of capybara to allow setting headers.
-    post "/feedback/foi", valid_params, {"HTTP_X_VARNISH" => "12345"}
+    post "/contact/foi", valid_params, {"HTTP_X_VARNISH" => "12345"}
 
     assert_requested(:post, %r{/foi_requests}) do |request|
       request.headers["X-Varnish"] == "12345"
@@ -42,23 +42,23 @@ describe "FOI" do
   it "recreate non-UTF-char bug" do
     stub_support_foi_request_creation
 
-    visit "/feedback/foi"
+    visit "/contact/foi"
 
     fill_in_valid_credentials
     fill_in "Provide a detailed description of the information you're seeking", :with => "\xFF\xFEother data"
     click_on "Submit Freedom of Information request"
 
-    i_should_be_on "/feedback/foi"
+    i_should_be_on "/contact/foi"
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/feedback/foi", {}
+    post "/contact/foi", {}
 
     response.body.should include("Please check the form")
   end
 
   it "should not accept spam (ie requests with val field filled in)" do
-    visit "/feedback/foi"
+    visit "/contact/foi"
 
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
@@ -73,7 +73,7 @@ describe "FOI" do
   it "should show an error message when the support app isn't available" do
     support_isnt_available
 
-    visit "/feedback/foi"
+    visit "/contact/foi"
 
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
@@ -81,20 +81,20 @@ describe "FOI" do
     fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
     click_on "Submit Freedom of Information request"
 
-    i_should_be_on "/feedback/foi"
+    i_should_be_on "/contact/foi"
 
     page.status_code.should == 503
   end
 
   it "should not proceed if the user hasn't filled in all required FOI fields" do
-    visit "/feedback/foi"
+    visit "/contact/foi"
 
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
     click_on "Submit Freedom of Information request"
 
-    i_should_be_on "/feedback/foi"
+    i_should_be_on "/contact/foi"
 
     find_field('Your name').value.should eq 'test name'
     find_field('Your email address').value.should eq 'a@a.com'

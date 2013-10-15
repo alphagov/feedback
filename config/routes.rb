@@ -1,18 +1,27 @@
 Feedback::Application.routes.draw do
+  get "/contact", format: false, to: "contact#index"
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  namespace :contact do
+    get 'govuk', to: "govuk#new", format: false
+    post 'govuk', to: "govuk#create", format: false
 
-  # See how all your routes lay out with "rake routes"
+    get 'foi', to: "foi#new", format: false
+    post 'foi', to: "foi#create", format: false
 
-  get "/feedback", :to => redirect("/feedback/contact"), :format => false
+    namespace :govuk do
+      post 'problem_reports', to: "problem_reports#create", format: false
+    end
+  end
+
+  # these are deprecated routes that can be removed once all frontends are submitting to the /contact endpoints
+  get "/feedback", :to => redirect("/contact"), :format => false
   post "/feedback", :to => "contact/govuk/problem_reports#create", :format => false
-  get "/feedback/contact", :to => "contact/govuk#new", :format => false
+  get "/feedback/contact", :to => redirect("/contact/govuk"), :format => false
   post "/feedback/contact", :to => "contact/govuk#create", :format => false
-  get "/feedback/foi", :to => "contact/foi#new", :format => false
+  get "/feedback/foi", :to => redirect("/contact/foi"), :format => false
   post "/feedback/foi", :to => "contact/foi#create", :format => false
 
-  root :to => redirect("/feedback", :status => 302)
+  root :to => redirect("/contact")
 
   if Rails.env.development? or Rails.env.test?
     get "test_forms/report_a_problem"
