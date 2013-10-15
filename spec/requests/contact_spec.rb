@@ -33,6 +33,24 @@ describe "Contact" do
     assert_requested(stub_post)
   end
 
+  # this can be deleted when the deprecated routes are dropped
+  it "should let the user submit a request on the legacy endpoint" do
+    stub_post = stub_support_named_contact_creation
+
+    post "/feedback/contact", {
+      contact: {
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "some text",
+        query: "cant-find",
+        location: "all"
+      }
+    }
+
+    expect(response.status).to eq(200)
+    assert_requested(stub_post)
+  end
+
   it "should not accept spam (ie a request with val field filled in)" do
     visit "/contact/govuk"
 

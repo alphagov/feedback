@@ -27,6 +27,17 @@ describe "FOI" do
     assert_requested(stub_post)
   end
 
+  # this can be deleted when the deprecated routes are dropped
+  it "should allow submission on the legacy end-point" do
+    stub_support_foi_request_creation
+    valid_params = { foi: { name: "A", email: "a@b.com", email_confirmation: "a@b.com", textdetails: "abc" } }
+
+    # Using Rack::Test instead of capybara to allow setting headers.
+    post "/feedback/foi", valid_params
+
+    assert_requested(:post, %r{/foi_requests})
+  end
+
   it "should pass the varnish ID through to the support app if set" do
     stub_support_foi_request_creation
     valid_params = { foi: { name: "A", email: "a@b.com", email_confirmation: "a@b.com", textdetails: "abc" } }
