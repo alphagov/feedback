@@ -21,7 +21,7 @@ describe "Reporting a problem with this content/tool" do
     fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
-    i_should_be_on "/feedback"
+    i_should_be_on "/contact"
 
     page.should have_content("Thank you for your help.")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
@@ -82,7 +82,7 @@ describe "Reporting a problem with this content/tool" do
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/feedback", {}
+    post "/contact", {}
 
     response.body.should include("we're unable to send your message")
   end
@@ -96,7 +96,7 @@ describe "Reporting a problem with this content/tool" do
     fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
-    i_should_be_on "/feedback"
+    i_should_be_on "/contact"
 
     page.status_code.should == 503
   end
@@ -109,7 +109,7 @@ describe "Reporting a problem with this content/tool" do
       fill_in "What went wrong", :with => ""
       click_on "Send"
 
-      i_should_be_on "/feedback"
+      i_should_be_on "/contact"
 
       page.should have_content("Sorry, we're unable to send your message")
     end

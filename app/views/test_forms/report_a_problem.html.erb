@@ -3,7 +3,7 @@
 <p class="report-a-problem-toggle"><a href="">Is something wrong with this page?</a></p>
 <div class="report-a-problem-container">
   <h2>Help us improve GOV.UK by telling us:</h2>
-  <%= form_tag "/feedback", :authenticity_token => false do %>
+  <%= form_tag "/contact", :authenticity_token => false do %>
     <%= hidden_field_tag :url, "#{request.protocol}#{request.host_with_port}#{request.fullpath}" %>
     <%= label_tag :what_doing do %>
       What you were doing
