@@ -19,24 +19,11 @@ class Ticket
     valid?
   end
 
-  def save
-    ticket = nil
-    if valid?
-      ticket = create_ticket
-      ticket_client.raise_ticket(ticket)
-    end
-    ticket
-  end
-
   def spam?
     errors[:val] && errors[:val].any?
   end
 
   private
-  def ticket_client
-    @ticket_client ||= TicketClientConnection.get_client
-  end
-
   def validate_val
     # val is used as a naive bot-preventor
     unless val.blank?
