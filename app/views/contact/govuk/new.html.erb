@@ -1,98 +1,103 @@
-<% content_for :title, "Contact GOV.UK - Feedback - GOV.UK" %>
-<% content_for :heading, "Contact GOV.UK" %>
+<% content_for :title do %><%= @page_title %><% end %>
 
-<p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
-<p>Remember, our <a href="/support">support pages</a> have answers to the most common questions about GOV.UK.</p>
-
-<form class="contact-form" action="/feedback/contact" method="post">
-
-  <input type="text" id="val" name="contact[val]" style="display:none"/>
-  <%= render "shared/error_summary" %>
-
-<fieldset id="location">  
-  <legend>What's it to do with?</legend>
-  <p>
-    <label>
-      <input type="radio" name="contact[location]" id="location-all" value="all"
-             <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
-    </label>
-  </p>
-
-  <% if @errors && @errors[:link] %>
-    <p class="validation group">
-    <span class="validation-message" id="linkerror"><%= @errors[:link].first %></span>
-  <% else %>
-    <p>
-  <% end %>
-
-  <label>
-    <input type="radio" name="contact[location]" id="location-specific"
-     value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
-  </label>
-
-    <label for="link" class="visuallyhidden">Enter URL or name of page</label>
-    <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
-    value=<%= (@old ? @old[:link] : '') %> >
-    </p>
-</fieldset>
-
-<fieldset>
-  <legend>Can you provide more detail?</legend>
-  <div class="group">
-    <p class="hint">For example if you were searching for something, what did you type into the search box?</p>
-    <div class='application-notice help-notice'>
-      <p>Please don't include any personal or financial information,
-      for example your National Insurance or credit card numbers.</p>
+  <header class="page-header group">
+    <div class="full-width">
+      <h1>Contact GOV.UK</h1>
     </div>
+  </header>
 
-    <% if @errors && @errors[:textdetails] %>
-      <p class="validation group">
-      <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
-    <% end %>
+  <div class="contact-container full-width group">
+    <div class="inner">
+      <form class="contact-form" action="/feedback/contact" method="post">
 
-    <label for="textdetails" class="visuallyhidden">Detail</label>
-    <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
-              required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
+        <p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+        <p>Remember, our <a href="/support">support pages</a> have answers to the most common questions about GOV.UK.</p>
+          <input type="text" id="val" name="contact[val]" style="display:none"/>
+          <%= render "shared/error_summary" %>
 
-    <% if @errors && @errors[:textdetails] %>
-      </p>
-    <% end %>
+        <fieldset id="location">  
+          <legend>What's it to do with?</legend>
+          <p>
+            <label>
+              <input type="radio" name="contact[location]" id="location-all" value="all"
+                     <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
+            </label>
+          </p>
 
-    <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+          <% if @errors && @errors[:link] %>
+            <p class="validation group">
+            <span class="validation-message" id="linkerror"><%= @errors[:link].first %></span>
+          <% else %>
+            <p>
+          <% end %>
+
+          <label>
+            <input type="radio" name="contact[location]" id="location-specific"
+             value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
+          </label>
+
+            <label for="link" class="visuallyhidden">Enter URL or name of page</label>
+            <input type="text" name="contact[link]" id="link" placeholder="Enter URL or name of page"
+            value=<%= (@old ? @old[:link] : '') %> >
+            </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Can you provide more detail?</legend>
+          <div class="group">
+            <p>For example if you were searching for something, what did you type into the search box?</p>
+              <p class="warning-message">Please don't include any personal or financial information,
+              for example your National Insurance or credit card numbers.</p>
+
+            <% if @errors && @errors[:textdetails] %>
+              <p class="validation group">
+              <span class="validation-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
+            <% end %>
+
+            <label for="textdetails" class="visuallyhidden">Detail</label>
+            <textarea name='contact[textdetails]' class="full-size counted" id="textdetails"
+                      required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
+
+            <% if @errors && @errors[:textdetails] %>
+              </p>
+            <% end %>
+
+            <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+          </div>
+        </fieldset>
+
+        <fieldset id="contact-details">
+          <legend>Do you want a reply?</legend>
+          <p>If you'd like us to get back to you, please leave your details below.</p>
+
+          <% if @errors && @errors[:name] %>
+            <p class="validation group">
+            <span class="validation-message" id="nameerror"><%= @errors[:name].first %></span>
+          <% else %>
+            <p class="group">
+          <% end %>
+
+            <label for="name">Your name</label>
+            <input name="contact[name]" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
+          </p>
+
+          <% if @errors && @errors[:email] %>
+            <p class="validation group">
+            <span class="validation-message" id="emailerror"><%= @errors[:email].first %></span>
+          <% else %>
+            <p class="group">
+          <% end %>
+
+            <label for="email">Your email address</label>
+            <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
+            <span class="hint">We'll only use this to reply to your message.</span>
+
+          </p>
+        </fieldset>
+
+        <p class="action group">
+          <button type="submit" class="button">Send message</button>
+        </p>
+      </form>
+    </div>
   </div>
-</fieldset>
-
-<fieldset id="contact-details">
-  <legend>Do you want a reply?</legend>
-  <p>If you'd like us to get back to you, please leave your details below.</p>
-
-  <% if @errors && @errors[:name] %>
-    <p class="validation group">
-    <span class="validation-message" id="nameerror"><%= @errors[:name].first %></span>
-  <% else %>
-    <p class="group">
-  <% end %>
-
-    <label for="name">Your name</label>
-    <input name="contact[name]" id="name" type="text" class="full-name" value="<%= (@old ? @old[:name] : '') %>">
-  </p>
-
-
-  <% if @errors && @errors[:email] %>
-    <p class="validation group">
-    <span class="validation-message" id="emailerror"><%= @errors[:email].first %></span>
-  <% else %>
-    <p class="group">
-  <% end %>
-
-    <label for="email">Your email address</label>
-    <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
-    <span class="hint">We'll only use this to reply to your message.</span>
-
-  </p>
-</fieldset>
-
-<p class="action group">
-  <button type="submit" class="button">Send message</button>
-</p>
-</form>
