@@ -1,8 +1,6 @@
-require 'slimmer/headers'
 require 'utf8_cleaner'
 
-class FeedbackController < ApplicationController
-  include Slimmer::Headers
+class Contact::Govuk::ProblemReportsController < ContactController
   include UTF8Cleaner
 
   DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
@@ -11,30 +9,7 @@ class FeedbackController < ApplicationController
   DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> "+
     "<p>Please tell us what you were doing or what went wrong.</p>"
 
-  before_filter :set_cache_control, :only => [
-    :foi,
-    :contact
-  ]
-
-  before_filter :setup_slimmer_artefact
-
-  def contact
-    get(:contact)
-  end
-
-  def foi
-    get(:foi)
-  end
-
-  def contact_submit
-    submit sanitised((params[:contact] || {}).merge(technical_attributes)), :contact
-  end
-
-  def foi_submit
-    submit sanitised((params[:foi] || {}).merge(technical_attributes)), :foi
-  end
-
-  def report_a_problem_submit
+  def create
     attributes = params.merge(technical_attributes)
 
     # Where the 'url' parameter isn't explicitly provided, obtain it
@@ -78,54 +53,6 @@ class FeedbackController < ApplicationController
 
   private
 
-  TICKET_HASH = {
-    :contact => ContactTicket,
-    :foi => FoiTicket
-  }
-
-  def get(type)
-    respond_to do |format|
-      format.html do
-        render type
-      end
-      format.any do
-        render nothing: true, status: 406
-      end
-    end
-  end
-
-  def submit(data, type)
-    ticket = TICKET_HASH[type].new data
-
-    if ticket.valid?
-      ticket.save
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
-      @contact_provided = (not data[:email].blank?)
-
-      respond_to do |format|
-        format.html do
-          render "shared/formok"
-        end
-      end
-    else
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
-      raise SpamError if ticket.spam?
-
-      @errors = ticket.errors.to_hash
-      @old = data
-
-      respond_to do |format|
-        format.html do
-          render :action => type
-        end
-      end
-    end
-  end
-
-  def set_cache_control
-    expires_in 10.minutes, :public => true unless Rails.env.development?
-  end
-
   def extract_return_path(url)
     uri = URI.parse(url)
     return_path = uri.path
@@ -133,13 +60,5 @@ class FeedbackController < ApplicationController
     return_path
   rescue URI::InvalidURIError
     nil
-  end
-
-  def setup_slimmer_artefact
-    set_slimmer_dummy_artefact(:section_name => "Feedback", :section_link => "/feedback")
-  end
-
-  def technical_attributes
-    { user_agent: request.user_agent, varnish_id: request.env["HTTP_X_VARNISH"] }
   end
 end

@@ -1,116 +1,16 @@
 require 'spec_helper'
 
-shared_examples_for "a contact resource" do
-  context "on GET" do
-    it "returns http success" do
-      get resource_name
-      response.should be_success
-    end
-
-    it "should set cache control headers for 10 mins" do
-      get resource_name
-      response.headers["Cache-Control"].should == "max-age=600, public"
-      response.should be_success
-    end
-
-    it "should return 406 when text/html isn't acceptable" do
-      request.env['HTTP_ACCEPT'] = 'nothing'
-      get resource_name
-
-      response.code.should eq("406")
-    end
-
-    it "should send a dummy artefact to slimmer with a Feedback section" do
-      controller.should_receive(:set_slimmer_dummy_artefact).with(section_name: "Feedback", section_link: "/feedback")
-      get resource_name
-    end
-  end
-
-  context "on POST" do
-    it "should return 406 when text/html isn't acceptable" do
-      request.env['HTTP_ACCEPT'] = 'nothing'
-      post resource_name, valid_params
-
-      response.code.should eq("406")
-    end
-  end
-end
-
-describe FeedbackController do
+describe Contact::Govuk::ProblemReportsController do
 
   before :each do
     ReportAProblemTicket.any_instance.stub(:save).and_return(true)
   end
 
-  describe "GET 'foi'" do
-    let(:resource_name) { :foi }
-    let(:valid_params) do
-      { 
-        foi: {
-          name: "test name",
-          email: "a@a.com",
-          email_confirmation: "a@a.com",
-          textdetails: "test foi"
-        }
-      }
-    end
-
-    it_behaves_like "a contact resource"
-  end
-
-  describe "GET 'contact'" do
-    let(:resource_name) { :contact }
-    let(:valid_params) do
-      {
-        contact: {
-          name: "Joe Bloggs",
-          email: "test@test.com",
-          textdetails: "Testing, testing, 1, 2, 3...",
-        }
-      }
-    end
-
-    it_behaves_like "a contact resource"
-  end
-
-  describe "POST 'contact'" do
-    context "with a valid contact submission" do
-      def do_contact_submit(attrs = {})
-        post :contact_submit, :contact => {
-          :name => "Joe Bloggs",
-          :email => "test@test.com",
-          :textdetails => "Testing, testing, 1, 2, 3...",
-        }.merge(attrs)
-      end
-
-      it "should respond successfully when POSTing a contact" do
-        do_contact_submit
-        response.should be_success
-      end
-
-      it "should create a ContactTicket object" do
-        stub_ticket = double("Ticket", valid?: true)
-        stub_ticket.should_receive(:save).and_return(true)
-
-        ContactTicket.should_receive(:new).
-          with(hash_including(
-            :name => "Joe Bloggs",
-            :email => "test@test.com",
-            :textdetails => "Testing, testing, 1, 2, 3...",
-          )).and_return(stub_ticket)
-
-        do_contact_submit
-
-        response.should be_success
-      end
-    end
-  end
-
-  describe "POST 'report_a_problem_submit'" do
+  describe "POST" do
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
-          post :report_a_problem_submit, {
+          post :create, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
@@ -182,7 +82,7 @@ describe FeedbackController do
             stub_ticket.should_receive(:save).and_return(true)
 
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
-            post :report_a_problem_submit, {
+            post :create, {
               :what_doing => "Nothing",
               :what_wrong => "Something",
             }
@@ -192,7 +92,7 @@ describe FeedbackController do
 
       context "ajax submission" do
         def do_submit(attrs = {})
-          xhr :post, :report_a_problem_submit, {
+          xhr :post, :create, {
             :url => "http://www.example.com/somewhere",
             :what_doing => "Nothing",
             :what_wrong => "Something",
