@@ -1,3 +1,6 @@
+require 'slimmer/headers'
+require 'utf8_cleaner'
+
 class ContactController < ApplicationController
   include Slimmer::Headers
   include UTF8Cleaner
