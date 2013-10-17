@@ -1,3 +1,5 @@
+require 'gds_api/support'
+
 class ContactTicket < Ticket
   attr_accessor :location, :link, :textdetails,
                 :name, :email,
