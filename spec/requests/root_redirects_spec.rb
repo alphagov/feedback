@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "Redirecting the root URL" do
 
-  specify "visiting the root URL redirects me to the feedback page", :allow_rescue => true do
+  specify "visiting the root URL redirects me to the contact index page", :allow_rescue => true do
     get "/"
 
-    response.should redirect_to("/feedback")
+    response.should redirect_to("/contact")
   end
 end

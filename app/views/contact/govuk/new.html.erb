@@ -8,12 +8,12 @@
 
   <div class="contact-container full-width group">
     <div class="inner">
-      <form class="contact-form" action="/feedback/contact" method="post">
+      <form class="contact-form" action="/contact/govuk" method="post">
 
-        <p>You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
-        <p>Remember, our <a href="/support">support pages</a> have answers to the most common questions about GOV.UK.</p>
-          <input type="text" id="val" name="contact[val]" style="display:none"/>
-          <%= render "shared/error_summary" %>
+        <p>Remember, the <a href="/help">help pages</a> have answers to the most common questions about the GOV.UK website. You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+
+        <input type="text" id="val" name="contact[val]" style="display:none"/>
+        <%= render "shared/error_summary" %>
 
         <fieldset id="location">  
           <legend>What's it to do with?</legend>

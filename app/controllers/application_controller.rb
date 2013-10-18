@@ -26,7 +26,7 @@ protected
       format.js do
         response = "<p>Sorry, we're unable to receive your message right now.</p> " +
                    "<p>We have other ways for you to provide feedback on the " +
-                   "<a href='/feedback'>support page</a>.</p>"
+                   "<a href='/contact'>contact page</a>.</p>"
         render json: { status: "error", message: response }, status: 503
       end
     end

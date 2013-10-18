@@ -21,7 +21,7 @@ describe "Reporting a problem with this content/tool" do
     fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
-    i_should_be_on "/feedback"
+    i_should_be_on "/contact/govuk/problem_reports"
 
     page.should have_content("Thank you for your help.")
     page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
@@ -51,6 +51,24 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
+  # this can be deleted when the deprecated routes are dropped
+  it "should support ajax submission on the deprecated endpoint", :js => true do
+    stub_post = stub_support_problem_report_creation
+
+    xhr :post, "/feedback", {
+      :url => "http://www.example.com/somewhere",
+      :what_doing => "Nothing",
+      :what_wrong => "Something",
+    }
+
+    expect(response.body).to include("Thank you for your help.")
+
+    assert_requested(:post, %r{/problem_reports}) do |request|
+      response = JSON.parse(request.body)["problem_report"]
+      response["what_doing"] == "Nothing" && response["what_wrong"] == "Something"
+    end
+  end
+
   def valid_params
     {
       :url => "http://www.example.com/test_forms/report_a_problem",
@@ -63,7 +81,7 @@ describe "Reporting a problem with this content/tool" do
     stub_support_problem_report_creation
 
     # Using Rack::Test instead of capybara to allow setting headers.
-    post "/feedback", valid_params, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
+    post "/contact/govuk/problem_reports", valid_params, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
 
     assert_requested(:post, %r{/problem_reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
@@ -74,7 +92,7 @@ describe "Reporting a problem with this content/tool" do
     stub_support_problem_report_creation
 
     # Using Rack::Test instead of capybara to allow setting headers.
-    post "/feedback", valid_params, {"HTTP_X_VARNISH" => "12345"}
+    post "/contact/govuk/problem_reports", valid_params, {"HTTP_X_VARNISH" => "12345"}
 
     assert_requested(:post, %r{/problem_reports}) do |request|
       request.headers["X-Varnish"] == "12345"
@@ -82,7 +100,7 @@ describe "Reporting a problem with this content/tool" do
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/feedback", {}
+    post "/contact/govuk/problem_reports", {}
 
     response.body.should include("we're unable to send your message")
   end
@@ -96,7 +114,7 @@ describe "Reporting a problem with this content/tool" do
     fill_in "What went wrong", :with => "It didn't work"
     click_on "Send"
 
-    i_should_be_on "/feedback"
+    i_should_be_on "/contact/govuk/problem_reports"
 
     page.status_code.should == 503
   end
@@ -109,7 +127,7 @@ describe "Reporting a problem with this content/tool" do
       fill_in "What went wrong", :with => ""
       click_on "Send"
 
-      i_should_be_on "/feedback"
+      i_should_be_on "/contact/govuk/problem_reports"
 
       page.should have_content("Sorry, we're unable to send your message")
     end

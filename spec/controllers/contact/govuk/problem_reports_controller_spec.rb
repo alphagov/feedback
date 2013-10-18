@@ -57,7 +57,7 @@ describe Contact::Govuk::ProblemReportsController do
         it "should render the thankyou template assigning the message string" do
           do_submit
           response.should render_template('thankyou')
-          assigns[:message].should == "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>"
+          assigns[:message].should == "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"
           assigns[:message].should be_html_safe
         end
 
@@ -120,14 +120,14 @@ describe Contact::Govuk::ProblemReportsController do
         it "should return json indicating success" do
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/feedback'>support page</a>.</p>"}
+          data.should == {"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"}
         end
 
         it "should return json indicating failure when ticket creation fails"  do
           ReportAProblemTicket.any_instance.stub(:save).and_raise(GdsApi::BaseError)
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/feedback'>support page</a>.</p>"}
+          data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>"}
         end
       end
     end

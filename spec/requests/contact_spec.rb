@@ -8,7 +8,7 @@ end
 
 def contact_submission_should_be_successful
   click_on "Send message"
-  i_should_be_on "/feedback/contact"
+  i_should_be_on "/contact/govuk"
   page.should have_content("Your message has been sent")
 end
 
@@ -24,7 +24,7 @@ describe "Contact" do
       referrer: nil
     )
 
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
@@ -33,8 +33,26 @@ describe "Contact" do
     assert_requested(stub_post)
   end
 
+  # this can be deleted when the deprecated routes are dropped
+  it "should let the user submit a request on the legacy endpoint" do
+    stub_post = stub_support_named_contact_creation
+
+    post "/feedback/contact", {
+      contact: {
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "some text",
+        query: "cant-find",
+        location: "all"
+      }
+    }
+
+    expect(response.status).to eq(200)
+    assert_requested(stub_post)
+  end
+
   it "should not accept spam (ie a request with val field filled in)" do
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
@@ -55,7 +73,7 @@ describe "Contact" do
       referrer: nil
     )
 
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in "textdetails", :with => "test text details"
@@ -67,33 +85,33 @@ describe "Contact" do
   it "should show an error message when the support app isn't available" do
     support_isnt_available
 
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-specific"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
 
-    i_should_be_on "/feedback/contact"
+    i_should_be_on "/contact/govuk"
 
     page.status_code.should == 503
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/feedback/contact", {}
+    post "/contact/govuk", {}
 
     response.body.should include("Please check the form")
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     click_on "Send message"
 
-    i_should_be_on "/feedback/contact"
+    i_should_be_on "/contact/govuk"
 
     find_field('Your name').value.should eq 'test name'
     find_field('Your email address').value.should eq 'a@a.com'
@@ -102,14 +120,14 @@ describe "Contact" do
   end
 
   it "should not let the user submit a request with email without name" do
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "textdetails", :with => "test text details"
     click_on "Send message"
 
-    i_should_be_on "/feedback/contact"
+    i_should_be_on "/contact/govuk"
 
     find_field('Your email address').value.should eq 'a@a.com'
     find_field('textdetails').value.should eq 'test text details'
@@ -118,14 +136,14 @@ describe "Contact" do
   end
 
   it "should not let the user submit a request with name without email" do
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-all"
     fill_in "Your name", :with => "test name"
     fill_in "textdetails", :with => "test text details"
     click_on "Send message"
 
-    i_should_be_on "/feedback/contact"
+    i_should_be_on "/contact/govuk"
 
     find_field('Your name').value.should eq 'test name'
     find_field('textdetails').value.should eq 'test text details'
@@ -136,14 +154,14 @@ describe "Contact" do
   it "should let the user submit a request with a link" do
     stub_support_named_contact_creation
 
-    visit "/feedback/contact"
+    visit "/contact/govuk"
 
     choose "location-specific"
     fill_in_valid_contact_details_and_description
     fill_in "link", :with => "some url"
     click_on "Send message"
 
-    i_should_be_on "/feedback/contact"
+    i_should_be_on "/contact/govuk"
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -157,7 +175,7 @@ describe "Contact" do
     stub_support_named_contact_creation
 
     # Using Rack::Test to allow setting the user agent.
-    post "/feedback/contact", {
+    post "/contact/govuk", {
       contact: {
         query: "report-problem",
         link: "www.test.com",
@@ -178,7 +196,7 @@ describe "Contact" do
     stub_support_named_contact_creation
 
     # Using Rack::Test to allow setting the user agent.
-    post "/feedback/contact", {
+    post "/contact/govuk", {
       contact: {
         query: "report-problem",
         link: "www.test.com",
