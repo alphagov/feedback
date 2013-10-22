@@ -13,6 +13,11 @@ def contact_submission_should_be_successful
 end
 
 describe "Contact" do
+  it "should display an index page" do
+    visit "/contact"
+    expect(page).to have_title "Contact"
+  end
+
   include GdsApi::TestHelpers::Support
   it "should let the user submit a request with contact details" do
     stub_post = stub_support_named_contact_creation(
@@ -25,6 +30,7 @@ describe "Contact" do
     )
 
     visit "/contact/govuk"
+    expect(page).to have_title "Contact GOV.UK"
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
