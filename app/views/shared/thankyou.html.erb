@@ -1,7 +1,5 @@
-<div class="contact-container full-width">
-	<%= @message %>
+<%= @message %>
 
-	<% if @return_path %>
-	  <%= link_to 'Return to where you were', @return_path %>
-	<% end %>
-</div>
+<% if @return_path %>
+  <%= link_to 'Return to where you were', @return_path %>
+<% end %>

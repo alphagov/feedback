@@ -11,7 +11,17 @@
   <body class="full-width">
     <div id="wrapper">
       <main id="content" role="main" class="group category-page">
-        <%= yield %>
+        <header class="page-header group">
+          <div class="full-width">
+            <h1><%= yield :title %></h1>
+          </div>
+        </header>
+
+        <div class="contact-container full-width group">
+          <%= yield %>
+        </div>
+
+        <%= yield :report_a_problem %>
       </main>
     </div>
   </body>
