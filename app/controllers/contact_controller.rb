@@ -27,15 +27,10 @@ class ContactController < ApplicationController
     ticket = ticket_class.new data
 
     if ticket.valid?
-      ticket.save
       Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
       @contact_provided = (not data[:email].blank?)
 
-      respond_to do |format|
-        format.html do
-          render "shared/formok"
-        end
-      end
+      respond_to_valid_submission(ticket)
     else
       Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
       raise SpamError if ticket.spam?
@@ -43,15 +38,36 @@ class ContactController < ApplicationController
       @errors = ticket.errors.to_hash
       @old = data
 
-      respond_to do |format|
-        format.html do
-          render :new
-        end
-      end
+      respond_to_invalid_submission(ticket)
     end
   end
 
   private
+  def respond_to_valid_submission(ticket)
+    ticket.save
+    confirm_submission
+  end
+
+  def respond_to_invalid_submission(ticket)
+    rerender_form    
+  end
+
+  def confirm_submission
+    respond_to do |format|
+      format.html do
+        render "shared/formok"
+      end
+    end
+  end
+
+  def rerender_form
+    respond_to do |format|
+      format.html do
+        render :new
+      end
+    end
+  end
+
   def contact_params
     params[type]
   end
