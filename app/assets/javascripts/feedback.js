@@ -26,25 +26,6 @@ GOVUK.feedback.initUserDetails = function () {
     $('#verifyemail').on('keydown', GOVUK.feedback.checkOnKeyDownEmail);
 }
 
-GOVUK.feedback.handleCounter = function (counted) {
-    var counterId = '#' + counted.id + 'counter';
-    $(counterId).html((1200 - counted.value.length) +  " characters remaining (limit is 1200 characters)");
-}
-
-
-GOVUK.feedback.initCounters = function () {
-    $('.counted').each(function (index) {
-        this.oninput = function () {
-            this.onkeydown = null;
-            GOVUK.feedback.handleCounter(this);
-        };
-
-        this.onkeydown = function () {
-            GOVUK.feedback.handleCounter(this);
-        };
-    });
-}
-
 GOVUK.feedback.checkRadio = function () {
     if ($('#location-specific').is(':checked')) {
         $('#link').removeAttr('disabled');
@@ -58,7 +39,7 @@ GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
 }
 
 GOVUK.feedback.init = function () {
-    GOVUK.feedback.initCounters();
+    GOVUK.textareaCharacterCountdown.initialize($('#textdetails'), $('#textdetailscounter'), 1200);
     GOVUK.feedback.initUserDetails();
     GOVUK.feedback.checkRadio();
 
