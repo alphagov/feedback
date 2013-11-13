@@ -13,8 +13,10 @@ Feedback::Application.routes.draw do
       post 'service-feedback', to: "service_feedback#create", format: false
     end
 
-    get 'dvla', to: redirect("/contact-the-dvla")
     get 'look-for-jobs', to: redirect("https://jobsearch.direct.gov.uk/ContactUs.aspx")
+
+    # these routes are deprecated and can be deleted as soon as the /contact page cache expires
+    get 'dvla', to: redirect("/contact-the-dvla")
     get 'passport-advice-line', to: redirect("/passport-advice-line")
     get 'student-finance-england', to: redirect("/contact-student-finance-england")
     get 'jobcentre-plus', to: redirect("/contact-jobcentre-plus")
