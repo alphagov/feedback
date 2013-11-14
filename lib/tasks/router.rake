@@ -18,6 +18,19 @@ namespace :router do
     ].each do |path, type|
       @router_api.add_route(path, type, @app_id, :skip_commit => true)
     end
+
+    [
+      %w(/feedback /contact),
+      %w(/feedback/contact /contact/govuk),
+      %w(/feedback/foi /contact/foi),
+      %w(/contact/dvla /contact-the-dvla),
+      %w(/contact/passport-advice-line /passport-advice-line),
+      %w(/contact/student-finance-england /contact-student-finance-england),
+      %w(/contact/jobcentre-plus /contact-jobcentre-plus),
+    ].each do |from, to|
+      @router_api.add_redirect_route(from, "exact", to, "permanent", :skip_commit => true)
+    end
+
     @router_api.commit_routes
   end
 
