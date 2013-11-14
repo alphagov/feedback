@@ -51,24 +51,6 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
-  # this can be deleted when the deprecated routes are dropped
-  it "should support ajax submission on the deprecated endpoint", :js => true do
-    stub_post = stub_support_problem_report_creation
-
-    xhr :post, "/feedback", {
-      :url => "http://www.example.com/somewhere",
-      :what_doing => "Nothing",
-      :what_wrong => "Something",
-    }
-
-    expect(response.body).to include("Thank you for your help.")
-
-    assert_requested(:post, %r{/problem_reports}) do |request|
-      response = JSON.parse(request.body)["problem_report"]
-      response["what_doing"] == "Nothing" && response["what_wrong"] == "Something"
-    end
-  end
-
   def valid_params
     {
       :url => "http://www.example.com/test_forms/report_a_problem",
