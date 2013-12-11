@@ -56,9 +56,7 @@
    <fieldset>
      <legend>Your request</legend>
      <div class="group">
-       <label for="textdetails">Provide a detailed description of the information you're seeking</label>
-
-       <p class="help">Include a detailed description of the information you're looking for. Don't include any personal or financial information.</p>
+      <label for="textdetails" class="instruction">Include a detailed description of the information you're looking for. Don't include any personal or financial information.</label>
 
        <% if @errors && @errors[:textdetails] %>
          <p class="validation group">
