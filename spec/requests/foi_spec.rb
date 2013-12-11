@@ -14,13 +14,13 @@ describe "FOI" do
     stub_post = stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
 
     visit "/contact/foi"
-    expect(page).to have_title "Make a Freedom of Information request"
+    expect(page).to have_title "Make a freedom of information request"
 
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
     fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
-    click_on "Submit Freedom of Information request"
+    click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
 
@@ -47,7 +47,7 @@ describe "FOI" do
 
     fill_in_valid_credentials
     fill_in "Provide a detailed description of the information you're seeking", :with => "\xFF\xFEother data"
-    click_on "Submit Freedom of Information request"
+    click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
   end
@@ -66,7 +66,7 @@ describe "FOI" do
     fill_in "Confirm your email address", :with => "a@a.com"
     fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
     fill_in "val", :with => "test val"
-    click_on "Submit Freedom of Information request"
+    click_on "Submit your freedom of information request"
 
     page.status_code.should == 400
   end
@@ -80,7 +80,7 @@ describe "FOI" do
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
     fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
-    click_on "Submit Freedom of Information request"
+    click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
 
@@ -93,7 +93,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    click_on "Submit Freedom of Information request"
+    click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
 
