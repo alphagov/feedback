@@ -19,7 +19,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
     click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
@@ -46,7 +46,7 @@ describe "FOI" do
     visit "/contact/foi"
 
     fill_in_valid_credentials
-    fill_in "Provide a detailed description of the information you're seeking", :with => "\xFF\xFEother data"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "\xFF\xFEother data"
     click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
@@ -64,7 +64,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
     fill_in "val", :with => "test val"
     click_on "Submit your freedom of information request"
 
@@ -79,7 +79,7 @@ describe "FOI" do
     fill_in "Your name", :with => "test name"
     fill_in "Your email address", :with => "a@a.com"
     fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Provide a detailed description of the information you're seeking", :with => "test foi request"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
     click_on "Submit your freedom of information request"
 
     i_should_be_on "/contact/foi"
