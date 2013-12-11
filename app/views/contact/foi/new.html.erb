@@ -1,15 +1,9 @@
-<% content_for :title do "Make a Freedom of Information request" end %>
+<% content_for :title do "Make a freedom of information request" end %>
 
 <div class="inner">
 
- <p>If you're thinking of making a Freedom of Information (FOI) request please read the guide to
-   <a href="/make-a-freedom-of-information-request/the-freedom-of-information-act">
-     Freedom of Information requests</a>
-   first. The guide also explains how you can find out whether someone has already requested the
-   information you need.
- </p>
-
- <p>If you'd like to make a new FOI request, use the form below.</p>
+ <p>Use this form to ask the Cabinet Office and GOV.UK for all the recorded information they have on any subject.</p>
+ <p>Find out <a href="/make-a-freedom-of-information-request">how to make a freedom of information (FOI) request</a> to other government departments or organisations, or search through previous FOI responses.</p>
 
  <form class="contact-form" action="/contact/foi" method="post">
 
@@ -62,9 +56,7 @@
    <fieldset>
      <legend>Your request</legend>
      <div class="group">
-       <label for="textdetails">Provide a detailed description of the information you're seeking</label>
-
-       <p class="help">Please don't include any personal or financial information.</p>
+      <label for="textdetails" class="instruction">Include a detailed description of the information you're looking for. Don't include any personal or financial information.</label>
 
        <% if @errors && @errors[:textdetails] %>
          <p class="validation group">
@@ -80,12 +72,12 @@
          </p>
        <% end %>
 
-       <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</p>
+       <p id="textdetailscounter" class="hint" aria-live="polite" aria-atomic="false">(Maximum of 1,200 characters)</p>
      </div>
    </fieldset>
 
    <p class="action group">
-     <button type="submit" class="button">Submit Freedom of Information request</button>
+     <button type="submit" class="button">Submit your freedom of information request</button>
    </p>
  </form>
 </div>
