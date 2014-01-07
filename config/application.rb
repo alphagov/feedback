@@ -44,7 +44,7 @@ module Feedback
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
+    config.filter_parameters += [:password, :name, :email, :email_confirmation, :textdetails, :what_doing, :what_wrong]
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
