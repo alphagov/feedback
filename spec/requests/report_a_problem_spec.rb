@@ -33,6 +33,7 @@ describe "Reporting a problem with this content/tool" do
     stub_post = stub_support_problem_report_creation
 
     visit "/test_forms/report_a_problem"
+    page.should have_button('Send')
 
     fill_in "What you were doing", :with => "I was doing something with javascript"
     fill_in "What went wrong", :with => "It didn't work"
@@ -118,6 +119,7 @@ describe "Reporting a problem with this content/tool" do
   describe "for json requests" do
     it "should show the error notification if both fields are empty", :js => true  do
       visit "/test_forms/report_a_problem"
+      page.should have_button('Send')
 
       fill_in "What you were doing", :with => ""
       fill_in "What went wrong", :with => ""
