@@ -24,7 +24,7 @@ gem 'rack_strip_client_ip', '0.0.1'
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
 else
-  gem "gds-api-adapters", "7.19.0"
+  gem 'gds-api-adapters', '8.2.1'
 end
 
 # Gems used only for assets and not required
