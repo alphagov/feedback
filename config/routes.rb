@@ -11,6 +11,7 @@ Feedback::Application.routes.draw do
     namespace :govuk do
       post 'problem_reports', to: "problem_reports#create", format: false
       post 'service-feedback', to: "service_feedback#create", format: false
+      get 'thankyou', to: "service_feedback#thankyou", format: false
     end
 
     get 'look-for-jobs', to: redirect("https://jobsearch.direct.gov.uk/ContactUs.aspx")

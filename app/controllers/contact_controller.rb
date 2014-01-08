@@ -49,7 +49,7 @@ class ContactController < ApplicationController
   end
 
   def respond_to_invalid_submission(ticket)
-    rerender_form    
+    rerender_form
   end
 
   def confirm_submission
