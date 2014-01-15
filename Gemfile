@@ -36,6 +36,7 @@ group :assets do
   gem 'govuk_frontend_toolkit', '0.41.0'
   gem 'sass', '3.2.1'
   gem 'sass-rails', "  ~> 3.2.3"
+  gem 'jquery-rails', '2.1.2'
 end
 
 group :development, :test do
