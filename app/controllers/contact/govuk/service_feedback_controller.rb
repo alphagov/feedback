@@ -11,11 +11,10 @@ class Contact::Govuk::ServiceFeedbackController < ContactController
   end
 
   def confirm_submission
-    respond_to do |format|
-      format.html do
-        render "thankyou"
-      end
-    end
+    redirect_to action: :thankyou
+  end
+
+  def thankyou
   end
 
   def respond_to_invalid_submission(ticket)
