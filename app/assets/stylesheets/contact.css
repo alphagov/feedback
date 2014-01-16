@@ -29,13 +29,12 @@
   }
 }
 
-
-.sections-variant .contact-search {
+.section-details .contact-search {
   margin: 0;
   width: 95%;
 }
 
-.searchbox-variant .contact-search {
+.contact-search {
   font-size: 24px;
   padding: 5px;
   margin-bottom: 20px;
