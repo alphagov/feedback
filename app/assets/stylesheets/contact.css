@@ -30,9 +30,17 @@
 }
 
 
-.contact-search {
+.sections-variant .contact-search {
   margin: 0;
   width: 95%;
+}
+
+.searchbox-variant .contact-search {
+  font-size: 24px;
+  padding: 5px;
+  margin-bottom: 20px;
+  color: #999;
+  line-height: 33px;
 }
 
 #contact-form {
@@ -71,13 +79,7 @@
   background-color: #D5E5F4;
   color: #161A1C;
 }
-.contact-search {
-  font-size: 24px;
-  padding: 5px;
-  margin-bottom: 20px;
-  color: #999;
-  line-height: 33px;
-}
+
 #contact-title {
   color: #2e3191;
   font-weight: 700;
