@@ -5,12 +5,12 @@
     <%=  stylesheet_link_tag 'feedback' %>
     <!--[if IE 6]><%= stylesheet_link_tag "feedback-ie6.css" %><![endif]-->
     <%=  javascript_include_tag 'feedback' %>
-    <%= yield :additional_javascript %>
     <%= yield :additional_stylesheets %>
     <title><%= yield :title %></title>
     <%= yield :section_meta_tags %>
   </head>
   <body class="full-width">
+    <%= yield :variant_testing %>
     <div id="wrapper">
       <main id="content" role="main" class="group category-page">
         <header class="page-header group">
