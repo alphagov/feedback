@@ -2,7 +2,7 @@ language: ruby
 script:
   - bundle exec rake
 rvm:
-  - 2.0.0
+  - 1.9.3-p484
 branches:
   except:
     - release
