@@ -154,7 +154,6 @@ $(function () {for (var i = 0, len = contact_array.length; i < len; ++i) {
 (function($){
   $(function(){
     $('select#contact-selector').selectToAutocomplete();
-    $('input[role=textbox]').attr('placeholder','example: child benefit')
     $('#contact-selector').change(function() {
       $('#contact-title').text($('#contact-selector option:selected').text());
       $('#contact-title').attr('href', $('#contact-selector option:selected').data('address')); 

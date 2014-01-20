@@ -18,7 +18,7 @@
 
 @media (min-width: 640px) {
   .section-details {
-    margin-left: 20.5em;
+    margin-left: 25.0em;
   }
 }
 
@@ -29,25 +29,17 @@
   }
 }
 
-.section-details .contact-search {
-  margin: 0;
-  width: 95%;
-}
-
 .contact-search {
   font-size: 24px;
   padding: 5px;
+  margin-top: 20px;
   margin-bottom: 20px;
   color: #999;
   line-height: 33px;
 }
 
 #contact-form {
-  margin-top: 20px;
-}
-
-.other > .section-details {
-  display: block;
+  margin-top: 10px;
 }
 
 .section-details p {
