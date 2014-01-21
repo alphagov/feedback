@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+.js-enabled .contact-contents {
+  display: none;
+}
+
+.section {
+  border-top: 1px solid #bfc1c3;
+  padding: 1em 0;
+}
+
+.section-title {
+  float: left;
+}
+
+.section-title > h2 {
+  font-size: 1.5em;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .section-details {
+    margin-left: 25.0em;
+  }
+}
+
+@media (max-width: 639px) {
+  .section-details {
+    clear:left;
+    padding-top: 0.5em;
+  }
+}
+
+.contact-search {
+  font-size: 24px;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #999;
+  line-height: 33px;
+}
+
+.contact-search-bar {
+  padding-top: 15px;
+}
+
+#contact-form {
+  margin-top: 10px;
+}
+
+.section-details p {
+  padding: 0;
+  margin: 0.5em 0 0 0;
+}
+
+.ui-autocomplete {
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  width: 218px;
+  border: 1px solid #B0BECA;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+.ui-autocomplete .ui-menu-item a {
+  border-top: 1px solid #B0BECA;
+  display: block;
+  padding: 4px 6px;
+  color: #353D44;
+  cursor: pointer;
+}
+.ui-autocomplete .ui-menu-item:first-child a {
+  border-top: none;
+}
+.ui-autocomplete .ui-menu-item a.ui-state-hover {
+  background-color: #D5E5F4;
+  color: #161A1C;
+}
+
+#contact-title {
+  color: #2e3191;
+  font-weight: 700;
+  font-size: 24px;
+}
+#contact-form {
+  font-size: 24px;
+}
+
+details {
+  display: block;
+  box-sizing: border-box;
+  padding: 1em 1em 0.25em 1em;
+  margin: 1em -1em 1.5em -1em;
+  background-color: transparent;
+  margin: 0 -1em 0 -1em; }
+  details > *:first-child {
+    margin-top: 0em; }
+  details ul, details ol {
+    padding-left: 1em; }
+  details .inner {
+    background-color: white;
+    border: 1px solid #bfc1c3;
+    padding: 2em;
+    margin-bottom: 0.75em; }
+    details .inner input[type="text"],
+    details .inner textarea {
+      background-color: #f8f8f8; }
+  details summary {
+    font-family: "nta", Arial, sans-serif;
+    font-size: 19px;
+    line-height: 1.31579;
+    font-weight: 400;
+    text-transform: none;
+    color: #2E3191;
+    cursor: pointer;
+    display: block;
+    text-decoration: underline;
+    margin-bottom: 0.5em;
+    margin-top: 0.2em; }
+    @media (max-width: 640px) {
+      details summary {
+        font-size: 16px;
+        line-height: 1.25; } }
+    details summary:hover {
+      color: #1D97FF; }
+    details summary:focus {
+      background-color: #FFBF47;
+      outline: 3px solid #FFBF47; }
+  details[open] {
+    margin: 0 -1em 0 -1em; }
+    details[open] summary:focus {
+      outline: none;
+      background-color: transparent; }
+
+/* Styles for browsers that don't yet natively support details/summary */
+.no-details details > * {
+  display: none; }
+
+.no-details details > summary:before {
+  float: left;
+  margin-top: 1px;
+  margin-right: -1px;
+  width: 20px;
+  content: '► '; }
+
+.no-details details.open > summary:before {
+  content: '▼ '; }
+
+.no-details details summary {
+  display: block; }

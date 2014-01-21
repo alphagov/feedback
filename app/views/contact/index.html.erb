@@ -1,4 +1,10 @@
 <% content_for :title do "Contact" end %>
+<% content_for :variant_testing do %>
+  <%= render "contact/variant-testing" %>
+  <%= javascript_include_tag 'contact' %>
+<% end %>
+
+<% content_for :additional_stylesheets do stylesheet_link_tag 'contact' end %>
 
 <nav role="navigation" class="contact-contents group">
   <div class="inner">
@@ -31,6 +37,6 @@
       </li>
     </ul>
  </div>
-</nav> 
+</nav>
 
 <% content_for :report_a_problem do %><div id="report-a-problem"></div><% end %>
