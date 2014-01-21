@@ -40,6 +40,10 @@
   line-height: 33px;
 }
 
+.contact-search-bar {
+  padding-top: 15px;
+}
+
 #contact-form {
   margin-top: 10px;
 }
