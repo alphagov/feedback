@@ -86,18 +86,65 @@
   font-size: 24px;
 }
 
-details, summary { display: block; }
-/* Apply a pointer cursor and style the background upon hover to indicate <summary> is a clickable element. */
-/* These styles can be applied regardless of whether the fallback is needed */
-summary { cursor: pointer; }
-summary:hover, summary:focus { background: #ddd; }
+details {
+  display: block;
+  box-sizing: border-box;
+  padding: 1em 1em 0.25em 1em;
+  margin: 1em -1em 1.5em -1em;
+  background-color: transparent;
+  margin: 0 -1em 0 -1em; }
+  details > *:first-child {
+    margin-top: 0em; }
+  details ul, details ol {
+    padding-left: 1em; }
+  details .inner {
+    background-color: white;
+    border: 1px solid #bfc1c3;
+    padding: 2em;
+    margin-bottom: 0.75em; }
+    details .inner input[type="text"],
+    details .inner textarea {
+      background-color: #f8f8f8; }
+  details summary {
+    font-family: "nta", Arial, sans-serif;
+    font-size: 19px;
+    line-height: 1.31579;
+    font-weight: 400;
+    text-transform: none;
+    color: #2E3191;
+    cursor: pointer;
+    display: block;
+    text-decoration: underline;
+    margin-bottom: 0.5em;
+    margin-top: 0.2em; }
+    @media (max-width: 640px) {
+      details summary {
+        font-size: 16px;
+        line-height: 1.25; } }
+    details summary:hover {
+      color: #1D97FF; }
+    details summary:focus {
+      background-color: #FFBF47;
+      outline: 3px solid #FFBF47; }
+  details[open] {
+    margin: 0 -1em 0 -1em; }
+    details[open] summary:focus {
+      outline: none;
+      background-color: transparent; }
 
-/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
-/* However, we’re still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
-/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
-.no-details details > * { display: none; }
-/* And yes, it should really be ::before, but that doesn’t work in IE8 */
-.no-details details > summary:before { float: left; width: 20px; content: '► '; }
-.no-details details.open > summary:before { content: '▼ '; }
-/* Make sure summary remains visible */
-.no-details details summary { display: block; }
+/* Styles for browsers that don't yet natively support details/summary */
+.no-details details > * {
+  display: none; }
+
+.no-details details > summary:before {
+  float: left;
+  margin-top: 1px;
+  margin-right: -1px;
+  width: 20px;
+  content: '► '; }
+
+.no-details details.open > summary:before {
+  content: '▼ '; }
+
+.no-details details summary {
+  display: block; }
