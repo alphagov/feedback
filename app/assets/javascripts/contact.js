@@ -9,7 +9,7 @@ GOVUK.showPage = function() {
   $('.contact-contents').show();
 };
 
-var test = new GOVUK.MultivariateTest({
+new GOVUK.MultivariateTest({
   name: 'govuk_contact_page',
   customVarIndex: 13,
   cohorts: {
