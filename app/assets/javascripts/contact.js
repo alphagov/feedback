@@ -3,6 +3,7 @@
 //= require jquery.select-to-autocomplete
 //= require govuk/multivariate-test
 //= require select
+//= require jquery.details
 
 GOVUK.showPage = function() {
   $('.contact-contents').show();
@@ -32,16 +33,8 @@ var test = new GOVUK.MultivariateTest({
     lists_variant: {
       callback: function() {
         $('.contact-container').html($('#lists-variant').html());
-        $('#show-contacts').click(function(e){
-          e.preventDefault();
-          $('#more-contacts').toggle();
-          if ($(this).text() === "more popular topics") {
-            $(this).text("fewer popular topics");
-          } else {
-            $(this).text("more popular topics");
-          }
-        });
-        $('#more-contacts').hide();
+        $('details').details();
+        $('html').addClass($.fn.details.support ? 'details' : 'no-details');
         GOVUK.showPage();
       }
     },
