@@ -55,7 +55,11 @@ class ContactController < ApplicationController
   def confirm_submission
     respond_to do |format|
       format.html do
-        render "shared/formok"
+        if @contact_provided
+          redirect_to contact_named_contact_thankyou_path
+        else
+          redirect_to contact_anonymous_feedback_thankyou_path
+        end
       end
     end
   end

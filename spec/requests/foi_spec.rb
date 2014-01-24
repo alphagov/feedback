@@ -22,7 +22,7 @@ describe "FOI" do
     fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
     click_on "Submit your Freedom of Information request"
 
-    i_should_be_on "/contact/foi"
+    i_should_be_on "/contact/govuk/thankyou"
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
     assert_requested(stub_post)
@@ -49,7 +49,7 @@ describe "FOI" do
     fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "\xFF\xFEother data"
     click_on "Submit your Freedom of Information request"
 
-    i_should_be_on "/contact/foi"
+    i_should_be_on "/contact/govuk/thankyou"
   end
 
   it "should still work even if the request doesn't have correct form params" do
