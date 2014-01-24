@@ -14,8 +14,8 @@ describe "Service feedback submission" do
 
     submit_service_feedback
 
-    expect(response).to redirect_to(contact_govuk_thankyou_path)
-    get contact_govuk_thankyou_path
+    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
+    get contact_anonymous_feedback_thankyou_path
 
     expect(response.body).to include("Thank you for your feedback.")
     assert_requested(stub_post)
@@ -45,8 +45,8 @@ describe "Service feedback submission" do
     in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
     post "/contact/govuk/service-feedback", {}
 
-    expect(response).to redirect_to(contact_govuk_thankyou_path)
-    get contact_govuk_thankyou_path
+    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
+    get contact_anonymous_feedback_thankyou_path
 
     response.body.should include("Thank you for your feedback.")
   end
