@@ -6,7 +6,7 @@ Feedback::Application.routes.draw do
     post 'govuk', to: "govuk#create", format: false
 
     get 'govuk/anonymous-feedback/thankyou', to: "govuk#anonymous_feedback_thankyou", format: false, as: "anonymous_feedback_thankyou"
-
+    get 'govuk/thankyou', to: "govuk#named_contact_thankyou", format: false, as: "named_contact_thankyou"
 
     get 'foi', to: "foi#new", format: false
     post 'foi', to: "foi#create", format: false
