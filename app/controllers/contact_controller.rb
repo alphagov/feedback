@@ -55,7 +55,7 @@ class ContactController < ApplicationController
   def confirm_submission
     respond_to do |format|
       format.html do
-        render "shared/formok"
+        render "contact/govuk/named_contact_thankyou"
       end
     end
   end
