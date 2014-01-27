@@ -24,6 +24,8 @@ describe ServiceFeedback do
 
   it { should ensure_length_of(:improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
   it { should ensure_length_of(:slug).is_at_most(512) }
+
+  it { should ensure_length_of(:url).is_at_most(2048) }
   it { should allow_value("https://www.gov.uk/done/whatever").for(:url) }
 
   context "when a valid URL is passed" do

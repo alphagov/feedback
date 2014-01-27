@@ -7,6 +7,7 @@ class ReportAProblemTicket < Ticket
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
+  validates_length_of :url, maximum: 2048
 
   def save
     if valid?
