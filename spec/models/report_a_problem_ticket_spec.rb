@@ -14,6 +14,10 @@ describe ReportAProblemTicket do
     ticket(what_doing: '').should have(1).error_on(:what_doing)
   end
 
+  it "should validate the length of URLs" do
+    ticket(url: 'https://www.gov.uk/' + ("a" * 2048)).should have(1).error_on(:url)
+  end
+
   it "should filter 'javascript_enabled'" do
     ticket(javascript_enabled: 'true').javascript_enabled.should be_true
 
