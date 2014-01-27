@@ -42,13 +42,4 @@ class ReportAProblemTicket < Ticket
       details
     end
   end
-
-  def url_if_valid(candidate)
-    valid_url?(candidate) ? candidate : nil
-  end
-
-  def valid_url?(candidate)
-    url = URI.parse(candidate) rescue false
-    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
-  end
 end
