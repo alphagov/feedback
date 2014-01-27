@@ -7,9 +7,10 @@ describe "Service feedback submission" do
     stub_post = stub_support_service_feedback_creation(
       service_satisfaction_rating: 5,
       improvement_comments: "the transaction is ace",
-      slug: "done/some-transaction",
+      slug: "some-transaction",
       user_agent: nil,
-      javascript_enabled: false
+      javascript_enabled: false,
+      url: "https://www.gov.uk/done/some-transaction"
     )
 
     submit_service_feedback
@@ -69,7 +70,8 @@ describe "Service feedback submission" do
       service_feedback: {
         service_satisfaction_rating: "5",
         improvement_comments: "the transaction is ace",
-        slug: "done/some-transaction"
+        slug: "some-transaction",
+        url: "https://www.gov.uk/done/some-transaction"
       }
     }
   end

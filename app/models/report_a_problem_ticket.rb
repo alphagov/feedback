@@ -7,6 +7,7 @@ class ReportAProblemTicket < Ticket
 
   validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
+  validates_length_of :url, maximum: 2048
 
   def save
     if valid?
@@ -41,14 +42,5 @@ class ReportAProblemTicket < Ticket
       details[field] = send(field)
       details
     end
-  end
-
-  def url_if_valid(candidate)
-    valid_url?(candidate) ? candidate : nil
-  end
-
-  def valid_url?(candidate)
-    url = URI.parse(candidate) rescue false
-    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
   end
 end
