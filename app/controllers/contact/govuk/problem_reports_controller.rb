@@ -40,7 +40,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
         # not returning the strictly correct status code here because
         # nginx is currently configured to intercept 4XX errors
         # and replace what the app sends back with a standard error page
-        render "shared/thankyou"
+        render "contact/govuk/problem_reports/thankyou"
       end
       format.js do
         response = { message: @message, status: status_text }

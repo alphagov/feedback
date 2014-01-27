@@ -23,7 +23,7 @@ describe Contact::FoiController do
 
       post :create, valid_params
 
-      response.should be_success
+      response.should be_redirect
       stub_post.should have_been_made
     end
   end

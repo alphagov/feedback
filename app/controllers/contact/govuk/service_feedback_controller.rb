@@ -11,10 +11,7 @@ class Contact::Govuk::ServiceFeedbackController < ContactController
   end
 
   def confirm_submission
-    redirect_to action: :thankyou
-  end
-
-  def thankyou
+    redirect_to contact_anonymous_feedback_thankyou_path
   end
 
   def respond_to_invalid_submission(ticket)

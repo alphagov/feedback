@@ -8,8 +8,14 @@ end
 
 def contact_submission_should_be_successful
   click_on "Send message"
-  i_should_be_on "/contact/govuk"
+  i_should_be_on "/contact/govuk/thankyou"
   page.should have_content("Your message has been sent")
+end
+
+def anonymous_submission_should_be_successful
+  click_on "Send message"
+  i_should_be_on "/contact/govuk/anonymous-feedback/thankyou"
+  page.should have_content("Thank you for your feedback")
 end
 
 describe "Contact" do
@@ -65,7 +71,7 @@ describe "Contact" do
 
     choose "location-all"
     fill_in "textdetails", :with => "test text details"
-    contact_submission_should_be_successful
+    anonymous_submission_should_be_successful
 
     assert_requested(stub_post)
   end
@@ -149,7 +155,7 @@ describe "Contact" do
     fill_in "link", :with => "some url"
     click_on "Send message"
 
-    i_should_be_on "/contact/govuk"
+    i_should_be_on "/contact/govuk/thankyou"
 
     page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
