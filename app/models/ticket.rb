@@ -1,3 +1,5 @@
+require 'uri'
+
 class Ticket
   include ActiveModel::Validations
   attr_accessor :val, :user_agent, :varnish_id
@@ -33,10 +35,14 @@ class Ticket
 
   def valid_url?(candidate)
     url = URI.parse(candidate) rescue false
-    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+    url.kind_of?(URI::Generic) && (url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS) || url.relative?)
   end
 
   def url_if_valid(candidate)
-    valid_url?(candidate) ? candidate : nil
+    case
+    when !valid_url?(candidate) then nil
+    when URI.parse(candidate).relative? then Plek.new.website_root + candidate
+    else candidate
+    end
   end
 end
