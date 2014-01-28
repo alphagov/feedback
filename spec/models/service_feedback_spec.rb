@@ -28,10 +28,17 @@ describe ServiceFeedback do
   it { should ensure_length_of(:url).is_at_most(2048) }
   it { should allow_value("https://www.gov.uk/done/whatever").for(:url) }
 
-  context "when a valid URL is passed" do
-    let(:subject) { ServiceFeedback.new(options) }
-    let(:options) { { service_satisfaction_rating: "5", url: "https://www.gov.uk/done/whenever" } }
-
+  context "when a valid absolute URL is passed" do
+    let(:subject) { ServiceFeedback.new(service_satisfaction_rating: "5", url: "https://www.gov.uk/done/whenever") }
     its(:details) { should include(url: "https://www.gov.uk/done/whenever") }
+  end
+
+  context "when a relative URL is passed (in prod)" do
+    before do
+      Plek.any_instance.stub(:website_root).and_return("https://www.something.gov.uk")
+    end
+
+    let(:subject) { ServiceFeedback.new(service_satisfaction_rating: "5", url: "/done/whenever") }
+    its(:details) { should include(url: "https://www.something.gov.uk/done/whenever") }
   end
 end
