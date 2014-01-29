@@ -55,5 +55,9 @@ describe ReportAProblemTicket do
     ticket(referrer: "https://www.gov.uk").referrer.should eq('https://www.gov.uk')
     ticket(referrer: "http://bla.example.org:9292/méh/fào?bar").referrer.should be_nil
     ticket(referrer: nil).referrer.should be_nil
-  end  
+  end
+
+  it "should treat a 'unknown' referrer as nil" do
+    expect(ticket(referrer: "unknown").referrer).to be_nil
+  end
 end

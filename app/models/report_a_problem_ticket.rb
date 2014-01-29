@@ -32,6 +32,10 @@ class ReportAProblemTicket < Ticket
     url_if_valid(@url)
   end
 
+  def referrer=(new_referrer)
+    @referrer = (new_referrer == 'unknown' ? nil : new_referrer)
+  end
+
   def referrer
     url_if_valid(@referrer)
   end
