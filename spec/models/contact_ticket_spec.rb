@@ -7,7 +7,8 @@ describe ContactTicket do
     {
       textdetails: "some text",
       query: "cant-find",
-      location: "all"
+      location: "all",
+      url: "https://www.gov.uk/contact/govuk"
     }
   end
 

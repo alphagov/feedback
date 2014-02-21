@@ -32,7 +32,8 @@ describe "Contact" do
       link: nil,
       javascript_enabled: false,
       user_agent: nil,
-      referrer: nil
+      referrer: nil,
+      url: "#{Plek.new.website_root}/contact/govuk"
     )
 
     visit "/contact/govuk"
@@ -64,7 +65,8 @@ describe "Contact" do
       link: nil,
       javascript_enabled: false,
       user_agent: nil,
-      referrer: nil
+      referrer: nil,
+      url: "#{Plek.new.website_root}/contact/govuk"
     )
 
     visit "/contact/govuk"

@@ -43,6 +43,7 @@ class ContactTicket < Ticket
       user_agent: user_agent,
       referrer: referrer,
       javascript_enabled: javascript_enabled,
+      url: url,
     }
     details[:requester] = { name: name, email: email } unless anonymous?
     details
