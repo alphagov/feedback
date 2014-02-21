@@ -2,7 +2,7 @@ require 'uri'
 
 class Ticket
   include ActiveModel::Validations
-  attr_accessor :val, :user_agent, :varnish_id
+  attr_accessor :val, :user_agent
 
   # This is deliberately higher than the max character count
   # in the front-end (javascript and maxlength in the markup),

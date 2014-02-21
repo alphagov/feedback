@@ -12,7 +12,7 @@ class ReportAProblemTicket < Ticket
   def save
     if valid?
       support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
-      support_api.create_problem_report(ticket_details, headers: { "X-Varnish" => varnish_id })
+      support_api.create_problem_report(ticket_details)
     end
   end
 

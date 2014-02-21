@@ -28,9 +28,9 @@ class ContactTicket < Ticket
     if valid?      
       support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
       if anonymous?
-        support_api.create_anonymous_long_form_contact(ticket_details, headers: { "X-Varnish" => varnish_id })
+        support_api.create_anonymous_long_form_contact(ticket_details)
       else
-        support_api.create_named_contact(ticket_details, headers: { "X-Varnish" => varnish_id })
+        support_api.create_named_contact(ticket_details)
       end
     end
   end

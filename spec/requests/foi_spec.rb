@@ -28,18 +28,6 @@ describe "FOI" do
     assert_requested(stub_post)
   end
 
-  it "should pass the varnish ID through to the support app if set" do
-    stub_support_foi_request_creation
-    valid_params = { foi: { name: "A", email: "a@b.com", email_confirmation: "a@b.com", textdetails: "abc" } }
-
-    # Using Rack::Test instead of capybara to allow setting headers.
-    post "/contact/foi", valid_params, {"HTTP_X_VARNISH" => "12345"}
-
-    assert_requested(:post, %r{/foi_requests}) do |request|
-      request.headers["X-Varnish"] == "12345"
-    end
-  end
-
   it "recreate non-UTF-char bug" do
     stub_support_foi_request_creation
 
