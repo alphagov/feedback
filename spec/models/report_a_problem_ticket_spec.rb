@@ -14,10 +14,6 @@ describe ReportAProblemTicket do
     ticket(what_doing: '').should have(1).error_on(:what_doing)
   end
 
-  it "should validate the length of URLs" do
-    ticket(url: 'https://www.gov.uk/' + ("a" * 2048)).should have(1).error_on(:url)
-  end
-
   it "should filter 'javascript_enabled'" do
     ticket(javascript_enabled: 'true').javascript_enabled.should be_true
 
@@ -43,12 +39,6 @@ describe ReportAProblemTicket do
     ticket(source: 'inside_government').source.should eq('inside_government')
 
     ticket(source: 'xxx').source.should be_nil
-  end
-
-  it "should filter 'url' to either nil or a valid URL" do
-    ticket(url: "https://www.gov.uk").url.should eq('https://www.gov.uk')
-    ticket(url: "http://bla.example.org:9292/méh/fào?bar").url.should be_nil
-    ticket(url: nil).url.should be_nil
   end
 
   it "should filter 'referrer' to either nil or a valid URL" do
