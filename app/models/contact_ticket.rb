@@ -78,6 +78,6 @@ class ContactTicket < Ticket
   end
 
   def referring_url_within_govuk?
-    @referrer and @referrer.starts_with?(ENV['GOVUK_WEBSITE_ROOT'])
+    @referrer and @referrer.starts_with?(Plek.new.website_root)
   end
 end
