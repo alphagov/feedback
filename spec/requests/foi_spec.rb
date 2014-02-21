@@ -11,7 +11,14 @@ describe "FOI" do
   end
 
   it "should let the user submit a FOI request" do
-    stub_post = stub_support_foi_request_creation(requester: {name: "test name", email: "a@a.com"}, details: "test foi request")
+    stub_post = stub_support_foi_request_creation(
+      requester: {
+        name: "test name",
+        email: "a@a.com"
+      },
+      details: "test foi request",
+      url: "#{Plek.new.website_root}/contact/foi"
+    )
 
     visit "/contact/foi"
     expect(page).to have_title "Make a Freedom of Information request"

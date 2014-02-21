@@ -6,6 +6,7 @@
   <p>Find out <a href="/make-a-freedom-of-information-request">how to make a Freedom of Information (FOI) request</a> to other government departments or organisations, or search through previous FOI responses.</p>
 
   <%= form_for :contact, url: contact_foi_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+    <%= hidden_field_tag 'foi[url]', Plek.new.website_root + contact_foi_path %>
 
     <input type="text" id="val" name="foi[val]" style="display:none"/>
     <%= render "shared/error_summary" %>
