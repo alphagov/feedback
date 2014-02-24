@@ -86,6 +86,6 @@ class ContactController < ApplicationController
   end
 
   def technical_attributes
-    { user_agent: request.user_agent, varnish_id: request.env["HTTP_X_VARNISH"] }
+    { user_agent: request.user_agent }
   end
 end

@@ -12,7 +12,7 @@ class ServiceFeedback < Ticket
   def save
     if valid?
       support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
-      support_api.create_service_feedback(details, headers: { "X-Varnish" => varnish_id })
+      support_api.create_service_feedback(details)
     end
   end
 

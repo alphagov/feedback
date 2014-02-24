@@ -71,17 +71,6 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
-  it "should pass the varnish ID through to the support app if set" do
-    stub_support_problem_report_creation
-
-    # Using Rack::Test instead of capybara to allow setting headers.
-    post "/contact/govuk/problem_reports", valid_params, {"HTTP_X_VARNISH" => "12345"}
-
-    assert_requested(:post, %r{/problem_reports}) do |request|
-      request.headers["X-Varnish"] == "12345"
-    end
-  end
-
   it "should still work even if the request doesn't have correct form params" do
     post "/contact/govuk/problem_reports", {}
 

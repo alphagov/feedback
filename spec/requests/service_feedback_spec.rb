@@ -32,16 +32,6 @@ describe "Service feedback submission" do
     end
   end
 
-  it "should pass the varnish ID through to the support app if set" do
-    stub_support_service_feedback_creation
-
-    submit_service_feedback("HTTP_X_VARNISH" => "12345")
-
-    assert_requested(:post, %r{/service_feedback}) do |request|
-      request.headers["X-Varnish"] == "12345"
-    end
-  end
-
   it "should accept invalid submissions, just not do anything with them (because the form itself lives
     in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
     post "/contact/govuk/service-feedback", {}
