@@ -2,7 +2,7 @@ require 'uri'
 
 class Ticket
   include ActiveModel::Validations
-  attr_accessor :val, :user_agent
+  attr_accessor :val, :user_agent, :url
 
   # This is deliberately higher than the max character count
   # in the front-end (javascript and maxlength in the markup),
@@ -11,6 +11,7 @@ class Ticket
   FIELD_MAXIMUM_CHARACTER_COUNT = 1250
 
   validate :validate_val
+  validates_length_of :url, maximum: 2048
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -23,6 +24,10 @@ class Ticket
 
   def spam?
     errors[:val] && errors[:val].any?
+  end
+
+  def url
+    url_if_valid(@url)
   end
 
   private

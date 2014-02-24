@@ -2,7 +2,8 @@
 
 
 <div class="inner">
-  <form class="contact-form" action="/contact/govuk" method="post">
+  <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+    <%= hidden_field_tag 'contact[url]', Plek.new.website_root + contact_govuk_path %>
 
     <p>Remember, the <a href="/help">help pages</a> have answers to the most common questions about the GOV.UK website. You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
 
@@ -92,5 +93,5 @@
     <p class="action group">
       <button type="submit" class="button">Send message</button>
     </p>
-  </form>
+  <% end %>
 </div>

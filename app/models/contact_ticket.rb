@@ -43,6 +43,7 @@ class ContactTicket < Ticket
       user_agent: user_agent,
       referrer: referrer,
       javascript_enabled: javascript_enabled,
+      url: url,
     }
     details[:requester] = { name: name, email: email } unless anonymous?
     details
@@ -78,6 +79,6 @@ class ContactTicket < Ticket
   end
 
   def referring_url_within_govuk?
-    @referrer and @referrer.starts_with?(ENV['GOVUK_WEBSITE_ROOT'])
+    @referrer and @referrer.starts_with?(Plek.new.website_root)
   end
 end

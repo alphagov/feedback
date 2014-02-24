@@ -20,6 +20,6 @@ class FoiTicket < Ticket
 
   private
   def ticket_details
-    { requester: { name: name, email: email }, details: textdetails }
+    { requester: { name: name, email: email }, details: textdetails, url: url }
   end
 end
