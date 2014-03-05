@@ -4,23 +4,13 @@
   <div class="inner">
     <p>Try one of the popular topics below to get a faster answer.</p>
     <ul id="popular-links" class="categories group">
-      <% @popular_links.each do |link| %>
-        <li>
-          <h2><%= link_to(link["Title"], link["URL"]) %></h2>
-          <p><%= link["Description"] %></p>
-        </li>
-      <% end %>
+      <%= render partial: "contact-link", collection: @popular_links, as: :link %>
     </ul>
 
     <details>
       <summary id="show-contacts">More topics</summary>
       <ul id="long-tail-links">
-        <% @long_tail_links.each do |link| %>
-          <li>
-            <h2><%= link_to(link["Title"], link["URL"]) %></h2>
-            <p><%= link["Description"] %></p>
-          </li>
-        <% end %>
+        <%= render partial: "contact-link", collection: @long_tail_links, as: :link %>
       </ul>
     </details>
 
