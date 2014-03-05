@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Interstitial page" do
   it "should display popular contact links" do
-    visit "/contact"    
+    visit "/contact"
 
     within "#popular-links" do
       CONTACT_LINKS.popular.each do |link|
