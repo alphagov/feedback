@@ -1,3 +1,5 @@
+//= require jquery.details.js
+
 var GOVUK = GOVUK || {};
 
 GOVUK.feedback = {};
@@ -74,6 +76,9 @@ GOVUK.feedback.init = function () {
     GOVUK.feedback.prepopulateFormBasedOnReferrer();
     $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
     $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>');
+
+    $('details').details();
+    $('html').addClass($.fn.details.support ? 'details' : 'no-details');
 }
 
 $(GOVUK.feedback.init);
