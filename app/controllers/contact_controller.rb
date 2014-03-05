@@ -9,6 +9,7 @@ class ContactController < ApplicationController
   before_filter :setup_slimmer_artefact, only: :new
 
   def index
+    @popular_links = POPULAR_CONTACT_LINKS
   end
 
   def new

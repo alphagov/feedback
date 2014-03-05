@@ -4,26 +4,13 @@
   <div class="inner">
     <p>Try one of the popular topics below to get a faster answer.</p>
     <ul class="categories group">
-      <li>
-        <h2><a href="/contact-the-dvla">Driving licences and car tax</a></h2>
-        <p>Contact DVLA for questions about driving and your vehicle.</p>
-      </li>
-      <li>
-        <h2><a href="/contact/look-for-jobs">Help with Universal Jobmatch</a></h2>
-        <p>Ask a question about the service or retrieve your lost login details.</p>
-      </li>
-      <li>
-        <h2><a href="/passport-advice-line">Passport Advice Line</a></h2>
-        <p>Get help with your passport application and renewals if you're a British Citizen.</p>
-      </li>
-      <li>
-        <h2><a href="/contact-student-finance-england">Student Finance England</a></h2>
-        <p>Get help with student loan applications and grants.</p>
-      </li>
-      <li>
-        <h2><a href="/contact-jobcentre-plus">Jobcentre Plus</a></h2>
-        <p>Get advice on benefits such as Jobseeker's Allowance (JSA).</p>
-      </li>
+      <% @popular_links.each do |link| %>
+        <li>
+          <h2><%= link_to(link["Title"], link["URL"]) %></h2>
+          <p><%= link["Description"] %></p>
+        </li>
+      <% end %>
+
       <li class="contact-keyline">
         <p>Use the <a href="/contact/govuk">GOV.UK form</a> to send your questions or comments about the website.</p>
         <br/>
