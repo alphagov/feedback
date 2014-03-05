@@ -3,14 +3,28 @@
 <nav role="navigation" class="contact-contents group">
   <div class="inner">
     <p>Try one of the popular topics below to get a faster answer.</p>
-    <ul class="categories group">
+    <ul id="popular-links" class="categories group">
       <% @popular_links.each do |link| %>
         <li>
           <h2><%= link_to(link["Title"], link["URL"]) %></h2>
           <p><%= link["Description"] %></p>
         </li>
       <% end %>
+    </ul>
 
+    <details>
+      <summary id="show-contacts">More topics</summary>
+      <ul id="long-tail-links">
+        <% @long_tail_links.each do |link| %>
+          <li>
+            <h2><%= link_to(link["Title"], link["URL"]) %></h2>
+            <p><%= link["Description"] %></p>
+          </li>
+        <% end %>
+      </ul>
+    </details>
+
+    <ul>
       <li class="contact-keyline">
         <p>Use the <a href="/contact/govuk">GOV.UK form</a> to send your questions or comments about the website.</p>
         <br/>

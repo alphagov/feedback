@@ -10,6 +10,7 @@ class ContactController < ApplicationController
 
   def index
     @popular_links = CONTACT_LINKS.popular
+    @long_tail_links = CONTACT_LINKS.long_tail
   end
 
   def new
