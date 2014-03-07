@@ -13,6 +13,7 @@ gem "unicorn", '4.3.1'
 gem "exception_notification", '4.0.0'
 gem "aws-ses", :require => 'aws/ses'
 gem "plek", "1.5.0"
+gem "airbrake", "3.1.15"
 
 gem "valid_email", "0.0.4"
 
