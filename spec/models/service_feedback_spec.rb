@@ -5,7 +5,7 @@ describe ServiceFeedback do
   include ValidatorHelper
   include GdsApi::TestHelpers::Support
 
-  context "valid service feedback" do  
+  context "valid service feedback" do
     let(:subject) { ServiceFeedback.new(options) }
     let(:options) { { service_satisfaction_rating: "5", improvement_comments: "Could it be any more black", url: "/done/abc" } }
     it { should be_valid }
@@ -25,4 +25,9 @@ describe ServiceFeedback do
 
   it { should ensure_length_of(:improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
   it { should ensure_length_of(:slug).is_at_most(512) }
+
+  context "with empty comments" do
+    let(:subject) { ServiceFeedback.new(improvement_comments: "") }
+    its(:details) { should include(improvement_comments: nil) }
+  end
 end

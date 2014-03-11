@@ -16,13 +16,18 @@ class ServiceFeedback < Ticket
   end
 
   def details
-    { 
+    {
       service_satisfaction_rating: service_satisfaction_rating.to_i,
       improvement_comments: improvement_comments,
-      slug: slug, 
+      slug: slug,
       user_agent: user_agent,
       javascript_enabled: !!javascript_enabled,
       url: url
     }
+  end
+
+  private
+  def improvement_comments
+    @improvement_comments.present? ? @improvement_comments : nil
   end
 end
