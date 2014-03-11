@@ -12,7 +12,7 @@ protected
   end
 
   def unable_to_create_ticket_error(exception)
-    ExceptionNotifier.notify_exception(exception, env: request.env)
+    notify_airbrake(exception)
 
     exception_class_name = exception.class.name.demodulize.downcase
     Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")
