@@ -32,8 +32,8 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '2.1.2'
   gem 'govuk_frontend_toolkit', '1.4.0'
-  gem 'sass', '3.2.1'
-  gem 'sass-rails', "  ~> 3.2.3"
+  gem 'sass', '3.3.9'
+  gem 'sass-rails', '3.2.6'
 end
 
 group :development, :test do
