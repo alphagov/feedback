@@ -31,7 +31,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '2.1.2'
-  gem 'govuk_frontend_toolkit', '0.43.2'
+  gem 'govuk_frontend_toolkit', '1.4.0'
   gem 'sass', '3.2.1'
   gem 'sass-rails', "  ~> 3.2.3"
 end
