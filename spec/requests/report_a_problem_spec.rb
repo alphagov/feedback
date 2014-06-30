@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 
 describe "Reporting a problem with this content/tool" do
   include GdsApi::TestHelpers::Support

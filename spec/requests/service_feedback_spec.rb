@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 
 describe "Service feedback submission" do
   include GdsApi::TestHelpers::Support

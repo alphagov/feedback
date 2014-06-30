@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 
 def fill_in_valid_contact_details_and_description
   fill_in "Your name", :with => "test name"
