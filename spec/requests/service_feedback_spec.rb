@@ -1,18 +1,18 @@
 require 'spec_helper'
-require 'gds_api/test_helpers/support'
+require 'gds_api/test_helpers/support_api'
 
 describe "Service feedback submission" do
-  include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
 
-  it "should pass the feedback through the support API" do
-    stub_post = stub_support_service_feedback_creation(
+  it "should pass the feedback through the support-api" do
+    stub_post = stub_support_api_service_feedback_creation(
       service_satisfaction_rating: 5,
-      improvement_comments: "the transaction is ace",
+      details: "the transaction is ace",
       slug: "some-transaction",
       user_agent: nil,
       javascript_enabled: false,
-      url: "https://www.gov.uk/done/some-transaction",
       referrer: "https://www.some-transaction.service.gov/uk/completed",
+      path: "/done/some-transaction",
     )
 
     submit_service_feedback
@@ -25,11 +25,11 @@ describe "Service feedback submission" do
   end
 
   it "should include the user_agent if available" do
-    stub_support_service_feedback_creation
+    stub_support_api_service_feedback_creation
 
     submit_service_feedback("HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)")
 
-    assert_requested(:post, %r{/service_feedback}) do |request|
+    assert_requested(:post, %r{/service-feedback}) do |request|
       JSON.parse(request.body)["service_feedback"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
     end
   end
@@ -44,8 +44,8 @@ describe "Service feedback submission" do
     response.body.should include("Thank you for your feedback.")
   end
 
-  it "should handle the support app being unavailable" do
-    support_isnt_available
+  it "should handle the support-api being unavailable" do
+    support_api_isnt_available
 
     submit_service_feedback
 

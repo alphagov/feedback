@@ -1,22 +1,22 @@
 require 'spec_helper'
-require 'gds_api/test_helpers/support'
+require 'gds_api/test_helpers/support_api'
 
 describe ServiceFeedback do
   include ValidatorHelper
-  include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
 
   context "valid service feedback" do
     let(:subject) { ServiceFeedback.new(options) }
     let(:options) { { service_satisfaction_rating: "5", improvement_comments: "Could it be any more black", url: "/done/abc" } }
     it { should be_valid }
 
-    it "should raise an exception if support isn't available" do
-      support_isnt_available
+    it "should raise an exception if the support-api isn't available" do
+      support_api_isnt_available
       lambda { subject.save }.should raise_error(GdsApi::BaseError)
     end
 
-    its(:details) { should include(service_satisfaction_rating: 5) }
-    its(:details) { should include(url: "#{Plek.new.website_root}/done/abc") }
+    its(:options) { should include(service_satisfaction_rating: 5) }
+    its(:options) { should include(path: "/done/abc") }
   end
 
   it { should_not allow_value(nil).for(:service_satisfaction_rating) }
@@ -28,6 +28,11 @@ describe ServiceFeedback do
 
   context "with empty comments" do
     let(:subject) { ServiceFeedback.new(improvement_comments: "") }
-    its(:details) { should include(improvement_comments: nil) }
+    its(:options) { should include(details: nil) }
+  end
+
+  context "with an invalid URL" do
+    let(:subject) { ServiceFeedback.new(url: "```") }
+    its(:options) { should include(path: nil) }
   end
 end
