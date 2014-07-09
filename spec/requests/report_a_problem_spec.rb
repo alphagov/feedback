@@ -53,6 +53,28 @@ describe "Reporting a problem with this content/tool" do
     end
   end
 
+  context "when the message follows a known spam pattern" do
+    it "confirms submission but doesn't actually persist the message" do
+      PROBLEM_REPORT_SPAM_MATCHERS << lambda do |message|
+        message.what_doing.present? && message.what_doing.include?("spammy spam")
+      end
+
+      visit "/test_forms/report_a_problem"
+
+      fill_in "What you were doing", with: "spammy spam"
+      fill_in "What went wrong", with: "Nothing"
+      click_on "Send"
+
+      page.should have_content("Thank you for your help.")
+
+      assert_not_requested(:post, %r{/problem_reports})
+    end
+
+    after do
+      PROBLEM_REPORT_SPAM_MATCHERS.clear
+    end
+  end
+
   def valid_params
     {
       :url => "http://www.example.com/test_forms/report_a_problem",

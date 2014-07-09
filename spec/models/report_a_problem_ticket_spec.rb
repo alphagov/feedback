@@ -50,4 +50,15 @@ describe ReportAProblemTicket do
   it "should treat a 'unknown' referrer as nil" do
     expect(ticket(referrer: "unknown").referrer).to be_nil
   end
+
+  it "should know if it's spam or not" do
+    PROBLEM_REPORT_SPAM_MATCHERS << lambda { |message| message.what_wrong.include?("spammy spam") }
+
+    expect(ticket(what_wrong: "spammy spam")).to be_spam
+    expect(ticket(what_wrong: "normal content")).to_not be_spam
+  end
+
+  after do
+    PROBLEM_REPORT_SPAM_MATCHERS.clear
+  end
 end

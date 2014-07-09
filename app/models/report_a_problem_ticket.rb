@@ -9,7 +9,7 @@ class ReportAProblemTicket < Ticket
   validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
 
   def save
-    if valid?
+    if valid? && !spam?
       support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
       support_api.create_problem_report(ticket_details)
     end
@@ -33,6 +33,10 @@ class ReportAProblemTicket < Ticket
 
   def referrer
     url_if_valid(@referrer)
+  end
+
+  def spam?
+    PROBLEM_REPORT_SPAM_MATCHERS.any? { |pattern| pattern[self] }
   end
 
   private
