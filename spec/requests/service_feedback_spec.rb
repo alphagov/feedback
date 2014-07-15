@@ -11,7 +11,8 @@ describe "Service feedback submission" do
       slug: "some-transaction",
       user_agent: nil,
       javascript_enabled: false,
-      url: "https://www.gov.uk/done/some-transaction"
+      url: "https://www.gov.uk/done/some-transaction",
+      referrer: "https://www.some-transaction.service.gov/uk/completed",
     )
 
     submit_service_feedback
@@ -62,7 +63,8 @@ describe "Service feedback submission" do
         service_satisfaction_rating: "5",
         improvement_comments: "the transaction is ace",
         slug: "some-transaction",
-        url: "https://www.gov.uk/done/some-transaction"
+        url: "https://www.gov.uk/done/some-transaction",
+        referrer: "https://www.some-transaction.service.gov/uk/completed",
       }
     }
   end

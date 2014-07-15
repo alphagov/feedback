@@ -1,7 +1,7 @@
 require 'gds_api/support'
 
 class ServiceFeedback < Ticket
-  attr_accessor :service_satisfaction_rating, :improvement_comments, :slug, :javascript_enabled
+  attr_accessor :service_satisfaction_rating, :improvement_comments, :slug, :javascript_enabled, :referrer
 
   validates_presence_of :service_satisfaction_rating, message: "You must select a rating"
   validates_inclusion_of :service_satisfaction_rating, in: ('1'..'5').to_a
@@ -22,6 +22,7 @@ class ServiceFeedback < Ticket
       slug: slug,
       user_agent: user_agent,
       javascript_enabled: !!javascript_enabled,
+      referrer: referrer,
       url: url
     }
   end
