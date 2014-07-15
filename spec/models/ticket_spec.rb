@@ -24,4 +24,14 @@ describe Ticket do
   it "should add the website root to relative URLs" do
     Ticket.new(url: '/relative/url').url.should eq("#{Plek.new.website_root}/relative/url")
   end
+
+  it "should filter 'referrer' to either nil or a valid URL" do
+    expect(Ticket.new(referrer: "https://www.gov.uk").referrer).to eq('https://www.gov.uk')
+    expect(Ticket.new(referrer: "http://bla.example.org:9292/méh/fào?bar").referrer).to be_nil
+    expect(Ticket.new(referrer: nil).referrer). to be_nil
+  end
+
+  it "should treat a 'unknown' referrer as nil" do
+    expect(Ticket.new(referrer: "unknown").referrer).to be_nil
+  end
 end

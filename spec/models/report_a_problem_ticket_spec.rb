@@ -41,16 +41,6 @@ describe ReportAProblemTicket do
     ticket(source: 'xxx').source.should be_nil
   end
 
-  it "should filter 'referrer' to either nil or a valid URL" do
-    ticket(referrer: "https://www.gov.uk").referrer.should eq('https://www.gov.uk')
-    ticket(referrer: "http://bla.example.org:9292/méh/fào?bar").referrer.should be_nil
-    ticket(referrer: nil).referrer.should be_nil
-  end
-
-  it "should treat a 'unknown' referrer as nil" do
-    expect(ticket(referrer: "unknown").referrer).to be_nil
-  end
-
   it "should know if it's spam or not" do
     PROBLEM_REPORT_SPAM_MATCHERS << lambda { |message| message.what_wrong.include?("spammy spam") }
 

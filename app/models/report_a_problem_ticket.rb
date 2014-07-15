@@ -27,14 +27,6 @@ class ReportAProblemTicket < Ticket
     @javascript_enabled == "true"
   end
 
-  def referrer=(new_referrer)
-    @referrer = (new_referrer == 'unknown' ? nil : new_referrer)
-  end
-
-  def referrer
-    url_if_valid(@referrer)
-  end
-
   def spam?
     PROBLEM_REPORT_SPAM_MATCHERS.any? { |pattern| pattern[self] }
   end
