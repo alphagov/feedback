@@ -11,8 +11,7 @@ class ServiceFeedback < Ticket
 
   def save
     if valid?
-      support_api = GdsApi::SupportApi.new(Plek.current.find('support-api'))
-      support_api.create_service_feedback(options)
+      Feedback.support_api.create_service_feedback(options)
     end
   end
 
