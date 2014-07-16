@@ -11,7 +11,8 @@ class ServiceFeedback < Ticket
 
   def save
     if valid?
-      Feedback.support_api.create_service_feedback(options)
+      api = SUPPORT_API_ENABLED ? Feedback.support_api : Feedback.support
+      api.create_service_feedback(options)
     end
   end
 
@@ -24,6 +25,7 @@ class ServiceFeedback < Ticket
       javascript_enabled: !!javascript_enabled,
       referrer: referrer,
       path: path,
+      url: url,
     }
   end
 

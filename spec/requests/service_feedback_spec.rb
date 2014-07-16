@@ -1,7 +1,9 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/support'
 require 'gds_api/test_helpers/support_api'
 
 describe "Service feedback submission" do
+  include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi
 
   it "should pass the feedback through the support-api" do
@@ -13,6 +15,7 @@ describe "Service feedback submission" do
       javascript_enabled: false,
       referrer: "https://www.some-transaction.service.gov/uk/completed",
       path: "/done/some-transaction",
+      url: "https://www.gov.uk/done/some-transaction",
     )
 
     submit_service_feedback
@@ -22,6 +25,32 @@ describe "Service feedback submission" do
 
     expect(response.body).to include("Thank you for your feedback.")
     assert_requested(stub_post)
+  end
+
+  # this is very temporary, until the 'support-api' is running stable in prod
+  it "should pass the feedback through the support (when the feature flag is flipped)" do
+    SUPPORT_API_ENABLED = false
+
+    stub_post = stub_support_service_feedback_creation(
+      service_satisfaction_rating: 5,
+      details: "the transaction is ace",
+      slug: "some-transaction",
+      user_agent: nil,
+      javascript_enabled: false,
+      referrer: "https://www.some-transaction.service.gov/uk/completed",
+      path: "/done/some-transaction",
+      url: "https://www.gov.uk/done/some-transaction",
+    )
+
+    submit_service_feedback
+
+    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
+    get contact_anonymous_feedback_thankyou_path
+
+    expect(response.body).to include("Thank you for your feedback.")
+    assert_requested(stub_post)
+
+    SUPPORT_API_ENABLED = true
   end
 
   it "should include the user_agent if available" do
