@@ -1,4 +1,5 @@
-require 'gds_api/support'
+require 'uri'
+require 'gds_api/support_api'
 
 class ServiceFeedback < Ticket
   attr_accessor :service_satisfaction_rating, :improvement_comments, :slug, :javascript_enabled, :referrer
@@ -10,25 +11,30 @@ class ServiceFeedback < Ticket
 
   def save
     if valid?
-      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
-      support_api.create_service_feedback(details)
+      api = SUPPORT_API_ENABLED ? Feedback.support_api : Feedback.support
+      api.create_service_feedback(options)
     end
   end
 
-  def details
+  def options
     {
       service_satisfaction_rating: service_satisfaction_rating.to_i,
-      improvement_comments: improvement_comments,
+      details: improvement_comments,
       slug: slug,
       user_agent: user_agent,
       javascript_enabled: !!javascript_enabled,
       referrer: referrer,
-      url: url
+      path: path,
+      url: url,
     }
   end
 
   private
   def improvement_comments
     @improvement_comments.present? ? @improvement_comments : nil
+  end
+
+  def path
+    !url.nil? ? URI(url).path : nil
   end
 end

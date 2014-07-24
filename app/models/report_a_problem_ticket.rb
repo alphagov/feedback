@@ -10,8 +10,7 @@ class ReportAProblemTicket < Ticket
 
   def save
     if valid? && !spam?
-      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
-      support_api.create_problem_report(ticket_details)
+      Feedback.support.create_problem_report(ticket_details)
     end
   end
 

@@ -25,12 +25,11 @@ class ContactTicket < Ticket
   end
 
   def save
-    if valid?      
-      support_api = GdsApi::Support.new(SUPPORT_API[:url], bearer_token: SUPPORT_API[:bearer_token])
+    if valid?
       if anonymous?
-        support_api.create_anonymous_long_form_contact(ticket_details)
+        Feedback.support.create_anonymous_long_form_contact(ticket_details)
       else
-        support_api.create_named_contact(ticket_details)
+        Feedback.support.create_named_contact(ticket_details)
       end
     end
   end
