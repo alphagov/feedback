@@ -15,6 +15,10 @@ describe Ticket do
     Ticket.new(url: 'https://www.gov.uk/' + ("a" * 2048)).should have(1).error_on(:url)
   end
 
+  it "should validate the length of the user agent" do
+    Ticket.new(user_agent: 'Mozilla ' + ("a" * 2048)).should have(1).error_on(:user_agent)
+  end
+
   it "should filter 'url' to either nil or a valid URL" do
     Ticket.new(url: "https://www.gov.uk").url.should eq('https://www.gov.uk')
     Ticket.new(url: "http://bla.example.org:9292/méh/fào?bar").url.should be_nil
