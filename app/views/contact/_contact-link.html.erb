@@ -1,4 +1,4 @@
 <li>
-  <h2><%= link_to(link["Title"], link["URL"]) %></h2>
+  <h2><%= link_to(link["Title"], link["URL"], rel: external_link?(link["URL"]) ? 'external' : '') %></h2>
   <p><%= link["Description"] %></p>
 </li>
