@@ -10,7 +10,7 @@
     <input type="text" id="val" name="contact[val]" style="display:none"/>
     <%= render "shared/error_summary" %>
 
-    <fieldset id="location">  
+    <fieldset id="location">
       <legend>What's it to do with?</legend>
       <p>
         <label>
@@ -84,7 +84,7 @@
       <% end %>
 
         <label for="email">Your email address</label>
-        <input name="contact[email]" id="email" type="text" class="email" value="<%= (@old ? @old[:email] : '') %>">
+        <input name="contact[email]" id="email" type="email" class="email" value="<%= (@old ? @old[:email] : '') %>">
         <span class="hint">We'll only use this to reply to your message.</span>
 
       </p>
