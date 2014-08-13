@@ -11,8 +11,7 @@ class ServiceFeedback < Ticket
 
   def save
     if valid?
-      api = SUPPORT_API_ENABLED ? Feedback.support_api : Feedback.support
-      api.create_service_feedback(options)
+      Feedback.support_api.create_service_feedback(options)
     end
   end
 
