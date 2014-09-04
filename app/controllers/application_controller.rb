@@ -31,4 +31,8 @@ protected
       end
     end
   end
+
+  def hide_report_a_problem_form_in_response
+    response.headers[Slimmer::Headers::REPORT_A_PROBLEM_FORM] = "false"
+  end
 end
