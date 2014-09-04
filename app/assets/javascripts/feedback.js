@@ -50,6 +50,7 @@ GOVUK.feedback.initCounters = function () {
 }
 
 GOVUK.feedback.checkRadio = function () {
+    console.log("hi");
     if ($('#location-specific').is(':checked')) {
         $('#link').removeAttr('disabled');
     } else {
@@ -71,7 +72,7 @@ GOVUK.feedback.init = function () {
         $(this).parents('form').submit();
     });
 
-    $('#location fieldset').change(function () {
+    $('fieldset#location').change(function () {
         GOVUK.feedback.checkRadio();
     });
 
