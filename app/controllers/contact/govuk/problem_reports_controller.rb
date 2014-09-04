@@ -23,6 +23,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
     if ticket.valid?
       ticket.save
 
+      response.headers[Slimmer::Headers::REPORT_A_PROBLEM_FORM] = "false"
       @message = DONE_OK_TEXT.html_safe
       status = 201
       status_text = "success"
