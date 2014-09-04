@@ -2,7 +2,7 @@ require 'slimmer/headers'
 
 class Contact::GovukController < ContactController
   before_filter proc {
-    response.headers[Slimmer::Headers::REPORT_A_PROBLEM_FORM] = "false"
+    hide_report_a_problem_form_in_response
   }, only: [ :anonymous_feedback_thankyou, :named_contact_thankyou ]
 
   def anonymous_feedback_thankyou

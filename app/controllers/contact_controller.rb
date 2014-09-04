@@ -57,7 +57,7 @@ class ContactController < ApplicationController
   def confirm_submission
     respond_to do |format|
       format.html do
-        response.headers[Slimmer::Headers::REPORT_A_PROBLEM_FORM] = "false"
+        hide_report_a_problem_form_in_response
         if @contact_provided
           redirect_to contact_named_contact_thankyou_path
         else
