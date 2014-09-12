@@ -69,7 +69,7 @@ GOVUK.feedback.init = function () {
         $(this).parents('form').submit();
     });
 
-    $('#location input').change(function () {
+    $('fieldset#location').change(function () {
         GOVUK.feedback.checkRadio();
     });
 

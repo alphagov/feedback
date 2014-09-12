@@ -12,12 +12,10 @@
 
     <fieldset id="location">
       <legend>What's it to do with?</legend>
-      <p>
-        <label>
+        <label class="selectable">
           <input type="radio" name="contact[location]" id="location-all" value="all"
                  <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> > The whole site
         </label>
-      </p>
 
       <% if @errors && @errors[:link] %>
         <p class="validation group">
@@ -26,7 +24,7 @@
         <p>
       <% end %>
 
-      <label>
+      <label class="selectable">
         <input type="radio" name="contact[location]" id="location-specific"
          value="specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : ""%> > A specific page
       </label>

@@ -13,18 +13,22 @@
     padding-bottom: 0.5em;
       p {
         padding-bottom: 0;
+        clear: both;
         label {
-          width: 10em;
-          display: inline-block;
+          display: block;
           margin-right: 0;
           }
     }
   }
 
   #link {
-    width: 64%;
-    margin-left: -0.25em;
-    margin-right: 0;
+    display: inline-block;
+    margin: 17px 0 0 0;
+    width: 100%;
+    @include media(desktop) {
+      margin-left: 1em;
+      width: 64%;
+    }
   }
 
   .group p.warning-message {
