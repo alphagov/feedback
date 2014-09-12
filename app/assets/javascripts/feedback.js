@@ -1,6 +1,4 @@
 //= require jquery.details.js
-//= require vendor/polyfills/bind
-//= require govuk/selection-buttons
 
 var GOVUK = GOVUK || {};
 
@@ -84,8 +82,3 @@ GOVUK.feedback.init = function () {
 }
 
 $(GOVUK.feedback.init);
-
-$(document).ready(function() {
-  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
-  GOVUK.selectionButtons($buttons);
-});
