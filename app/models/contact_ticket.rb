@@ -27,7 +27,7 @@ class ContactTicket < Ticket
   def save
     if valid?
       if anonymous?
-        Feedback.support.create_anonymous_long_form_contact(ticket_details)
+        Feedback.support_api.create_anonymous_long_form_contact(ticket_details)
       else
         Feedback.support.create_named_contact(ticket_details)
       end
@@ -38,11 +38,13 @@ class ContactTicket < Ticket
   def ticket_details
     details = {
       details: textdetails,
-      link: link,
+      link: link, # needed for the `support` app
+      user_specified_url: link, # needed for the `support-api` app
       user_agent: user_agent,
       referrer: referrer,
       javascript_enabled: javascript_enabled,
       url: url,
+      path: url ? URI(url).path : nil, # needed for the `support-api` app
     }
     details[:requester] = { name: name, email: email } unless anonymous?
     details
