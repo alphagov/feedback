@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'gds_api/test_helpers/support'
+require 'gds_api/test_helpers/support_api'
 
 def fill_in_valid_contact_details_and_description
   fill_in "Your name", :with => "test name"
@@ -26,15 +27,18 @@ describe "Contact" do
   end
 
   include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
   it "should let the user submit a request with contact details" do
     stub_post = stub_support_named_contact_creation(
       requester: { name: "test name", email: "a@a.com" },
       details: "test text details",
+      user_specified_url: nil,
       link: nil,
       javascript_enabled: false,
       user_agent: nil,
       referrer: nil,
-      url: "#{Plek.new.website_root}/contact/govuk"
+      url: "#{Plek.new.website_root}/contact/govuk",
+      path: "/contact/govuk",
     )
 
     visit "/contact/govuk"
@@ -64,10 +68,12 @@ describe "Contact" do
     stub_post = stub_support_long_form_anonymous_contact_creation(
       details: "test text details",
       link: nil,
+      user_specified_url: nil,
       javascript_enabled: false,
       user_agent: nil,
       referrer: nil,
-      url: "#{Plek.new.website_root}/contact/govuk"
+      url: "#{Plek.new.website_root}/contact/govuk",
+      path: "/contact/govuk",
     )
 
     visit "/contact/govuk"
