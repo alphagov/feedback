@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'gds_api/test_helpers/support'
+require 'gds_api/test_helpers/support_api'
 
 describe "Reporting a problem with this content/tool" do
-  include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
 
   it "should submit the problem report through the support API" do
-    stub_post = stub_support_problem_report_creation(
-      url: "http://www.example.com/test_forms/report_a_problem",
+    stub_post = stub_support_api_problem_report_creation(
+      path: "/test_forms/report_a_problem",
       what_doing: "I was doing something",
       what_wrong: "It didn't work",
       user_agent: nil,
@@ -31,7 +31,7 @@ describe "Reporting a problem with this content/tool" do
   end
 
   it "should support ajax submission if available", :js => true do
-    stub_post = stub_support_problem_report_creation
+    stub_post = stub_support_api_problem_report_creation
 
     visit "/test_forms/report_a_problem"
     page.should have_button('Send')
@@ -44,12 +44,12 @@ describe "Reporting a problem with this content/tool" do
 
     page.should have_content("Thank you for your help.")
 
-    assert_requested(:post, %r{/problem_reports}) do |request|
+    assert_requested(:post, %r{/problem-reports}) do |request|
       response = JSON.parse(request.body)["problem_report"]
       response["what_doing"] == "I was doing something with javascript" &&
         response["what_wrong"] == "It didn't work" &&
         response["javascript_enabled"] == true &&
-        response["url"] =~ %r{/test_forms/report_a_problem}
+        response["path"] == "/test_forms/report_a_problem"
     end
   end
 
@@ -67,7 +67,7 @@ describe "Reporting a problem with this content/tool" do
 
       page.should have_content("Thank you for your help.")
 
-      assert_not_requested(:post, %r{/problem_reports})
+      assert_not_requested(:post, %r{/problem-reports})
     end
 
     after do
@@ -84,12 +84,12 @@ describe "Reporting a problem with this content/tool" do
   end
 
   it "should include the user_agent if available" do
-    stub_support_problem_report_creation
+    stub_support_api_problem_report_creation
 
     # Using Rack::Test instead of capybara to allow setting headers.
     post "/contact/govuk/problem_reports", valid_params, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
 
-    assert_requested(:post, %r{/problem_reports}) do |request|
+    assert_requested(:post, %r{/problem-reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
     end
   end
@@ -101,7 +101,7 @@ describe "Reporting a problem with this content/tool" do
   end
 
   it "should handle errors when submitting problem reports" do
-    support_isnt_available
+    support_api_isnt_available
 
     visit "/test_forms/report_a_problem"
 

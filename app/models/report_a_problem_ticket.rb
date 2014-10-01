@@ -10,7 +10,7 @@ class ReportAProblemTicket < Ticket
 
   def save
     if valid? && !spam?
-      Feedback.support.create_problem_report(ticket_details)
+      Feedback.support_api.create_problem_report(ticket_details)
     end
   end
 
@@ -32,7 +32,7 @@ class ReportAProblemTicket < Ticket
 
   private
   def ticket_details
-    [:what_wrong, :what_doing, :url, :user_agent, :javascript_enabled, :referrer, :source, :page_owner].inject({}) do |details, field|
+    [:what_wrong, :what_doing, :path, :user_agent, :javascript_enabled, :referrer, :source, :page_owner].inject({}) do |details, field|
       details[field] = send(field)
       details
     end
