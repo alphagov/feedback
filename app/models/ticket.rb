@@ -31,6 +31,10 @@ class Ticket
     url_if_valid(@url)
   end
 
+  def path
+    url ? URI(url).path : nil
+  end
+
   def referrer=(new_referrer)
     @referrer = (new_referrer == 'unknown' ? nil : new_referrer)
   end
