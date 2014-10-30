@@ -60,6 +60,16 @@
 
   GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
       $('#link').val(document.referrer);
+      /* pre-select the "A specific page" if the form was linked to directly */
+      if (document.referrer && !(GOVUK.feedback.getPathFor(document.referrer) == "/contact")) {
+        $('#location-specific').click();
+      }
+  }
+
+  GOVUK.feedback.getPathFor = function (url) {
+      var link = document.createElement("a");
+      link.href = url;
+      return link.pathname;
   }
 
   GOVUK.feedback.init = function () {
