@@ -5,7 +5,7 @@ gem 'rails', '3.2.18'
 if ENV['SLIMMER_DEV']
   gem "slimmer", :path => '../slimmer'
 else
-  gem "slimmer", '8.1.0'
+  gem "slimmer", '8.2.1'
 end
 
 gem "unicorn", '4.3.1'
