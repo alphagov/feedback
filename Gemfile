@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '3.2.22'
 
 if ENV['SLIMMER_DEV']
   gem "slimmer", :path => '../slimmer'
