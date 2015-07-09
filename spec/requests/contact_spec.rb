@@ -216,4 +216,27 @@ describe "Contact" do
       response["referrer"] == "https://www.dev.gov.uk/referring_url"
     end
   end
+
+  it "should prefill the specific page field with the page before /contact", :js => true do
+
+    visit "/contact/foi"
+    click_on "Contact"
+
+    contact_referrer = page.driver.cookies['govuk_contact_referrer'].value
+    expect(contact_referrer).to match(/\/contact\/foi$/)
+
+    click_on "GOV.UK form"
+    stub_support_named_contact_creation
+
+    choose "location-specific"
+    fill_in_valid_contact_details_and_description
+    click_on "Send message"
+
+    i_should_be_on "/contact/govuk/thankyou"
+
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["link"].ends_with? "/contact/foi"
+    end
+  end
 end

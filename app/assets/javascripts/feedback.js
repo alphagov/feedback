@@ -36,7 +36,6 @@
     $(counterId).html((1200 - counted.value.length) +  " characters remaining (limit is 1200 characters)");
   }
 
-
   GOVUK.feedback.initCounters = function () {
     $('.counted').each(function (index) {
       this.oninput = function () {
@@ -58,10 +57,18 @@
     }
   }
 
+  GOVUK.feedback.saveReferrerToCookie = function () {
+    GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 });
+  }
+
   GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
-    $('#link').val(document.referrer);
-    /* pre-select the "A specific page" if the form was linked to directly */
-    if (document.referrer && !(GOVUK.feedback.getPathFor(document.referrer) == "/contact")) {
+    var specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer;
+
+    // Preopulate specific page field
+    $('#link').val(specificPage);
+
+    // Choose "A specific page" option if the form was linked to directly
+    if (specificPage && !(GOVUK.feedback.getPathFor(document.referrer) == "/contact")) {
       $('#location-specific').click();
     }
   }
@@ -85,6 +92,10 @@
     $('fieldset#location').change(function () {
       GOVUK.feedback.checkRadio();
     });
+
+    if (window.location.pathname == "/contact") {
+      GOVUK.feedback.saveReferrerToCookie();
+    }
 
     GOVUK.feedback.prepopulateFormBasedOnReferrer();
     $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
