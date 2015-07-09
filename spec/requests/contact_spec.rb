@@ -228,7 +228,6 @@ describe "Contact" do
     click_on "GOV.UK form"
     stub_support_named_contact_creation
 
-    choose "location-specific"
     fill_in_valid_contact_details_and_description
     click_on "Send message"
 

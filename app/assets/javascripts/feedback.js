@@ -68,7 +68,7 @@
     $('#link').val(specificPage);
 
     // Choose "A specific page" option if the form was linked to directly
-    if (specificPage && !(GOVUK.feedback.getPathFor(document.referrer) == "/contact")) {
+    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage) == "/contact")) {
       $('#location-specific').click();
     }
   }
