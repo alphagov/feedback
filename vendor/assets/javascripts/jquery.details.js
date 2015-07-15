@@ -1,4 +1,7 @@
 /*! http://mths.be/details v0.1.0 by @mathias | includes http://mths.be/noselect v1.0.3 */
+//
+// This is a fork of the original details which has been updated for jQuery 1.10+ support
+//
 ;(function(document, $) {
 
   var proto = $.fn,
@@ -101,7 +104,7 @@
             // Do the same for the info within the `details` element
             $detailsNotSummary = $details.children(':not(summary)'),
             // This will be used later to look for direct child text nodes
-            $detailsNotSummaryContents = $details.contents(':not(summary)');
+            $detailsNotSummaryContents = $details.contents().not('summary');
 
         // If there is no `summary` in the current `details` element…
         if (!$detailsSummary.length) {
