@@ -10,7 +10,7 @@ end
 
 gem "unicorn", '4.3.1'
 
-gem "plek", "1.5.0"
+gem "plek", "1.11.0"
 gem "airbrake", "3.1.15"
 
 gem "valid_email", "0.0.4"
@@ -22,7 +22,7 @@ gem 'rack_strip_client_ip', '0.0.1'
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '20.1.1'
+  gem 'gds-api-adapters', '23.2.2'
 end
 
 # Gems used only for assets and not required
