@@ -35,6 +35,10 @@
    @include bold-19;
   }
 
+  textarea {
+    @include core-19;
+  }
+
   .contact-form textarea.full-size {
     height: 15em;
 
