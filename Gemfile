@@ -8,7 +8,7 @@ else
   gem "slimmer", '8.2.1'
 end
 
-gem "unicorn", '4.3.1'
+gem "unicorn", '4.9.0'
 
 gem "plek", "1.11.0"
 gem "airbrake", "3.1.15"
@@ -43,5 +43,6 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3'
   gem 'webmock', '1.13.0', :require => false
   gem 'poltergeist', '1.6.0'
-  gem "shoulda-matchers", '2.4.0'
+  gem "shoulda-matchers", '2.8.0'
+  gem 'test-unit', '3.1.3'
 end
