@@ -65,4 +65,6 @@ Feedback::Application.configure do
   config.logstasher.enabled = true
   config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
   config.logstasher.supress_app_log = true
+
+  config.eager_load = true
 end
