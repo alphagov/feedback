@@ -11,13 +11,13 @@ end
 def contact_submission_should_be_successful
   click_on "Send message"
   i_should_be_on "/contact/govuk/thankyou"
-  page.should have_content("Your message has been sent")
+  expect(page).to have_content("Your message has been sent")
 end
 
 def anonymous_submission_should_be_successful
   click_on "Send message"
   i_should_be_on "/contact/govuk/anonymous-feedback/thankyou"
-  page.should have_content("Thank you for your feedback")
+  expect(page).to have_content("Thank you for your feedback")
 end
 
 describe "Contact" do
@@ -61,7 +61,7 @@ describe "Contact" do
 
     no_web_calls_should_have_been_made
 
-    page.status_code.should == 400
+    expect(page.status_code).to eq(400)
   end
 
   it "should let the user submit an anonymous request" do
@@ -97,13 +97,13 @@ describe "Contact" do
 
     i_should_be_on "/contact/govuk"
 
-    page.status_code.should == 503
+    expect(page.status_code).to eq(503)
   end
 
   it "should still work even if the request doesn't have correct form params" do
     post "/contact/govuk", {}
 
-    response.body.should include("Please check the form")
+    expect(response.body).to include("Please check the form")
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
@@ -116,8 +116,8 @@ describe "Contact" do
 
     i_should_be_on "/contact/govuk"
 
-    find_field('Your name').value.should eq 'test name'
-    find_field('Your email address').value.should eq 'a@a.com'
+    expect(find_field('Your name').value).to eq 'test name'
+    expect(find_field('Your email address').value).to eq 'a@a.com'
 
     no_web_calls_should_have_been_made
   end
@@ -132,8 +132,8 @@ describe "Contact" do
 
     i_should_be_on "/contact/govuk"
 
-    find_field('Your email address').value.should eq 'a@a.com'
-    find_field('textdetails').value.should eq 'test text details'
+    expect(find_field('Your email address').value).to eq 'a@a.com'
+    expect(find_field('textdetails').value).to eq 'test text details'
 
     no_web_calls_should_have_been_made
   end
@@ -148,8 +148,8 @@ describe "Contact" do
 
     i_should_be_on "/contact/govuk"
 
-    find_field('Your name').value.should eq 'test name'
-    find_field('textdetails').value.should eq 'test text details'
+    expect(find_field('Your name').value).to eq 'test name'
+    expect(find_field('textdetails').value).to eq 'test text details'
 
     no_web_calls_should_have_been_made
   end
@@ -166,7 +166,7 @@ describe "Contact" do
 
     i_should_be_on "/contact/govuk/thankyou"
 
-    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
+    expect(page).to have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]

@@ -19,35 +19,35 @@ describe FoiTicket do
   end
 
   it "should return no errors on valid params" do
-    foi_request.should be_valid
+    expect(foi_request).to be_valid
   end
 
   it "should return email error with invalid email" do
-    foi_request(email: "a", email_confirmation: "a").should have(1).error_on(:email)
+    expect(foi_request(email: "a", email_confirmation: "a").errors[:email].size).to eq(1)
   end
 
   it "should return email error with empty email" do
-    foi_request(email: "", email_confirmation: "").should have_at_least(1).error_on(:email)
+    expect(foi_request(email: "", email_confirmation: "").errors[:email].size).to be >= 1
   end
 
   it "should return email error with non matching verification email" do
-    foi_request(email: "a@a.com", email_confirmation: "a@b.com").should have(1).error_on(:email_confirmation)
+    expect(foi_request(email: "a@a.com", email_confirmation: "a@b.com").errors[:email_confirmation].size).to eq(1)
   end
 
   it "should return name error with empty name" do
-    foi_request(name: "").should have(1).error_on(:name)
+    expect(foi_request(name: "").errors[:name].size).to eq(1)
   end
 
   it "should return foi error with empty textdetails" do
-    foi_request(textdetails: "").should have(1).error_on(:textdetails)
+    expect(foi_request(textdetails: "").errors[:textdetails].size).to eq(1)
   end
 
   it "should return foi error with too long foi text" do
-    foi_request(textdetails: build_random_string(1251)).should have(1).error_on(:textdetails)
+    expect(foi_request(textdetails: build_random_string(1251)).errors[:textdetails].size).to eq(1)
   end
 
   it "should raise an exception if support isn't available" do
     support_isnt_available
-    lambda { foi_request.save }.should raise_error(GdsApi::BaseError)
+    expect { foi_request.save }.to raise_error(GdsApi::BaseError)
   end
 end

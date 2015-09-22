@@ -31,11 +31,11 @@ else
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.14.0'
-  gem 'capybara', '2.1.0'
+  gem 'rspec-rails', '3.3.3'
+  gem 'capybara', '2.5.0'
   gem 'simplecov', '0.6.4'
   gem 'simplecov-rcov', '0.2.3'
-  gem 'webmock', '1.13.0', :require => false
+  gem 'webmock', '1.21.0', :require => false
   gem 'poltergeist', '1.6.0'
   gem "shoulda-matchers", '2.8.0'
   gem 'test-unit', '3.1.3'

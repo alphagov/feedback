@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Contact::Govuk::ProblemReportsController do
 
   before :each do
-    ReportAProblemTicket.any_instance.stub(:save).and_return(true)
+    allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_return(true)
   end
 
   describe "POST" do
@@ -19,15 +19,15 @@ describe Contact::Govuk::ProblemReportsController do
 
         it "should save the ticket" do
           stub_ticket = double("Ticket")
-          ReportAProblemTicket.should_receive(:new).
+          expect(ReportAProblemTicket).to receive(:new).
             with(hash_including(
               :url => "http://www.example.com/somewhere",
               :what_doing => "Nothing",
               :what_wrong => "Something",
               :user_agent => "Rails Testing"
             )).and_return(stub_ticket)
-          stub_ticket.should_receive(:valid?).and_return(true)
-          stub_ticket.should_receive(:save).and_return(true)
+          expect(stub_ticket).to receive(:valid?).and_return(true)
+          expect(stub_ticket).to receive(:save).and_return(true)
 
           do_submit
         end
@@ -35,51 +35,51 @@ describe Contact::Govuk::ProblemReportsController do
         describe "assigning the return url" do
           it "should assign the return_url to the given url without the host etc." do
             do_submit
-            assigns[:return_path].should == "/somewhere"
+            expect(assigns[:return_path]).to eq("/somewhere")
           end
 
           it "should retain the query_string from the given URL" do
             do_submit :url => "http://www.example.com/somewhere?foo=bar&baz=1"
-            assigns[:return_path].should == "/somewhere?foo=bar&baz=1"
+            expect(assigns[:return_path]).to eq("/somewhere?foo=bar&baz=1")
           end
 
           it "should assign nil if an invalid url is provided" do
             do_submit :url => "b[]laaaaaargh!"
-            assigns[:return_path].should == nil
+            expect(assigns[:return_path]).to eq(nil)
           end
 
           it "should assign nil if no url is provided" do
             do_submit :url => nil
-            assigns[:return_path].should == nil
+            expect(assigns[:return_path]).to eq(nil)
           end
         end
 
         it "should render the thankyou template assigning the message string" do
           do_submit
-          response.should render_template('thankyou')
-          assigns[:message].should == "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"
-          assigns[:message].should be_html_safe
+          expect(response).to render_template('thankyou')
+          expect(assigns[:message]).to eq("<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>")
+          expect(assigns[:message]).to be_html_safe
         end
 
         context "when ticket creation fails" do
           before :each do
-            ReportAProblemTicket.any_instance.stub(:save).and_raise(GdsApi::BaseError)
+            allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           end
 
           it "should render the thankyou template assigning the message string" do
             do_submit
-            response.response_code.should == 503
+            expect(response.response_code).to eq(503)
           end
         end
 
         describe "no 'url' value explicitly set" do
           it "should use the referrer URL to set the 'url' for the model" do
             stub_ticket = double("Ticket")
-            ReportAProblemTicket.should_receive(:new).
+            expect(ReportAProblemTicket).to receive(:new).
               with(hash_including(:url => "http://www.gov.uk/referral-city")).
               and_return(stub_ticket)
-            stub_ticket.should_receive(:valid?).and_return(true)
-            stub_ticket.should_receive(:save).and_return(true)
+            expect(stub_ticket).to receive(:valid?).and_return(true)
+            expect(stub_ticket).to receive(:save).and_return(true)
 
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
             post :create, {
@@ -103,7 +103,7 @@ describe Contact::Govuk::ProblemReportsController do
 
         it "should save the ticket" do
           stub_ticket = double("Ticket")
-          ReportAProblemTicket.should_receive(:new).
+          expect(ReportAProblemTicket).to receive(:new).
             with(hash_including(
               :url => "http://www.example.com/somewhere",
               :what_doing => "Nothing",
@@ -111,8 +111,8 @@ describe Contact::Govuk::ProblemReportsController do
               :user_agent => "Rails Testing",
               :javascript_enabled => "true"
             )).and_return(stub_ticket)
-          stub_ticket.stub(:valid?).and_return(true)
-          stub_ticket.should_receive(:save).and_return(true)
+          allow(stub_ticket).to receive(:valid?).and_return(true)
+          expect(stub_ticket).to receive(:save).and_return(true)
 
           do_submit
         end
@@ -120,14 +120,14 @@ describe Contact::Govuk::ProblemReportsController do
         it "should return json indicating success" do
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"}
+          expect(data).to eq({"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"})
         end
 
         it "should return json indicating failure when ticket creation fails"  do
-          ReportAProblemTicket.any_instance.stub(:save).and_raise(GdsApi::BaseError)
+          allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           do_submit
           data = JSON.parse(response.body)
-          data.should == {"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>"}
+          expect(data).to eq({"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>"})
         end
       end
     end

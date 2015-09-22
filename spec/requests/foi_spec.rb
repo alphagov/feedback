@@ -31,11 +31,13 @@ describe "FOI" do
 
     i_should_be_on "/contact/govuk/thankyou"
 
-    page.should have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
+    expect(page).to have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
     assert_requested(stub_post)
   end
 
   it "recreate non-UTF-char bug" do
+    skip 'replace with proper UTF8 scrubbing'
+
     stub_support_foi_request_creation
 
     visit "/contact/foi"
@@ -50,7 +52,7 @@ describe "FOI" do
   it "should still work even if the request doesn't have correct form params" do
     post "/contact/foi", {}
 
-    response.body.should include("Please check the form")
+    expect(response.body).to include("Please check the form")
   end
 
   it "should not accept spam (ie requests with val field filled in)" do
@@ -63,7 +65,7 @@ describe "FOI" do
     fill_in "val", :with => "test val"
     click_on "Submit your Freedom of Information request"
 
-    page.status_code.should == 400
+    expect(page.status_code).to eq(400)
   end
 
   it "should show an error message when the support app isn't available" do
@@ -79,7 +81,7 @@ describe "FOI" do
 
     i_should_be_on "/contact/foi"
 
-    page.status_code.should == 503
+    expect(page.status_code).to eq(503)
   end
 
   it "should not proceed if the user hasn't filled in all required FOI fields" do
@@ -92,9 +94,9 @@ describe "FOI" do
 
     i_should_be_on "/contact/foi"
 
-    find_field('Your name').value.should eq 'test name'
-    find_field('Your email address').value.should eq 'a@a.com'
-    find_field('Confirm your email address').value.should eq 'a@a.com'
+    expect(find_field('Your name').value).to eq 'test name'
+    expect(find_field('Your email address').value).to eq 'a@a.com'
+    expect(find_field('Confirm your email address').value).to eq 'a@a.com'
 
     no_web_calls_should_have_been_made
   end

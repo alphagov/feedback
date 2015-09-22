@@ -44,7 +44,7 @@ describe "Service feedback submission" do
     expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
     get contact_anonymous_feedback_thankyou_path
 
-    response.body.should include("Thank you for your feedback.")
+    expect(response.body).to include("Thank you for your feedback.")
   end
 
   it "should handle the support-api being unavailable" do

@@ -23,8 +23,8 @@ describe Contact::GovukController do
 
       post :create, valid_params
 
-      response.should be_redirect
-      stub_post.should have_been_made
+      expect(response).to be_redirect
+      expect(stub_post).to have_been_made
     end
   end
 end
