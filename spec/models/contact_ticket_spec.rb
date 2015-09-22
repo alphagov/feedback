@@ -53,7 +53,7 @@ describe ContactTicket do
   end
 
   it "should return contact error with too long email" do
-    named_ticket(email: (build_random_string 1251) + "@a.com").should have(1).error_on(:email)
+    named_ticket(email: (build_random_string 1251) + "@a.com").should have(2).errors_on(:email)
   end
 
   it "should return contact error with location specific but without link" do

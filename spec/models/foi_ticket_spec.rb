@@ -31,7 +31,7 @@ describe FoiTicket do
   end
 
   it "should return email error with non matching verification email" do
-    foi_request(email: "a@a.com", email_confirmation: "a@b.com").should have(1).error_on(:email)
+    foi_request(email: "a@a.com", email_confirmation: "a@b.com").should have(1).error_on(:email_confirmation)
   end
 
   it "should return name error with empty name" do

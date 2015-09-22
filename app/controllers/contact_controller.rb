@@ -64,6 +64,7 @@ class ContactController < ApplicationController
           redirect_to contact_anonymous_feedback_thankyou_path
         end
       end
+      format.any { render nothing: true, status: 406 }
     end
   end
 
