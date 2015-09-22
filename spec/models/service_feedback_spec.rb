@@ -21,10 +21,10 @@ describe ServiceFeedback do
 
   it { should_not allow_value(nil).for(:service_satisfaction_rating) }
   it { should allow_value(nil).for(:improvement_comments) }
-  it { should ensure_inclusion_of(:service_satisfaction_rating).in_array(('1'..'5').to_a) }
+  it { should validate_inclusion_of(:service_satisfaction_rating).in_array(('1'..'5').to_a) }
 
-  it { should ensure_length_of(:improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
-  it { should ensure_length_of(:slug).is_at_most(512) }
+  it { should validate_length_of(:improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
+  it { should validate_length_of(:slug).is_at_most(512) }
 
   context "with empty comments" do
     let(:subject) { ServiceFeedback.new(improvement_comments: "") }
