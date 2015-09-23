@@ -6,6 +6,11 @@ git clean -fdx
 
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment
 
-bundle exec govuk-lint-ruby --diff --cached
+if [[ ${GIT_BRANCH} != "origin/master" ]]; then
+  bundle exec govuk-lint-ruby \
+    --format html --out rubocop-${GIT_COMMIT}.html \
+    --format clang
+fi
+
 bundle exec rake
 bundle exec rake assets:precompile
