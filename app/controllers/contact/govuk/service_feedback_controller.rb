@@ -1,5 +1,3 @@
-require 'utf8_cleaner'
-
 class Contact::Govuk::ServiceFeedbackController < ContactController
   private
   def ticket_class

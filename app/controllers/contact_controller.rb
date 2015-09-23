@@ -1,9 +1,7 @@
 require 'slimmer/headers'
-require 'utf8_cleaner'
 
 class ContactController < ApplicationController
   include Slimmer::Headers
-  include UTF8Cleaner
 
   before_filter :set_cache_control, only: [ :new, :index ]
   before_filter :setup_slimmer_artefact, only: :new
@@ -25,7 +23,7 @@ class ContactController < ApplicationController
   end
 
   def create
-    data = sanitised((contact_params || {}).merge(technical_attributes))
+    data = contact_params.merge(technical_attributes)
     ticket = ticket_class.new data
 
     if ticket.valid?
@@ -77,7 +75,7 @@ class ContactController < ApplicationController
   end
 
   def contact_params
-    params[type]
+    params[type] || {}
   end
 
   private

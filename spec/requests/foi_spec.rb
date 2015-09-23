@@ -35,20 +35,6 @@ describe "FOI" do
     assert_requested(stub_post)
   end
 
-  it "recreate non-UTF-char bug" do
-    skip 'replace with proper UTF8 scrubbing'
-
-    stub_support_foi_request_creation
-
-    visit "/contact/foi"
-
-    fill_in_valid_credentials
-    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "\xFF\xFEother data"
-    click_on "Submit your Freedom of Information request"
-
-    i_should_be_on "/contact/govuk/thankyou"
-  end
-
   it "should still work even if the request doesn't have correct form params" do
     post "/contact/foi", {}
 
