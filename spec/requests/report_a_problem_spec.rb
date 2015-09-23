@@ -24,8 +24,8 @@ describe "Reporting a problem with this content/tool" do
 
     i_should_be_on "/contact/govuk/problem_reports"
 
-    page.should have_content("Thank you for your help.")
-    page.should have_link("Return to where you were", :href => "/test_forms/report_a_problem")
+    expect(page).to have_content("Thank you for your help.")
+    expect(page).to have_link("Return to where you were", :href => "/test_forms/report_a_problem")
 
     assert_requested(stub_post)
   end
@@ -34,7 +34,7 @@ describe "Reporting a problem with this content/tool" do
     stub_post = stub_support_api_problem_report_creation
 
     visit "/test_forms/report_a_problem"
-    page.should have_button('Send')
+    expect(page).to have_button('Send')
 
     fill_in "What you were doing", :with => "I was doing something with javascript"
     fill_in "What went wrong", :with => "It didn't work"
@@ -42,7 +42,7 @@ describe "Reporting a problem with this content/tool" do
 
     i_should_be_on "/test_forms/report_a_problem"
 
-    page.should have_content("Thank you for your help.")
+    expect(page).to have_content("Thank you for your help.")
 
     assert_requested(:post, %r{/problem-reports}) do |request|
       response = JSON.parse(request.body)["problem_report"]
@@ -65,7 +65,7 @@ describe "Reporting a problem with this content/tool" do
       fill_in "What went wrong", with: "Nothing"
       click_on "Send"
 
-      page.should have_content("Thank you for your help.")
+      expect(page).to have_content("Thank you for your help.")
 
       assert_not_requested(:post, %r{/problem-reports})
     end
@@ -97,7 +97,7 @@ describe "Reporting a problem with this content/tool" do
   it "should still work even if the request doesn't have correct form params" do
     post "/contact/govuk/problem_reports", {}
 
-    response.body.should include("we're unable to send your message")
+    expect(response.body).to include("we're unable to send your message")
   end
 
   it "should handle errors when submitting problem reports" do
@@ -111,7 +111,7 @@ describe "Reporting a problem with this content/tool" do
 
     i_should_be_on "/contact/govuk/problem_reports"
 
-    page.status_code.should == 503
+    expect(page.status_code).to eq(503)
   end
 
   describe "for html requests" do
@@ -124,21 +124,21 @@ describe "Reporting a problem with this content/tool" do
 
       i_should_be_on "/contact/govuk/problem_reports"
 
-      page.should have_content("Sorry, we're unable to send your message")
+      expect(page).to have_content("Sorry, we're unable to send your message")
     end
   end
 
   describe "for json requests" do
     it "should show the error notification if both fields are empty", :js => true  do
       visit "/test_forms/report_a_problem"
-      page.should have_button('Send')
+      expect(page).to have_button('Send')
 
       fill_in "What you were doing", :with => ""
       fill_in "What went wrong", :with => ""
       click_on "Send"
 
       i_should_be_on "/test_forms/report_a_problem"
-      page.should have_content("Please enter details of what you were doing")
+      expect(page).to have_content("Please enter details of what you were doing")
     end
   end
 end

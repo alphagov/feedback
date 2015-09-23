@@ -12,7 +12,6 @@ class ContactTicket < Ticket
   validates_length_of :name, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates :email, email: { message: "The email address must be valid" }, allow_blank: true
   validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validate :invalidate_trailing_dot_in_email
   validate :validate_mail_name_connection
   validates_presence_of :location, message: "Please tell us what your contact is to do with"
 
@@ -64,12 +63,6 @@ class ContactTicket < Ticket
     end
     if email.blank? and not name.blank?
       @errors.add :email, 'The email field cannot be empty'
-    end
-  end
-
-  def invalidate_trailing_dot_in_email
-    if not email.nil? and email.end_with?(".")
-      @errors.add :email, "The email address must not have a trailing full stop"
     end
   end
 

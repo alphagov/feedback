@@ -1,8 +1,4 @@
-require 'utf8_cleaner'
-
 class Contact::Govuk::ProblemReportsController < ContactController
-  include UTF8Cleaner
-
   DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
     "<p>If you have more extensive feedback, " +
     "please visit the <a href='/contact'>contact page</a>.</p>"
@@ -18,7 +14,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
     # Specifially, the 40X pages on GOV.UK.
     attributes = attributes.merge(:url => request.referer) unless params.has_key? :url
 
-    ticket = ReportAProblemTicket.new sanitised(attributes)
+    ticket = ReportAProblemTicket.new(attributes)
 
     if ticket.valid?
       ticket.save

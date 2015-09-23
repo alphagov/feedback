@@ -9,7 +9,7 @@ Feedback::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -65,4 +65,6 @@ Feedback::Application.configure do
   config.logstasher.enabled = true
   config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
   config.logstasher.supress_app_log = true
+
+  config.eager_load = true
 end

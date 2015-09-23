@@ -2,31 +2,31 @@
 require 'spec_helper'
 
 describe Ticket do
-  it { should allow_value("https://www.gov.uk/done/whatever").for(:url) }
-  it { should_not be_spam}
+  it { is_expected.to allow_value("https://www.gov.uk/done/whatever").for(:url) }
+  it { is_expected.not_to be_spam}
 
   context "a bot has populated the val field" do
     let(:subject) { Ticket.new(val: "xxxxx") }
-    it { should be_spam}
-    it { should_not be_valid }
+    it { is_expected.to be_spam}
+    it { is_expected.not_to be_valid }
   end
 
   it "should validate the length of URLs" do
-    Ticket.new(url: 'https://www.gov.uk/' + ("a" * 2048)).should have(1).error_on(:url)
+    expect(Ticket.new(url: 'https://www.gov.uk/' + ("a" * 2048)).errors[:url].size).to eq(1)
   end
 
   it "should validate the length of the user agent" do
-    Ticket.new(user_agent: 'Mozilla ' + ("a" * 2048)).should have(1).error_on(:user_agent)
+    expect(Ticket.new(user_agent: 'Mozilla ' + ("a" * 2048)).errors[:user_agent].size).to eq(1)
   end
 
   it "should filter 'url' to either nil or a valid URL" do
-    Ticket.new(url: "https://www.gov.uk").url.should eq('https://www.gov.uk')
-    Ticket.new(url: "http://bla.example.org:9292/méh/fào?bar").url.should be_nil
-    Ticket.new(url: nil).url.should be_nil
+    expect(Ticket.new(url: "https://www.gov.uk").url).to eq('https://www.gov.uk')
+    expect(Ticket.new(url: "http://bla.example.org:9292/méh/fào?bar").url).to be_nil
+    expect(Ticket.new(url: nil).url).to be_nil
   end
 
   it "should add the website root to relative URLs" do
-    Ticket.new(url: '/relative/url').url.should eq("#{Plek.new.website_root}/relative/url")
+    expect(Ticket.new(url: '/relative/url').url).to eq("#{Plek.new.website_root}/relative/url")
   end
 
   it "should filter 'referrer' to either nil or a valid URL" do
