@@ -6,5 +6,6 @@ git clean -fdx
 
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment
 
+bundle exec govuk-lint-ruby --diff --cached
 bundle exec rake
 bundle exec rake assets:precompile
