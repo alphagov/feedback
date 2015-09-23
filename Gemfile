@@ -18,6 +18,7 @@ gem "valid_email", "0.0.11"
 gem "statsd-ruby", "1.2.1", require: "statsd"
 gem 'logstasher', '0.4.8'
 gem 'rack_strip_client_ip', '0.0.1'
+gem 'invalid_utf8_rejector'
 
 gem 'uglifier', '2.1.2'
 gem 'govuk_frontend_toolkit', '1.6.0'
