@@ -12,13 +12,11 @@ class Ticket
 
   validate :validate_val
   validates_length_of :url, maximum: 2048
-  validates_length_of :user_agent,  maximum: 2048
+  validates_length_of :user_agent, maximum: 2048
 
   def initialize(attributes = {})
     attributes.each do |key, value|
-      if respond_to? "#{key}="
-        send("#{key}=", value)
-      end
+      send("#{key}=", value) if respond_to? "#{key}="
     end
     valid?
   end
@@ -46,14 +44,12 @@ class Ticket
   private
   def validate_val
     # val is used as a naive bot-preventor
-    unless val.blank?
-      @errors.add :val
-    end
+    @errors.add :val unless val.blank?
   end
 
   def valid_url?(candidate)
     url = URI.parse(candidate) rescue false
-    url.kind_of?(URI::Generic) && (url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS) || url.relative?)
+    url.is_a?(URI::Generic) && (url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS) || url.relative?)
   end
 
   def url_if_valid(candidate)

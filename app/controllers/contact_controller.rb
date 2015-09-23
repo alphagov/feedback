@@ -3,7 +3,7 @@ require 'slimmer/headers'
 class ContactController < ApplicationController
   include Slimmer::Headers
 
-  before_filter :set_cache_control, only: [ :new, :index ]
+  before_filter :set_cache_control, only: [:new, :index]
   before_filter :setup_slimmer_artefact, only: :new
 
   def index
@@ -27,12 +27,12 @@ class ContactController < ApplicationController
     ticket = ticket_class.new data
 
     if ticket.valid?
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.successful_submission")
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type}.successful_submission")
       @contact_provided = (not data[:email].blank?)
 
       respond_to_valid_submission(ticket)
     else
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type.to_s}.invalid_submission")
+      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash
@@ -80,11 +80,11 @@ class ContactController < ApplicationController
 
   private
   def set_cache_control
-    expires_in 10.minutes, :public => true unless Rails.env.development?
+    expires_in 10.minutes, public: true unless Rails.env.development?
   end
 
   def setup_slimmer_artefact
-    set_slimmer_dummy_artefact(:section_name => "Contact", :section_link => "/contact")
+    set_slimmer_dummy_artefact(section_name: "Contact", section_link: "/contact")
   end
 
   def technical_attributes

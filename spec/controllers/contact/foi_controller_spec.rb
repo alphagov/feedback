@@ -5,7 +5,7 @@ describe Contact::FoiController do
   include GdsApi::TestHelpers::Support
 
   let(:valid_params) do
-    { 
+    {
       foi: {
         name: "test name",
         email: "a@a.com",

@@ -3,9 +3,9 @@ require 'gds_api/test_helpers/support'
 require 'gds_api/test_helpers/support_api'
 
 def fill_in_valid_contact_details_and_description
-  fill_in "Your name", :with => "test name"
-  fill_in "Your email address", :with => "a@a.com"
-  fill_in "textdetails", :with => "test text details"
+  fill_in "Your name", with: "test name"
+  fill_in "Your email address", with: "a@a.com"
+  fill_in "textdetails", with: "test text details"
 end
 
 def contact_submission_should_be_successful
@@ -56,7 +56,7 @@ describe "Contact" do
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
-    fill_in "val", :with => "test val"
+    fill_in "val", with: "test val"
     click_on "Send message"
 
     no_web_calls_should_have_been_made
@@ -79,7 +79,7 @@ describe "Contact" do
     visit "/contact/govuk"
 
     choose "location-all"
-    fill_in "textdetails", :with => "test text details"
+    fill_in "textdetails", with: "test text details"
     anonymous_submission_should_be_successful
 
     assert_requested(stub_post)
@@ -92,7 +92,7 @@ describe "Contact" do
 
     choose "location-specific"
     fill_in_valid_contact_details_and_description
-    fill_in "link", :with => "some url"
+    fill_in "link", with: "some url"
     click_on "Send message"
 
     i_should_be_on "/contact/govuk"
@@ -110,8 +110,8 @@ describe "Contact" do
     visit "/contact/govuk"
 
     choose "location-all"
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
     click_on "Send message"
 
     i_should_be_on "/contact/govuk"
@@ -126,8 +126,8 @@ describe "Contact" do
     visit "/contact/govuk"
 
     choose "location-all"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "textdetails", :with => "test text details"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "textdetails", with: "test text details"
     click_on "Send message"
 
     i_should_be_on "/contact/govuk"
@@ -142,8 +142,8 @@ describe "Contact" do
     visit "/contact/govuk"
 
     choose "location-all"
-    fill_in "Your name", :with => "test name"
-    fill_in "textdetails", :with => "test text details"
+    fill_in "Your name", with: "test name"
+    fill_in "textdetails", with: "test text details"
     click_on "Send message"
 
     i_should_be_on "/contact/govuk"
@@ -161,7 +161,7 @@ describe "Contact" do
 
     choose "location-specific"
     fill_in_valid_contact_details_and_description
-    fill_in "link", :with => "some url"
+    fill_in "link", with: "some url"
     click_on "Send message"
 
     i_should_be_on "/contact/govuk/thankyou"
@@ -217,8 +217,7 @@ describe "Contact" do
     end
   end
 
-  it "should prefill the specific page field with the page before /contact", :js => true do
-
+  it "should prefill the specific page field with the page before /contact", js: true do
     visit "/contact/foi"
     click_on "Contact"
 

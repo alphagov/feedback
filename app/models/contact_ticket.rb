@@ -6,12 +6,12 @@ class ContactTicket < Ticket
                 :javascript_enabled, :referrer
 
   validate :validate_link
-  validates_length_of :link, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validates_presence_of :textdetails, :message => "The message field cannot be empty"
-  validates_length_of :textdetails, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validates_length_of :name, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates_length_of :link, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates_presence_of :textdetails, message: "The message field cannot be empty"
+  validates_length_of :textdetails, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates_length_of :name, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates :email, email: { message: "The email address must be valid" }, allow_blank: true
-  validates_length_of :email, :maximum => FIELD_MAXIMUM_CHARACTER_COUNT, :message => "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates_length_of :email, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validate :validate_mail_name_connection
   validates_presence_of :location, message: "Please tell us what your contact is to do with"
 
@@ -50,7 +50,7 @@ class ContactTicket < Ticket
   end
 
   def anonymous?
-    name.blank? and email.blank?
+    name.blank? && email.blank?
   end
 
   def referrer
@@ -58,21 +58,21 @@ class ContactTicket < Ticket
   end
 
   def validate_mail_name_connection
-    if name.blank? and not email.blank?
+    if name.blank? && email.present?
       @errors.add :name, 'The name field cannot be empty'
     end
-    if email.blank? and not name.blank?
+    if email.blank? && name.present?
       @errors.add :email, 'The email field cannot be empty'
     end
   end
 
   def validate_link
-    if (location == "specific") and link.blank?
+    if (location == "specific") && link.blank?
       @errors.add :link, 'The link field cannot be empty'
     end
   end
 
   def referring_url_within_govuk?
-    @referrer and @referrer.starts_with?(Plek.new.website_root)
+    @referrer && @referrer.starts_with?(Plek.new.website_root)
   end
 end

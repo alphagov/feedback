@@ -5,9 +5,9 @@ describe "FOI" do
   include GdsApi::TestHelpers::Support
 
   def fill_in_valid_credentials
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "Confirm your email address", :with => "a@a.com"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "Confirm your email address", with: "a@a.com"
   end
 
   it "should let the user submit a FOI request" do
@@ -23,10 +23,10 @@ describe "FOI" do
     visit "/contact/foi"
     expect(page).to have_title "Make a Freedom of Information request"
 
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "Confirm your email address", with: "a@a.com"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", with: "test foi request"
     click_on "Submit your Freedom of Information request"
 
     i_should_be_on "/contact/govuk/thankyou"
@@ -44,11 +44,11 @@ describe "FOI" do
   it "should not accept spam (ie requests with val field filled in)" do
     visit "/contact/foi"
 
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
-    fill_in "val", :with => "test val"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "Confirm your email address", with: "a@a.com"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", with: "test foi request"
+    fill_in "val", with: "test val"
     click_on "Submit your Freedom of Information request"
 
     expect(page.status_code).to eq(400)
@@ -59,10 +59,10 @@ describe "FOI" do
 
     visit "/contact/foi"
 
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "Confirm your email address", :with => "a@a.com"
-    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", :with => "test foi request"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "Confirm your email address", with: "a@a.com"
+    fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", with: "test foi request"
     click_on "Submit your Freedom of Information request"
 
     i_should_be_on "/contact/foi"
@@ -73,9 +73,9 @@ describe "FOI" do
   it "should not proceed if the user hasn't filled in all required FOI fields" do
     visit "/contact/foi"
 
-    fill_in "Your name", :with => "test name"
-    fill_in "Your email address", :with => "a@a.com"
-    fill_in "Confirm your email address", :with => "a@a.com"
+    fill_in "Your name", with: "test name"
+    fill_in "Your email address", with: "a@a.com"
+    fill_in "Confirm your email address", with: "a@a.com"
     click_on "Submit your Freedom of Information request"
 
     i_should_be_on "/contact/foi"
@@ -86,5 +86,4 @@ describe "FOI" do
 
     no_web_calls_should_have_been_made
   end
-
 end

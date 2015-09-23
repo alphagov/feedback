@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe ReportAProblemTicket do
-  def ticket(params={})
+  def ticket(params = {})
     ReportAProblemTicket.new(params)
   end
 
