@@ -240,7 +240,7 @@ DEPENDENCIES
   plek (~> 1.11.0)
   poltergeist (~> 1.6.0)
   rack_strip_client_ip (= 0.0.1)
-  rails (~> 4.2.4)
+  rails (= 4.2.4)
   rspec-rails (~> 3.3.3)
   sass (~> 3.4.18)
   sass-rails (~> 5.0.4)
