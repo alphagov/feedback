@@ -82,9 +82,9 @@ GEM
     json (1.8.3)
     kgio (2.10.0)
     link_header (0.0.8)
-    logstash-event (1.2.02)
-    logstasher (0.6.5)
-      logstash-event (~> 1.2.0)
+    logstash-event (1.1.5)
+    logstasher (0.6.2)
+      logstash-event (~> 1.1.0)
       request_store
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -236,7 +236,7 @@ DEPENDENCIES
   govuk-lint
   govuk_frontend_toolkit (= 1.6.0)
   invalid_utf8_rejector
-  logstasher (~> 0.6.5)
+  logstasher (= 0.6.2)
   plek (~> 1.11.0)
   poltergeist (~> 1.6.0)
   rack_strip_client_ip (= 0.0.1)
