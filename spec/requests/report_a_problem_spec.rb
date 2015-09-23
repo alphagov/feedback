@@ -18,26 +18,26 @@ describe "Reporting a problem with this content/tool" do
 
     visit "/test_forms/report_a_problem"
 
-    fill_in "What you were doing", :with => "I was doing something"
-    fill_in "What went wrong", :with => "It didn't work"
+    fill_in "What you were doing", with: "I was doing something"
+    fill_in "What went wrong", with: "It didn't work"
     click_on "Send"
 
     i_should_be_on "/contact/govuk/problem_reports"
 
     expect(page).to have_content("Thank you for your help.")
-    expect(page).to have_link("Return to where you were", :href => "/test_forms/report_a_problem")
+    expect(page).to have_link("Return to where you were", href: "/test_forms/report_a_problem")
 
     assert_requested(stub_post)
   end
 
-  it "should support ajax submission if available", :js => true do
+  it "should support ajax submission if available", js: true do
     stub_post = stub_support_api_problem_report_creation
 
     visit "/test_forms/report_a_problem"
     expect(page).to have_button('Send')
 
-    fill_in "What you were doing", :with => "I was doing something with javascript"
-    fill_in "What went wrong", :with => "It didn't work"
+    fill_in "What you were doing", with: "I was doing something with javascript"
+    fill_in "What went wrong", with: "It didn't work"
     click_on "Send"
 
     i_should_be_on "/test_forms/report_a_problem"
@@ -77,9 +77,9 @@ describe "Reporting a problem with this content/tool" do
 
   def valid_params
     {
-      :url => "http://www.example.com/test_forms/report_a_problem",
-      :what_doing => "I was doing something",
-      :what_wrong => "It didn't work"
+      url: "http://www.example.com/test_forms/report_a_problem",
+      what_doing: "I was doing something",
+      what_wrong: "It didn't work"
     }
   end
 
@@ -105,8 +105,8 @@ describe "Reporting a problem with this content/tool" do
 
     visit "/test_forms/report_a_problem"
 
-    fill_in "What you were doing", :with => "I was doing something"
-    fill_in "What went wrong", :with => "It didn't work"
+    fill_in "What you were doing", with: "I was doing something"
+    fill_in "What went wrong", with: "It didn't work"
     click_on "Send"
 
     i_should_be_on "/contact/govuk/problem_reports"
@@ -118,8 +118,8 @@ describe "Reporting a problem with this content/tool" do
     it "should show the error notification if both fields are empty" do
       visit "/test_forms/report_a_problem"
 
-      fill_in "What you were doing", :with => ""
-      fill_in "What went wrong", :with => ""
+      fill_in "What you were doing", with: ""
+      fill_in "What went wrong", with: ""
       click_on "Send"
 
       i_should_be_on "/contact/govuk/problem_reports"
@@ -129,12 +129,12 @@ describe "Reporting a problem with this content/tool" do
   end
 
   describe "for json requests" do
-    it "should show the error notification if both fields are empty", :js => true  do
+    it "should show the error notification if both fields are empty", js: true do
       visit "/test_forms/report_a_problem"
       expect(page).to have_button('Send')
 
-      fill_in "What you were doing", :with => ""
-      fill_in "What went wrong", :with => ""
+      fill_in "What you were doing", with: ""
+      fill_in "What went wrong", with: ""
       click_on "Send"
 
       i_should_be_on "/test_forms/report_a_problem"

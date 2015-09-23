@@ -20,9 +20,7 @@ Feedback::Application.routes.draw do
     get 'look-for-jobs', to: redirect("https://jobsearch.direct.gov.uk/ContactUs.aspx")
   end
 
-  root :to => redirect("/contact")
+  root to: redirect("/contact")
 
-  if Rails.env.development? or Rails.env.test?
-    get "test_forms/report_a_problem"
-  end
+  get "test_forms/report_a_problem" if Rails.env.development? || Rails.env.test?
 end

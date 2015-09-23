@@ -2,7 +2,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
   DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
     "<p>If you have more extensive feedback, " +
     "please visit the <a href='/contact'>contact page</a>.</p>"
-  DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> "+
+  DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> " +
     "<p>Please tell us what you were doing or what went wrong.</p>"
 
   def create
@@ -12,7 +12,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
     # from the HTTP referer. This is an edge case in the app as there
     # should only be a finite number of places where this occurs.
     # Specifially, the 40X pages on GOV.UK.
-    attributes = attributes.merge(:url => request.referer) unless params.has_key? :url
+    attributes = attributes.merge(url: request.referer) unless params.has_key? :url
 
     ticket = ReportAProblemTicket.new(attributes)
 

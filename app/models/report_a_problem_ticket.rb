@@ -5,8 +5,8 @@ class ReportAProblemTicket < Ticket
 
   attr_accessor :what_wrong, :what_doing, :javascript_enabled, :referrer, :source, :page_owner
 
-  validates :what_wrong, :presence => true, :if => proc{|ticket| ticket.what_doing.blank? }
-  validates :what_doing, :presence => true, :if => proc{|ticket| ticket.what_wrong.blank? }
+  validates :what_wrong, presence: true, if: proc {|ticket| ticket.what_doing.blank? }
+  validates :what_doing, presence: true, if: proc {|ticket| ticket.what_wrong.blank? }
 
   def save
     if valid? && !spam?

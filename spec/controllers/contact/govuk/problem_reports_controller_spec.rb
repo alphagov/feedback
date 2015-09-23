@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Contact::Govuk::ProblemReportsController do
-
   before :each do
     allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_return(true)
   end
@@ -11,9 +10,9 @@ describe Contact::Govuk::ProblemReportsController do
       context "html request" do
         def do_submit(attrs = {})
           post :create, {
-            :url => "http://www.example.com/somewhere",
-            :what_doing => "Nothing",
-            :what_wrong => "Something",
+            url: "http://www.example.com/somewhere",
+            what_doing: "Nothing",
+            what_wrong: "Something",
           }.merge(attrs)
         end
 
@@ -21,10 +20,10 @@ describe Contact::Govuk::ProblemReportsController do
           stub_ticket = double("Ticket")
           expect(ReportAProblemTicket).to receive(:new).
             with(hash_including(
-              :url => "http://www.example.com/somewhere",
-              :what_doing => "Nothing",
-              :what_wrong => "Something",
-              :user_agent => "Rails Testing"
+                   url: "http://www.example.com/somewhere",
+                   what_doing: "Nothing",
+                   what_wrong: "Something",
+                   user_agent: "Rails Testing"
             )).and_return(stub_ticket)
           expect(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)
@@ -39,17 +38,17 @@ describe Contact::Govuk::ProblemReportsController do
           end
 
           it "should retain the query_string from the given URL" do
-            do_submit :url => "http://www.example.com/somewhere?foo=bar&baz=1"
+            do_submit url: "http://www.example.com/somewhere?foo=bar&baz=1"
             expect(assigns[:return_path]).to eq("/somewhere?foo=bar&baz=1")
           end
 
           it "should assign nil if an invalid url is provided" do
-            do_submit :url => "b[]laaaaaargh!"
+            do_submit url: "b[]laaaaaargh!"
             expect(assigns[:return_path]).to eq(nil)
           end
 
           it "should assign nil if no url is provided" do
-            do_submit :url => nil
+            do_submit url: nil
             expect(assigns[:return_path]).to eq(nil)
           end
         end
@@ -76,15 +75,15 @@ describe Contact::Govuk::ProblemReportsController do
           it "should use the referrer URL to set the 'url' for the model" do
             stub_ticket = double("Ticket")
             expect(ReportAProblemTicket).to receive(:new).
-              with(hash_including(:url => "http://www.gov.uk/referral-city")).
+              with(hash_including(url: "http://www.gov.uk/referral-city")).
               and_return(stub_ticket)
             expect(stub_ticket).to receive(:valid?).and_return(true)
             expect(stub_ticket).to receive(:save).and_return(true)
 
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
             post :create, {
-              :what_doing => "Nothing",
-              :what_wrong => "Something",
+              what_doing: "Nothing",
+              what_wrong: "Something",
             }
           end
         end
@@ -93,11 +92,11 @@ describe Contact::Govuk::ProblemReportsController do
       context "ajax submission" do
         def do_submit(attrs = {})
           xhr :post, :create, {
-            :url => "http://www.example.com/somewhere",
-            :what_doing => "Nothing",
-            :what_wrong => "Something",
-            :javascript_enabled => "true",
-            :referrer => "https://www.gov.uk/some-url/"
+            url: "http://www.example.com/somewhere",
+            what_doing: "Nothing",
+            what_wrong: "Something",
+            javascript_enabled: "true",
+            referrer: "https://www.gov.uk/some-url/"
           }.merge(attrs)
         end
 
@@ -105,11 +104,11 @@ describe Contact::Govuk::ProblemReportsController do
           stub_ticket = double("Ticket")
           expect(ReportAProblemTicket).to receive(:new).
             with(hash_including(
-              :url => "http://www.example.com/somewhere",
-              :what_doing => "Nothing",
-              :what_wrong => "Something",
-              :user_agent => "Rails Testing",
-              :javascript_enabled => "true"
+                   url: "http://www.example.com/somewhere",
+                   what_doing: "Nothing",
+                   what_wrong: "Something",
+                   user_agent: "Rails Testing",
+                   javascript_enabled: "true"
             )).and_return(stub_ticket)
           allow(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)
@@ -123,7 +122,7 @@ describe Contact::Govuk::ProblemReportsController do
           expect(data).to eq({"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"})
         end
 
-        it "should return json indicating failure when ticket creation fails"  do
+        it "should return json indicating failure when ticket creation fails" do
           allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           do_submit
           data = JSON.parse(response.body)

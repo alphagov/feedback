@@ -10,9 +10,7 @@ class ServiceFeedback < Ticket
   validates_length_of :slug, maximum: 512
 
   def save
-    if valid?
-      Feedback.support_api.create_service_feedback(options)
-    end
+    Feedback.support_api.create_service_feedback(options) if valid?
   end
 
   def options
