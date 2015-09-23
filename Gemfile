@@ -32,6 +32,7 @@ else
 end
 
 group :development, :test do
+  gem 'govuk-lint'
   gem 'rspec-rails', '3.3.3'
   gem 'capybara', '2.5.0'
   gem 'simplecov', '0.6.4'
