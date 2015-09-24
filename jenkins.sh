@@ -1,4 +1,5 @@
 #!/bin/bash -xe
+export USE_SIMPLECOV=true
 export GOVUK_ASSET_ROOT=http://static.dev.gov.uk
 export RAILS_ENV=test
 

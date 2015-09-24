@@ -35,8 +35,8 @@ group :development, :test do
   gem 'govuk-lint'
   gem 'rspec-rails', '3.3.3'
   gem 'capybara', '2.5.0'
-  gem 'simplecov', '0.6.4'
-  gem 'simplecov-rcov', '0.2.3'
+  gem 'simplecov', '0.6.4', require: false
+  gem 'simplecov-rcov', '0.2.3', require: false
   gem 'webmock', '1.21.0', require: false
   gem 'poltergeist', '1.6.0'
   gem 'shoulda-matchers', '2.8.0'
