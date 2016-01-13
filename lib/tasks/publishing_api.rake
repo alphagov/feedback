@@ -16,6 +16,7 @@ class RedirectPublisher
 
     redirect = {
       "content_id" => content_id,
+      "base_path" => base_path,
       "format" => "redirect",
       "publishing_app" => publishing_app,
       "update_type" => "major",
@@ -28,12 +29,13 @@ class RedirectPublisher
       ]
     }
 
-    publishing_api.put_content_item(base_path, redirect)
+    publishing_api.put_content(content_id, redirect)
+    publishing_api.publish(content_id, "major")
   end
 
 private
   def publishing_api
-    @publishing_api ||= GdsApi::PublishingApi.new(Plek.find("publishing-api"))
+    @publishing_api ||= GdsApi::PublishingApiV2.new(Plek.find("publishing-api"))
   end
 end
 
