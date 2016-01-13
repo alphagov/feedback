@@ -3,12 +3,13 @@ require 'gds_api/publishing_api'
 require 'gds_api/publishing_api/special_route_publisher'
 
 class RedirectPublisher
-  attr_reader :logger, :publishing_app, :type
+  attr_reader :logger, :publishing_app, :type, :publishing_api
 
-  def initialize(logger:, publishing_app:, type: "exact")
+  def initialize(logger:, publishing_app:, type: "exact", publishing_api:)
     @logger = logger
     @publishing_app = publishing_app
     @type = type
+    @publishing_api = publishing_api
   end
 
   def call(content_id, base_path, destination_path)
@@ -32,18 +33,24 @@ class RedirectPublisher
     publishing_api.put_content(content_id, redirect)
     publishing_api.publish(content_id, "major")
   end
+end
 
-private
-  def publishing_api
-    @publishing_api ||= GdsApi::PublishingApiV2.new(Plek.find("publishing-api"))
-  end
+def publishing_api
+  GdsApi::PublishingApiV2.new(
+    Plek.new.find('publishing-api'),
+    bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example'
+  )
 end
 
 namespace :publishing_api do
   desc 'Publish special routes via publishing api'
   task :publish_special_routes do
     logger = Logger.new(STDOUT)
-    special_route_publisher = GdsApi::PublishingApi::SpecialRoutePublisher.new(logger: logger)
+    special_route_publisher = GdsApi::PublishingApi::SpecialRoutePublisher.new(
+      logger: logger,
+      publishing_api: publishing_api
+    )
+
     special_route_publisher.publish(
       content_id: "58b05bc2-fde5-4a0b-af73-8edc532674f8",
       title: "Government contacts",
@@ -53,7 +60,7 @@ namespace :publishing_api do
       rendering_app: 'feedback'
     )
 
-    redirect_publisher = RedirectPublisher.new(logger: logger, publishing_app: 'feedback')
+    redirect_publisher = RedirectPublisher.new(logger: logger, publishing_app: 'feedback', publishing_api: publishing_api)
     redirect_publisher.call('be88ff3e-deb3-4a6e-b6ac-d6d12b50ac3d', '/feedback', '/contact')
     redirect_publisher.call('16a89a3b-bd41-4bce-adaf-7505b844632f', '/feedback/contact', '/contact/govuk')
     redirect_publisher.call('a6d9bafd-f69b-4d2f-a002-c7547473e152', '/feedback/foi', '/contact/foi')
