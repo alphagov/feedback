@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5.1'
 
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 9.0.0'
+  gem 'slimmer', '~> 9.0.1'
 end
 
 gem 'unicorn', '~> 4.9.0'
