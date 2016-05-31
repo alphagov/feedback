@@ -70,6 +70,3 @@ namespace :publishing_api do
     redirect_publisher.call('b7f6e48e-9d2c-4789-a64f-455921dca0d0', '/contact/jobcentre-plus', '/contact-jobcentre-plus')
   end
 end
-
-desc "Temporary alias of publishing_api:publish_special_routes for backward compatibility"
-task "router:register" => "publishing_api:publish_special_routes"
