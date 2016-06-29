@@ -1,4 +1,5 @@
 //= require jquery.details.js
+//= require vendor/jquery.inputevent
 
 (function(){
   "use strict";
@@ -38,14 +39,9 @@
 
   GOVUK.feedback.initCounters = function () {
     $('.counted').each(function (index) {
-      this.oninput = function () {
-        this.onkeydown = null;
+      $(this).on('txtinput', function () {
         GOVUK.feedback.handleCounter(this);
-      };
-
-      this.onkeydown = function () {
-        GOVUK.feedback.handleCounter(this);
-      };
+      });
     });
   }
 
