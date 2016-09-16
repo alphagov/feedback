@@ -15,6 +15,7 @@ describe "Page improvements" do
         path: "/path/to/page",
         name: "Henry",
         email: "henry@example.com",
+        user_agent: 'Safari',
       }.to_json,
       common_headers
 
@@ -24,6 +25,7 @@ describe "Page improvements" do
         "path" => "/path/to/page",
         "name" => "Henry",
         "email" => "henry@example.com",
+        "user_agent" => "Safari",
       })
 
     expect(expected_request).to have_been_made
