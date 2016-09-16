@@ -57,17 +57,17 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
-    domain_name (0.5.25)
+    domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
-    gds-api-adapters (26.5.0)
+    gds-api-adapters (36.0.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
-      plek
+      plek (>= 1.9.0)
       rack-cache
-      rest-client (~> 1.8.0)
+      rest-client (~> 2.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     govuk-lint (0.3.0)
@@ -93,7 +93,9 @@ GEM
       PriorityQueue (~> 0.1.2)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    mime-types (2.99.2)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.11.2)
@@ -114,7 +116,7 @@ GEM
     power_assert (0.2.4)
     powerpack (0.1.1)
     rack (1.6.4)
-    rack-cache (1.5.1)
+    rack-cache (1.6.1)
       rack (>= 0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -147,10 +149,10 @@ GEM
     raindrops (0.15.0)
     rake (11.2.2)
     request_store (1.2.0)
-    rest-client (1.8.0)
+    rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.3.2)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.1)
@@ -213,7 +215,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.2)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -236,7 +238,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 4.3.1)
   capybara (~> 2.5.0)
-  gds-api-adapters (= 26.5.0)
+  gds-api-adapters (= 36.0.0)
   govuk-lint
   govuk_frontend_toolkit (= 1.6.0)
   invalid_utf8_rejector
