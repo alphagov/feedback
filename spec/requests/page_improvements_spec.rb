@@ -32,13 +32,12 @@ describe "Page improvements" do
   end
 
   it "responds successfully" do
-    stub_any_support_api_call
+    params = { description: "The title is the wrong colour." }
+    stub_create_page_improvement(params)
 
-    post "/contact/govuk/page_improvements",
-      { description: "The title is the wrong colour." }.to_json,
-      common_headers
+    post "/contact/govuk/page_improvements", params.to_json, common_headers
 
-    assert_response :success
+    expect(response.code).to eq('201')
     expect(response_hash).to include('status' => 'success')
   end
 
