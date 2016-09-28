@@ -28,7 +28,7 @@ gem 'sass-rails', '~> 5.0.4'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '36.0.0'
+  gem 'gds-api-adapters', '36.3.0'
 end
 
 group :development, :test do
