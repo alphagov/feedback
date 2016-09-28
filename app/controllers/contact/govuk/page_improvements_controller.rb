@@ -10,6 +10,6 @@ class Contact::Govuk::PageImprovementsController < ApplicationController
   end
 
   def page_improvements_params
-    params.slice(:description, :email, :name, :path, :user_agent)
+    params.slice(:description, :email, :name, :url, :user_agent)
   end
 end

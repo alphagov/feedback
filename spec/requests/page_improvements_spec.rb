@@ -12,7 +12,7 @@ describe "Page improvements" do
     post "/contact/govuk/page_improvements",
       {
         description: "The title is the wrong colour.",
-        path: "/path/to/page",
+        url: "https://gov.uk/path/to/page",
         name: "Henry",
         email: "henry@example.com",
         user_agent: 'Safari',
@@ -22,7 +22,7 @@ describe "Page improvements" do
     expected_request = a_request(:post, Plek.current.find('support-api') + "/page-improvements")
       .with(body: {
         "description" => "The title is the wrong colour.",
-        "path" => "/path/to/page",
+        "url" => "https://gov.uk/path/to/page",
         "name" => "Henry",
         "email" => "henry@example.com",
         "user_agent" => "Safari",
