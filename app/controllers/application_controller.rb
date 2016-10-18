@@ -26,7 +26,7 @@ protected
         headers[Slimmer::Headers::SKIP_HEADER] = "1"
         render nothing: true, status: 503
       end
-      format.js do
+      format.any(:js, :json) do
         response = "<p>Sorry, we're unable to receive your message right now.</p> " +
           "<p>We have other ways for you to provide feedback on the " +
           "<a href='/contact'>contact page</a>.</p>"
