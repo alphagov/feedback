@@ -39,4 +39,5 @@ group :development, :test do
   gem 'poltergeist', '~> 1.6.0'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'test-unit', '3.1.3'
+  gem 'pry-byebug'
 end
