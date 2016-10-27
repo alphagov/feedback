@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support'
 
-describe Contact::GovukController do
+RSpec.describe Contact::GovukController, type: :controller do
   include GdsApi::TestHelpers::Support
 
   let(:valid_params) do

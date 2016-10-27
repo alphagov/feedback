@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support_api'
 
-describe "Page improvements" do
+RSpec.describe "Page improvements", type: :request do
   include GdsApi::TestHelpers::SupportApi
 
   let(:common_headers) { { "Accept" => "application/json", "Content-Type" => "application/json" } }

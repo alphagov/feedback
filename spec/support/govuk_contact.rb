@@ -1,4 +1,4 @@
-shared_examples_for "a GOV.UK contact" do
+RSpec.shared_examples_for "a GOV.UK contact" do
   context "on GET" do
     it "returns http success" do
       get :new

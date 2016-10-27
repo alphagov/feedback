@@ -1,7 +1,7 @@
 # encoding: UTF-8
-require 'spec_helper'
+require 'rails_helper'
 
-describe Ticket do
+RSpec.describe Ticket, type: :model do
   it { is_expected.to allow_value("https://www.gov.uk/done/whatever").for(:url) }
   it { is_expected.not_to be_spam}
 

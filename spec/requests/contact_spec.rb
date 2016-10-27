@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support'
 require 'gds_api/test_helpers/support_api'
 
@@ -20,14 +20,15 @@ def anonymous_submission_should_be_successful
   expect(page).to have_content("Thank you for your feedback")
 end
 
-describe "Contact" do
+RSpec.describe "Contact", type: :request do
+  include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
+
   it "should display an index page" do
     visit "/contact"
     expect(page).to have_title "Contact"
   end
 
-  include GdsApi::TestHelpers::Support
-  include GdsApi::TestHelpers::SupportApi
   it "should let the user submit a request with contact details" do
     stub_post = stub_support_named_contact_creation(
       requester: { name: "test name", email: "a@a.com" },

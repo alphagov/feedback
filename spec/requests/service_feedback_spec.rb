@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support'
 require 'gds_api/test_helpers/support_api'
 
-describe "Service feedback submission" do
+RSpec.describe "Service feedback submission", type: :request do
   include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi
 

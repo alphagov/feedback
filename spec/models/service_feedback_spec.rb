@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support_api'
 
-describe ServiceFeedback do
+RSpec.describe ServiceFeedback, type: :model do
   include ValidatorHelper
   include GdsApi::TestHelpers::SupportApi
 

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ContactTicket do
+RSpec.describe ContactTicket, type: :model do
   include ValidatorHelper
 
   def valid_anonymous_ticket_details

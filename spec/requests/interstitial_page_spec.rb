@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'uri'
 
-describe "Interstitial page" do
+RSpec.describe "Interstitial page", type: :request do
   before do
     visit "/contact"
   end

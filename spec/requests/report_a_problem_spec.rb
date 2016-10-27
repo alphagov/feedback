@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support_api'
 
-describe "Reporting a problem with this content/tool" do
+RSpec.describe "Reporting a problem with this content/tool", type: :request do
   include GdsApi::TestHelpers::SupportApi
 
   it "should submit the problem report through the support API" do

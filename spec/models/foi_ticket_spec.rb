@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support'
 
-describe FoiTicket do
+RSpec.describe FoiTicket, type: :model do
   include ValidatorHelper
   include GdsApi::TestHelpers::Support
 
