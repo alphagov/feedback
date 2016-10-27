@@ -23,7 +23,7 @@ RSpec.describe "Interstitial page", type: :request do
   end
 
   let(:all_urls) { (CONTACT_LINKS.long_tail + CONTACT_LINKS.popular).map { |link| URI(link["URL"]) } }
-  let(:external_urls) { all_urls.select {|url| url.host && url.host != 'www.gov.uk' } }
+  let(:external_urls) { all_urls.select { |url| url.host && url.host != 'www.gov.uk' } }
 
   it "highlights external links" do
     external_urls.each do |url|

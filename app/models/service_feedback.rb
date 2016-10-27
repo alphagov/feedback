@@ -26,7 +26,8 @@ class ServiceFeedback < Ticket
     }
   end
 
-  private
+private
+
   def improvement_comments
     @improvement_comments.present? ? @improvement_comments : nil
   end

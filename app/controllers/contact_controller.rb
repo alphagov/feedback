@@ -42,13 +42,14 @@ class ContactController < ApplicationController
     end
   end
 
-  private
+private
+
   def respond_to_valid_submission(ticket)
     ticket.save
     confirm_submission
   end
 
-  def respond_to_invalid_submission(ticket)
+  def respond_to_invalid_submission(_ticket)
     rerender_form
   end
 
@@ -78,7 +79,6 @@ class ContactController < ApplicationController
     params[type] || {}
   end
 
-  private
   def set_cache_control
     expires_in 10.minutes, public: true unless Rails.env.development?
   end

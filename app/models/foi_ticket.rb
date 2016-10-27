@@ -14,7 +14,8 @@ class FoiTicket < Ticket
     Feedback.support.create_foi_request(ticket_details) if valid?
   end
 
-  private
+private
+
   def ticket_details
     { requester: { name: name, email: email }, details: textdetails, url: url }
   end

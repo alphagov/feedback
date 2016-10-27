@@ -3,11 +3,11 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   it { is_expected.to allow_value("https://www.gov.uk/done/whatever").for(:url) }
-  it { is_expected.not_to be_spam}
+  it { is_expected.not_to be_spam }
 
   context "a bot has populated the val field" do
     let(:subject) { Ticket.new(val: "xxxxx") }
-    it { is_expected.to be_spam}
+    it { is_expected.to be_spam }
     it { is_expected.not_to be_valid }
   end
 

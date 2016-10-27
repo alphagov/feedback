@@ -31,7 +31,7 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
   end
 
   it "should support ajax submission if available", js: true do
-    stub_post = stub_support_api_problem_report_creation
+    stub_support_api_problem_report_creation
 
     visit "/test_forms/report_a_problem"
     expect(page).to have_button('Send')
@@ -87,7 +87,8 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
     stub_support_api_problem_report_creation
 
     # Using Rack::Test instead of capybara to allow setting headers.
-    post "/contact/govuk/problem_reports", valid_params, {"HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)"}
+    headers = { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" }
+    post "/contact/govuk/problem_reports", valid_params, headers
 
     assert_requested(:post, %r{/problem-reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"

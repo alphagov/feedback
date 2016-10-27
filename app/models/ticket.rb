@@ -41,7 +41,8 @@ class Ticket
     url_if_valid(@referrer)
   end
 
-  private
+private
+
   def validate_val
     # val is used as a naive bot-preventor
     @errors.add :val unless val.blank?

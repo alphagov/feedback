@@ -33,7 +33,8 @@ class ContactTicket < Ticket
     end
   end
 
-  private
+private
+
   def ticket_details
     details = {
       details: textdetails,

@@ -1,12 +1,12 @@
 require 'gds_api/support'
 
 class ReportAProblemTicket < Ticket
-  SOURCE_WHITELIST = %w(mainstream inside_government page_not_found)
+  SOURCE_WHITELIST = %w(mainstream inside_government page_not_found).freeze
 
   attr_accessor :what_wrong, :what_doing, :javascript_enabled, :referrer, :source, :page_owner
 
-  validates :what_wrong, presence: true, if: proc {|ticket| ticket.what_doing.blank? }
-  validates :what_doing, presence: true, if: proc {|ticket| ticket.what_wrong.blank? }
+  validates :what_wrong, presence: true, if: proc { |ticket| ticket.what_doing.blank? }
+  validates :what_doing, presence: true, if: proc { |ticket| ticket.what_wrong.blank? }
 
   def save
     if valid? && !spam?
@@ -30,7 +30,8 @@ class ReportAProblemTicket < Ticket
     PROBLEM_REPORT_SPAM_MATCHERS.any? { |pattern| pattern[self] }
   end
 
-  private
+private
+
   def ticket_details
     [:what_wrong, :what_doing, :path, :user_agent, :javascript_enabled, :referrer, :source, :page_owner].inject({}) do |details, field|
       details[field] = send(field)
