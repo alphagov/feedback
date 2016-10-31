@@ -25,6 +25,8 @@ gem 'govuk_frontend_toolkit', '1.6.0'
 gem 'sass', '~> 3.4.18'
 gem 'sass-rails', '~> 5.0.4'
 
+gem 'google-api-client', '~> 0.9'
+
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
