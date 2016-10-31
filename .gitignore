@@ -17,3 +17,6 @@
 /coverage
 
 /spec/examples.txt
+
+# Ignore the google-credentials.json file for assisted digital
+/config/google-credentials.json
