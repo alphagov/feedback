@@ -11,7 +11,8 @@ class Contact::GovukController < ContactController
   def named_contact_thankyou
   end
 
-  private
+private
+
   def ticket_class
     ContactTicket
   end

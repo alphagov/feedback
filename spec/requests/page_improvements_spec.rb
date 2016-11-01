@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support_api'
 
-describe "Page improvements" do
+RSpec.describe "Page improvements", type: :request do
   include GdsApi::TestHelpers::SupportApi
 
   let(:common_headers) { { "Accept" => "application/json", "Content-Type" => "application/json" } }
@@ -60,7 +60,7 @@ describe "Page improvements" do
       .with(body: {}.to_json)
       .to_return(
         status: 422,
-        body: { status: 'error', errors: [{ description: "can't be blank" }]}.to_json,
+        body: { status: 'error', errors: [{ description: "can't be blank" }] }.to_json,
         headers: { "Content-Type" => "application/json; charset=utf-8" }
       )
 

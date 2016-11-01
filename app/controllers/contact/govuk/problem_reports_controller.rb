@@ -48,7 +48,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
     end
   end
 
-  private
+private
 
   def extract_return_path(url)
     uri = URI.parse(url)

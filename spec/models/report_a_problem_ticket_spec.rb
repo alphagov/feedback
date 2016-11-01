@@ -1,7 +1,7 @@
 # encoding: UTF-8
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReportAProblemTicket do
+RSpec.describe ReportAProblemTicket, type: :model do
   def ticket(params = {})
     ReportAProblemTicket.new(params)
   end

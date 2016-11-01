@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'gds_api/test_helpers/support'
 require 'gds_api/test_helpers/support_api'
 
@@ -20,14 +20,15 @@ def anonymous_submission_should_be_successful
   expect(page).to have_content("Thank you for your feedback")
 end
 
-describe "Contact" do
+RSpec.describe "Contact", type: :request do
+  include GdsApi::TestHelpers::Support
+  include GdsApi::TestHelpers::SupportApi
+
   it "should display an index page" do
     visit "/contact"
     expect(page).to have_title "Contact"
   end
 
-  include GdsApi::TestHelpers::Support
-  include GdsApi::TestHelpers::SupportApi
   it "should let the user submit a request with contact details" do
     stub_post = stub_support_named_contact_creation(
       requester: { name: "test name", email: "a@a.com" },
@@ -178,7 +179,7 @@ describe "Contact" do
     stub_support_named_contact_creation
 
     # Using Rack::Test to allow setting the user agent.
-    post "/contact/govuk", {
+    params = {
       contact: {
         query: "report-problem",
         link: "www.test.com",
@@ -187,7 +188,9 @@ describe "Contact" do
         email: "test@test.com",
         textdetails: "test text details"
       }
-    }, {"HTTP_USER_AGENT" => "T1000 (Bazinga)"}
+    }
+    headers = { "HTTP_USER_AGENT" => "T1000 (Bazinga)" }
+    post "/contact/govuk", params, headers
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -199,7 +202,7 @@ describe "Contact" do
     stub_support_named_contact_creation
 
     # Using Rack::Test to allow setting the user agent.
-    post "/contact/govuk", {
+    params = {
       contact: {
         query: "report-problem",
         link: "www.test.com",
@@ -210,6 +213,7 @@ describe "Contact" do
         referrer: "https://www.dev.gov.uk/referring_url"
       }
     }
+    post "/contact/govuk", params
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]

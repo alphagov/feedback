@@ -33,10 +33,11 @@ end
 
 group :development, :test do
   gem 'govuk-lint'
-  gem 'rspec-rails', '~> 3.3.3'
+  gem 'rspec-rails', '~> 3.4.0'
   gem 'capybara', '~> 2.5.0'
   gem 'webmock', '~> 1.21.0', require: false
   gem 'poltergeist', '~> 1.6.0'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'test-unit', '3.1.3'
+  gem 'pry-byebug'
 end

@@ -1,5 +1,6 @@
 class Contact::FoiController < ContactController
-  private
+private
+
   def ticket_class
     FoiTicket
   end

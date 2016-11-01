@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   slimmer_template 'wrapper'
 
 protected
+
   def robot_script_submission_detected
     headers[Slimmer::Headers::SKIP_HEADER] = "1"
     render nothing: true, status: 400

@@ -4,10 +4,10 @@ class ContactLinks
   end
 
   def popular
-    @table.select {|link| link["Type"] == "popular"}
+    @table.select { |link| link["Type"] == "popular" }
   end
 
   def long_tail
-    @table.select {|link| link["Type"] == "long-tail"}
+    @table.select { |link| link["Type"] == "long-tail" }
   end
 end

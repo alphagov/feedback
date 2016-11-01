@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Contact::Govuk::ProblemReportsController do
+RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
   before :each do
     allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_return(true)
   end
@@ -81,10 +81,7 @@ describe Contact::Govuk::ProblemReportsController do
             expect(stub_ticket).to receive(:save).and_return(true)
 
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
-            post :create, {
-              what_doing: "Nothing",
-              what_wrong: "Something",
-            }
+            post :create, what_doing: "Nothing", what_wrong: "Something"
           end
         end
       end # html
@@ -119,14 +116,14 @@ describe Contact::Govuk::ProblemReportsController do
         it "should return json indicating success" do
           do_submit
           data = JSON.parse(response.body)
-          expect(data).to eq({"status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>"})
+          expect(data).to eq("status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>")
         end
 
         it "should return json indicating failure when ticket creation fails" do
           allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           do_submit
           data = JSON.parse(response.body)
-          expect(data).to eq({"status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>"})
+          expect(data).to eq("status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>")
         end
       end
     end
