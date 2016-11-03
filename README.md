@@ -47,13 +47,14 @@ in is set via the following environment:
 To find the ID of a spreadsheet you wish to use, the [following documentation
 from google is useful](https://developers.google.com/sheets/guides/concepts#spreadsheet_id).
 
-Authorisation for writing to the spreadsheet must be granted to the app.  We use
-a service account JSON key (see [Google's documentation](https://developers.google.com/identity/protocols/OAuth2ServiceAccount)).
-Once you have generated your service account key, place a copy of the JSON key
-in:
+Authorisation for writing to the spreadsheet must be granted to the app.
 
-    config/google-credentials.json
-
-You must also take the `client_email` value from that file and share the
-spreadsheet with that email address, giving it at least "can edit" permissions
-so the application can write data back.
+1.  Generate a service account (see [Google's documentation](https://developers.google.com/identity/protocols/OAuth2ServiceAccount))
+    and store the JSON key somewhere safe.
+2.  Extract the `client_email` value from the JSON key and make it available to
+    the app in the `GOOGLE_CLIENT_EMAIL` environment variable.
+3.  Extract the `private_key` value from the JSON key and make it avaiable to
+    the app via the `GOOGLE_PRIVATE_KEY` environment variable.
+4.  Share the spreadsheet that you want to write data to with the email address
+    stored in the `GOOGLE_CLIENT_EMAIL`.  It should have at least "can edit"
+    permissions so the application can write data to the sheet.
