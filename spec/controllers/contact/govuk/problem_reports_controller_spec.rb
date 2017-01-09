@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
+  render_views
+
   before :each do
     allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_return(true)
   end

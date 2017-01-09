@@ -17,11 +17,6 @@ RSpec.shared_examples_for "a GOV.UK contact" do
 
       expect(response.code).to eq("406")
     end
-
-    it "should send a dummy artefact to slimmer with a Contact section" do
-      expect(controller).to receive(:set_slimmer_dummy_artefact).with(section_name: "Contact", section_link: "/contact")
-      get :new
-    end
   end
 
   context "on POST" do
