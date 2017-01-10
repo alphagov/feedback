@@ -60,7 +60,7 @@ RSpec.describe "Contact", type: :request do
     fill_in "val", with: "test val"
     click_on "Send message"
 
-    no_web_calls_should_have_been_made
+    no_post_calls_should_have_been_made
 
     expect(page.status_code).to eq(400)
   end
@@ -120,7 +120,7 @@ RSpec.describe "Contact", type: :request do
     expect(find_field('Your name').value).to eq 'test name'
     expect(find_field('Your email address').value).to eq 'a@a.com'
 
-    no_web_calls_should_have_been_made
+    no_post_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with email without name" do
@@ -136,7 +136,7 @@ RSpec.describe "Contact", type: :request do
     expect(find_field('Your email address').value).to eq 'a@a.com'
     expect(find_field('textdetails').value).to eq 'test text details'
 
-    no_web_calls_should_have_been_made
+    no_post_calls_should_have_been_made
   end
 
   it "should not let the user submit a request with name without email" do
@@ -152,7 +152,7 @@ RSpec.describe "Contact", type: :request do
     expect(find_field('Your name').value).to eq 'test name'
     expect(find_field('textdetails').value).to eq 'test text details'
 
-    no_web_calls_should_have_been_made
+    no_post_calls_should_have_been_made
   end
 
   it "should let the user submit a request with a link" do
@@ -221,14 +221,13 @@ RSpec.describe "Contact", type: :request do
     end
   end
 
-  it "should prefill the specific page field with the page before /contact", js: true do
-    visit "/contact/foi"
-    click_on "Contact"
-
-    contact_referrer = page.driver.cookies['govuk_contact_referrer'].value
-    expect(contact_referrer).to match(/\/contact\/foi$/)
-
+  # Because the breadcrumb component is not loaded as HTML
+  # we need to workaround by filling the form to get the
+  # cookie `govuk_contact_referrer`.
+  it "should have a cookie with the previous page page before filling the form", js: true do
+    visit "/contact"
     click_on "GOV.UK form"
+
     stub_support_named_contact_creation
 
     fill_in_valid_contact_details_and_description
@@ -236,9 +235,10 @@ RSpec.describe "Contact", type: :request do
 
     i_should_be_on "/contact/govuk/thankyou"
 
-    assert_requested(:post, %r{/named_contacts}) do |request|
-      response = JSON.parse(request.body)["named_contact"]
-      response["link"].ends_with? "/contact/foi"
-    end
+    click_on "Return to the GOV.UK home page"
+
+    cookies = page.driver.cookies
+    expect(cookies.keys).to include('govuk_contact_referrer')
+    expect(cookies['govuk_contact_referrer'].value).to match(/\/thankyou$/)
   end
 end

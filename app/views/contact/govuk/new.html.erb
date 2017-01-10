@@ -1,6 +1,5 @@
 <% content_for :title do "Contact GOV.UK" end %>
 
-
 <div class="inner">
   <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
     <%= hidden_field_tag 'contact[url]', Plek.new.website_root + contact_govuk_path %>

@@ -234,13 +234,13 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
-    slimmer (9.0.1)
+    slimmer (10.0.0)
       activesupport
       json
       nokogiri (>= 1.5.0, < 1.7.0)
       null_logger
       plek (>= 1.1.0)
-      rack (>= 1.3.5)
+      rack
       rest-client
     slop (3.6.0)
     sprockets (3.7.0)
@@ -303,7 +303,7 @@ DEPENDENCIES
   sass (~> 3.4.18)
   sass-rails (~> 5.0.4)
   shoulda-matchers (~> 2.8.0)
-  slimmer (~> 9.0.1)
+  slimmer (~> 10.0.0)
   statsd-ruby (~> 1.2.1)
   test-unit (= 3.1.3)
   uglifier (~> 2.7.2)

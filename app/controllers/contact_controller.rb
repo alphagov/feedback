@@ -4,14 +4,16 @@ class ContactController < ApplicationController
   include Slimmer::Headers
 
   before_filter :set_cache_control, only: [:new, :index]
-  before_filter :setup_slimmer_artefact, only: :new
 
   def index
     @popular_links = CONTACT_LINKS.popular
     @long_tail_links = CONTACT_LINKS.long_tail
+    @breadcrumbs = [breadcrumbs.first]
   end
 
   def new
+    @breadcrumbs = breadcrumbs
+
     respond_to do |format|
       format.html do
         render :new
@@ -43,6 +45,19 @@ class ContactController < ApplicationController
   end
 
 private
+
+  def breadcrumbs
+    [
+      {
+        title: "Home",
+        url: '/'
+      },
+      {
+        title: 'Contact',
+        url: '/contact'
+      }
+    ]
+  end
 
   def respond_to_valid_submission(ticket)
     ticket.save
@@ -81,10 +96,6 @@ private
 
   def set_cache_control
     expires_in 10.minutes, public: true unless Rails.env.development?
-  end
-
-  def setup_slimmer_artefact
-    set_slimmer_dummy_artefact(section_name: "Contact", section_link: "/contact")
   end
 
   def technical_attributes

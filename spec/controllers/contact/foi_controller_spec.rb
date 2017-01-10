@@ -2,6 +2,8 @@ require 'rails_helper'
 require 'gds_api/test_helpers/support'
 
 RSpec.describe Contact::FoiController, type: :controller do
+  render_views
+
   include GdsApi::TestHelpers::Support
 
   let(:valid_params) do
