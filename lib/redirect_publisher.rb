@@ -1,7 +1,3 @@
-require 'logger'
-require 'gds_api/publishing_api'
-require 'gds_api/publishing_api/special_route_publisher'
-
 class RedirectPublisher
   attr_reader :logger, :publishing_app, :type, :publishing_api
 
