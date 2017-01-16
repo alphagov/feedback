@@ -34,6 +34,7 @@ else
 end
 
 group :development, :test do
+  gem 'govuk-content-schema-test-helpers'
   gem 'govuk-lint'
   gem 'rspec-rails', '~> 3.4.0'
   gem 'capybara', '~> 2.5.0'
