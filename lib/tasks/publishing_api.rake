@@ -1,3 +1,7 @@
+require 'logger'
+require 'gds_api/publishing_api'
+require 'gds_api/publishing_api/special_route_publisher'
+
 namespace :publishing_api do
   def publishing_api
     GdsApi::PublishingApiV2.new(
