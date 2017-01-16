@@ -89,6 +89,8 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
+    govuk-content-schema-test-helpers (1.4.0)
+      json-schema (~> 2.5.1)
     govuk-lint (1.2.1)
       rubocop (~> 0.39.0)
       scss_lint
@@ -103,6 +105,8 @@ GEM
     invalid_utf8_rejector (0.0.2)
       rack (~> 1.0)
     json (1.8.3)
+    json-schema (2.5.2)
+      addressable (~> 2.3.8)
     jwt (1.5.6)
     kgio (2.10.0)
     link_header (0.0.8)
@@ -290,6 +294,7 @@ DEPENDENCIES
   capybara (~> 2.5.0)
   gds-api-adapters (= 36.3.0)
   google-api-client (~> 0.9)
+  govuk-content-schema-test-helpers
   govuk-lint
   govuk_frontend_toolkit (= 1.6.0)
   invalid_utf8_rejector
