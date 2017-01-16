@@ -1,3 +1,5 @@
+require './lib/redirect_publisher'
+
 require 'logger'
 require 'gds_api/publishing_api'
 require 'gds_api/publishing_api/special_route_publisher'
