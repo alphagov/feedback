@@ -51,6 +51,11 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    ci_reporter (2.0.0)
+      builder (>= 2.1.2)
+    ci_reporter_rspec (1.0.0)
+      ci_reporter (~> 2.0)
+      rspec (>= 2.14, < 4)
     cliver (0.3.2)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
@@ -192,6 +197,10 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (2.1.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
     rspec-core (3.4.4)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -288,6 +297,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 4.3.1)
   capybara (~> 2.5.0)
+  ci_reporter_rspec
   gds-api-adapters (= 36.3.0)
   google-api-client (~> 0.9)
   govuk-lint
