@@ -43,4 +43,5 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'test-unit', '3.1.3'
   gem 'pry-byebug'
+  gem 'ci_reporter_rspec'
 end
