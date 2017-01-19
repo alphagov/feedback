@@ -3,7 +3,7 @@
 REPOSITORY = 'feedback'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
-node('mongodb-2.4') {
+node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
   properties([
