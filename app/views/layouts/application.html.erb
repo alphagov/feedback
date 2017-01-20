@@ -9,7 +9,6 @@
     <%= yield :section_meta_tags %>
   </head>
   <body class="full-width">
-    <div class="header-context"><!-- Deliberately empty. This will prevent Slimmer from adding the artefact-breadcrumb. --></div>
     <div id="wrapper">
       <main id="content" role="main" class="group category-page">
         <%= render partial: 'govuk_component/breadcrumbs', locals: { breadcrumbs: @breadcrumbs } %>
