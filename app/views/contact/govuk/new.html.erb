@@ -6,7 +6,8 @@
 
     <p>Remember, the <a href="/help">help pages</a> have answers to the most common questions about the GOV.UK website. You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
 
-    <input type="text" id="val" name="contact[val]" style="display:none"/>
+    <%= render partial: "shared/spam_honeypot", locals: { form_name: 'contact' } %>
+
     <%= render "shared/error_summary" %>
 
     <fieldset id="location">
