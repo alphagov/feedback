@@ -30,7 +30,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     submit_service_feedback
 
     expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
-      JSON.parse(request.body)["values"][0][2] == "it was fine"
+      JSON.parse(request.body)["values"][0][7] == "it was fine"
     }).to have_been_requested
   end
 
@@ -38,7 +38,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
 
     expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
-      JSON.parse(request.body)["values"][0][4] == "Shamfari/3.14159 (Fooey)"
+      JSON.parse(request.body)["values"][0][9] == "Shamfari/3.14159 (Fooey)"
     }).to have_been_requested
   end
 
@@ -58,7 +58,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   def valid_params
     {
       service_feedback: {
-        assistance: 'no',
+        assistance_received: 'no',
         service_satisfaction_rating: '5',
         improvement_comments: 'it was fine',
         slug: "some-transaction",
