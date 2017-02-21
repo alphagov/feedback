@@ -1,8 +1,14 @@
 require 'rails_helper'
+require 'gds_api/test_helpers/support_api'
+
 
 RSpec.describe "Assisted digital help with fees submission", type: :request do
+  include GdsApi::TestHelpers::SupportApi
+  include ActiveSupport::Testing::TimeHelpers
+
   before do
     stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*})
+    stub_support_api_service_feedback_creation
     # Set auth to nil, and this won't try to incur extra requests
     allow(GoogleCredentials).to receive(:authorization).and_return nil
   end
@@ -26,12 +32,48 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     expect(response.body).to include("Thank you for your feedback.")
   end
 
-  it "sends the data to google" do
+  it "sends the full assisted digital feedback data to google" do
+    the_past = 13.years.ago.change(usec: 0)
+    travel_to(the_past) do
+      submit_service_feedback
+
+      expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
+        values = JSON.parse(request.body)["values"][0]
+        values == [
+          'yes',
+          'someone helped me',
+          'friend-relative',
+          nil,
+          nil,
+          nil,
+          5,
+          "it was fine",
+          'some-transaction',
+          nil,
+          false,
+          'https://www.some-transaction.service.gov/uk/completed',
+          "/done/some-transaction",
+          "https://www.gov.uk/done/some-transaction",
+          the_past.iso8601(3),
+        ]
+      }).to have_been_requested
+    end
+  end
+
+  it "sends a subset of the data to the support api as service feedback" do
+    service_feedback_request = stub_support_api_service_feedback_creation(
+      service_satisfaction_rating: 5,
+      details: "it was fine",
+      slug: "some-transaction",
+      user_agent: nil,
+      javascript_enabled: false,
+      referrer: "https://www.some-transaction.service.gov/uk/completed",
+      path: "/done/some-transaction",
+      url: "https://www.gov.uk/done/some-transaction",
+    )
     submit_service_feedback
 
-    expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
-      JSON.parse(request.body)["values"][0][7] == "it was fine"
-    }).to have_been_requested
+    expect(service_feedback_request).to have_been_requested
   end
 
   it "should include the user_agent if available" do
@@ -58,7 +100,9 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   def valid_params
     {
       service_feedback: {
-        assistance_received: 'no',
+        assistance_received: 'yes',
+        assistance_received_comments: 'someone helped me',
+        assistance_provided_by: 'friend-relative',
         service_satisfaction_rating: '5',
         improvement_comments: 'it was fine',
         slug: "some-transaction",
