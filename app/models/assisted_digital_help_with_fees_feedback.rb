@@ -1,13 +1,61 @@
 require 'uri'
 
 class AssistedDigitalHelpWithFeesFeedback < Ticket
-  attr_accessor :assistance, :service_satisfaction_rating, :improvement_comments, :slug, :javascript_enabled
+  attr_accessor :assistance_received,
+                :assistance_received_comments,
+                :assistance_provided_by,
+                :assistance_provided_by_other,
+                :assistance_satisfaction_rating,
+                :assistance_improvement_comments,
+                :service_satisfaction_rating,
+                :improvement_comments,
+                :slug,
+                :javascript_enabled
 
-  validates :assistance, presence: { message: "You must select how much assistance you received" },
-                         inclusion: { in: %w(no some all) }
-  validates :service_satisfaction_rating, presence: { message: "You must select a rating" },
-                                          inclusion: { in: ('1'..'5').to_a }
-  validates :improvement_comments, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
+  validates :assistance_received,
+            presence: { message: "You must select if you received assistance with this service" },
+            inclusion: { in: %w(yes no) }
+
+  validates :assistance_received_comments,
+            length: {
+              maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
+              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
+            },
+            presence: true,
+            if: :assistance_received?
+
+  validates :assistance_provided_by,
+            inclusion: { in: %w(friend-relative work-colleague government-staff other) },
+            presence: true,
+            if: :assistance_received?
+
+  validates :assistance_provided_by_other,
+            length: { maximum: 512 },
+            presence: true,
+            if: :assistance_provided_by_other?
+
+  validates :assistance_satisfaction_rating,
+            inclusion: { in: ('1'..'5').to_a },
+            presence: true,
+            if: :assistance_provided_by_other_or_government_staff?
+
+  validates :assistance_improvement_comments,
+            length: {
+              maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
+              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+            },
+            if: :assistance_provided_by_other_or_government_staff?
+
+  validates :service_satisfaction_rating,
+            presence: { message: "You must select a rating" },
+            inclusion: { in: ('1'..'5').to_a }
+
+  validates :improvement_comments,
+            length: {
+              maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
+              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+            }
+
   validates :slug, length: { maximum: 512 }
 
   def initialize(*args)
@@ -21,7 +69,12 @@ class AssistedDigitalHelpWithFeesFeedback < Ticket
 
   def as_row_data
     [
-      assistance,
+      assistance_received,
+      assistance_received? ? assistance_received_comments : nil,
+      assistance_received? ? assistance_provided_by : nil,
+      assistance_provided_by_other? ? assistance_provided_by_other : nil,
+      assistance_provided_by_other_or_government_staff? ? assistance_satisfaction_rating.to_i : nil,
+      assistance_provided_by_other_or_government_staff? ? assistance_improvement_comments : nil,
       service_satisfaction_rating.to_i,
       improvement_comments,
       slug,
@@ -37,6 +90,26 @@ class AssistedDigitalHelpWithFeesFeedback < Ticket
 private
 
   attr_reader :created_at
+
+  def assistance_received?
+    assistance_received.present? && assistance_received == 'yes'
+  end
+
+  def assistance_provided_by_other?
+    assistance_received? ? assistance_provided_by.present? && assistance_provided_by == 'other' : false
+  end
+
+  def assistance_provided_by_other_or_government_staff?
+    assistance_received? ? assistance_provided_by.present? && %w(government-staff other).include?(assistance_provided_by) : false
+  end
+
+  def assistance_received_comments
+    @assistance_received_comments.present? ? @assistance_received_comments : nil
+  end
+
+  def assistance_improvement_comments
+    @assistance_improvement_comments.present? ? @assistance_improvement_comments : nil
+  end
 
   def improvement_comments
     @improvement_comments.present? ? @improvement_comments : nil

@@ -6,7 +6,7 @@ module Contact
     private
 
       def ticket_class
-        AssistedDigitalHelpWithFeesFeedback
+        MultiTicket.new(AssistedDigitalHelpWithFeesFeedback, ServiceFeedback)
       end
 
       def type
