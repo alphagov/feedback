@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AssistedDigitalHelpWithFeesFeedback, type: :model do
+RSpec.describe AssistedDigitalFeedback, type: :model do
   include ValidatorHelper
   include ActiveSupport::Testing::TimeHelpers
 
@@ -21,12 +21,12 @@ RSpec.describe AssistedDigitalHelpWithFeesFeedback, type: :model do
 
     context '#save' do
       it 'sends the item to be stored in the google spreadsheet as row data' do
-        expect(Feedback.assisted_digital_help_with_fees_spreadsheet).to receive(:store).with(subject.as_row_data)
+        expect(Feedback.assisted_digital_spreadsheet).to receive(:store).with(subject.as_row_data)
         subject.save
       end
 
       it "should raise an exception if the google spreadsheet communication doesn't work" do
-        allow(Feedback.assisted_digital_help_with_fees_spreadsheet).to receive(:store).and_raise(GoogleSpreadsheetStore::Error.new('uh-oh!'))
+        allow(Feedback.assisted_digital_spreadsheet).to receive(:store).and_raise(GoogleSpreadsheetStore::Error.new('uh-oh!'))
         expect { subject.save }.to raise_error(GoogleSpreadsheetStore::Error, 'uh-oh!')
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe AssistedDigitalHelpWithFeesFeedback, type: :model do
 
     context '#save' do
       it 'does not send the options to be stored in the google spreadsheet' do
-        expect(Feedback.assisted_digital_help_with_fees_spreadsheet).not_to receive(:store)
+        expect(Feedback.assisted_digital_spreadsheet).not_to receive(:store)
         subject.save
       end
     end

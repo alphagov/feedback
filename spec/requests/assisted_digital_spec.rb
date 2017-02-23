@@ -94,7 +94,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/assisted-digital-help-with-fees-survey-feedback", params, headers
+    post "/contact/govuk/assisted-digital-survey-feedback", params, headers
   end
 
   def valid_params

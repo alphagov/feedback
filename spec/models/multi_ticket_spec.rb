@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe MultiTicket, type: :model do
-  subject { described_class.new(ServiceFeedback, AssistedDigitalHelpWithFeesFeedback) }
+  subject { described_class.new(ServiceFeedback, AssistedDigitalFeedback) }
 
   context '#new' do
     it 'stores the supplied ticket types' do
-      expect(subject.ticket_types).to eq [ServiceFeedback, AssistedDigitalHelpWithFeesFeedback]
+      expect(subject.ticket_types).to eq [ServiceFeedback, AssistedDigitalFeedback]
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe MultiTicket, type: :model do
     it 'stores an instance of each ticket type' do
       expect(subject.tickets.size).to eq 2
       expect(subject.tickets.first).to be_a ServiceFeedback
-      expect(subject.tickets.last).to be_an AssistedDigitalHelpWithFeesFeedback
+      expect(subject.tickets.last).to be_an AssistedDigitalFeedback
     end
 
     it 'supplies all the data to each ticket instance' do
@@ -34,7 +34,7 @@ RSpec.describe MultiTicket, type: :model do
   end
 
   describe MultiTicket::Instance do
-    subject { MultiTicket.new(ServiceFeedback, AssistedDigitalHelpWithFeesFeedback).new(data) }
+    subject { MultiTicket.new(ServiceFeedback, AssistedDigitalFeedback).new(data) }
     let(:data) do
       {
         assistance_received: 'no',
