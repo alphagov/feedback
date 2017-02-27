@@ -26,7 +26,7 @@ class Ticket
   end
 
   def url
-    url_if_valid(@url)
+    UrlNormaliser.url_if_valid(@url)
   end
 
   def path
@@ -38,7 +38,7 @@ class Ticket
   end
 
   def referrer
-    url_if_valid(@referrer)
+    UrlNormaliser.url_if_valid(@referrer)
   end
 
 private
@@ -46,18 +46,5 @@ private
   def validate_val
     # val is used as a naive bot-preventor
     @errors.add :val unless val.blank?
-  end
-
-  def valid_url?(candidate)
-    url = URI.parse(candidate) rescue false
-    url.is_a?(URI::Generic) && (url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS) || url.relative?)
-  end
-
-  def url_if_valid(candidate)
-    case
-    when !valid_url?(candidate) then nil
-    when URI.parse(candidate).relative? then Plek.new.website_root + candidate
-    else candidate
-    end
   end
 end
