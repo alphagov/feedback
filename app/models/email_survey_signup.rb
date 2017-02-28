@@ -41,6 +41,8 @@ class EmailSurveySignup
 
   def survey
     @survey ||= EmailSurvey.find(survey_id)
+  rescue EmailSurvey::NotFoundError
+    nil
   end
 
   def to_notify_params

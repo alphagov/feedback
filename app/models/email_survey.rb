@@ -1,4 +1,5 @@
 class EmailSurvey
+  class NotFoundError < StandardError; end
   attr_accessor :id, :url, :start_time, :end_time, :name
   def initialize(id:, url:, start_time:, end_time:, name:nil)
     self.id = id
@@ -17,7 +18,7 @@ class EmailSurvey
   end
 
   def self.find(id)
-    SURVEYS.fetch(id)
+    SURVEYS.fetch(id) { |not_found_id| raise NotFoundError.new(not_found_id) }
   end
 
   SURVEYS = Hash[
