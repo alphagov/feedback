@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EmailSurvey, type: :model do
-  let(:subject) {
+  subject(:education_email_survey) {
     described_class.new(
       id: 'education_email_survey',
       url: 'https://smartsurvey.co.uk.example.com/survey/1234',

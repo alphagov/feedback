@@ -8,7 +8,8 @@ RSpec.describe EmailSurveySignup, type: :model do
       id: 'education_email_survey',
       url: 'http://survey.example.com/1',
       start_time: 1.day.ago,
-      end_time: 2.days.from_now
+      end_time: 2.days.from_now,
+      name: 'My name is: Education survey'
     )
   }
   let(:all_surveys) { { education_email_survey.id => education_email_survey } }
@@ -16,7 +17,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     stub_const('EmailSurvey::SURVEYS', all_surveys)
   end
 
-  subject { described_class.new(survey_options) }
+  subject(:email_survey_signup) { described_class.new(survey_options) }
   let(:survey_options) do
     {
       survey_id: 'education_email_survey',
@@ -88,6 +89,62 @@ RSpec.describe EmailSurveySignup, type: :model do
   context "#spam?" do
     it 'is not spam' do
       expect(subject).not_to be_spam
+    end
+  end
+
+  context "#survey_name" do
+    it 'is the name of the survey instance' do
+      expect(subject.survey_name).to eq 'My name is: Education survey'
+    end
+
+    it 'is nil if the survey instance does not exist' do
+      subject.survey_id = 'not-a-survey'
+      expect(subject.survey_name).to be_nil
+    end
+  end
+
+  context "#survey_url" do
+    it 'is the survey_source escaped and added as a `c` querystring to the url of the survey instance' do
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
+    end
+
+    it 'adds the `c` param properly if the survey url already has a querystring' do
+      education_email_survey.url = "http://survey.example.com/1?foo=bar"
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?foo=bar&c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
+    end
+
+    it 'encodes querystrings in the survey_source correctly' do
+      subject.survey_source = 'https://www.gov.uk/done/some-transaction?foo=bar&baz=qux'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction%3Ffoo%3Dbar%26baz%3Dqux'
+    end
+
+    it 'is nil if the survey instance does not exist' do
+      subject.survey_id = 'not-a-survey'
+      expect(subject.survey_url).to be_nil
+    end
+  end
+
+  context "#to_notify_params" do
+    subject { email_survey_signup.to_notify_params }
+
+    it "includes the default template_id" do
+      expect(subject[:template_id]).to eq '8fe8ab4f-a6ac-44a1-9d8b-f611a493231b'
+    end
+
+    it "includes the email address" do
+      expect(subject[:email_address]).to eq 'i_like_taking_surveys@example.com'
+    end
+
+    it "includes a reference to uniquely connect the signup to the notification" do
+      expect(subject[:reference]).to eq "email-survey-signup-#{email_survey_signup.object_id}"
+    end
+
+    it "includes the survey name in the personalisation details" do
+      expect(subject[:personalisation][:survey_name]).to eq 'My name is: Education survey'
+    end
+
+    it "includes the survey url in the personalisation details" do
+      expect(subject[:personalisation][:survey_url]).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
     end
   end
 end
