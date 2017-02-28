@@ -2,18 +2,11 @@ require 'rails_helper'
 require 'survey_notify_service'
 
 RSpec.describe SurveyNotifyService do
-  let(:education_email_survey) {
-    EmailSurvey.new(
-      id: 'education_email_survey',
-      url: 'http://survey.example.com/1',
-      start_time: 1.day.ago,
-      end_time: 2.days.from_now,
-      name: 'My name is: Education survey'
-    )
-  }
-  let(:all_surveys) { { education_email_survey.id => education_email_survey } }
+  include EmailSurveyHelpers
+
+  let(:education_email_survey) { create_education_email_survey }
   before do
-    stub_const('EmailSurvey::SURVEYS', all_surveys)
+    stub_surveys_data education_email_survey
   end
   let(:email_survey_signup) do
     EmailSurveySignup.new(

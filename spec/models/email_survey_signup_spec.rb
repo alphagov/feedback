@@ -2,19 +2,11 @@ require 'rails_helper'
 
 RSpec.describe EmailSurveySignup, type: :model do
   include ActiveSupport::Testing::TimeHelpers
+  include EmailSurveyHelpers
 
-  let(:education_email_survey) {
-    EmailSurvey.new(
-      id: 'education_email_survey',
-      url: 'http://survey.example.com/1',
-      start_time: 1.day.ago,
-      end_time: 2.days.from_now,
-      name: 'My name is: Education survey'
-    )
-  }
-  let(:all_surveys) { { education_email_survey.id => education_email_survey } }
+  let(:education_email_survey) { create_education_email_survey }
   before do
-    stub_const('EmailSurvey::SURVEYS', all_surveys)
+    stub_surveys_data(education_email_survey)
   end
 
   subject(:email_survey_signup) { described_class.new(survey_options) }

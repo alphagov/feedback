@@ -1,17 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe EmailSurvey, type: :model do
-  subject(:education_email_survey) {
-    described_class.new(
-      id: 'education_email_survey',
-      url: 'https://smartsurvey.co.uk.example.com/survey/1234',
-      start_time: 1.day.ago,
-      end_time: 1.day.from_now,
-    )
-  }
-  let(:all_surveys) { { education_email_survey.id => education_email_survey } }
+  include EmailSurveyHelpers
+  subject(:education_email_survey) { create_education_email_survey }
   before do
-    stub_const('EmailSurvey::SURVEYS', all_surveys)
+    stub_surveys_data(education_email_survey)
   end
 
   describe '.find' do
