@@ -15,11 +15,14 @@ class EmailSurveySignup
     attributes.each do |key, value|
       send("#{key}=", value) if respond_to? "#{key}="
     end
-    valid?
   end
 
   def spam?
     false
+  end
+
+  def save
+    Feedback.survey_notify_service.send_email(self) if valid?
   end
 
   def survey_source

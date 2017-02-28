@@ -28,6 +28,29 @@ RSpec.describe EmailSurveySignup, type: :model do
 
   context "a minimal valid email survey signup item" do
     it { is_expected.to be_valid }
+
+    context '#save' do
+      it 'sends an email to the email address using GOV.UK notify' do
+        expect(Feedback.survey_notify_service).to receive(:send_email).with(subject)
+        subject.save
+      end
+
+      it "should raise an exception if the GOV.UK notify call doesn't work" do
+        allow(Feedback.survey_notify_service).to receive(:send_email).and_raise(SurveyNotifyService::Error.new("uh-oh!"))
+        expect { subject.save }.to raise_error(SurveyNotifyService::Error, "uh-oh!")
+      end
+    end
+  end
+
+  context 'an invalid feedback item' do
+    let(:survey_options) { {} }
+
+    context '#save' do
+      it 'does not send an email using GOV.UK notify' do
+        expect(Feedback.survey_notify_service).not_to receive(:send_email)
+        subject.save
+      end
+    end
   end
 
   context 'validations' do
