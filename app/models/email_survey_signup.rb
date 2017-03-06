@@ -10,6 +10,7 @@ class EmailSurveySignup
   validates :survey_id, presence: true,
                         inclusion: { in: ->(_instance) { EmailSurvey.all.map(&:id) } }
   validate :survey_is_active, if: :survey
+  validate :survey_source_is_relative, if: :survey_source
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -25,8 +26,8 @@ class EmailSurveySignup
     Feedback.survey_notify_service.send_email(self) if valid?
   end
 
-  def survey_source
-    UrlNormaliser.url_if_valid(@survey_source)
+  def survey_source=(new_survey_source)
+    @survey_source = UrlNormaliser.relative_to_website_root(new_survey_source)
   end
 
   def survey_name
@@ -64,6 +65,10 @@ class EmailSurveySignup
   end
 
 private
+
+  def survey_source_is_relative
+    errors.add(:survey_source, :is_not_a_relative_url) unless UrlNormaliser.valid_url?(survey_source, relative_only: true)
+  end
 
   def survey_is_active
     errors.add(:survey_id, :is_not_currently_running) unless survey.active?

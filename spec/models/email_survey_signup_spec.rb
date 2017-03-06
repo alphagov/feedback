@@ -13,7 +13,7 @@ RSpec.describe EmailSurveySignup, type: :model do
   let(:survey_options) do
     {
       survey_id: 'education_email_survey',
-      survey_source: 'https://www.gov.uk/done/some-transaction',
+      survey_source: '/done/some-transaction',
       email_address: 'i_like_taking_surveys@example.com'
     }
   end
@@ -70,7 +70,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     it { is_expected.not_to allow_value(nil).for(:survey_source) }
     it 'ensures `survey_source` has a length of at most 2048' do
       # at the boundary it's ok
-      subject.survey_source = 'https://www.gov.uk/' + ('a' * 2029)
+      subject.survey_source = '/' + ('a' * 2047)
       subject.valid?
       expect(subject.errors[:survey_source]).not_to include "is too long (maximum is 2048 characters)"
 
@@ -79,19 +79,30 @@ RSpec.describe EmailSurveySignup, type: :model do
       subject.valid?
       expect(subject.errors[:survey_source]).to include "is too long (maximum is 2048 characters)"
     end
-    it "filters 'survey_source' to either nil or a valid URL" do
-      subject.survey_source = 'https://www.gov.uk'
-      expect(subject.survey_source).to eq('https://www.gov.uk')
-
-      subject.survey_source = "http://bla.example.org:9292/méh/fào?bar"
-      expect(subject.survey_source).to be_nil
-
-      subject.survey_source = nil
-      expect(subject.survey_source).to be_nil
+    it "expects 'survey_source' to be a relative url and start with a `/`" do
+      subject.survey_source = 'done/some-transaction'
+      subject.valid?
+      expect(subject.errors[:survey_source]).not_to be_empty
     end
-    it "adds the website root to relative sources" do
-      subject.survey_source = '/relative/url'
-      expect(subject.survey_source).to eq("#{Plek.new.website_root}/relative/url")
+    it "allows 'survey_source' to be a relative url with a query-string" do
+      subject.survey_source = '/done/some-transaction?cachebust=1234'
+      subject.valid?
+      expect(subject.errors[:survey_source]).to be_empty
+    end
+    it "strips the domain from absolute urls that come from the website root" do
+      subject.survey_source = "#{Plek.new.website_root}/absolute/url"
+      subject.valid?
+      expect(subject.errors[:survey_source]).to be_empty
+      expect(subject.survey_source).to eq("/absolute/url")
+    end
+    it "leaves query-strings in the 'survey_source'" do
+      subject.survey_source = '/done/some-transaction?cachebust=1234'
+      expect(subject.survey_source).to eq '/done/some-transaction?cachebust=1234'
+    end
+    it "rejects absolute urls that come from the a different domain" do
+      subject.survey_source = "https://www.example.com/absolute/url"
+      subject.valid?
+      expect(subject.errors[:survey_source]).not_to be_empty
     end
 
     it { is_expected.not_to allow_value(nil).for(:email_address) }
@@ -120,17 +131,17 @@ RSpec.describe EmailSurveySignup, type: :model do
 
   context "#survey_url" do
     it 'is the survey_source escaped and added as a `c` querystring to the url of the survey instance' do
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction'
     end
 
     it 'adds the `c` param properly if the survey url already has a querystring' do
       education_email_survey.url = "http://survey.example.com/1?foo=bar"
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?foo=bar&c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?foo=bar&c=%2Fdone%2Fsome-transaction'
     end
 
     it 'encodes querystrings in the survey_source correctly' do
-      subject.survey_source = 'https://www.gov.uk/done/some-transaction?foo=bar&baz=qux'
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction%3Ffoo%3Dbar%26baz%3Dqux'
+      subject.survey_source = '/done/some-transaction?foo=bar&baz=qux'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction%3Ffoo%3Dbar%26baz%3Dqux'
     end
 
     it 'is nil if the survey instance does not exist' do
@@ -159,7 +170,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     end
 
     it "includes the survey url in the personalisation details" do
-      expect(subject[:personalisation][:survey_url]).to eq 'http://survey.example.com/1?c=https%3A%2F%2Fwww.gov.uk%2Fdone%2Fsome-transaction'
+      expect(subject[:personalisation][:survey_url]).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction'
     end
   end
 end

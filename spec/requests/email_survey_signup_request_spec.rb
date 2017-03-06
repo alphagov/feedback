@@ -100,7 +100,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
     {
       email_survey_signup: {
         survey_id: 'education_email_survey',
-        survey_source: 'https://www.gov.uk/done/some-transaction',
+        survey_source: '/done/some-transaction',
         email_address: "i_like_surveys@example.com",
       }
     }
