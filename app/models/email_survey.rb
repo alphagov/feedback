@@ -25,9 +25,9 @@ class EmailSurvey
     [
       new(
         id: 'education_email_survey',
-        url: 'https://smartsurvey.co.uk.example.com/survey/1234',
-        start_time: Time.zone.parse("2017-02-23").beginning_of_day,
-        end_time: Time.zone.parse("2017-03-05").end_of_day,
+        url: 'https://www.smartsurvey.co.uk/s/gov-uk/',
+        start_time: Time.zone.parse("2017-03-06").beginning_of_day,
+        end_time: Time.zone.parse("2017-03-10").end_of_day,
         name: 'education user research'
       ).freeze,
     ].map { |s| [s.id, s] }
