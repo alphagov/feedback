@@ -17,10 +17,7 @@ protected
   end
 
   def unable_to_create_ticket_error(exception)
-    notify_airbrake(exception)
-
-    exception_class_name = exception.class.name.demodulize.downcase
-    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")
+    log_exception(exception)
 
     respond_to do |format|
       format.html do
@@ -39,5 +36,12 @@ protected
 
   def hide_report_a_problem_form_in_response
     response.headers[Slimmer::Headers::REPORT_A_PROBLEM_FORM] = "false"
+  end
+
+  def log_exception(exception)
+    notify_airbrake(exception)
+
+    exception_class_name = exception.class.name.demodulize.downcase
+    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")
   end
 end

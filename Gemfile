@@ -27,6 +27,8 @@ gem 'sass-rails', '~> 5.0.4'
 
 gem 'google-api-client', '~> 0.9'
 
+gem 'notifications-ruby-client'
+
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
