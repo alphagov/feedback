@@ -117,7 +117,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       .with { |request|
         json_payload = JSON.parse(request.body)
         (json_payload["email_address"] == "i_like_surveys@example.com") &&
-          (json_payload["personalisation"]["survey_name"] == "My name is: Education survey")
+          (json_payload["personalisation"]["survey_url"] == "http://survey.example.com/1?c=%2Fdone%2Fsome-transaction")
       }
     expect(notify_request).to have_been_requested
   end

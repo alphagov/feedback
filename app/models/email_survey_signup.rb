@@ -57,7 +57,9 @@ class EmailSurveySignup
       template_id: '8fe8ab4f-a6ac-44a1-9d8b-f611a493231b',
       email_address: email_address,
       personalisation: {
-        survey_name: survey_name,
+        # Note that notify will error if we don't supply all the keys the
+        # template uses, but it will also error if we supply extra keys the
+        # template doesn't use.  Take care here.
         survey_url: survey_url
       },
       reference: "email-survey-signup-#{object_id}"

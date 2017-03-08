@@ -165,8 +165,11 @@ RSpec.describe EmailSurveySignup, type: :model do
       expect(subject[:reference]).to eq "email-survey-signup-#{email_survey_signup.object_id}"
     end
 
-    it "includes the survey name in the personalisation details" do
-      expect(subject[:personalisation][:survey_name]).to eq 'My name is: Education survey'
+    it "only has survey_url as a key in the personalisation details" do
+      # Notify raises an error if you supply un-needed params in the
+      # personalisation hash and our template only uses survey_url currently
+      expect(subject[:personalisation].size).to eq 1
+      expect(subject[:personalisation]).to have_key(:survey_url)
     end
 
     it "includes the survey url in the personalisation details" do
