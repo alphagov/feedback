@@ -75,6 +75,41 @@ RSpec.describe "Email survey sign-up request", type: :request do
     end
   end
 
+  context 'for a JS request' do
+    it "responds inline with a 200 ok success message" do
+      submit_email_survey_sign_up as_js: true
+
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq("application/json")
+      expect(JSON.parse(response.body)).to eq({ "message" => "email survey sign up success"})
+    end
+
+    it "responds with a 422 failure for invalid submissions" do
+      submit_email_survey_sign_up as_js: true, params: {}
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.content_type).to eq("application/json")
+      json_response = JSON.parse(response.body)
+      expect(json_response).to have_key "message"
+      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response).to have_key "errors"
+    end
+
+    it "should handle the GOV.UK notify service failing" do
+      stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/email')
+        .to_return(status: 403, body: '{"errors":[{"error":403,"message":"forbidden"}]}')
+
+      submit_email_survey_sign_up as_js: true
+
+      expect(response).to have_http_status(:service_unavailable)
+      expect(response.content_type).to eq("application/json")
+      json_response = JSON.parse(response.body)
+      expect(json_response).to have_key "message"
+      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response).to have_key "errors"
+    end
+  end
+
   it "sends an email to the supplied email address using GOV.UK notify" do
     submit_email_survey_sign_up
 
@@ -87,11 +122,12 @@ RSpec.describe "Email survey sign-up request", type: :request do
     expect(notify_request).to have_been_requested
   end
 
-  def submit_email_survey_sign_up(params: valid_params, headers: {}, as_xhr: false)
+  def submit_email_survey_sign_up(params: valid_params, headers: {}, as_xhr: false, as_js: false)
     args = ["/contact/govuk/email-survey-signup", params, headers]
     if as_xhr
       xhr(:post, *args)
     else
+      args.first << '.js' if as_js
       post *args
     end
   end

@@ -16,7 +16,7 @@ module Contact
       end
 
       def confirm_submission
-        if request.xhr?
+        if ajax_request?
           render json: { message: "email survey sign up success" }, status: :ok
         else
           redirect_to contact_anonymous_feedback_thankyou_path
@@ -24,7 +24,7 @@ module Contact
       end
 
       def respond_to_invalid_submission(ticket)
-        if request.xhr?
+        if ajax_request?
           render json: { message: "email survey sign up failure", errors: ticket.errors }, status: :unprocessable_entity
         else
           # for now, ignore just discard invalid submissions
@@ -36,12 +36,18 @@ module Contact
       end
 
       def respond_to_notify_error(exception)
-        if request.xhr?
+        if ajax_request?
           log_exception(exception)
           render json: { message: "email survey sign up failure", errors: exception.cause.message }, status: :service_unavailable
         else
           unable_to_create_ticket_error(exception)
         end
+      end
+
+    private
+
+      def ajax_request?
+        request.xhr? || request.format == :js
       end
     end
   end
