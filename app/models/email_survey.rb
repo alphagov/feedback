@@ -27,6 +27,13 @@ class EmailSurvey
         id: 'govuk_email_survey_t01',
         url: 'https://www.smartsurvey.co.uk/s/gov-uk/',
         start_time: Time.zone.parse("2017-03-08").beginning_of_day,
+        end_time: Time.zone.parse("2017-03-10").end_of_day,
+        name: 'GOV.UK user research'
+      ).freeze,
+      new(
+        id: 'govuk_email_survey_t02',
+        url: 'https://www.smartsurvey.co.uk/s/gov_uk/',
+        start_time: Time.zone.parse("2017-03-10").beginning_of_day,
         end_time: Time.zone.parse("2017-03-13").end_of_day,
         name: 'GOV.UK user research'
       ).freeze,
