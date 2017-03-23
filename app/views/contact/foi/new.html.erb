@@ -8,7 +8,8 @@
   <%= form_for :contact, url: contact_foi_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
     <%= hidden_field_tag 'foi[url]', Plek.new.website_root + contact_foi_path %>
 
-    <input type="text" id="val" name="foi[val]" style="display:none"/>
+    <%= render partial: "shared/spam_honeypot", locals: { form_name: 'foi' } %>
+
     <%= render "shared/error_summary" %>
 
     <fieldset>
