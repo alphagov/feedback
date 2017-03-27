@@ -1,6 +1,8 @@
 feedback
 ========
 
+[![Code Climate](https://codeclimate.com/github/alphagov/feedback/badges/gpa.svg)](https://codeclimate.com/github/alphagov/feedback)
+
 This app handles user feedback related things.
 
 ### Testing
