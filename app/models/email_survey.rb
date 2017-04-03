@@ -25,9 +25,9 @@ class EmailSurvey
     [
       new(
         id: 'govuk_email_survey_t02',
-        url: 'https://www.smartsurvey.co.uk/s/govuk-',
-        start_time: Time.zone.parse("2017-03-22").beginning_of_day,
-        end_time: Time.zone.parse("2017-03-24").end_of_day,
+        url: 'https://www.smartsurvey.co.uk/s/_govuk',
+        start_time: Time.zone.parse("2017-04-03").beginning_of_day,
+        end_time: Time.zone.parse("2017-04-04").end_of_day,
         name: 'GOV.UK user research'
       ).freeze,
     ].map { |s| [s.id, s] }
