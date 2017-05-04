@@ -36,7 +36,7 @@ RSpec.describe "FOI", type: :request do
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/contact/foi", {}
+    post "/contact/foi", params: {}
 
     expect(response.body).to include("Please check the form")
   end

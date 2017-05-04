@@ -102,7 +102,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/contact/govuk", {}
+    post "/contact/govuk", params: {}
 
     expect(response.body).to include("Please check the form")
   end
@@ -190,7 +190,7 @@ RSpec.describe "Contact", type: :request do
       }
     }
     headers = { "HTTP_USER_AGENT" => "T1000 (Bazinga)" }
-    post "/contact/govuk", params, headers
+    post "/contact/govuk", params: params, headers: headers
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -213,7 +213,7 @@ RSpec.describe "Contact", type: :request do
         referrer: "https://www.dev.gov.uk/referring_url"
       }
     }
-    post "/contact/govuk", params
+    post "/contact/govuk", params: params
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]

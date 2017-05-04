@@ -13,7 +13,7 @@ protected
 
   def robot_script_submission_detected
     headers[Slimmer::Headers::SKIP_HEADER] = "1"
-    render nothing: true, status: 400
+    head(:bad_request)
   end
 
   def unable_to_create_ticket_error(exception)
@@ -23,7 +23,7 @@ protected
       format.html do
         # no content needed here, will display the default 503 page
         headers[Slimmer::Headers::SKIP_HEADER] = "1"
-        render nothing: true, status: 503
+        head :service_unavailable
       end
       format.any(:js, :json) do
         response = "<p>Sorry, we're unable to receive your message right now.</p> " +

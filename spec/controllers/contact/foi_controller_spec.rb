@@ -23,7 +23,7 @@ RSpec.describe Contact::FoiController, type: :controller do
     it "should pass the contact onto the support app" do
       stub_post = stub_support_foi_request_creation
 
-      post :create, valid_params
+      post :create, params: valid_params
 
       expect(response).to be_redirect
       expect(stub_post).to have_been_made

@@ -69,7 +69,6 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
 
       assert_not_requested(:post, %r{/problem-reports})
     end
-
     after do
       PROBLEM_REPORT_SPAM_MATCHERS.clear
     end
@@ -88,7 +87,7 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
 
     # Using Rack::Test instead of capybara to allow setting headers.
     headers = { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" }
-    post "/contact/govuk/problem_reports", valid_params, headers
+    post "/contact/govuk/problem_reports", params: valid_params, headers: headers
 
     assert_requested(:post, %r{/problem-reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
@@ -96,7 +95,7 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
   end
 
   it "should still work even if the request doesn't have correct form params" do
-    post "/contact/govuk/problem_reports", {}
+    post "/contact/govuk/problem_reports", params: {}
 
     expect(response.body).to include("we're unable to send your message")
   end
