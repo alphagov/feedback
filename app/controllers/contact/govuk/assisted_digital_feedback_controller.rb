@@ -1,16 +1,16 @@
 module Contact
   module Govuk
-    class AssistedDigitalHelpWithFeesFeedbackController < ContactController
+    class AssistedDigitalFeedbackController < ContactController
       rescue_from GoogleSpreadsheetStore::Error, with: :unable_to_create_ticket_error
 
     private
 
       def ticket_class
-        MultiTicket.new(AssistedDigitalHelpWithFeesFeedback, ServiceFeedback)
+        MultiTicket.new(AssistedDigitalFeedback, ServiceFeedback)
       end
 
       def type
-        :assisted_digital_help_with_fees_feedback
+        :assisted_digital_feedback
       end
 
       def contact_params

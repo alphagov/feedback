@@ -1,6 +1,6 @@
 require 'uri'
 
-class AssistedDigitalHelpWithFeesFeedback < Ticket
+class AssistedDigitalFeedback < Ticket
   attr_accessor :assistance_received,
                 :assistance_received_comments,
                 :assistance_provided_by,
@@ -64,7 +64,7 @@ class AssistedDigitalHelpWithFeesFeedback < Ticket
   end
 
   def save
-    Feedback.assisted_digital_help_with_fees_spreadsheet.store(as_row_data) if valid?
+    Feedback.assisted_digital_spreadsheet.store(as_row_data) if valid?
   end
 
   def as_row_data

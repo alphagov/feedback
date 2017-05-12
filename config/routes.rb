@@ -14,7 +14,7 @@ Feedback::Application.routes.draw do
     namespace :govuk do
       post 'problem_reports', to: "problem_reports#create", format: false
       post 'service-feedback', to: "service_feedback#create", format: false
-      post 'assisted-digital-help-with-fees-survey-feedback', to: "assisted_digital_help_with_fees_feedback#create", format: false
+      post 'assisted-digital-survey-feedback', to: "assisted_digital_feedback#create", format: false
       post 'email-survey-signup', to: 'email_survey_signup#create', format: false
       post 'email-survey-signup.js', to: 'email_survey_signup#create', defaults: { format: :js }
       resources 'page_improvements', only: [:create], format: false

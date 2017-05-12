@@ -36,13 +36,15 @@ In order to raise tickets in Zendesk, the `feedback` app submits data to the `su
 
         development> GDS_SSO_STRATEGY=real bowl signon support feedback
 
-### Assisted Digital Help With Fees Feedback
+### Assisted Digital Feedback
 
-This feedback is not stored in the support-api like the other tickets.  This data
-is stored in a google spreadsheet.  The ID of the spreadsheet to store the data
-in is set via the following environment:
+Assisted Digital feedback is stored twice.  The standard service feedback
+component is sent to support-api like other tickets, but the rest of the
+feedback specifically about assisted digital support is stored in a google
+spreadsheet.  The ID of the spreadsheet to store the data in is set via the
+following environment variable:
 
-    ASSISTED_DIGITAL_HELP_WITH_FEES_GOOGLE_SPREADSHEET_KEY
+    ASSISTED_DIGITAL_GOOGLE_SPREADSHEET_KEY
 
 To find the ID of a spreadsheet you wish to use, the [following documentation
 from google is useful](https://developers.google.com/sheets/guides/concepts#spreadsheet_id).
