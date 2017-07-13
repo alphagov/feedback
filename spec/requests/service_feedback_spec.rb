@@ -37,6 +37,16 @@ RSpec.describe "Service feedback submission", type: :request do
     end
   end
 
+  it "should include the referrer if available" do
+    stub_support_api_service_feedback_creation
+
+    submit_service_feedback
+
+    assert_requested(:post, %r{/service-feedback}) do |request|
+      JSON.parse(request.body)["service_feedback"]["referrer"] == "https://www.some-transaction.service.gov/uk/completed"
+    end
+  end
+
   it "should accept invalid submissions, just not do anything with them (because the form itself lives
     in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
     post "/contact/govuk/service-feedback", {}
