@@ -49,7 +49,7 @@ RSpec.describe "Service feedback submission", type: :request do
 
   it "should accept invalid submissions, just not do anything with them (because the form itself lives
     in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
-    post "/contact/govuk/service-feedback", {}
+    post "/contact/govuk/service-feedback", params: {}
 
     expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
     get contact_anonymous_feedback_thankyou_path
@@ -67,7 +67,7 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   def submit_service_feedback(headers = {})
-    post "/contact/govuk/service-feedback", valid_params, headers
+    post "/contact/govuk/service-feedback", params: valid_params, headers: headers
   end
 
   def valid_params

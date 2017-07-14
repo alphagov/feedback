@@ -1,7 +1,7 @@
 class EmailSurvey
   class NotFoundError < StandardError; end
   attr_accessor :id, :url, :start_time, :end_time, :name
-  def initialize(id:, url:, start_time:, end_time:, name:nil)
+  def initialize(id:, url:, start_time:, end_time:, name: nil)
     self.id = id
     self.url = url
     self.start_time = start_time

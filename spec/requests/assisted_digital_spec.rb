@@ -1,7 +1,6 @@
 require 'rails_helper'
 require 'gds_api/test_helpers/support_api'
 
-
 RSpec.describe "Assisted digital help with fees submission", type: :request do
   include GdsApi::TestHelpers::SupportApi
   include ActiveSupport::Testing::TimeHelpers
@@ -85,7 +84,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   end
 
   it "should handle the google storage service failing" do
-    stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).to_return(status: 403)
+    WebMock.stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).to_return(status: 403)
 
     submit_service_feedback
 
@@ -94,7 +93,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/assisted-digital-survey-feedback", params, headers
+    post "/contact/govuk/assisted-digital-survey-feedback", params: params, headers: headers
   end
 
   def valid_params

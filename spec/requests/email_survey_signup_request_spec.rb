@@ -46,7 +46,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq("application/json")
-      expect(JSON.parse(response.body)).to eq({ "message" => "email survey sign up success"})
+      expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
 
     it "responds with a 422 failure for invalid submissions" do
@@ -81,7 +81,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq("application/json")
-      expect(JSON.parse(response.body)).to eq({ "message" => "email survey sign up success"})
+      expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
 
     it "responds with a 422 failure for invalid submissions" do
@@ -123,12 +123,12 @@ RSpec.describe "Email survey sign-up request", type: :request do
   end
 
   def submit_email_survey_sign_up(params: valid_params, headers: {}, as_xhr: false, as_js: false)
-    args = ["/contact/govuk/email-survey-signup", params, headers]
+    url = "/contact/govuk/email-survey-signup"
     if as_xhr
-      xhr(:post, *args)
+      post url, params: params, headers: headers, xhr: true
     else
-      args.first << '.js' if as_js
-      post *args
+      url << '.js' if as_js
+      post url, params: params, headers: headers
     end
   end
 
