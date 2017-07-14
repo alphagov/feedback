@@ -25,7 +25,7 @@ class ContactController < ApplicationController
   end
 
   def create
-    data = contact_params.merge(technical_attributes)
+    data = contact_params.merge(browser_attributes)
     ticket = ticket_class.new data
 
     if ticket.valid?
@@ -96,6 +96,15 @@ private
 
   def set_cache_control
     expires_in 10.minutes, public: true unless Rails.env.development?
+  end
+
+  def browser_attributes
+    technical_attributes.merge(referrer_attribute)
+  end
+
+  def referrer_attribute
+    referrer = request.referrer
+    referrer.present? ? { referrer: referrer } : {}
   end
 
   def technical_attributes
