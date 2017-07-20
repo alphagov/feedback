@@ -33,7 +33,7 @@ RSpec.describe "Page improvements", type: :request do
 
   it "responds successfully" do
     params = { description: "The title is the wrong colour." }
-    stub_create_page_improvement(params)
+    stub_support_api_create_page_improvement(params)
 
     post "/contact/govuk/page_improvements", params.to_json, common_headers
 
