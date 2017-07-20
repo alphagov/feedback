@@ -28,6 +28,6 @@ class RedirectPublisher
     }
 
     publishing_api.put_content(content_id, redirect)
-    publishing_api.publish(content_id, "major")
+    publishing_api.publish(content_id)
   end
 end
