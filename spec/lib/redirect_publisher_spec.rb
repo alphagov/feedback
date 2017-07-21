@@ -34,7 +34,7 @@ RSpec.describe RedirectPublisher do
     api = double(:publishing_api)
 
     expect(api).to receive(:put_content).with(content_id, expected_redirect)
-    expect(api).to receive(:publish).once.with(content_id, 'major')
+    expect(api).to receive(:publish).once.with(content_id)
 
     expect(logger).to receive(:info)
       .with("Registering redirect #{content_id}: '#{current_base_path}' -> '#{destination_path}'")
@@ -60,7 +60,7 @@ RSpec.describe RedirectPublisher do
 
     api = double(:publishing_api)
     expect(api).to receive(:put_content).with(an_instance_of(String), be_valid_against_schema('redirect'))
-    expect(api).to receive(:publish).once.with(content_id, 'major')
+    expect(api).to receive(:publish).once.with(content_id)
 
     expect(logger).to receive(:info)
       .with("Registering redirect #{content_id}: '#{current_base_path}' -> '#{destination_path}'")

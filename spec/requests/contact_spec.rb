@@ -66,7 +66,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should let the user submit an anonymous request" do
-    stub_post = stub_support_long_form_anonymous_contact_creation(
+    stub_post = stub_support_api_long_form_anonymous_contact_creation(
       details: "test text details",
       link: nil,
       user_specified_url: nil,
