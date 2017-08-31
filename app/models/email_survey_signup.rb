@@ -1,6 +1,6 @@
 class EmailSurveySignup
   include ActiveModel::Validations
-  attr_accessor :survey_id, :survey_source, :email_address
+  attr_accessor :survey_id, :survey_source, :email_address, :ga_client_id
 
   validates :email_address, presence: true,
                             email: { message: "The email address must be valid" },
@@ -38,6 +38,7 @@ class EmailSurveySignup
     return nil unless survey.present?
     uri = URI.parse(survey.url)
     query_string = "c=#{CGI.escape(survey_source)}"
+    query_string += "&gcl=#{ga_client_id}" if ga_client_id.present?
     query_string.prepend("#{uri.query}&") unless uri.query.blank?
     uri.query = query_string
     uri.to_s

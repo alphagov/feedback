@@ -12,7 +12,8 @@ RSpec.describe SurveyNotifyService do
     EmailSurveySignup.new(
       survey_id: 'education_email_survey',
       survey_source: 'https://www.gov.uk/done/some-transaction',
-      email_address: 'i_like_taking_surveys@example.com'
+      email_address: 'i_like_taking_surveys@example.com',
+      ga_client_id: '12345.67890'
     )
   end
 

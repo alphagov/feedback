@@ -69,7 +69,8 @@ them a link to a survey.  You can find out more about surveys in static [by
 reading the documentation](https://github.com/alphagov/static/blob/master/doc/surveys.md).
 
 The request will contain an `email_address` (the users email address), a
-`survey_source` (the path on GOV.UK where the sign up form was displayed), and
+`survey_source` (the path on GOV.UK where the sign up form was displayed), 
+`ga_client_id` (the Google Analytics client ID for that user's session), and
 `survey_id` (the survey they were invited to take part in).  The `survey_id`
 should match with an instance of `EmailSurvey` defined in [`app/models/email_survey.rb`.](app/models/email_survey.rb)
 These instances, like their counterparts in static, have start and endtimes so
@@ -113,7 +114,9 @@ Currently the template takes a single parameter:
                  to invite the user to take part in that survey - this is
                  constructed by taking the `url` of the `EmailSurvey` instance
                  and adding the `survey_source` as a `c` param to the query
-                 string.
+                 string. At the end of the url we will also add the `ga_client_id`
+                 (e.g. if we have ga_client_id = '12345.67899' then the resulting 
+                 `survey_url` will be appended with `&gcl=12345.67890`)
 
 Adding new parameters will require a deploy, so it might be best to add a new
 template with new parameters and have the deploy change the template id *and*
