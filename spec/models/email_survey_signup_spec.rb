@@ -14,7 +14,8 @@ RSpec.describe EmailSurveySignup, type: :model do
     {
       survey_id: 'education_email_survey',
       survey_source: '/done/some-transaction',
-      email_address: 'i_like_taking_surveys@example.com'
+      email_address: 'i_like_taking_surveys@example.com',
+      ga_client_id: '12345.67890'
     }
   end
 
@@ -110,6 +111,18 @@ RSpec.describe EmailSurveySignup, type: :model do
     it { is_expected.not_to allow_value("abc @d.com").for(:email_address) }
     it { is_expected.not_to allow_value("abc@d.com.").for(:email_address) }
     it { is_expected.to validate_length_of(:email_address).is_at_most(1250) }
+
+    it "adds ga_client_id to end of surveyUrl" do
+      subject.ga_client_id = '12345.67890'
+      subject.survey_source = '/done/some-transaction'
+      expect(subject.survey_url).to include('&gcl=12345.67890')
+    end
+
+    it "doesn't add the ga_client_id if it's not provided" do
+      subject.ga_client_id = nil
+      subject.survey_source = '/done/some-transaction'
+      expect(subject.survey_url).to_not include('&gcl')
+    end
   end
 
   context "#spam?" do
@@ -131,17 +144,17 @@ RSpec.describe EmailSurveySignup, type: :model do
 
   context "#survey_url" do
     it 'is the survey_source escaped and added as a `c` querystring to the url of the survey instance' do
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction&gcl=12345.67890'
     end
 
     it 'adds the `c` param properly if the survey url already has a querystring' do
       education_email_survey.url = "http://survey.example.com/1?foo=bar"
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?foo=bar&c=%2Fdone%2Fsome-transaction'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?foo=bar&c=%2Fdone%2Fsome-transaction&gcl=12345.67890'
     end
 
     it 'encodes querystrings in the survey_source correctly' do
       subject.survey_source = '/done/some-transaction?foo=bar&baz=qux'
-      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction%3Ffoo%3Dbar%26baz%3Dqux'
+      expect(subject.survey_url).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction%3Ffoo%3Dbar%26baz%3Dqux&gcl=12345.67890'
     end
 
     it 'is nil if the survey instance does not exist' do
@@ -173,7 +186,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     end
 
     it "includes the survey url in the personalisation details" do
-      expect(subject[:personalisation][:survey_url]).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction'
+      expect(subject[:personalisation][:survey_url]).to eq 'http://survey.example.com/1?c=%2Fdone%2Fsome-transaction&gcl=12345.67890'
     end
   end
 end
