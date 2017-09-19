@@ -198,10 +198,9 @@ RSpec.describe "Contact", type: :request do
     end
   end
 
-  it "should include the referrer if available" do
+  it "should include the referrer if present in the contact params" do
     stub_support_named_contact_creation
 
-    # Using Rack::Test to allow setting the user agent.
     params = {
       contact: {
         query: "report-problem",
@@ -214,6 +213,49 @@ RSpec.describe "Contact", type: :request do
       }
     }
     post "/contact/govuk", params
+
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["referrer"] == "https://www.dev.gov.uk/referring_url"
+    end
+  end
+
+  it "should include the referrer if present in the post" do
+    stub_support_named_contact_creation
+
+    params = {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details",
+      },
+      referrer: "https://www.dev.gov.uk/referring_url",
+    }
+    post "/contact/govuk", params
+
+    assert_requested(:post, %r{/named_contacts}) do |request|
+      response = JSON.parse(request.body)["named_contact"]
+      response["referrer"] == "https://www.dev.gov.uk/referring_url"
+    end
+  end
+
+  it "should include the referrer from the request" do
+    stub_support_named_contact_creation
+
+    params = {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details",
+      },
+    }
+    post "/contact/govuk", params, { 'HTTP_REFERER' => "https://www.dev.gov.uk/referring_url" }
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]

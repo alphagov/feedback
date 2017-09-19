@@ -76,6 +76,56 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     expect(service_feedback_request).to have_been_requested
   end
 
+  context 'the referrer value' do
+    before do
+      stub_support_api_service_feedback_creation
+    end
+
+    it "uses the referrer from the posted params" do
+      posted_params = valid_params
+      posted_params[:referrer] = 'http://referrer.example.com/i-came-from-here'
+      posted_params[:service_feedback].delete(:referrer)
+      submit_service_feedback(params: posted_params)
+
+      expect(a_request(:post, %r{/service-feedback}).with { |request|
+        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+      }).to have_been_requested
+    end
+
+    it "uses the referrer from the service_feedback params" do
+      posted_params = valid_params
+      posted_params.delete(:referrer)
+      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
+      submit_service_feedback(params: posted_params)
+
+      expect(a_request(:post, %r{/service-feedback}).with { |request|
+        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+      }).to have_been_requested
+    end
+
+    it "uses the referrer from the request header" do
+      posted_params = valid_params
+      posted_params.delete(:referrer)
+      posted_params[:service_feedback].delete(:referrer)
+      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-came-from-here' })
+
+      expect(a_request(:post, %r{/service-feedback}).with { |request|
+        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+      }).to have_been_requested
+    end
+
+    it "prefers the referrer from the service_feedback params if all are present header" do
+      posted_params = valid_params
+      posted_params[:referrer] = 'http://referrer.example.com/i-did-not-come-from-here'
+      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
+      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-did-not-come-from-here-either' })
+
+      expect(a_request(:post, %r{/service-feedback}).with { |request|
+        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+      }).to have_been_requested
+    end
+  end
+
   it "should include the user_agent if available" do
     submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
 
@@ -107,8 +157,8 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
         improvement_comments: 'it was fine',
         slug: "some-transaction",
         url: "https://www.gov.uk/done/some-transaction",
-        referrer: "https://www.some-transaction.service.gov/uk/completed",
-      }
+      },
+      referrer: "https://www.some-transaction.service.gov/uk/completed",
     }
   end
 end
