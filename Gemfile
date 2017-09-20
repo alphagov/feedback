@@ -33,7 +33,7 @@ gem 'notifications-ruby-client'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '47.2'
+  gem 'gds-api-adapters', '~> 47.2'
 end
 
 group :development, :test do
