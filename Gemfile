@@ -14,7 +14,6 @@ gem 'plek', '~> 1.11.0'
 
 gem 'valid_email', '~> 0.0.11'
 
-gem 'statsd-ruby', '~> 1.4.0', require: 'statsd'
 gem 'logstasher', '0.6.2'
 gem 'rack_strip_client_ip', '0.0.1'
 gem 'invalid_utf8_rejector'
