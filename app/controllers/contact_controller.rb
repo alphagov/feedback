@@ -103,7 +103,7 @@ private
   end
 
   def referrer_attribute
-    referrer = request.referrer
+    referrer = contact_params[:referrer] || params[:referrer] || request.referrer
     referrer.present? ? { referrer: referrer } : {}
   end
 
