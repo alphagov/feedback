@@ -11,11 +11,10 @@ end
 gem 'unicorn', '~> 4.9.0'
 
 gem 'plek', '~> 1.11.0'
-gem 'airbrake', '~> 4.3.1'
 
 gem 'valid_email', '~> 0.0.11'
 
-gem 'statsd-ruby', '~> 1.2.1', require: 'statsd'
+gem 'statsd-ruby', '~> 1.4.0', require: 'statsd'
 gem 'logstasher', '0.6.2'
 gem 'rack_strip_client_ip', '0.0.1'
 gem 'invalid_utf8_rejector'
@@ -35,6 +34,8 @@ if ENV['API_DEV']
 else
   gem 'gds-api-adapters', '~> 48.0'
 end
+
+gem 'govuk_app_config', '~> 0.2.0'
 
 group :development, :test do
   gem 'govuk-content-schema-test-helpers'
