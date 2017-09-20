@@ -5,7 +5,7 @@ gem 'rails', '~> 4.0'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 10.1.1'
+  gem 'slimmer', '~> 11.0.2'
 end
 
 gem 'unicorn', '~> 4.9.0'
@@ -33,7 +33,7 @@ gem 'notifications-ruby-client'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 47.2'
+  gem 'gds-api-adapters', '~> 48.0'
 end
 
 group :development, :test do
