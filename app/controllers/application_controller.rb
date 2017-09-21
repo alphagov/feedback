@@ -39,9 +39,9 @@ protected
   end
 
   def log_exception(exception)
-    notify_airbrake(exception)
+    GovukError.notify(exception)
 
     exception_class_name = exception.class.name.demodulize.downcase
-    Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.exception.#{exception_class_name}")
+    GovukStatsd.increment("exception.#{exception_class_name}")
   end
 end

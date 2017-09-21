@@ -5,17 +5,15 @@ gem 'rails', '~> 4.0'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 10.1.1'
+  gem 'slimmer', '~> 11.0.2'
 end
 
 gem 'unicorn', '~> 4.9.0'
 
 gem 'plek', '~> 1.11.0'
-gem 'airbrake', '~> 4.3.1'
 
 gem 'valid_email', '~> 0.0.11'
 
-gem 'statsd-ruby', '~> 1.2.1', require: 'statsd'
 gem 'logstasher', '0.6.2'
 gem 'rack_strip_client_ip', '0.0.1'
 gem 'invalid_utf8_rejector'
@@ -33,8 +31,10 @@ gem 'notifications-ruby-client'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 47.2'
+  gem 'gds-api-adapters', '~> 48.0'
 end
+
+gem 'govuk_app_config', '~> 0.2.0'
 
 group :development, :test do
   gem 'govuk-content-schema-test-helpers'

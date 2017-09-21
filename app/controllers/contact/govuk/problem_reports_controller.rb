@@ -23,12 +23,12 @@ class Contact::Govuk::ProblemReportsController < ContactController
       @message = DONE_OK_TEXT.html_safe
       status = 201
       status_text = "success"
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.report_a_problem.successful_submission")
+      GovukStatsd.increment("report_a_problem.successful_submission")
     else
       @message = DONE_INVALID_TEXT.html_safe
       status = 422
       status_text = "error"
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.report_a_problem.invalid_submission")
+      GovukStatsd.increment("report_a_problem.invalid_submission")
     end
 
     respond_to do |format|

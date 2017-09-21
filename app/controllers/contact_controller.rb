@@ -29,12 +29,12 @@ class ContactController < ApplicationController
     ticket = ticket_class.new data
 
     if ticket.valid?
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type}.successful_submission")
+      GovukStatsd.increment("#{type}.successful_submission")
       @contact_provided = (not data[:email].blank?)
 
       respond_to_valid_submission(ticket)
     else
-      Statsd.new(::STATSD_HOST).increment("#{::STATSD_PREFIX}.#{type}.invalid_submission")
+      GovukStatsd.increment("#{type}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash
