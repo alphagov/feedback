@@ -8,5 +8,5 @@ else
   ENV['SURVEY_NOTIFY_SERVICE_API_KEY']
 end
 
-Feedback.survey_notify_service = SurveyNotifyService.new(api_key)
+Rails.application.config.survey_notify_service = SurveyNotifyService.new(api_key)
 

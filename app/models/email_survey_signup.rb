@@ -23,7 +23,7 @@ class EmailSurveySignup
   end
 
   def save
-    Feedback.survey_notify_service.send_email(self) if valid?
+    Rails.application.config.survey_notify_service.send_email(self) if valid?
   end
 
   def survey_source=(new_survey_source)

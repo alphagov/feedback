@@ -3,7 +3,7 @@ require 'slimmer/headers'
 class ContactController < ApplicationController
   include Slimmer::Headers
 
-  before_filter :set_cache_control, only: [:new, :index]
+  before_action :set_cache_control, only: [:new, :index]
 
   def index
     @popular_links = CONTACT_LINKS.popular
@@ -19,7 +19,7 @@ class ContactController < ApplicationController
         render :new
       end
       format.any do
-        render nothing: true, status: 406
+        head(:not_acceptable)
       end
     end
   end
@@ -78,7 +78,7 @@ private
           redirect_to contact_anonymous_feedback_thankyou_path
         end
       end
-      format.any { render nothing: true, status: 406 }
+      format.any { head(:not_acceptable) }
     end
   end
 

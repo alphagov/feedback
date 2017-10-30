@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0'
+gem 'rails', '5.1.4'
 
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 11.0.2'
+  gem 'slimmer', '~> 11.1.0'
 end
 
 gem 'unicorn', '~> 4.9.0'
@@ -15,7 +15,7 @@ gem 'plek', '~> 1.11.0'
 gem 'valid_email', '~> 0.0.11'
 
 gem 'logstasher', '0.6.2'
-gem 'rack_strip_client_ip', '0.0.1'
+gem 'rack_strip_client_ip', '0.0.2'
 gem 'invalid_utf8_rejector'
 
 gem 'uglifier', '~> 2.7.2'
@@ -31,7 +31,7 @@ gem 'notifications-ruby-client'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 48.0'
+  gem 'gds-api-adapters', '49.6.0'
 end
 
 gem 'govuk_app_config', '~> 0.2.0'
@@ -39,10 +39,11 @@ gem 'govuk_app_config', '~> 0.2.0'
 group :development, :test do
   gem 'govuk-content-schema-test-helpers'
   gem 'govuk-lint'
-  gem 'rspec-rails', '~> 3.4.0'
-  gem 'capybara', '~> 2.5.0'
+  gem 'rspec-rails', '~> 3.6'
+  gem 'rails-controller-testing'
+  gem 'capybara', '~> 2.5'
   gem 'webmock', '~> 1.21.0', require: false
-  gem 'poltergeist', '~> 1.6.0'
+  gem 'poltergeist'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'test-unit', '3.1.3'
   gem 'pry-byebug'

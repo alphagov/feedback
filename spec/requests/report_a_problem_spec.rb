@@ -88,7 +88,7 @@ RSpec.describe "Reporting a problem with this content/tool", type: :request do
 
     # Using Rack::Test instead of capybara to allow setting headers.
     headers = { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" }
-    post "/contact/govuk/problem_reports", valid_params, headers
+    post "/contact/govuk/problem_reports", params: valid_params, headers: headers
 
     assert_requested(:post, %r{/problem-reports}) do |request|
       JSON.parse(request.body)["problem_report"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
