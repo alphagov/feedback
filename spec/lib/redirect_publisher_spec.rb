@@ -16,7 +16,6 @@ RSpec.describe RedirectPublisher do
     destination_path = "/contact"
 
     expected_redirect = {
-      "content_id" => content_id,
       "base_path" => current_base_path,
       "schema_name" => "redirect",
       "document_type" => "redirect",

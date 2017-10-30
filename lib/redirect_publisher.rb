@@ -12,7 +12,6 @@ class RedirectPublisher
     logger.info("Registering redirect #{content_id}: '#{current_base_path}' -> '#{destination_path}'")
 
     redirect = {
-      "content_id" => content_id,
       "base_path" => current_base_path,
       "schema_name" => "redirect",
       "document_type" => "redirect",
