@@ -51,6 +51,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
 private
 
   def extract_return_path(url)
+    return nil if url.blank?
     uri = URI.parse(url)
     return_path = uri.path
     return_path << "?#{uri.query}" if uri.query.present?
