@@ -249,7 +249,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
-    sass (3.4.22)
+    sass (3.4.25)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
@@ -339,7 +339,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-controller-testing
   rspec-rails (~> 3.6)
-  sass (~> 3.4.18)
+  sass (~> 3.4.25)
   sass-rails (~> 5.0.4)
   shoulda-matchers (~> 2.8.0)
   slimmer (~> 11.1.0)
