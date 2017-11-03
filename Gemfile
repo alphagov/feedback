@@ -22,7 +22,7 @@ gem 'uglifier', '~> 2.7.2'
 gem 'govuk_frontend_toolkit', '1.6.0'
 gem 'sass', '~> 3.4.18'
 gem 'sass-rails', '~> 5.0.4'
-gem 'asset_bom_removal-rails', '~> 1.0.0'
+gem 'asset_bom_removal-rails', '~> 1.0.2'
 
 gem 'google-api-client', '~> 0.10'
 
