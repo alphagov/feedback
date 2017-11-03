@@ -12,7 +12,7 @@ gem 'unicorn', '~> 5.3.1'
 
 gem 'plek', '~> 1.11.0'
 
-gem 'valid_email', '~> 0.0.11'
+gem 'valid_email', '~> 0.1.0'
 
 gem 'logstasher', '0.6.2'
 gem 'rack_strip_client_ip', '0.0.2'
