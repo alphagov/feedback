@@ -8,7 +8,7 @@ else
   gem 'slimmer', '~> 11.1.0'
 end
 
-gem 'unicorn', '~> 4.9.0'
+gem 'unicorn', '~> 5.3.1'
 
 gem 'plek', '~> 1.11.0'
 
