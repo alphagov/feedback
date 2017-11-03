@@ -62,7 +62,7 @@ GEM
     cliver (0.3.2)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.2)
     declarative (0.0.10)
@@ -111,6 +111,7 @@ GEM
     govuk_frontend_toolkit (1.6.0)
       rails (>= 3.1.0)
       sass (>= 3.2.0)
+    hashdiff (0.3.7)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
@@ -306,9 +307,10 @@ GEM
     valid_email (0.0.11)
       activemodel
       mail (~> 2.6.1)
-    webmock (1.21.0)
+    webmock (3.1.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -346,7 +348,7 @@ DEPENDENCIES
   uglifier (~> 2.7.2)
   unicorn (~> 4.9.0)
   valid_email (~> 0.0.11)
-  webmock (~> 1.21.0)
+  webmock (~> 3.1.0)
 
 BUNDLED WITH
    1.15.1
