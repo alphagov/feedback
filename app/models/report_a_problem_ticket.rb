@@ -10,7 +10,7 @@ class ReportAProblemTicket < Ticket
 
   def save
     if valid? && !spam?
-      Feedback.support_api.create_problem_report(ticket_details)
+      Rails.application.config.support_api.create_problem_report(ticket_details)
     end
   end
 

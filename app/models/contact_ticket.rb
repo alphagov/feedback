@@ -26,9 +26,9 @@ class ContactTicket < Ticket
   def save
     if valid?
       if anonymous?
-        Feedback.support_api.create_anonymous_long_form_contact(ticket_details)
+        Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
       else
-        Feedback.support.create_named_contact(ticket_details)
+        Rails.application.config.support.create_named_contact(ticket_details)
       end
     end
   end

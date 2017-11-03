@@ -11,7 +11,7 @@ class FoiTicket < Ticket
   validates_length_of :textdetails, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
 
   def save
-    Feedback.support.create_foi_request(ticket_details) if valid?
+    Rails.application.config.support.create_foi_request(ticket_details) if valid?
   end
 
 private

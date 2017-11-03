@@ -24,7 +24,7 @@ RSpec.shared_examples_for "a GOV.UK contact" do
       stub_request(:any, /.*/)
 
       request.env['HTTP_ACCEPT'] = 'nothing'
-      post :create, valid_params
+      post :create, params: valid_params
 
       expect(response.code).to eq("406")
     end

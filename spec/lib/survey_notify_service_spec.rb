@@ -47,7 +47,7 @@ RSpec.describe SurveyNotifyService do
         expect(error.message).to match(/Communication with notify service failed/)
         expect(error.cause).to be_a Notifications::Client::RequestError
         expect(error.cause.code).to eq '403'
-        expect(error.cause.message).to eq [{"error" => "Forbidden", "message" => "You are not allowed to do this"}]
+        expect(error.cause.message).to eq [{ "error" => "Forbidden", "message" => "You are not allowed to do this" }]
       }
     end
   end

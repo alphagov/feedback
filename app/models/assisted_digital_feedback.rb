@@ -64,7 +64,7 @@ class AssistedDigitalFeedback < Ticket
   end
 
   def save
-    Feedback.assisted_digital_spreadsheet.store(as_row_data) if valid?
+    Rails.application.config.assisted_digital_spreadsheet.store(as_row_data) if valid?
   end
 
   def as_row_data
