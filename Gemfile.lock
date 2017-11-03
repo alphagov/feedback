@@ -162,7 +162,7 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    plek (1.11.0)
+    plek (2.0.0)
     poltergeist (1.16.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -335,7 +335,7 @@ DEPENDENCIES
   invalid_utf8_rejector
   logstasher (= 0.6.2)
   notifications-ruby-client
-  plek (~> 1.11.0)
+  plek (~> 2.0.0)
   poltergeist
   pry-byebug
   rack_strip_client_ip (= 0.0.2)
