@@ -42,7 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'capybara', '~> 2.5'
-  gem 'webmock', '~> 1.21.0', require: false
+  gem 'webmock', '~> 3.1.0', require: false
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'test-unit', '3.1.3'
