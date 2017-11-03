@@ -336,7 +336,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-controller-testing
   rspec-rails (~> 3.6)
-  sass (~> 3.4.18)
+  sass (~> 3.4.25)
   sass-rails (~> 5.0.4)
   shoulda-matchers (~> 2.8.0)
   slimmer (~> 11.1.0)
