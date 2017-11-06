@@ -44,7 +44,7 @@ group :development, :test do
   gem 'capybara', '~> 2.5'
   gem 'webmock', '~> 3.1.0', require: false
   gem 'poltergeist'
-  gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'shoulda-matchers', '~> 3.0.1'
   gem 'test-unit', '3.1.3'
   gem 'pry-byebug'
   gem 'ci_reporter_rspec'
