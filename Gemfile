@@ -14,7 +14,7 @@ gem 'plek', '~> 2.0.0'
 
 gem 'valid_email', '~> 0.1.0'
 
-gem 'logstasher', '0.6.2'
+gem 'logstasher', '1.2.2'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'invalid_utf8_rejector'
 
