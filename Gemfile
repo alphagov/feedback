@@ -10,7 +10,7 @@ end
 
 gem 'unicorn', '~> 5.3.1'
 
-gem 'plek', '~> 1.11.0'
+gem 'plek', '~> 2.0.0'
 
 gem 'valid_email', '~> 0.1.0'
 
