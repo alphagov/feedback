@@ -1,123 +1,104 @@
-feedback
-========
+# Feedback
 
-This app handles user feedback related things.
+This app collects feedback from users via contact forms rendered on GOV.UK. 
+This data is then sent to the `support` app or `support-api` app to be dealt with.
 
-### Testing
+## Contact Page on GOV.UK
+![Contact Page on GOV.UK](/docs/screenshots/contact_page.png?raw=true "Contact Page on GOV.UK")
+
+## Contact Form on GOV.UK
+![Contact Form on GOV.UK](/docs/screenshots/contact_form.png?raw=true "Contact Form on GOV.UK")
+
+## Nomenclature
+
+- **Feedback**: All the data received from contact forms is considered to be "feedback" of some form 
+or other and relates to pages published on GOV.UK. 
+- **Anonymous Contact**: Part of the feedback collected by this app is anonymous, when it's 
+submitted via an anonymous contact form in the [feedback app][feedback]. 
+- **Named Contact**: In contrast with the `Anonymous Contact` feedback, this is submitted 
+via a form that will require you to identify yourself. This data is sent directly 
+to the `support` app. 
+
+## Technical documentation
+
+This is a public facing Ruby on Rails application that collects feedback from users in multiple ways:
+
+1. Renders a contact page on GOV.UK: `https://www.gov.uk/contact/govuk`
+2. Collects feedback from other contact forms. Pages using the `static` app 
+will have a link at the bottom of the page asking: `Is there anything wrong with this page?`. 
+Clicking this link will show you 
+a form. The data from the form will be submitted to the `feedback` app.
+3. Sends feedback either to the `support` app or the `support-api` app. If the 
+feedback is sent to the `support` app, it will in turn create a ticket in Zendesk. 
+If it's sent to the `support-api` app then it will either be stored in a database 
+or a Zendesk ticket will be created. 
+4. A certain subset of tickets ('assisted digital') have a special workflow: they're 
+sent once to a Google spreadsheet via the Google API, and then a subset of the data 
+is sent to `support-api` which will save them in its database. More documentation about 
+that here: [docs/assisted_digital_feedback.md](docs/assisted_digital_feedback.md).
+5. Handles email survey signups. A banner that shows up on `gov.uk` will ask you to 
+provide an email to signup to a survey. `feedback` will then email you a link to the 
+survey. However, it does not collect the answers. More documentation about that here: 
+[docs/email_survey_signups.md](docs/email_survey_signups.md) 
+
+### Dependencies
+
+- [support-api](https://github.com/alphagov/support-api) - provides an API for storing and fetching anonymous feedback about pages on GOV.UK. Data comes in from the [feedback app][feedback] on the public-facing frontend and is read by [the support app][support] on the admin-facing backend.
+- [support](https://github.com/alphagov/support) - receives feedback from the `feedback` app and creates Zendesk tickets from it.
+- [static](https://github.com/alphagov/static) - renders contact forms that will collect information that will be sent to the `feedback` app. 
+
+### Running the application
+
+To start the app using `bowler`:
+
+    bowl feedback
+
+To start the app directly:
+
+    ./startup.sh
+    
+This will start the app on port `3028`.     
+
+### Running the test suite
 
 To run unit tests, execute the following:
 
     bundle exec rake
 
-### Testing with a mock `signon` strategy
+#### Manual testing with a mock signon strategy
 
 Launch using `bowl` from the `development` directory:
 
     development> bowl feedback
 
-### Testing with real authorisation
+#### Manual testing with real authorisation
 
-In order to raise tickets in Zendesk, the `feedback` app submits data to the `support` app. As the relevant `support` app endpoints are behind `signon`, `feedback` needs a bearer token for authorisation. To get this working after an import of signon data from preview:
+For the feedback that is sent to the `support` app the `feedback` app needs a 
+bearer token for authorization because `support` is a backend app protected by 
+`signon`.  The same is not true for the feedback that is sent to `support-api` 
+because it's not protected by `signon`.
 
-1. Copy the token from the [support app initializer](config/initializers/support_app.rb).
-
-2. Start a rails console session within `signon`:
-
-        signonotron2> bundle exec rails c
-
-3. Execute the following (to update the token):
-
-        u = User.find_by_email('feedback@alphagov.co.uk')
-        a = u.authorisations.first
-        a.token = "<PLACE TOKEN HERE>"
-        a.save
-
-4. To start with real authentication using `signon` and `support`:
-
-        development> GDS_SSO_STRATEGY=real bowl signon support feedback
+You can read more about how to obtain authorization in the docs: 
+[docs/testing_with_real_authorization](docs/testing_with_real_authorization.md).
 
 ### Assisted Digital Feedback
 
 Assisted Digital feedback is stored twice.  The standard service feedback
 component is sent to support-api like other tickets, but the rest of the
 feedback specifically about assisted digital support is stored in a google
-spreadsheet.  The ID of the spreadsheet to store the data in is set via the
-following environment variable:
+spreadsheet. 
 
-    ASSISTED_DIGITAL_GOOGLE_SPREADSHEET_KEY
-
-To find the ID of a spreadsheet you wish to use, the [following documentation
-from google is useful](https://developers.google.com/sheets/guides/concepts#spreadsheet_id).
-
-Authorisation for writing to the spreadsheet must be granted to the app.
-
-1.  Generate a service account (see [Google's documentation](https://developers.google.com/identity/protocols/OAuth2ServiceAccount))
-    and store the JSON key somewhere safe.
-2.  Extract the `client_email` value from the JSON key and make it available to
-    the app in the `GOOGLE_CLIENT_EMAIL` environment variable.
-3.  Extract the `private_key` value from the JSON key and make it avaiable to
-    the app via the `GOOGLE_PRIVATE_KEY` environment variable.
-4.  Share the spreadsheet that you want to write data to with the email address
-    stored in the `GOOGLE_CLIENT_EMAIL`.  It should have at least "can edit"
-    permissions so the application can write data to the sheet.
+A more thorough explanation about how assisted digital feedback works can 
+be found in the docs: [docs/assisted_digital_feedback.md](docs/assisted_digital_feedback.md).
 
 ### Email Survey Signups
 
 This type of feedback is not actually feedback, it's a response from a banner
 displayed by static asking users to provide an email address where we can send
-them a link to a survey.  You can find out more about surveys in static [by
-reading the documentation](https://github.com/alphagov/static/blob/master/doc/surveys.md).
+them a link to a survey. The survey will then be emailed to them via the 
+`feedback` app. Please be aware that the answers we get back on the survey will 
+NOT be stored in `feedback`.
 
-The request will contain an `email_address` (the users email address), a
-`survey_source` (the path on GOV.UK where the sign up form was displayed), 
-`ga_client_id` (the Google Analytics client ID for that user's session), and
-`survey_id` (the survey they were invited to take part in).  The `survey_id`
-should match with an instance of `EmailSurvey` defined in [`app/models/email_survey.rb`.](app/models/email_survey.rb)
-These instances, like their counterparts in static, have start and endtimes so
-that we don't send emails when the survey has closed.  Unlike their counterparts
-in static they do not have match rules on the path - response that gets past an
-`survey_id` check and is in the `active?` time period will be sent an email.
-
-The email is sent using GOV.UK Notify using the "GOV.UK Surveys" service and a
-hardcoded email template (name: `email_survey_signup`, id: `8fe8ab4f-a6ac-44a1-9d8b-f611a493231b`)
-that belongs to that service.  This means that all running instances must use
-API keys for the same service or the template won't exist.  The API key is
-provided with the env var:
-
-    SURVEY_NOTIFY_SERVICE_API_KEY
-
-Deployed environments have this filled in via puppet and our standard mechanism
-for handling keys.  On the GOV.UK dev vm you'll want to join the service on
-GOV.UK Notify and create your own  API key.  When creating a key for yourself
-choosese either:
-
-* "test" - which won't send any emails at all, but will give you valid
-           responses from the API
-* "team" - which will only send emails to people on the team or the whitelisted
-           email addresses.
-
-Note that future versions may allow for different surveys to use different
-templates, but they'll still all have to belong to the same Notify service.
-
-#### A note on Notify template parameters
-
-Notify templates can be parameterised, and when we talk to the notify API we
-send a `personalisation` key that contains values for all the parameters in the
-template.  Notify will error if there are missing keys, but it will also error
-if there are extra keys.  This means we have to take care when editing the
-template in the Notify UI and take care not to introduce, nor remove parameters
-without updating the code.
-
-Currently the template takes a single parameter:
-
-* `survey_url` - the url that the survey lives at and will be sent in the email
-                 to invite the user to take part in that survey - this is
-                 constructed by taking the `url` of the `EmailSurvey` instance
-                 and adding the `survey_source` as a `c` param to the query
-                 string. At the end of the url we will also add the `ga_client_id`
-                 (e.g. if we have ga_client_id = '12345.67899' then the resulting 
-                 `survey_url` will be appended with `&gcl=12345.67890`)
-
-Adding new parameters will require a deploy, so it might be best to add a new
-template with new parameters and have the deploy change the template id *and*
-the parameters.
+A more thorough explanation of how email surveys work can be found in the docs:
+[docs/email_survey_signup.md](docs/email_survey_signups.md).
+ 
