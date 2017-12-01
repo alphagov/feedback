@@ -156,7 +156,7 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
-    notifications-ruby-client (2.4.0)
+    notifications-ruby-client (2.5.0)
       jwt (~> 2.1)
     null_logger (0.0.1)
     os (0.9.6)
