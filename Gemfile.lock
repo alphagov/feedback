@@ -256,7 +256,7 @@ GEM
     ruby-progressbar (1.9.0)
     safe_yaml (1.0.4)
     sass (3.4.25)
-    sass-rails (5.0.6)
+    sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -294,7 +294,7 @@ GEM
       power_assert
     thor (0.20.0)
     thread_safe (0.3.6)
-    tilt (2.0.5)
+    tilt (2.0.8)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     uber (0.1.0)
@@ -344,7 +344,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails (~> 3.7)
   sass (~> 3.4.18)
-  sass-rails (~> 5.0.4)
+  sass-rails (~> 5.0.7)
   shoulda-matchers (~> 3.0.1)
   slimmer (~> 11.1.0)
   test-unit (= 3.1.3)
