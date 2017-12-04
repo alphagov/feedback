@@ -336,7 +336,6 @@ DEPENDENCIES
   govuk_app_config (~> 1.0.0)
   govuk_frontend_toolkit (= 1.6.0)
   invalid_utf8_rejector
-  logstasher (= 1.2.2)
   notifications-ruby-client
   plek (~> 2.0.0)
   poltergeist
