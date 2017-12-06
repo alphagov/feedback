@@ -106,9 +106,11 @@ GEM
       rubocop (~> 0.51.0)
       rubocop-rspec (~> 1.16.0)
       scss_lint
-    govuk_app_config (0.3.0)
-      sentry-raven (~> 2.6.3)
+    govuk_app_config (1.0.0)
+      logstasher (~> 1.2.2)
+      sentry-raven (~> 2.7.1)
       statsd-ruby (~> 1.4.0)
+      unicorn (~> 5.3.1)
     govuk_frontend_toolkit (1.6.0)
       rails (>= 3.1.0)
       sass (>= 3.2.0)
@@ -265,7 +267,7 @@ GEM
     scss_lint (0.55.0)
       rake (>= 0.9, < 13)
       sass (~> 3.4.20)
-    sentry-raven (2.6.3)
+    sentry-raven (2.7.1)
       faraday (>= 0.7.6, < 1.0)
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
@@ -331,10 +333,9 @@ DEPENDENCIES
   google-api-client (~> 0.10)
   govuk-content-schema-test-helpers
   govuk-lint
-  govuk_app_config (~> 0.3.0)
+  govuk_app_config (~> 1.0.0)
   govuk_frontend_toolkit (= 1.6.0)
   invalid_utf8_rejector
-  logstasher (= 1.2.2)
   notifications-ruby-client
   plek (~> 2.0.0)
   poltergeist
@@ -349,7 +350,6 @@ DEPENDENCIES
   slimmer (~> 11.1.0)
   test-unit (= 3.1.3)
   uglifier (~> 3.2.0)
-  unicorn (~> 5.3.1)
   valid_email (~> 0.1.0)
   webmock (~> 3.1.1)
 

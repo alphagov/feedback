@@ -20,9 +20,5 @@ Rails.application.configure do
 
   config.log_level = :info
 
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
-  config.logstasher.supress_app_log = true
-
   config.serve_static_files = false
 end
