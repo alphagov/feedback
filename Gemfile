@@ -15,7 +15,7 @@ gem 'valid_email', '~> 0.1.0'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'invalid_utf8_rejector'
 
-gem 'uglifier', '~> 3.2.0'
+gem 'uglifier', '~> 4.0.1'
 gem 'govuk_frontend_toolkit', '1.6.0'
 gem 'sass', '~> 3.4.18'
 gem 'sass-rails', '~> 5.0.7'
