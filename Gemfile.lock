@@ -260,7 +260,7 @@ GEM
       rubocop (>= 0.51.0)
     ruby-progressbar (1.9.0)
     safe_yaml (1.0.4)
-    sass (3.5.3)
+    sass (3.5.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -351,7 +351,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-controller-testing
   rspec-rails (~> 3.7)
-  sass (~> 3.5.3)
+  sass (~> 3.5.4)
   sass-rails (~> 5.0.7)
   shoulda-matchers (~> 3.0.1)
   slimmer (~> 11.1.0)
