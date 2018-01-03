@@ -319,7 +319,7 @@ GEM
     valid_email (0.1.0)
       activemodel
       mail (>= 2.6.1)
-    webmock (3.1.1)
+    webmock (3.2.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -358,7 +358,7 @@ DEPENDENCIES
   test-unit (= 3.2.7)
   uglifier (~> 3.2.0)
   valid_email (~> 0.1.0)
-  webmock (~> 3.1.1)
+  webmock (~> 3.2.0)
 
 BUNDLED WITH
    1.15.1
