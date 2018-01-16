@@ -33,6 +33,13 @@ class EmailSurvey
         end_time: Time.zone.parse("2116-12-31").end_of_day,
         name: 'GOV.UK user research'
       ).freeze,
+      new(
+        id: 'treetest_pre_test_signup',
+        url: 'https://signup.take-part-in-research.service.gov.uk/contact?utm_campaign=crowd-banner&utm_source=Other&utm_medium=gov.uk&t=GDS&id=119',
+        start_time: Time.zone.parse('2018-01-22').beginning_of_day,
+        end_time: Time.zone.parse('2018-01-23').end_of_day,
+        name: 'GOV.UK user research'
+      ).freeze,
     ].map { |s| [s.id, s] }
   ].freeze
 end
