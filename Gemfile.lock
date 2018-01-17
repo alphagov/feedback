@@ -106,11 +106,11 @@ GEM
       rubocop (~> 0.51.0)
       rubocop-rspec (~> 1.19.0)
       scss_lint
-    govuk_app_config (1.1.0)
+    govuk_app_config (1.2.1)
       logstasher (~> 1.2.2)
       sentry-raven (~> 2.7.1)
       statsd-ruby (~> 1.4.0)
-      unicorn (~> 5.3.1)
+      unicorn (~> 5.4.0)
     govuk_frontend_toolkit (7.2.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
@@ -125,7 +125,7 @@ GEM
     json-schema (2.8.0)
       addressable (>= 2.4)
     jwt (2.1.0)
-    kgio (2.11.0)
+    kgio (2.11.1)
     link_header (0.0.8)
     little-plugger (1.1.4)
     logging (2.2.2)
@@ -150,7 +150,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.10.3)
+    minitest (5.11.1)
     multi_json (1.12.2)
     multipart-post (2.0.0)
     netrc (0.11.0)
@@ -222,7 +222,8 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
-    request_store (1.3.2)
+    request_store (1.4.0)
+      rack (>= 1.4)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -313,7 +314,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.4)
     unicode-display_width (1.3.0)
-    unicorn (5.3.1)
+    unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     valid_email (0.1.0)
@@ -340,7 +341,7 @@ DEPENDENCIES
   google-api-client (~> 0.19)
   govuk-content-schema-test-helpers
   govuk-lint
-  govuk_app_config (~> 1.1.0)
+  govuk_app_config (~> 1.2.1)
   govuk_frontend_toolkit (= 7.2.0)
   invalid_utf8_rejector
   notifications-ruby-client
