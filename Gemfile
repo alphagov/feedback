@@ -8,7 +8,7 @@ else
   gem 'slimmer', '~> 11.1.0'
 end
 
-gem 'plek', '~> 2.1.0'
+gem 'plek', '~> 2.1.1'
 
 gem 'valid_email', '~> 0.1.0'
 
