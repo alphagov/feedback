@@ -23,6 +23,9 @@
           <%= yield %>
         </div>
       </main>
+      <% unless @hide_feedback_component %>
+        <%= render 'govuk_publishing_components/components/feedback' %>
+      <% end %>
     </div>
   </body>
 </html>

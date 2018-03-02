@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount GovukPublishingComponents::Engine, at: "/component-guide"
+
   get "/contact", format: false, to: "contact#index"
 
   namespace :contact do
@@ -24,6 +26,4 @@ Rails.application.routes.draw do
   end
 
   root to: redirect("/contact")
-
-  get "test_forms/report_a_problem" if Rails.env.development? || Rails.env.test?
 end
