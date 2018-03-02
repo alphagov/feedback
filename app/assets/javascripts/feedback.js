@@ -1,5 +1,6 @@
 //= require jquery.details.js
 //= require vendor/jquery.inputevent
+//= require govuk_publishing_components/components/feedback
 
 (function(){
   "use strict";
