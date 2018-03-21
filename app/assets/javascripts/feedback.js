@@ -1,6 +1,6 @@
 //= require jquery.details.js
 //= require vendor/jquery.inputevent
-//= require govuk_publishing_components/components/feedback
+//= require govuk_publishing_components/all_components
 
 (function(){
   "use strict";
