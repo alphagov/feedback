@@ -19,7 +19,7 @@ gem 'invalid_utf8_rejector'
 
 gem 'uglifier', '~> 4.1.8'
 gem 'govuk_frontend_toolkit', '7.4.2'
-gem 'sass', '~> 3.5.5'
+gem 'sass', '~> 3.5.6'
 gem 'sass-rails', '~> 5.0.7'
 gem 'asset_bom_removal-rails', '~> 1.0.2'
 
