@@ -132,7 +132,7 @@ GEM
       activesupport (~> 5.1)
       gds-api-adapters (>= 43.0)
       govuk_ab_testing (~> 2.4)
-    govuk_publishing_components (5.6.0)
+    govuk_publishing_components (5.7.0)
       govspeak (>= 5.0.3)
       govuk_frontend_toolkit
       govuk_navigation_helpers (~> 9.2.1)
@@ -166,7 +166,7 @@ GEM
       activesupport (>= 4.0)
       logstash-event (~> 1.2.0)
       request_store
-    loofah (2.2.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lrucache (0.1.4)
@@ -235,8 +235,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (5.1.5)
       actionpack (= 5.1.5)
       activesupport (= 5.1.5)
@@ -246,7 +246,7 @@ GEM
     rainbow (2.2.2)
       rake
     raindrops (0.19.0)
-    rake (12.3.0)
+    rake (12.3.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -378,7 +378,7 @@ DEPENDENCIES
   govuk-lint
   govuk_app_config (~> 1.4.0)
   govuk_frontend_toolkit (= 7.4.2)
-  govuk_publishing_components (~> 5.6.0)
+  govuk_publishing_components (~> 5.7.0)
   invalid_utf8_rejector
   notifications-ruby-client
   plek (~> 2.1.1)
