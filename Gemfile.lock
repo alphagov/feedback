@@ -103,7 +103,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    govspeak (5.5.0)
+    govspeak (5.6.0)
       actionview (>= 4.1, < 6)
       addressable (>= 2.3.8, < 3)
       commander (~> 4.4)
@@ -112,14 +112,13 @@ GEM
       kramdown (~> 1.15.0)
       money (~> 6.7)
       nokogiri (~> 1.5)
-      sanitize (~> 2.1.0)
+      sanitize (~> 4.6)
     govuk-content-schema-test-helpers (1.6.1)
       json-schema (~> 2.8.0)
     govuk-lint (3.7.0)
       rubocop (~> 0.51.0)
       rubocop-rspec (~> 1.19.0)
       scss_lint
-    govuk_ab_testing (2.4.1)
     govuk_app_config (1.4.1)
       logstasher (~> 1.2.2)
       sentry-raven (~> 2.7.1)
@@ -128,14 +127,10 @@ GEM
     govuk_frontend_toolkit (7.4.2)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
-    govuk_navigation_helpers (9.2.1)
-      activesupport (~> 5.1)
-      gds-api-adapters (>= 43.0)
-      govuk_ab_testing (~> 2.4)
-    govuk_publishing_components (5.7.0)
+    govuk_publishing_components (6.0.0)
       govspeak (>= 5.0.3)
+      govuk_app_config
       govuk_frontend_toolkit
-      govuk_navigation_helpers (~> 9.2.1)
       rails (>= 5.0.0.1)
       rake
       rouge
@@ -189,6 +184,8 @@ GEM
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    nokogumbo (1.5.0)
+      nokogiri
     notifications-ruby-client (2.6.0)
       jwt (>= 1.5, < 3)
     null_logger (0.0.1)
@@ -213,7 +210,7 @@ GEM
     rack (2.0.4)
     rack-cache (1.7.1)
       rack (>= 0.4)
-    rack-test (0.8.3)
+    rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rack_strip_client_ip (0.0.2)
     rails (5.1.5)
@@ -294,8 +291,10 @@ GEM
       rubocop (>= 0.51.0)
     ruby-progressbar (1.9.0)
     safe_yaml (1.0.4)
-    sanitize (2.1.0)
+    sanitize (4.6.4)
+      crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
+      nokogumbo (~> 1.4)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -378,7 +377,7 @@ DEPENDENCIES
   govuk-lint
   govuk_app_config (~> 1.4.1)
   govuk_frontend_toolkit (= 7.4.2)
-  govuk_publishing_components (~> 5.7.0)
+  govuk_publishing_components (~> 6.0.0)
   invalid_utf8_rejector
   notifications-ruby-client
   plek (~> 2.1.1)
