@@ -119,7 +119,7 @@ GEM
       rubocop (~> 0.51.0)
       rubocop-rspec (~> 1.19.0)
       scss_lint
-    govuk_app_config (1.4.1)
+    govuk_app_config (1.4.2)
       logstasher (~> 1.2.2)
       sentry-raven (~> 2.7.1)
       statsd-ruby (~> 1.4.0)
@@ -375,7 +375,7 @@ DEPENDENCIES
   google-api-client (~> 0.20)
   govuk-content-schema-test-helpers
   govuk-lint
-  govuk_app_config (~> 1.4.1)
+  govuk_app_config (~> 1.4.2)
   govuk_frontend_toolkit (= 7.4.2)
   govuk_publishing_components (~> 6.2.0)
   invalid_utf8_rejector
