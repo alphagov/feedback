@@ -33,6 +33,15 @@ class EmailSurvey
         end_time: Time.zone.parse("2116-12-31").end_of_day,
         name: 'GOV.UK user research'
       ).freeze,
+      # This is the default survey that runs on the footer
+      # hence the long lived start/end times
+      new(
+        id: 'footer_satisfaction_survey',
+        url: 'https://www.smartsurvey.co.uk/s/0087N',
+        start_time: Time.zone.parse("2017-01-01").beginning_of_day,
+        end_time: Time.zone.parse("2116-12-31").end_of_day,
+        name: 'GOV.UK user research'
+      ).freeze,
       new(
         id: 'treetest_pre_test_signup',
         url: 'https://signup.take-part-in-research.service.gov.uk/contact?utm_campaign=crowd-banner&utm_source=Other&utm_medium=gov.uk&t=GDS&id=119',
