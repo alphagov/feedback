@@ -23,7 +23,7 @@ gem 'sass', '~> 3.5.6'
 gem 'sass-rails', '~> 5.0.7'
 gem 'asset_bom_removal-rails', '~> 1.0.2'
 
-gem 'google-api-client', '~> 0.20'
+gem 'google-api-client', '~> 0.21'
 
 gem 'notifications-ruby-client'
 
