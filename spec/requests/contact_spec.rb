@@ -263,9 +263,6 @@ RSpec.describe "Contact", type: :request do
     end
   end
 
-  # Because the breadcrumb component is not loaded as HTML
-  # we need to workaround by filling the form to get the
-  # cookie `govuk_contact_referrer`.
   it "should have a cookie with the previous page page before filling the form", js: true do
     visit "/contact"
     click_on "GOV.UK form"
