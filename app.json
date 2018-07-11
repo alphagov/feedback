@@ -1,7 +1,36 @@
 {
   "name": "feedback",
   "scripts": {},
-  "env": {},
+  "env": {
+    "GOVUK_APP_DOMAIN": {
+      "value": "www.gov.uk"
+    },
+    "GOVUK_WEBSITE_ROOT": {
+      "value": "https://www.gov.uk"
+    },
+    "PLEK_SERVICE_CONTENT_STORE_URI": {
+      "value": "https://www.gov.uk/api"
+    },
+    "PLEK_SERVICE_RUMMAGER_URI": {
+      "value": "https://www.gov.uk/api"
+    },
+    "PLEK_SERVICE_STATIC_URI": {
+      "value": "assets.digital.cabinet-office.gov.uk"
+    },
+    "RAILS_SERVE_STATIC_ASSETS": {
+      "value": "yes"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "value": "yes"
+    },
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    }
+  },
+  "image": "heroku/ruby",
   "formation": {},
   "addons": [],
   "buildpacks": []

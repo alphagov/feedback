@@ -21,8 +21,6 @@ Rails.application.routes.draw do
       post 'email-survey-signup.js', to: 'email_survey_signup#create', defaults: { format: :js }
       resources 'page_improvements', only: [:create], format: false
     end
-
-    get 'look-for-jobs', to: redirect("https://jobsearch.direct.gov.uk/ContactUs.aspx")
   end
 
   root to: redirect("/contact")
