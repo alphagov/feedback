@@ -61,6 +61,10 @@
   GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
     var specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer;
 
+    // Mask email addresses
+    var emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
+    specificPage = specificPage.replace(emailPattern, '[email]');
+
     // Preopulate specific page field
     $('#link').val(specificPage);
 
