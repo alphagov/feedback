@@ -42,7 +42,14 @@
       <legend>What are the details?</legend>
       <div class="group">
         <p>For example if you were searching for something, what did you type into the search box?</p>
-          <p class="warning-message">Don’t include personal or financial information, for example your National Insurance number or credit card details.</p>
+
+        <%= render "govuk_publishing_components/components/govspeak", {} do %>
+          <div class="application-notice help-notice">
+            <p>
+              Don’t include personal or financial information, for example your National Insurance number or credit card details.
+            </p>
+          </div>
+        <% end %>
 
         <% if @errors && @errors[:textdetails] %>
           <p class="validation group">
