@@ -4,7 +4,10 @@
   <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
     <%= hidden_field_tag 'contact[url]', Plek.new.website_root + contact_govuk_path %>
 
-    <p>Remember, the <a href="/help">help pages</a> have answers to the most common questions about the GOV.UK website. You can use the form below to ask a question, report a problem or suggest an improvement we can make to GOV.UK.</p>
+    <p>This form is for issues to do with the GOV.UK website.</p>
+    <p>You can use it to ask a question, report a problem or suggest an improvement to the GOV.UK team.</p>
+    <p>We can’t reply to you with advice. We don’t have access to information about you held by government departments.</p>
+    <p>If you have a question about a government service or policy, check the <a href="/help">help pages</a> or contact the <a hef="/government/organisations">government department</a> directly.</p>
 
     <%= render partial: "shared/spam_honeypot", locals: { form_name: 'contact' } %>
 
@@ -36,10 +39,10 @@
     </fieldset>
 
     <fieldset>
-      <legend>Can you provide more detail?</legend>
+      <legend>What are the details?</legend>
       <div class="group">
         <p>For example if you were searching for something, what did you type into the search box?</p>
-          <p class="warning-message">Don't include personal or financial information, eg your National Insurance number or credit card details.</p>
+          <p class="warning-message">Don’t include personal or financial information, for example your National Insurance number or credit card details.</p>
 
         <% if @errors && @errors[:textdetails] %>
           <p class="validation group">
