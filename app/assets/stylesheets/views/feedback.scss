@@ -33,6 +33,7 @@
     .contact-form {
       p {
         @include core-19;
+        padding-bottom: 0;
       }
       legend {
         @include bold-24
