@@ -38,7 +38,7 @@ gem 'govuk_app_config', '~> 1.8.0'
 group :development, :test do
   gem 'govuk-content-schema-test-helpers'
   gem 'govuk-lint'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 3.8'
   gem 'rails-controller-testing'
   gem 'capybara', '~> 3.5'
   gem 'webmock', '~> 3.4.2', require: false
