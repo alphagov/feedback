@@ -40,7 +40,7 @@ group :development, :test do
   gem 'govuk-lint'
   gem 'rspec-rails', '~> 3.8'
   gem 'rails-controller-testing'
-  gem 'capybara', '~> 3.5'
+  gem 'capybara', '~> 3.6'
   gem 'webmock', '~> 3.4.2', require: false
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 3.0.1'
