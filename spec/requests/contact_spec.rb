@@ -276,8 +276,9 @@ RSpec.describe "Contact", type: :request do
 
     click_on "Return to the GOV.UK home page"
 
-    cookies = page.driver.cookies
-    expect(cookies.keys).to include('govuk_contact_referrer')
-    expect(cookies['govuk_contact_referrer'].value).to match(/\/thankyou$/)
+    cookies = page.driver.browser.manage.all_cookies
+    contact_referrer_cookie = cookies.find { |c| c[:name] == 'govuk_contact_referrer' }
+    expect(contact_referrer_cookie).not_to be_nil
+    expect(contact_referrer_cookie[:value]).to match(/\/thankyou$/)
   end
 end
