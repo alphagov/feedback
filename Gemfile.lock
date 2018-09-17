@@ -383,7 +383,6 @@ PLATFORMS
 
 DEPENDENCIES
   asset_bom_removal-rails (~> 1.0.2)
-  capybara (~> 3.7)
   ci_reporter_rspec
   gds-api-adapters (= 53.0.0)
   google-api-client (~> 0.23)

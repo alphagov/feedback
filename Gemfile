@@ -41,7 +41,6 @@ group :development, :test do
   gem 'govuk-lint'
   gem 'rspec-rails', '~> 3.8'
   gem 'rails-controller-testing'
-  gem 'capybara', '~> 3.7'
   gem 'webmock', '~> 3.4.2', require: false
   gem 'shoulda-matchers', '~> 3.0.1'
   gem 'test-unit', '3.2.8'
