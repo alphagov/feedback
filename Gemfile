@@ -33,7 +33,7 @@ else
   gem 'gds-api-adapters', '53.1.0'
 end
 
-gem 'govuk_app_config', '~> 1.9.0'
+gem 'govuk_app_config', '~> 1.9.1'
 
 group :development, :test do
   gem 'govuk-content-schema-test-helpers'
