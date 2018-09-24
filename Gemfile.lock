@@ -51,6 +51,8 @@ GEM
       rails (>= 4.2)
       sass (> 3.4)
     ast (2.4.0)
+    aws-xray-sdk (0.10.2)
+      oj (~> 3.0)
     builder (3.2.3)
     byebug (9.1.0)
     capybara (3.7.2)
@@ -127,7 +129,8 @@ GEM
       rubocop (~> 0.58)
       rubocop-rspec (~> 1.28)
       scss_lint
-    govuk_app_config (1.8.0)
+    govuk_app_config (1.9.0)
+      aws-xray-sdk (~> 0.10.0)
       logstasher (~> 1.2.2)
       sentry-raven (~> 2.7.1)
       statsd-ruby (~> 1.4.0)
@@ -201,6 +204,7 @@ GEM
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
     null_logger (0.0.1)
+    oj (3.6.10)
     os (1.0.0)
     parallel (1.12.1)
     parser (2.5.1.2)
@@ -388,7 +392,7 @@ DEPENDENCIES
   google-api-client (~> 0.24)
   govuk-content-schema-test-helpers
   govuk-lint
-  govuk_app_config (~> 1.8.0)
+  govuk_app_config (~> 1.9.0)
   govuk_frontend_toolkit (= 7.6.0)
   govuk_publishing_components (~> 9.26.0)
   govuk_test
