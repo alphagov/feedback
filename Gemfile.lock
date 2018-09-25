@@ -129,7 +129,7 @@ GEM
       rubocop (~> 0.58)
       rubocop-rspec (~> 1.28)
       scss_lint
-    govuk_app_config (1.9.1)
+    govuk_app_config (1.9.2)
       aws-xray-sdk (~> 0.10.0)
       logstasher (~> 1.2.2)
       sentry-raven (~> 2.7.1)
@@ -392,7 +392,7 @@ DEPENDENCIES
   google-api-client (~> 0.24)
   govuk-content-schema-test-helpers
   govuk-lint
-  govuk_app_config (~> 1.9.1)
+  govuk_app_config (~> 1.9.2)
   govuk_frontend_toolkit (= 7.6.0)
   govuk_publishing_components (~> 9.26.1)
   govuk_test
