@@ -50,12 +50,14 @@ namespace :publishing_api do
     redirect_publisher.call(
       content_id: 'a6d9bafd-f69b-4d2f-a002-c7547473e152',
       current_base_path: '/feedback/foi',
-      destination_path: '/contact/foi')
+      destination_path: '/contact/foi'
+    )
 
     redirect_publisher.call(
       content_id: 'd9f4ef65-4efb-4865-a562-c41d9794b796',
       current_base_path: '/contact/dvla',
-      destination_path: '/contact-the-dvla')
+      destination_path: '/contact-the-dvla'
+    )
 
     redirect_publisher.call(
       content_id: '80ea2f60-c900-4c73-a129-d5418fc7d12d',

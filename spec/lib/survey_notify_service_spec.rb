@@ -29,8 +29,7 @@ RSpec.describe SurveyNotifyService do
 
     it 'sends the survey signup to notify' do
       send_email_request = a_request(:post,
-        'https://api.notifications.service.gov.uk/v2/notifications/email'
-      ).with(body: email_survey_signup.to_notify_params.to_json)
+        'https://api.notifications.service.gov.uk/v2/notifications/email').with(body: email_survey_signup.to_notify_params.to_json)
 
       subject.send_email(email_survey_signup)
 

@@ -33,7 +33,7 @@ class ReportAProblemTicket < Ticket
 private
 
   def ticket_details
-    [:what_wrong, :what_doing, :path, :user_agent, :javascript_enabled, :referrer, :source, :page_owner].inject({}) do |details, field|
+    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].inject({}) do |details, field|
       details[field] = send(field)
       details
     end
