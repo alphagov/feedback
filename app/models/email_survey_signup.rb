@@ -1,6 +1,7 @@
 class EmailSurveySignup
   include ActiveModel::Validations
-  attr_accessor :survey_id, :survey_source, :email_address, :ga_client_id
+  attr_accessor :survey_id, :email_address, :ga_client_id
+  attr_reader :survey_source
 
   validates :email_address, presence: true,
                             email: { message: "The email address must be valid" },
