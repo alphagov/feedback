@@ -93,6 +93,7 @@
         <label for="email">Your email address</label>
         <input name="contact[email]" id="email" type="email" class="email" value="<%= (@old ? @old[:email] : '') %>">
         <span class="hint">We'll only use this to reply to your message.</span>
+        <input aria-hidden="true" type="hidden" name="contact[govuk_thanks_martha]">
 
       </p>
     </fieldset>
