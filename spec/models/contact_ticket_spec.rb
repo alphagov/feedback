@@ -24,6 +24,15 @@ RSpec.describe ContactTicket, type: :model do
     ContactTicket.new valid_named_ticket_details.merge(options)
   end
 
+  def named_bad_ticket
+    ContactTicket.new valid_named_ticket_details.merge(name: "Bad Robot", email: "123456@qq.com")
+  end
+
+  it "should not create named contact with a bad ticket" do
+    expect(Rails.application.config.support).to_not receive(:create_named_contact)
+    named_bad_ticket.save
+  end
+
   it "should validate anonymous tickets" do
     expect(anon_ticket).to be_valid
   end
