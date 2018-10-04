@@ -26,6 +26,13 @@ class ContactController < ApplicationController
 
   def create
     data = contact_params.merge(browser_attributes)
+
+    unless data[:govuk_thanks_martha].blank?
+      hide_report_a_problem_form_in_response
+      redirect_to contact_anonymous_feedback_thankyou_path
+      return
+    end
+
     ticket = ticket_class.new data
 
     if ticket.valid?
