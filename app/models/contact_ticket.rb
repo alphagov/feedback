@@ -26,10 +26,12 @@ class ContactTicket < Ticket
 
   def save
     if valid?
-      if anonymous?
-        Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
-      else
-        Rails.application.config.support.create_named_contact(ticket_details)
+      unless email_qq
+        if anonymous?
+          Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
+        else
+          Rails.application.config.support.create_named_contact(ticket_details)
+        end
       end
     end
   end
@@ -66,6 +68,10 @@ private
     if email.blank? && name.present?
       @errors.add :email, 'The email field cannot be empty'
     end
+  end
+
+  def email_qq
+    /[0-9]+@qq.com$/.match?(email)
   end
 
   def validate_link
