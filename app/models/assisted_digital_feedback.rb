@@ -2,15 +2,16 @@ require 'uri'
 
 class AssistedDigitalFeedback < Ticket
   attr_accessor :assistance_received,
-                :assistance_received_comments,
                 :assistance_provided_by,
                 :assistance_provided_by_other,
                 :assistance_satisfaction_rating,
-                :assistance_improvement_comments,
                 :service_satisfaction_rating,
-                :improvement_comments,
                 :slug,
                 :javascript_enabled
+
+  attr_writer :improvement_comments,
+              :assistance_received_comments,
+              :assistance_improvement_comments
 
   validates :assistance_received,
             presence: { message: "You must select if you received assistance with this service" },

@@ -15,8 +15,7 @@ RSpec.describe GoogleSpreadsheetStore do
       subject.store(["some data", 1, 2, false, nil, "yes?", "6"])
 
       store_request = a_request(:post,
-        'https://sheets.googleapis.com/v4/spreadsheets/my-spreadsheet-id/values/Sheet1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS'
-      ).with(body: '{"values":[["some data",1,2,false,null,"yes?","6"]]}')
+        'https://sheets.googleapis.com/v4/spreadsheets/my-spreadsheet-id/values/Sheet1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS').with(body: '{"values":[["some data",1,2,false,null,"yes?","6"]]}')
       expect(store_request).to have_been_requested
     end
 
@@ -24,12 +23,12 @@ RSpec.describe GoogleSpreadsheetStore do
       stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/my-spreadsheet-id/*}).to_return(status: 403, body: 'forbidden')
       expect {
         subject.store(["some data", 1, 2, false, nil, "yes?", "6"])
-      }.to raise_error { |error|
+      }.to(raise_error { |error|
         expect(error).to be_a described_class::Error
         expect(error.message).to match(/Error while storing data in google/)
         expect(error.cause).to be_a Google::Apis::Error
         expect(error.cause.body).to eq 'forbidden'
-      }
+      })
     end
   end
 end

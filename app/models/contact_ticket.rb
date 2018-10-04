@@ -1,9 +1,10 @@
 require 'gds_api/support'
 
 class ContactTicket < Ticket
-  attr_accessor :location, :link, :textdetails,
-                :name, :email,
-                :javascript_enabled, :referrer
+  attr_accessor :location, :textdetails,
+                :name, :email
+
+  attr_writer :javascript_enabled, :referrer, :link
 
   validate :validate_link
   validates_length_of :link, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"

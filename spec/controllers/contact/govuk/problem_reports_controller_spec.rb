@@ -89,7 +89,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
             }
           end
         end
-      end # html
+      end
 
       context "ajax submission" do
         def do_submit(attrs = {})

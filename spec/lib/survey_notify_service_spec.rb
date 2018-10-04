@@ -29,8 +29,7 @@ RSpec.describe SurveyNotifyService do
 
     it 'sends the survey signup to notify' do
       send_email_request = a_request(:post,
-        'https://api.notifications.service.gov.uk/v2/notifications/email'
-      ).with(body: email_survey_signup.to_notify_params.to_json)
+        'https://api.notifications.service.gov.uk/v2/notifications/email').with(body: email_survey_signup.to_notify_params.to_json)
 
       subject.send_email(email_survey_signup)
 
@@ -42,13 +41,13 @@ RSpec.describe SurveyNotifyService do
         .to_return(status: 403, body: '{"errors":[{"error":"Forbidden","message":"You are not allowed to do this"}]}')
       expect {
         subject.send_email(email_survey_signup)
-      }.to raise_error { |error|
+      }.to(raise_error { |error|
         expect(error).to be_a described_class::Error
         expect(error.message).to match(/Communication with notify service failed/)
         expect(error.cause).to be_a Notifications::Client::RequestError
         expect(error.cause.code).to eq '403'
         expect(error.cause.message).to eq [{ "error" => "Forbidden", "message" => "You are not allowed to do this" }]
-      }
+      })
     end
   end
 end

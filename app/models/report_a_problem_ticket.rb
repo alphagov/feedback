@@ -3,7 +3,8 @@ require 'gds_api/support'
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w(mainstream inside_government page_not_found).freeze
 
-  attr_accessor :what_wrong, :what_doing, :javascript_enabled, :referrer, :source, :page_owner
+  attr_accessor :what_wrong, :what_doing, :referrer
+  attr_writer :page_owner, :javascript_enabled, :source
 
   validates :what_wrong, presence: true, if: proc { |ticket| ticket.what_doing.blank? }
   validates :what_doing, presence: true, if: proc { |ticket| ticket.what_wrong.blank? }
@@ -33,7 +34,7 @@ class ReportAProblemTicket < Ticket
 private
 
   def ticket_details
-    [:what_wrong, :what_doing, :path, :user_agent, :javascript_enabled, :referrer, :source, :page_owner].inject({}) do |details, field|
+    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].inject({}) do |details, field|
       details[field] = send(field)
       details
     end

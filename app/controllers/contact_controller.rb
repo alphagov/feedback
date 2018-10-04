@@ -3,7 +3,7 @@ require 'slimmer/headers'
 class ContactController < ApplicationController
   include Slimmer::Headers
 
-  before_action :set_cache_control, only: [:new, :index]
+  before_action :set_cache_control, only: %i[new index]
 
   def index
     @popular_links = CONTACT_LINKS.popular
