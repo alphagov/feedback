@@ -26,7 +26,7 @@ class ContactTicket < Ticket
 
   def save
     if valid?
-      unless email_qq
+      unless bad_email_address?
         if anonymous?
           Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
         else
@@ -70,8 +70,23 @@ private
     end
   end
 
-  def email_qq
-    /[0-9]+@qq.com$/.match?(email)
+  def bad_email_address?
+    bad_domains = Regexp.union(
+      /\A*@.*\.beameagle.top$/,
+      /\A*@.*\.bishop-knot.xyz$/,
+      /\A*@.*\.captainmaid.top$/,
+      /\A*@.*\.eaglefight.top$/,
+      /\A*@.*\.gull-minnow.top$/,
+      /\A*@.*\.hensailor.xyz$/,
+      /\A*@.*\.lady-and-lunch.xyz$/,
+      /\A*@.*\.marver-coats.xyz$/,
+      /\A*@.*\.pine-and-onyx.xyz$/,
+      /\A*@.*\.stars-and-glory.top$/,
+      /\A*@.*\.veinflower.xyz$/,
+      /\A*@qq.com$/
+    )
+
+    bad_domains.match?(email)
   end
 
   def validate_link
