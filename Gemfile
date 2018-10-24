@@ -12,7 +12,7 @@ gem 'govuk_publishing_components', '~> 12.2.0'
 
 gem 'plek', '~> 2.1.1'
 
-gem 'valid_email', '~> 0.1.0'
+gem 'valid_email', '~> 0.1.1'
 
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'invalid_utf8_rejector'
