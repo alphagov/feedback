@@ -140,7 +140,7 @@ GEM
     govuk_frontend_toolkit (8.1.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
-    govuk_publishing_components (12.14.1)
+    govuk_publishing_components (12.19.0)
       govspeak (>= 5.0.3)
       govuk_app_config
       govuk_frontend_toolkit
@@ -205,7 +205,7 @@ GEM
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
     null_logger (0.0.1)
-    oj (3.7.1)
+    oj (3.7.4)
     os (1.0.0)
     parallel (1.12.1)
     parser (2.5.1.2)
@@ -397,7 +397,7 @@ DEPENDENCIES
   govuk-lint
   govuk_app_config (~> 1.10.0)
   govuk_frontend_toolkit (= 8.1.0)
-  govuk_publishing_components (~> 12.14.1)
+  govuk_publishing_components (~> 12.19.0)
   govuk_test
   invalid_utf8_rejector
   notifications-ruby-client
