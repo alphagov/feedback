@@ -30,7 +30,7 @@ gem 'notifications-ruby-client'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '55.0.1'
+  gem 'gds-api-adapters', '55.0.2'
 end
 
 gem 'govuk_app_config', '~> 1.10.0'
