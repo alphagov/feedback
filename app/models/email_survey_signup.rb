@@ -37,6 +37,7 @@ class EmailSurveySignup
 
   def survey_url
     return nil unless survey.present?
+
     uri = URI.parse(survey.url)
     query_string = "c=#{CGI.escape(survey_source)}"
     query_string += "&gcl=#{ga_client_id}" if ga_client_id.present?

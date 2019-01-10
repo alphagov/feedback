@@ -17,6 +17,7 @@ module UrlNormaliser
 
   def self.relative_to_website_root(candidate)
     return if candidate.nil?
+
     candidate.sub(/\A#{Regexp.escape(Plek.new.website_root)}/, '')
   end
 end
