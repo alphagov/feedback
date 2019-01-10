@@ -23,6 +23,6 @@ module Feedback
 
     config.encoding = "utf-8"
 
-    config.filter_parameters += [:password, :name, :email, :email_confirmation, :textdetails, :what_doing, :what_wrong]
+    config.filter_parameters += %i[password name email email_confirmation textdetails what_doing what_wrong]
   end
 end
