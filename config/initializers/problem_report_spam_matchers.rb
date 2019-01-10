@@ -8,4 +8,4 @@ PROBLEM_REPORT_SPAM_MATCHERS = [
   # get rid of very low-quality feedback where "what_wrong" and "what_doing" are
   # either single words or missing completely
   lambda { |ticket| !ticket.what_wrong.include?(" ") && !ticket.what_doing.include?(" ") },
-]
+].freeze
