@@ -9,4 +9,3 @@ else
 end
 
 Rails.application.config.survey_notify_service = SurveyNotifyService.new(api_key)
-
