@@ -3,12 +3,35 @@ module Contact
     class EmailSurveySignupController < ContactController
       rescue_from SurveyNotifyService::Error, with: :respond_to_notify_error
 
-      def ticket_class
-        EmailSurveySignup
-      end
+      def create
+        data = contact_params.merge(browser_attributes)
+        ticket = EmailSurveySignup.new(data)
 
-      def type
-        :email_survey_signup
+        if ticket.valid?
+          GovukStatsd.increment("email_survey_signup.successful_submission")
+          @contact_provided = (not data[:email].blank?)
+
+          respond_to_valid_submission(ticket)
+        else
+          GovukStatsd.increment("email_survey_signup.invalid_submission")
+          raise SpamError if ticket.spam?
+
+          @errors = ticket.errors.to_hash
+          @old = data
+
+          # To be removed after 21/2/2019
+          GovukError.notify(
+            "Invalid email survey submitted",
+            extra: {
+              params: contact_params,
+              errors: ticket.errors,
+              request: request,
+            },
+            level: "debug",
+          )
+
+          respond_to_invalid_submission(ticket)
+        end
       end
 
       def contact_params
