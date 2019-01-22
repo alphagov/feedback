@@ -43,13 +43,11 @@ RSpec.describe ReportAProblemTicket, type: :model do
   end
 
   it "should know if it's spam or not" do
-    PROBLEM_REPORT_SPAM_MATCHERS << lambda { |message| message.what_wrong.include?("spammy spam") }
+    allow(Rails.application.config)
+      .to receive(:problem_report_spam_matchers)
+      .and_return([lambda { |message| message.what_wrong.include?("spammy spam") }])
 
     expect(ticket(what_wrong: "spammy spam")).to be_spam
     expect(ticket(what_wrong: "normal content")).to_not be_spam
-  end
-
-  after do
-    PROBLEM_REPORT_SPAM_MATCHERS.clear
   end
 end

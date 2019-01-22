@@ -3,6 +3,7 @@ require 'googleauth'
 class GoogleCredentials
   def self.authorization(scopes)
     raise ArgumentError, "Must define GOOGLE_PRIVATE_KEY and GOOGLE_CLIENT_EMAIL in order to authenticate." unless all_configuration_in_env?
+
     # NOTE: we should be able to use:
     #     ENV['GOOGLE_ACCOUNT_TYPE'] = 'service_account'
     #     Google::Auth.get_default_credentials(scopes)

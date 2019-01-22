@@ -28,7 +28,7 @@ class ReportAProblemTicket < Ticket
   end
 
   def spam?
-    PROBLEM_REPORT_SPAM_MATCHERS.any? { |pattern| pattern[self] }
+    Rails.application.config.problem_report_spam_matchers.any? { |pattern| pattern[self] }
   end
 
 private

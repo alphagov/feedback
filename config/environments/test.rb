@@ -10,7 +10,7 @@ Rails.application.configure do
 
   config.cache_classes = true
 
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
 
   config.eager_load = false
 
