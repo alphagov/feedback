@@ -23,9 +23,8 @@ module Contact
           GovukError.notify(
             "Invalid email survey submitted",
             extra: {
-              params: contact_params,
-              errors: ticket.errors,
-              request: request,
+              ticket: ticket,
+              errors: ticket.errors.full_messages,
             },
             level: "debug",
           )
