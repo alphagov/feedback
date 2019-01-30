@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post 'assisted-digital-survey-feedback', to: "assisted_digital_feedback#create", format: false
       post 'email-survey-signup', to: 'email_survey_signup#create', format: false
       post 'email-survey-signup.js', to: 'email_survey_signup#create', defaults: { format: :js }
+      post 'content_improvement', to: 'content_improvement#create', defaults: { format: :js }
       resources 'page_improvements', only: [:create], format: false
     end
   end
