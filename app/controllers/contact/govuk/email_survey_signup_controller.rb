@@ -19,16 +19,6 @@ module Contact
           @errors = ticket.errors.to_hash
           @old = data
 
-          # To be removed after 21/2/2019
-          GovukError.notify(
-            "Invalid email survey submitted",
-            extra: {
-              ticket: ticket,
-              errors: ticket.errors.full_messages,
-            },
-            level: "debug",
-          )
-
           respond_to_invalid_submission(ticket)
         end
       end
