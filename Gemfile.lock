@@ -44,7 +44,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    archive-zip (0.11.0)
+    archive-zip (0.12.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
     asset_bom_removal-rails (1.0.2)
@@ -55,7 +55,7 @@ GEM
       oj (~> 3.0)
     builder (3.2.3)
     byebug (11.0.0)
-    capybara (3.10.1)
+    capybara (3.14.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -148,9 +148,10 @@ GEM
       rake
       rouge
       sass-rails (>= 5.0.4)
-    govuk_test (0.3.1)
+    govuk_test (0.4.0)
       capybara
       chromedriver-helper
+      ptools
       puma
       selenium-webdriver
     hashdiff (0.3.8)
@@ -219,6 +220,7 @@ GEM
     pry-byebug (3.7.0)
       byebug (~> 11.0)
       pry (~> 0.10)
+    ptools (1.3.5)
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.6)
@@ -261,7 +263,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    regexp_parser (1.2.0)
+    regexp_parser (1.3.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
