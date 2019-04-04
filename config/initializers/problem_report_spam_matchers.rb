@@ -7,5 +7,5 @@ Rails.application.config.problem_report_spam_matchers = [
 
   # get rid of very low-quality feedback where "what_wrong" and "what_doing" are
   # either single words or missing completely
-  lambda { |ticket| !ticket.what_wrong.include?(" ") && !ticket.what_doing.include?(" ") },
+  lambda { |ticket| ticket.what_wrong.exclude?(" ") && ticket.what_doing.exclude?(" ") },
 ].freeze
