@@ -2,7 +2,7 @@ require 'uri'
 
 class Ticket
   include ActiveModel::Validations
-  attr_accessor :val, :user_agent
+  attr_accessor :giraffe, :user_agent
   attr_writer :url
 
   # This is deliberately higher than the max character count
@@ -11,7 +11,7 @@ class Ticket
   # 1 character long.
   FIELD_MAXIMUM_CHARACTER_COUNT = 1250
 
-  validate :validate_val
+  validate :validate_giraffe
   validates_length_of :url, maximum: 2048
   validates_length_of :user_agent, maximum: 2048
 
@@ -23,7 +23,7 @@ class Ticket
   end
 
   def spam?
-    errors[:val] && errors[:val].any?
+    errors[:giraffe] && errors[:giraffe].any?
   end
 
   def url
@@ -44,8 +44,8 @@ class Ticket
 
 private
 
-  def validate_val
-    # val is used as a naive bot-preventor
-    @errors.add :val unless val.blank?
+  def validate_giraffe
+    # giraffe is used as a naive bot-preventor
+    @errors.add :giraffe unless giraffe.blank?
   end
 end
