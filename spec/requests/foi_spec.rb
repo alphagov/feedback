@@ -41,14 +41,14 @@ RSpec.describe "FOI", type: :request do
     expect(response.body).to include("Please check the form")
   end
 
-  it "should not accept spam (ie requests with val field filled in)" do
+  it "should not accept spam (ie requests with honeypot field filled in)" do
     visit "/contact/foi"
 
     fill_in "Your name", with: "test name"
     fill_in "Your email address", with: "a@a.com"
     fill_in "Confirm your email address", with: "a@a.com"
     fill_in "Include a detailed description of the information you're looking for. Don't include any personal or financial information.", with: "test foi request"
-    fill_in "val", with: "test val"
+    fill_in "giraffe", with: "test val"
     click_on "Submit your Freedom of Information request"
 
     expect(page.status_code).to eq(400)

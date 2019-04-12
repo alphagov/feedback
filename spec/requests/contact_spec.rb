@@ -52,12 +52,12 @@ RSpec.describe "Contact", type: :request do
     assert_requested(stub_post)
   end
 
-  it "should not accept spam (ie a request with val field filled in)" do
+  it "should not accept spam (ie a request with honeypot field filled in)" do
     visit "/contact/govuk"
 
     choose "location-all"
     fill_in_valid_contact_details_and_description
-    fill_in "val", with: "test val"
+    fill_in "giraffe", with: "test val"
     click_on "Send message"
 
     no_post_calls_should_have_been_made
