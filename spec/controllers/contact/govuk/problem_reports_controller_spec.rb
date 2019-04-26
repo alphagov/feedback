@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
   render_views
 
-  before :each do
-    allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_return(true)
-  end
-
   describe "POST" do
     context "with a valid report_a_problem submission" do
       context "html request" do
