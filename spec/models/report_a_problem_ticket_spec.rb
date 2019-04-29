@@ -42,12 +42,20 @@ RSpec.describe ReportAProblemTicket, type: :model do
     expect(ticket(source: 'xxx').source).to be_nil
   end
 
-  it "should know if it's spam or not" do
-    allow(Rails.application.config)
-      .to receive(:problem_report_spam_matchers)
-      .and_return([lambda { |message| message.what_wrong.include?("spammy spam") }])
+  context "spam detection" do
+    it "should mark single word submissions as spam" do
+      expect(ticket(what_doing: 'oneword', what_wrong: '')).to be_spam
+      expect(ticket(what_doing: '', what_wrong: 'oneword')).to be_spam
+      expect(ticket(what_doing: 'oneword', what_wrong: 'oneword')).to be_spam
+    end
 
-    expect(ticket(what_wrong: "spammy spam")).to be_spam
-    expect(ticket(what_wrong: "normal content")).to_not be_spam
+    it 'should mark Web Cruiser scanning as spam' do
+      expect(ticket(what_doing: 'WCRTESTINP scanning')).to be_spam
+      expect(ticket(what_wrong: 'WCRTESTINP scanning')).to be_spam
+    end
+
+    it 'should allow genuine submissions' do
+      expect(ticket(what_doing: 'browsing', what_wrong: 'it broke')).to_not be_spam
+    end
   end
 end
