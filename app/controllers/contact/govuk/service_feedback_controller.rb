@@ -1,5 +1,5 @@
 class Contact::Govuk::ServiceFeedbackController < ContactController
-private
+private # rubocop:disable Layout/IndentationWidth
 
   def ticket_class
     ServiceFeedback

@@ -11,10 +11,10 @@ RSpec.describe "Content Improvement Feedback", type: :request do
     stub_any_support_api_call
 
     post '/contact/govuk/content_improvement',
-      params: {
-      description: "I need this page to exist"
-      }.to_json,
-      headers: common_headers
+         params: {
+           description: "I need this page to exist"
+         }.to_json,
+         headers: common_headers
 
     expected_request = a_request(:post, support_api_url + "/anonymous-feedback/content_improvement")
       .with(body: {
@@ -39,8 +39,8 @@ RSpec.describe "Content Improvement Feedback", type: :request do
       support_api_isnt_available
 
       post "/contact/govuk/content_improvement",
-        params: { description: "Huh?" }.to_json,
-        headers: common_headers
+           params: { description: "Huh?" }.to_json,
+           headers: common_headers
 
       assert_response :error
       expect(response_hash).to include('status' => 'error')
@@ -58,8 +58,8 @@ RSpec.describe "Content Improvement Feedback", type: :request do
     )
 
     post "/contact/govuk/content_improvement",
-      params: {}.to_json,
-      headers: common_headers
+         params: {}.to_json,
+         headers: common_headers
 
     expect(response.code).to eq('422')
     expect(response_hash).to include('status' => 'error')
@@ -70,11 +70,11 @@ RSpec.describe "Content Improvement Feedback", type: :request do
     stub_any_support_api_call
 
     post "/contact/govuk/content_improvement",
-      params: {
-        description: "The title is the wrong colour.",
-        another: "attribute"
-      }.to_json,
-      headers: common_headers
+         params: {
+           description: "The title is the wrong colour.",
+           another: "attribute"
+         }.to_json,
+         headers: common_headers
 
     expected_request = a_request(:post, Plek.current.find('support-api') + "/anonymous-feedback/content_improvement")
       .with(body: { "description" => "The title is the wrong colour." })

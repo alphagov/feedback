@@ -10,14 +10,14 @@ RSpec.describe "Page improvements", type: :request do
     stub_any_support_api_call
 
     post "/contact/govuk/page_improvements",
-      params: {
-        description: "The title is the wrong colour.",
-        url: "https://gov.uk/path/to/page",
-        name: "Henry",
-        email: "henry@example.com",
-        user_agent: 'Safari',
-      }.to_json,
-      headers: common_headers
+         params: {
+           description: "The title is the wrong colour.",
+           url: "https://gov.uk/path/to/page",
+           name: "Henry",
+           email: "henry@example.com",
+           user_agent: 'Safari',
+         }.to_json,
+         headers: common_headers
 
     expected_request = a_request(:post, Plek.current.find('support-api') + "/page-improvements")
       .with(body: {
@@ -46,8 +46,8 @@ RSpec.describe "Page improvements", type: :request do
       support_api_isnt_available
 
       post "/contact/govuk/page_improvements",
-        params: { description: "The title is the wrong colour." }.to_json,
-        headers: common_headers
+           params: { description: "The title is the wrong colour." }.to_json,
+           headers: common_headers
 
       assert_response :error
       expect(response_hash).to include('status' => 'error')
@@ -65,8 +65,8 @@ RSpec.describe "Page improvements", type: :request do
       )
 
     post "/contact/govuk/page_improvements",
-      params: {}.to_json,
-      headers: common_headers
+         params: {}.to_json,
+         headers: common_headers
 
     expect(response.code).to eq('422')
     expect(response_hash).to include('status' => 'error')
@@ -77,11 +77,11 @@ RSpec.describe "Page improvements", type: :request do
     stub_any_support_api_call
 
     post "/contact/govuk/page_improvements",
-      params: {
-        description: "The title is the wrong colour.",
-        try_my_luck: "maliciousCode();"
-      }.to_json,
-      headers: common_headers
+         params: {
+           description: "The title is the wrong colour.",
+           try_my_luck: "maliciousCode();"
+         }.to_json,
+         headers: common_headers
 
     expected_request = a_request(:post, Plek.current.find('support-api') + "/page-improvements")
       .with(body: { "description" => "The title is the wrong colour." })
