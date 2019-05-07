@@ -14,8 +14,8 @@ RSpec.describe GoogleSpreadsheetStore do
     it 'writes the supplied data to a google spreadsheet as a single row' do
       subject.store(["some data", 1, 2, false, nil, "yes?", "6"])
 
-      store_request = a_request(:post,
-        'https://sheets.googleapis.com/v4/spreadsheets/my-spreadsheet-id/values/Sheet1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS').with(body: '{"values":[["some data",1,2,false,null,"yes?","6"]]}')
+      url = 'https://sheets.googleapis.com/v4/spreadsheets/my-spreadsheet-id/values/Sheet1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS'
+      store_request = a_request(:post, url).with(body: '{"values":[["some data",1,2,false,null,"yes?","6"]]}')
       expect(store_request).to have_been_requested
     end
 
