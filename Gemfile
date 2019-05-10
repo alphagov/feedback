@@ -18,7 +18,7 @@ gem 'invalid_utf8_rejector'
 gem 'rack_strip_client_ip', '0.0.2'
 
 gem 'asset_bom_removal-rails', '~> 1.0.2'
-gem 'govuk_frontend_toolkit', '8.1.0'
+gem 'govuk_frontend_toolkit', '8.2.0'
 gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5.0.7'
 gem 'uglifier', '~> 4.1.20'
