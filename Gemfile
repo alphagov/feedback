@@ -33,7 +33,7 @@ else
   gem 'gds-api-adapters', '59.2.1'
 end
 
-gem 'govuk_app_config', '~> 1.16.1'
+gem 'govuk_app_config', '~> 1.16.2'
 
 group :development, :test do
   gem 'ci_reporter_rspec'
