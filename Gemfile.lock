@@ -348,7 +348,7 @@ GEM
     unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    valid_email (0.1.2)
+    valid_email (0.1.3)
       activemodel
       mail (>= 2.6.1)
     webdrivers (3.8.0)
@@ -392,7 +392,7 @@ DEPENDENCIES
   shoulda-matchers (~> 3.0.1)
   slimmer (~> 13.1.0)
   uglifier (~> 4.1.20)
-  valid_email (~> 0.1.2)
+  valid_email (~> 0.1.3)
   webmock (~> 3.5.1)
 
 BUNDLED WITH
