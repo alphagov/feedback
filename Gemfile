@@ -23,7 +23,7 @@ gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5.0.7'
 gem 'uglifier', '~> 4.1.20'
 
-gem 'google-api-client', '~> 0.29'
+gem 'google-api-client', '~> 0.30'
 
 gem 'notifications-ruby-client'
 
