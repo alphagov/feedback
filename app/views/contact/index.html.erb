@@ -7,12 +7,13 @@
       <%= render partial: "contact-link", collection: @popular_links, as: :link %>
     </ul>
 
-    <details>
-      <summary id="show-contacts">More topics</summary>
-      <ul id="long-tail-links">
+    <%= render "govuk_publishing_components/components/details", {
+      title: "More topics"
+    } do %>
+      <ul>
         <%= render partial: "contact-link", collection: @long_tail_links, as: :link %>
       </ul>
-    </details>
+    <% end %>
 
     <ul>
       <li class="contact-keyline">
