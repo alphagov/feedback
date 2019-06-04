@@ -13,12 +13,7 @@
     <div id="wrapper">
       <main id="content" role="main" class="group category-page">
         <%= render 'govuk_publishing_components/components/breadcrumbs', breadcrumbs: @breadcrumbs %>
-
-        <header class="page-header group">
-          <div class="full-width">
-            <h1><%= yield :title %></h1>
-          </div>
-        </header>
+        <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
 
         <div class="contact-container full-width group">
           <%= yield %>
