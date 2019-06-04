@@ -10,7 +10,6 @@
 @import "panels";
 @import "design-patterns/buttons";
 @import "shims";
-@import "design-patterns/show-hide";
 
 @mixin form($label-alignment: top, $label-width: 8em, $legend-colour: $text-colour) {
 
@@ -39,7 +38,7 @@
       padding: 0.3em 0 0.1em 0.4em;
   }
 
-  textarea{  
+  textarea{
     min-height: 10em;
     height: auto;
   }
@@ -67,7 +66,7 @@
     }
   }
 
-  // Help text  
+  // Help text
   .hint {
     clear: left;
     display: block;
@@ -149,7 +148,7 @@
       padding-left: 2.2em;
       li{
       list-style-type: none;
-      list-style-image: none; 
+      list-style-image: none;
       }
     }
     ol{
@@ -213,7 +212,7 @@
         + input,
         + select,
         + textarea {
-          margin-left: $label-width + 0.75em; 
+          margin-left: $label-width + 0.75em;
         }
       }
     }
@@ -242,7 +241,7 @@
     fieldset{
       legend{
         display: block;
-        padding-left: $label-width - 1em; // Align legend with fields (needs offset)    
+        padding-left: $label-width - 1em; // Align legend with fields (needs offset)
       }
       // Nested fieldsets
       fieldset{
@@ -264,7 +263,7 @@
             .group,
             &.option label{
               //margin-top: -1.5em;
-            }        
+            }
             .group{
               margin-bottom: 0.5em;
             }
@@ -317,51 +316,19 @@
 
 
   // Top-aligned labels
-  } @else { 
+  } @else {
     label{ display:block; }
     input{ margin-left: 0; }
     legend span {
       padding-bottom: 0.3em;
       display: block;
     }
-    .inline{    
+    .inline{
       input[type=text],
       select,
       textarea{
         margin-right: 0.5em;
       }
-    }
-  }
-}
-
-
-// HIDDEN CONTROLS
-//
-// So, for example, you click on a checkbox and it reveals a free-text field
-// Use in combination with the show/hide pattern
-
-@mixin hidden-form-controls{
-
-  @include details-and-summary;
-
-  .hidden-controls details{
-    padding-top: 0;
-    summary{
-      text-decoration: none;
-      margin-bottom: 0;
-      &:hover{
-        color: #333;
-        font-weight: 300;
-      }
-      &::-webkit-details-marker { 
-        display:none; 
-      }
-    }
-    &[open]{
-      padding-top: 0;
-    }
-    textarea {
-      margin: 0 0 0.75em 0;
     }
   }
 }

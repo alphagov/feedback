@@ -15,7 +15,7 @@ RSpec.describe "Interstitial page", type: :request do
   end
 
   it "displays long-tail contact links" do
-    within "#long-tail-links" do
+    within "details" do
       CONTACT_LINKS.long_tail.each do |link|
         expect(page).to have_link(link["Title"], href: link["URL"])
       end

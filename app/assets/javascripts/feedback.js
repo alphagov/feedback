@@ -1,4 +1,3 @@
-//= require jquery.details.js
 //= require vendor/jquery.inputevent
 //= require govuk_publishing_components/all_components
 
@@ -101,9 +100,6 @@
     GOVUK.feedback.prepopulateFormBasedOnReferrer();
     $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>');
     $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>');
-
-    $('details').details();
-    $('html').addClass($.fn.details.support ? 'details' : 'no-details');
   }
 
   $(GOVUK.feedback.init);
