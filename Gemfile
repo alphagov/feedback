@@ -43,6 +43,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.8'
-  gem 'shoulda-matchers', '~> 3.0.1'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'webmock', '~> 3.6.0', require: false
 end
