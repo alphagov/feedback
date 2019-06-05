@@ -1,25 +1,5 @@
 .category-page {
 
-  header.page-header {
-
-    div {
-      h1 {
-        @include bold-48;
-        width: 75%;
-
-        @include media(mobile) {
-          width: auto;
-        }
-      }
-
-      h2 {
-        @include core-24;
-        color: inherit;
-        margin: 0;
-      }
-    }
-  }
-
   .inner {
     padding: 0;
     margin: 0;
