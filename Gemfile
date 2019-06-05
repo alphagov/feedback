@@ -10,7 +10,7 @@ end
 
 gem 'govuk_publishing_components', '~> 16.27.1'
 
-gem 'plek', '~> 2.1.1'
+gem 'plek', '~> 3.0.0'
 
 gem 'valid_email', '~> 0.1.3'
 
