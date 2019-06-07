@@ -34,7 +34,25 @@
 
   GOVUK.feedback.handleCounter = function (counted) {
     var counterId = '#' + counted.id + 'counter';
-    $(counterId).html((1200 - counted.value.length) +  " characters remaining (limit is 1200 characters)");
+    var maxLength = 1200
+    var currentLength = counted.value.length
+    var remainingNumber = maxLength - currentLength
+    var thresholdValue = maxLength * 90 / 100 // 90% of the total maximum length
+    var charVerb = (remainingNumber < 0) ? 'too many' : 'remaining'
+    var charNoun = 'character' + ((remainingNumber === -1 || remainingNumber === 1) ? '' : 's')
+    var displayNumber = Math.abs(remainingNumber)
+    $(counterId).html((displayNumber) + ' ' + charNoun + ' ' + charVerb + " (limit is " + maxLength + " characters)");
+    
+    // remove aria attributes when users start typing
+    $(counterId).removeAttr('aria-live aria-atomic')
+
+    // only add the screenreader anouncements when threshold is reached
+    if (currentLength > thresholdValue) {
+      $(counterId).attr({
+        "aria-live": "polite",
+        "aria-atomic": "false"
+      })
+    }
   }
 
   GOVUK.feedback.initCounters = function () {
