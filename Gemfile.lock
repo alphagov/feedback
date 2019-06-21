@@ -53,13 +53,13 @@ GEM
       oj (~> 3.0)
     builder (3.2.3)
     byebug (11.0.0)
-    capybara (3.18.0)
+    capybara (3.24.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
-      regexp_parser (~> 1.2)
+      regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (1.0.1)
       rake (< 13.0)
@@ -132,10 +132,10 @@ GEM
       rake
       rouge
       sassc-rails (>= 2.0.1)
-    govuk_test (0.4.3)
+    govuk_test (1.0.0)
       capybara
       puma
-      selenium-webdriver
+      selenium-webdriver (>= 3.142)
       webdrivers
     hashdiff (0.4.0)
     http-cookie (1.0.3)
@@ -236,7 +236,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    regexp_parser (1.4.0)
+    regexp_parser (1.5.1)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -280,7 +280,7 @@ GEM
     rubocop-rspec (1.32.0)
       rubocop (>= 0.60.0)
     ruby-progressbar (1.10.0)
-    rubyzip (1.2.2)
+    rubyzip (1.2.3)
     safe_yaml (1.0.5)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -305,7 +305,7 @@ GEM
     scss_lint (0.58.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
-    selenium-webdriver (3.142.0)
+    selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
     sentry-raven (2.7.4)
@@ -351,10 +351,10 @@ GEM
     valid_email (0.1.3)
       activemodel
       mail (>= 2.6.1)
-    webdrivers (3.8.0)
+    webdrivers (4.0.1)
       nokogiri (~> 1.6)
       rubyzip (~> 1.0)
-      selenium-webdriver (~> 3.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     webmock (3.6.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
