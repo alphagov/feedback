@@ -1,8 +1,4 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
   activemodel:
     errors:
       models:
@@ -10,3 +6,9 @@ en:
           attributes:
             survey_id:
               is_not_currently_running: "The survey is not currently active"
+  controllers:
+    contact:
+      govuk:
+        email_survey_signup:
+          done_invalid_email: <h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>
+          service_unavailable: <h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>

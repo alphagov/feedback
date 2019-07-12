@@ -3,11 +3,6 @@ module Contact
     class EmailSurveySignupController < ContactController
       rescue_from SurveyNotifyService::Error, with: :respond_to_notify_error
 
-      DONE_INVALID_EMAIL = "<h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> " +
-        "<p>Enter an email address in the correct format, like name@example.com</p>"
-
-      SERVICE_UNAVAILABLE = "<h2>Sorry, we’re unable to receive your message right now.<h2> " +
-        "<p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>"
       def create
         data = contact_params.merge(browser_attributes)
         ticket = EmailSurveySignup.new(data)
@@ -41,9 +36,8 @@ module Contact
       end
 
       def respond_to_invalid_submission(ticket)
-        @message = DONE_INVALID_EMAIL.html_safe
         if ajax_request?
-          render json: { message: @message, errors: ticket.errors }, status: :unprocessable_entity
+          render json: { message: I18n.t('controllers.contact.govuk.email_survey_signup.done_invalid_email'), errors: ticket.errors }, status: :unprocessable_entity
         else
           # for now, ignore just discard invalid submissions
           # because the actual form lives in the "frontend" app,
@@ -54,10 +48,9 @@ module Contact
       end
 
       def respond_to_notify_error(exception)
-        @message = SERVICE_UNAVAILABLE.html_safe
         if ajax_request?
           log_exception(exception)
-          render json: { message: @message, errors: exception.cause.message }, status: :service_unavailable
+          render json: { message: I18n.t('controllers.contact.govuk.email_survey_signup.service_unavailable'), errors: exception.cause.message }, status: :service_unavailable
         else
           unable_to_create_ticket_error(exception)
         end
