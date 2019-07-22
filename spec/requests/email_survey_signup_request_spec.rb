@@ -56,7 +56,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response.content_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
-      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>"
       expect(json_response).to have_key "errors"
     end
 
@@ -70,7 +70,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response.content_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
-      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response["message"]).to eq '<h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>'
       expect(json_response).to have_key "errors"
     end
   end
@@ -91,7 +91,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response.content_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
-      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>"
       expect(json_response).to have_key "errors"
     end
 
@@ -105,7 +105,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response.content_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
-      expect(json_response["message"]).to eq "email survey sign up failure"
+      expect(json_response["message"]).to eq '<h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>'
       expect(json_response).to have_key "errors"
     end
   end
