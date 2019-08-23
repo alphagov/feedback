@@ -1,26 +1,16 @@
 <% content_for :title do "Contact" end %>
+  <p class="govuk-body">Try one of the popular topics below to get a faster answer.</p>
+  <ul id="popular-links" class="govuk-list">
+    <%= render partial: "contact-link", collection: @popular_links, as: :link %>
+  </ul>
 
-<nav role="navigation" class="contact-contents group">
-  <div class="inner">
-    <p>Try one of the popular topics below to get a faster answer.</p>
-    <ul id="popular-links" class="categories group">
-      <%= render partial: "contact-link", collection: @popular_links, as: :link %>
+  <%= render "govuk_publishing_components/components/details", {
+    title: "More topics"
+  } do %>
+    <ul class="govuk-list">
+      <%= render partial: "contact-link", collection: @long_tail_links, as: :link %>
     </ul>
-
-    <%= render "govuk_publishing_components/components/details", {
-      title: "More topics"
-    } do %>
-      <ul>
-        <%= render partial: "contact-link", collection: @long_tail_links, as: :link %>
-      </ul>
-    <% end %>
-
-    <ul>
-      <li class="contact-keyline">
-        <p>Use the <a href="/contact/govuk">GOV.UK form</a> to send your questions or comments about the website.</p>
-        <br/>
-        <p>Check the <a href="/help">GOV.UK help pages</a> to find out about the use of cookies, accessibility of the site, the privacy policy and terms and conditions of use.</p>
-      </li>
-    </ul>
- </div>
-</nav>
+  <% end %>
+<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+<p class="govuk-body">Use the <a class="govuk-link" href="/contact/govuk">GOV.UK form</a> to send your questions or comments about the website.</p>
+<p class="govuk-body">Check the <a class="govuk-link" href="/help">GOV.UK help pages</a> to find out about the use of cookies, accessibility of the site, the privacy policy and terms and conditions of use.</p>

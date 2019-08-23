@@ -9,14 +9,15 @@
     <title><%= yield :title %></title>
     <%= yield :section_meta_tags %>
   </head>
-  <body class="full-width">
+  <body>
     <div id="wrapper">
-      <main id="content" role="main" class="group category-page">
-        <%= render 'govuk_publishing_components/components/breadcrumbs', breadcrumbs: @breadcrumbs %>
-        <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
-
-        <div class="contact-container full-width group">
-          <%= yield %>
+      <%= render 'govuk_publishing_components/components/breadcrumbs', breadcrumbs: @breadcrumbs %>
+      <main id="content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
+            <%= yield %>
+          </div>
         </div>
       </main>
       <% unless @hide_feedback_component %>
