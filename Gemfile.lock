@@ -83,7 +83,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
-    gds-api-adapters (59.6.0)
+    gds-api-adapters (60.0.0)
       addressable
       link_header
       null_logger
@@ -139,6 +139,7 @@ GEM
       selenium-webdriver (>= 3.142)
       webdrivers
     hashdiff (1.0.0)
+    http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
@@ -244,7 +245,8 @@ GEM
       uber (< 0.2.0)
     request_store (1.4.1)
       rack (>= 1.4)
-    rest-client (2.0.2)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
@@ -375,7 +377,7 @@ PLATFORMS
 DEPENDENCIES
   asset_bom_removal-rails (~> 1.0.2)
   ci_reporter_rspec
-  gds-api-adapters (= 59.6.0)
+  gds-api-adapters (= 60.0.0)
   google-api-client (~> 0.30)
   govuk-content-schema-test-helpers
   govuk-lint
