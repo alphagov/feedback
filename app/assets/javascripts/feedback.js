@@ -63,14 +63,6 @@
     });
   }
 
-  GOVUK.feedback.checkRadio = function () {
-    if ($('#location-specific').is(':checked')) {
-      $('#link').removeAttr('disabled');
-    } else {
-      $('#link').attr('disabled', 'disabled')
-    }
-  }
-
   GOVUK.feedback.saveReferrerToCookie = function () {
     GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 });
   }
@@ -100,16 +92,6 @@
   GOVUK.feedback.init = function () {
     GOVUK.feedback.initCounters();
     GOVUK.feedback.initUserDetails();
-    GOVUK.feedback.checkRadio();
-
-    $('button.button').click(function() {
-      $(this).attr('disabled', 'disabled');
-      $(this).parents('form').submit();
-    });
-
-    $('fieldset#location').change(function () {
-      GOVUK.feedback.checkRadio();
-    });
 
     if (window.location.pathname == "/contact") {
       GOVUK.feedback.saveReferrerToCookie();
