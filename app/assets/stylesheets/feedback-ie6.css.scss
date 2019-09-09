@@ -1,6 +1,26 @@
 // BASE STYLESHEET FOR IE 6 COMPILER
 
-$is-ie: true;
-$ie-version: 6;
+//adjust radio button positioning
+.contact-form .govuk-radios__input {
+  margin-left: -26px;
+  width: 15px;
+  height: 15px;
+  top: 8px;
+}
 
-@import "feedback.scss";
+details {
+  zoom: 1;
+}
+
+.govuk-grid-row {
+  margin: 0;
+  padding:0;
+  clear: both;
+  zoom: 1;
+}
+  
+.govuk-grid-column-two-thirds {
+  float: left;
+  width: 66%;
+  padding: 0;
+}
