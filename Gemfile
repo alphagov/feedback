@@ -8,7 +8,7 @@ else
   gem 'slimmer', '~> 13.1.0'
 end
 
-gem 'govuk_publishing_components', '~> 17.21.0'
+gem 'govuk_publishing_components', '~> 20.0.0'
 
 gem 'plek', '~> 3.0.0'
 
@@ -18,7 +18,6 @@ gem 'invalid_utf8_rejector'
 gem 'rack_strip_client_ip', '0.0.2'
 
 gem 'asset_bom_removal-rails', '~> 1.0.2'
-gem 'govuk_frontend_toolkit', '8.2.0'
 gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5.0.7'
 gem 'uglifier', '~> 4.1.20'

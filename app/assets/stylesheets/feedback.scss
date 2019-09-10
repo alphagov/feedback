@@ -1,17 +1,7 @@
 @charset "UTF-8";
-// ===================================================
-// CONTACT FORM
-//
-
-// govuk_frontend_toolkit mixins
-@import "_conditionals";
-@import "_typography";
-@import "_colours";
-@import "_css3";
-@import "design-patterns/forms.scss";
-
-// View stylesheets
-@import "views/feedback";
-@import "views/contact";
-
+$govuk-compatibility-govuktemplate: true;
 @import "govuk_publishing_components/all_components";
+
+.app-link-as-heading {
+    @include govuk-font($size:24, $weight: bold, $line-height: 1.8);
+}
