@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     get 'govuk/thankyou', to: "govuk#named_contact_thankyou", format: false, as: "named_contact_thankyou"
 
     namespace :govuk do
+      # This list of POST-able routes should be kept in sync with the rate-limited URLS in
+      # govuk-puppet: https://github.com/alphagov/govuk-puppet/blob/master/modules/router/templates/router_include.conf.erb#L56-L61
       post 'problem_reports', to: "problem_reports#create", format: false
       post 'service-feedback', to: "service_feedback#create", format: false
       post 'assisted-digital-survey-feedback', to: "assisted_digital_feedback#create", format: false
