@@ -10,6 +10,10 @@ class ServiceFeedback < Ticket
   validates_length_of :improvement_comments, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
   validates_length_of :slug, maximum: 512
 
+  def improvement_comments
+    @improvement_comments.present? ? @improvement_comments : nil
+  end
+
   def save
     Rails.application.config.support_api.create_service_feedback(options) if valid?
   end
@@ -28,10 +32,6 @@ class ServiceFeedback < Ticket
   end
 
 private
-
-  def improvement_comments
-    @improvement_comments.present? ? @improvement_comments : nil
-  end
 
   def path
     !url.nil? ? URI(url).path : nil
