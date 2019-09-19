@@ -88,6 +88,18 @@ class AssistedDigitalFeedback < Ticket
     ]
   end
 
+  def assistance_received_comments
+    @assistance_received_comments.present? ? @assistance_received_comments : nil
+  end
+
+  def assistance_improvement_comments
+    @assistance_improvement_comments.present? ? @assistance_improvement_comments : nil
+  end
+
+  def improvement_comments
+    @improvement_comments.present? ? @improvement_comments : nil
+  end
+
 private
 
   attr_reader :created_at
@@ -102,18 +114,6 @@ private
 
   def assistance_provided_by_other_or_government_staff?
     assistance_received? ? assistance_provided_by.present? && %w(government-staff other).include?(assistance_provided_by) : false
-  end
-
-  def assistance_received_comments
-    @assistance_received_comments.present? ? @assistance_received_comments : nil
-  end
-
-  def assistance_improvement_comments
-    @assistance_improvement_comments.present? ? @assistance_improvement_comments : nil
-  end
-
-  def improvement_comments
-    @improvement_comments.present? ? @improvement_comments : nil
   end
 
   def path
