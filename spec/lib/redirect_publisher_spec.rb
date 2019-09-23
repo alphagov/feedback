@@ -1,10 +1,10 @@
-require 'rails_helper'
-require './lib/redirect_publisher'
-require 'govuk-content-schema-test-helpers/rspec_matchers'
+require "rails_helper"
+require "./lib/redirect_publisher"
+require "govuk-content-schema-test-helpers/rspec_matchers"
 
 RSpec.describe RedirectPublisher do
   GovukContentSchemaTestHelpers.configure do |config|
-    config.schema_type = 'publisher_v2'
+    config.schema_type = "publisher_v2"
     config.project_root = Rails.root
   end
 
@@ -26,8 +26,8 @@ RSpec.describe RedirectPublisher do
           "path" => current_base_path,
           "type" => "exact",
           "destination" => destination_path,
-        }
-      ]
+        },
+      ],
     }
 
     api = double(:publishing_api)
@@ -40,7 +40,7 @@ RSpec.describe RedirectPublisher do
 
     redirect_publisher = RedirectPublisher.new(
       logger: logger,
-      publishing_app: 'feedback',
+      publishing_app: "feedback",
       type: "exact",
       publishing_api: api,
     )
@@ -58,7 +58,7 @@ RSpec.describe RedirectPublisher do
     destination_path = "/contact"
 
     api = double(:publishing_api)
-    expect(api).to receive(:put_content).with(an_instance_of(String), be_valid_against_schema('redirect'))
+    expect(api).to receive(:put_content).with(an_instance_of(String), be_valid_against_schema("redirect"))
     expect(api).to receive(:publish).once.with(content_id)
 
     expect(logger).to receive(:info)
@@ -66,7 +66,7 @@ RSpec.describe RedirectPublisher do
 
     redirect_publisher = RedirectPublisher.new(
       logger: logger,
-      publishing_app: 'feedback',
+      publishing_app: "feedback",
       type: "exact",
       publishing_api: api,
     )

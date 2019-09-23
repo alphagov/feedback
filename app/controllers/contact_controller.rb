@@ -1,4 +1,4 @@
-require 'slimmer/headers'
+require "slimmer/headers"
 
 class ContactController < ApplicationController
   include Slimmer::Headers
@@ -50,12 +50,12 @@ private
     [
       {
         title: "Home",
-        url: '/'
+        url: "/",
       },
       {
-        title: 'Contact',
-        url: '/contact'
-      }
+        title: "Contact",
+        url: "/contact",
+      },
     ]
   end
 
@@ -104,7 +104,7 @@ private
 
   def referrer_attribute
     referrer = contact_params[:referrer] || params[:referrer] || request.referrer
-    referrer = referrer.gsub(/[^\s=\/?&]+(?:@|%40)[^\s=\/?&]+/, '[email]') if referrer.present?
+    referrer = referrer.gsub(/[^\s=\/?&]+(?:@|%40)[^\s=\/?&]+/, "[email]") if referrer.present?
     referrer.present? ? { referrer: referrer } : {}
   end
 

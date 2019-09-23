@@ -1,4 +1,4 @@
-require 'gds_api/support'
+require "gds_api/support"
 
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w(mainstream inside_government page_not_found).freeze

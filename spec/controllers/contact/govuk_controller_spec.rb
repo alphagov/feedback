@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support'
+require "rails_helper"
+require "gds_api/test_helpers/support"
 
 RSpec.describe Contact::GovukController, type: :controller do
   render_views
@@ -13,7 +13,7 @@ RSpec.describe Contact::GovukController, type: :controller do
         email: "test@test.com",
         location: "all",
         textdetails: "Testing, testing, 1, 2, 3...",
-      }
+      },
     }
   end
 

@@ -1,4 +1,4 @@
-require 'slimmer/headers'
+require "slimmer/headers"
 
 class Contact::GovukController < ContactController
   before_action proc {

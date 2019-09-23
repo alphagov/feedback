@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ContactTicket, type: :model do
   include ValidatorHelper
@@ -8,7 +8,7 @@ RSpec.describe ContactTicket, type: :model do
       textdetails: "some text",
       query: "cant-find",
       location: "all",
-      url: "https://www.gov.uk/contact/govuk"
+      url: "https://www.gov.uk/contact/govuk",
     }
   end
 
@@ -28,7 +28,7 @@ RSpec.describe ContactTicket, type: :model do
     it "should not create a named contact" do
       bad_actors = [
         "12345@qq.com",
-        "james@one.beameagle.top"
+        "james@one.beameagle.top",
       ]
       bad_actors.each do |bad_actor|
         bad_ticket = ContactTicket.new valid_named_ticket_details.merge(name: "Bad Robot", email: bad_actor)

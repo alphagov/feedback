@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
   render_views
@@ -21,7 +21,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
                    url: "http://www.example.com/somewhere",
                    what_doing: "Nothing",
                    what_wrong: "Something",
-                   user_agent: "Rails Testing"
+                   user_agent: "Rails Testing",
             )).and_return(stub_ticket)
           expect(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)
@@ -53,7 +53,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
 
         it "should render the thankyou template assigning the message string" do
           do_submit
-          expect(response).to render_template('thankyou')
+          expect(response).to render_template("thankyou")
           expect(assigns[:message]).to eq("<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>")
           expect(assigns[:message]).to be_html_safe
         end
@@ -81,7 +81,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
             post :create, params: {
               what_doing: "Nothing",
-              what_wrong: "Something"
+              what_wrong: "Something",
             }
           end
         end
@@ -94,7 +94,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
             what_doing: "Nothing",
             what_wrong: "Something",
             javascript_enabled: "true",
-            referrer: "https://www.gov.uk/some-url/"
+            referrer: "https://www.gov.uk/some-url/",
           }.merge(attrs), xhr: true
         end
 
@@ -106,7 +106,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
                    what_doing: "Nothing",
                    what_wrong: "Something",
                    user_agent: "Rails Testing",
-                   javascript_enabled: "true"
+                   javascript_enabled: "true",
             )).and_return(stub_ticket)
           allow(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)

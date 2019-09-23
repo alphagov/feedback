@@ -1,18 +1,18 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support_api'
+require "rails_helper"
+require "gds_api/test_helpers/support_api"
 
 RSpec.describe "Content Improvement Feedback", type: :request do
   include GdsApi::TestHelpers::SupportApi
 
   let(:common_headers) { { "Accept" => "application/json", "Content-Type" => "application/json" } }
-  let(:support_api_url) { Plek.current.find('support-api') }
+  let(:support_api_url) { Plek.current.find("support-api") }
 
-  it 'submits the feedback to the support api' do
+  it "submits the feedback to the support api" do
     stub_any_support_api_call
 
-    post '/contact/govuk/content_improvement',
+    post "/contact/govuk/content_improvement",
          params: {
-           description: "I need this page to exist"
+           description: "I need this page to exist",
          }.to_json,
          headers: common_headers
 
@@ -28,10 +28,10 @@ RSpec.describe "Content Improvement Feedback", type: :request do
     params = { description: "I need this page to exist" }
     stub_support_api_create_content_improvement_feedback(params)
 
-    post '/contact/govuk/content_improvement', params: params.to_json, headers: common_headers
+    post "/contact/govuk/content_improvement", params: params.to_json, headers: common_headers
 
-    expect(response.code).to eq('201')
-    expect(response_hash).to include('status' => 'success')
+    expect(response.code).to eq("201")
+    expect(response_hash).to include("status" => "success")
   end
 
   context "when the Support API isn't available" do
@@ -43,7 +43,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
            headers: common_headers
 
       assert_response :error
-      expect(response_hash).to include('status' => 'error')
+      expect(response_hash).to include("status" => "error")
     end
   end
 
@@ -53,17 +53,17 @@ RSpec.describe "Content Improvement Feedback", type: :request do
       .with(body: {}.to_json)
       .to_return(
         status: 422,
-        body: { status: 'error', errors: [{ description: "can't be blank" }] }.to_json,
-        headers: { "Content-Type" => "application/json; charset=utf-8" }
+        body: { status: "error", errors: [{ description: "can't be blank" }] }.to_json,
+        headers: { "Content-Type" => "application/json; charset=utf-8" },
     )
 
     post "/contact/govuk/content_improvement",
          params: {}.to_json,
          headers: common_headers
 
-    expect(response.code).to eq('422')
-    expect(response_hash).to include('status' => 'error')
-    expect(response_hash).to include('errors' => [{ 'description' => "can't be blank" }])
+    expect(response.code).to eq("422")
+    expect(response_hash).to include("status" => "error")
+    expect(response_hash).to include("errors" => [{ "description" => "can't be blank" }])
   end
 
   it "only sends permitted attributes to the Support API" do
@@ -72,11 +72,11 @@ RSpec.describe "Content Improvement Feedback", type: :request do
     post "/contact/govuk/content_improvement",
          params: {
            description: "The title is the wrong colour.",
-           another: "attribute"
+           another: "attribute",
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, Plek.current.find('support-api') + "/anonymous-feedback/content_improvement")
+    expected_request = a_request(:post, Plek.current.find("support-api") + "/anonymous-feedback/content_improvement")
       .with(body: { "description" => "The title is the wrong colour." })
 
     expect(expected_request).to have_been_made

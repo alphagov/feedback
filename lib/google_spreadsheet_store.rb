@@ -1,5 +1,5 @@
-require 'google_credentials'
-require 'google/apis/sheets_v4'
+require "google_credentials"
+require "google/apis/sheets_v4"
 
 class GoogleSpreadsheetStore
   # Rename SheetsV4 to Sheets - seems to be standard practice to make upgrades easier
@@ -13,7 +13,7 @@ class GoogleSpreadsheetStore
     end
   end
 
-  SCOPES = ['https://www.googleapis.com/auth/spreadsheets'].freeze
+  SCOPES = ["https://www.googleapis.com/auth/spreadsheets"].freeze
 
   def initialize(spreadsheet_key)
     @spreadsheet_key = spreadsheet_key
@@ -24,10 +24,10 @@ class GoogleSpreadsheetStore
     data = Sheets::ValueRange.from_json({ values: [row_data] }.to_json)
     sheet_service.append_spreadsheet_value(
       spreadsheet_key,
-      'Sheet1',
+      "Sheet1",
       data,
-      value_input_option: 'RAW',
-      insert_data_option: 'INSERT_ROWS'
+      value_input_option: "RAW",
+      insert_data_option: "INSERT_ROWS",
     )
   rescue Google::Apis::Error => e
     raise Error.new("Error while storing data in google (#{e.message})", cause: e)

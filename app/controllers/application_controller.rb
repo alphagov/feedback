@@ -1,5 +1,5 @@
-require 'spam_error'
-require 'gds_api/exceptions'
+require "spam_error"
+require "gds_api/exceptions"
 
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :robot_script_submission_detected
@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   if ENV["BASIC_AUTH_USERNAME"]
     http_basic_authenticate_with(
       name: ENV.fetch("BASIC_AUTH_USERNAME"),
-      password: ENV.fetch("BASIC_AUTH_PASSWORD")
+      password: ENV.fetch("BASIC_AUTH_PASSWORD"),
     )
   end
 

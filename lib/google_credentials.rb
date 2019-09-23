@@ -1,4 +1,4 @@
-require 'googleauth'
+require "googleauth"
 
 class GoogleCredentials
   def self.authorization(scopes)

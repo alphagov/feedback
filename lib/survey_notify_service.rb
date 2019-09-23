@@ -1,5 +1,5 @@
-require 'notifications/client'
-require 'notifications/client/response_notification'
+require "notifications/client"
+require "notifications/client/response_notification"
 
 class SurveyNotifyService
   class Error < StandardError
