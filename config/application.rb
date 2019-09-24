@@ -1,4 +1,4 @@
-require File.expand_path('boot', __dir__)
+require File.expand_path("boot", __dir__)
 
 require "action_controller/railtie"
 require "action_mailer/railtie"
@@ -16,8 +16,8 @@ module Feedback
 
     config.assets.enabled = true
     config.assets.precompile += %w(feedback.js feedback.css feedback-ie6.css)
-    config.assets.prefix = '/feedback' # this has to match the path configured in puppet and deploy scripts.
-    config.assets.version = '1.0'
+    config.assets.prefix = "/feedback" # this has to match the path configured in puppet and deploy scripts.
+    config.assets.version = "1.0"
 
     config.eager_load_paths += %W(#{config.root}/lib)
 

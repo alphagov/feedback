@@ -1,1 +1,1 @@
-require 'slimmer/test'
+require "slimmer/test"

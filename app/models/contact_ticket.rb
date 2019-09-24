@@ -1,4 +1,4 @@
-require 'gds_api/support'
+require "gds_api/support"
 
 class ContactTicket < Ticket
   attr_accessor :location, :textdetails,
@@ -63,10 +63,10 @@ private
 
   def validate_mail_name_connection
     if name.blank? && email.present?
-      @errors.add :name, 'The name field cannot be empty'
+      @errors.add :name, "The name field cannot be empty"
     end
     if email.blank? && name.present?
-      @errors.add :email, 'The email field cannot be empty'
+      @errors.add :email, "The email field cannot be empty"
     end
   end
 
@@ -83,7 +83,7 @@ private
       /\A*@.*\.pine-and-onyx.xyz$/,
       /\A*@.*\.stars-and-glory.top$/,
       /\A*@.*\.veinflower.xyz$/,
-      /\A*@qq.com$/
+      /\A*@qq.com$/,
     )
 
     bad_domains.match?(email)
@@ -91,7 +91,7 @@ private
 
   def validate_link
     if (location == "specific") && link.blank?
-      @errors.add :link, 'The link field cannot be empty'
+      @errors.add :link, "The link field cannot be empty"
     end
   end
 

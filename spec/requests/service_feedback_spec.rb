@@ -1,6 +1,6 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support'
-require 'gds_api/test_helpers/support_api'
+require "rails_helper"
+require "gds_api/test_helpers/support"
+require "gds_api/test_helpers/support_api"
 
 RSpec.describe "Service feedback submission", type: :request do
   include GdsApi::TestHelpers::Support
@@ -37,30 +37,30 @@ RSpec.describe "Service feedback submission", type: :request do
     end
   end
 
-  context 'the referrer value' do
+  context "the referrer value" do
     before do
       stub_support_api_service_feedback_creation
     end
 
     it "uses the value in the service_feedback params" do
       posted_params = valid_params
-      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
+      posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
       posted_params.delete(:referrer)
       submit_service_feedback(params: posted_params)
 
       assert_requested(:post, %r{/service-feedback}) do |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       end
     end
 
     it "uses the value in the posted params" do
       posted_params = valid_params
       posted_params[:service_feedback].delete(:referrer)
-      posted_params[:referrer] = 'http://referrer.example.com/i-came-from-here'
+      posted_params[:referrer] = "http://referrer.example.com/i-came-from-here"
       submit_service_feedback(params: posted_params)
 
       assert_requested(:post, %r{/service-feedback}) do |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       end
     end
 
@@ -68,21 +68,21 @@ RSpec.describe "Service feedback submission", type: :request do
       posted_params = valid_params
       posted_params[:service_feedback].delete(:referrer)
       posted_params.delete(:referrer)
-      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-came-from-here' })
+      submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-came-from-here" })
 
       assert_requested(:post, %r{/service-feedback}) do |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       end
     end
 
     it "prefers the value in the service_feedback params if all options are present" do
       posted_params = valid_params
-      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
-      posted_params[:referrer] = 'http://referrer.example.com/i-did-not-come-from-here'
-      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-did-not-come-from-here-either' })
+      posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
+      posted_params[:referrer] = "http://referrer.example.com/i-did-not-come-from-here"
+      submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-did-not-come-from-here-either" })
 
       assert_requested(:post, %r{/service-feedback}) do |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       end
     end
   end
@@ -118,7 +118,7 @@ RSpec.describe "Service feedback submission", type: :request do
         slug: "some-transaction",
         url: "https://www.gov.uk/done/some-transaction",
         referrer: "https://www.some-transaction.service.gov/uk/completed",
-      }
+      },
     }
   end
 end

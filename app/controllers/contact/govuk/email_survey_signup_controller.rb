@@ -37,7 +37,7 @@ module Contact
 
       def respond_to_invalid_submission(ticket)
         if ajax_request?
-          render json: { message: I18n.t('controllers.contact.govuk.email_survey_signup.done_invalid_email'), errors: ticket.errors }, status: :unprocessable_entity
+          render json: { message: I18n.t("controllers.contact.govuk.email_survey_signup.done_invalid_email"), errors: ticket.errors }, status: :unprocessable_entity
         else
           # for now, ignore just discard invalid submissions
           # because the actual form lives in the "frontend" app,
@@ -50,7 +50,7 @@ module Contact
       def respond_to_notify_error(exception)
         if ajax_request?
           log_exception(exception)
-          render json: { message: I18n.t('controllers.contact.govuk.email_survey_signup.service_unavailable'), errors: exception.cause.message }, status: :service_unavailable
+          render json: { message: I18n.t("controllers.contact.govuk.email_survey_signup.service_unavailable"), errors: exception.cause.message }, status: :service_unavailable
         else
           unable_to_create_ticket_error(exception)
         end

@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support_api'
+require "rails_helper"
+require "gds_api/test_helpers/support_api"
 
 
 RSpec.describe "Assisted digital help with fees submission", type: :request do
@@ -40,18 +40,18 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
         values = JSON.parse(request.body)["values"][0]
         values == [
-          'yes',
-          'someone helped me',
-          'friend-relative',
+          "yes",
+          "someone helped me",
+          "friend-relative",
           nil,
           nil,
           nil,
           5,
           "it was fine",
-          'some-transaction',
+          "some-transaction",
           nil,
           false,
-          'https://www.some-transaction.service.gov/uk/completed',
+          "https://www.some-transaction.service.gov/uk/completed",
           "/done/some-transaction",
           "https://www.gov.uk/done/some-transaction",
           the_past.iso8601(3),
@@ -76,30 +76,30 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     expect(service_feedback_request).to have_been_requested
   end
 
-  context 'the referrer value' do
+  context "the referrer value" do
     before do
       stub_support_api_service_feedback_creation
     end
 
     it "uses the referrer from the posted params" do
       posted_params = valid_params
-      posted_params[:referrer] = 'http://referrer.example.com/i-came-from-here'
+      posted_params[:referrer] = "http://referrer.example.com/i-came-from-here"
       posted_params[:service_feedback].delete(:referrer)
       submit_service_feedback(params: posted_params)
 
       expect(a_request(:post, %r{/service-feedback}).with { |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       }).to have_been_requested
     end
 
     it "uses the referrer from the service_feedback params" do
       posted_params = valid_params
       posted_params.delete(:referrer)
-      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
+      posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
       submit_service_feedback(params: posted_params)
 
       expect(a_request(:post, %r{/service-feedback}).with { |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       }).to have_been_requested
     end
 
@@ -107,21 +107,21 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       posted_params = valid_params
       posted_params.delete(:referrer)
       posted_params[:service_feedback].delete(:referrer)
-      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-came-from-here' })
+      submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-came-from-here" })
 
       expect(a_request(:post, %r{/service-feedback}).with { |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       }).to have_been_requested
     end
 
     it "prefers the referrer from the service_feedback params if all are present header" do
       posted_params = valid_params
-      posted_params[:referrer] = 'http://referrer.example.com/i-did-not-come-from-here'
-      posted_params[:service_feedback][:referrer] = 'http://referrer.example.com/i-came-from-here'
-      submit_service_feedback(params: posted_params, headers: { 'HTTP_REFERER' => 'http://referrer.example.com/i-did-not-come-from-here-either' })
+      posted_params[:referrer] = "http://referrer.example.com/i-did-not-come-from-here"
+      posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
+      submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-did-not-come-from-here-either" })
 
       expect(a_request(:post, %r{/service-feedback}).with { |request|
-        JSON.parse(request.body)["service_feedback"]["referrer"] == 'http://referrer.example.com/i-came-from-here'
+        JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
       }).to have_been_requested
     end
   end
@@ -150,11 +150,11 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   def valid_params
     {
       service_feedback: {
-        assistance_received: 'yes',
-        assistance_received_comments: 'someone helped me',
-        assistance_provided_by: 'friend-relative',
-        service_satisfaction_rating: '5',
-        improvement_comments: 'it was fine',
+        assistance_received: "yes",
+        assistance_received_comments: "someone helped me",
+        assistance_provided_by: "friend-relative",
+        service_satisfaction_rating: "5",
+        improvement_comments: "it was fine",
         slug: "some-transaction",
         url: "https://www.gov.uk/done/some-transaction",
       },

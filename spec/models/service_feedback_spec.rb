@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support_api'
+require "rails_helper"
+require "gds_api/test_helpers/support_api"
 
 RSpec.describe ServiceFeedback, type: :model do
   include ValidatorHelper
@@ -15,12 +15,12 @@ RSpec.describe ServiceFeedback, type: :model do
       expect { subject.save }.to raise_error(GdsApi::BaseError)
     end
 
-    describe '#options' do
+    describe "#options" do
       subject { super().options }
       it { is_expected.to include(service_satisfaction_rating: 5) }
     end
 
-    describe '#options' do
+    describe "#options" do
       subject { super().options }
       it { is_expected.to include(path: "/done/abc") }
     end
@@ -28,7 +28,7 @@ RSpec.describe ServiceFeedback, type: :model do
 
   it { is_expected.not_to allow_value(nil).for(:service_satisfaction_rating) }
   it { is_expected.to allow_value(nil).for(:improvement_comments) }
-  it { is_expected.to validate_inclusion_of(:service_satisfaction_rating).in_array(('1'..'5').to_a) }
+  it { is_expected.to validate_inclusion_of(:service_satisfaction_rating).in_array(("1".."5").to_a) }
 
   it { is_expected.to validate_length_of(:improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
   it { is_expected.to validate_length_of(:slug).is_at_most(512) }
@@ -36,7 +36,7 @@ RSpec.describe ServiceFeedback, type: :model do
   context "with empty comments" do
     let(:subject) { ServiceFeedback.new(improvement_comments: "") }
 
-    describe '#options' do
+    describe "#options" do
       subject { super().options }
       it { is_expected.to include(details: nil) }
     end
@@ -45,7 +45,7 @@ RSpec.describe ServiceFeedback, type: :model do
   context "with an invalid URL" do
     let(:subject) { ServiceFeedback.new(url: "```") }
 
-    describe '#options' do
+    describe "#options" do
       subject { super().options }
       it { is_expected.to include(path: nil) }
     end

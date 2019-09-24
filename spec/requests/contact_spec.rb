@@ -1,6 +1,6 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/support'
-require 'gds_api/test_helpers/support_api'
+require "rails_helper"
+require "gds_api/test_helpers/support"
+require "gds_api/test_helpers/support_api"
 
 def fill_in_valid_contact_details_and_description
   fill_in "Your name", with: "test name"
@@ -117,8 +117,8 @@ RSpec.describe "Contact", type: :request do
 
     i_should_be_on "/contact/govuk"
 
-    expect(find_field('Your name').value).to eq 'test name'
-    expect(find_field('Your email address').value).to eq 'a@a.com'
+    expect(find_field("Your name").value).to eq "test name"
+    expect(find_field("Your email address").value).to eq "a@a.com"
 
     no_post_calls_should_have_been_made
   end
@@ -133,8 +133,8 @@ RSpec.describe "Contact", type: :request do
 
     i_should_be_on "/contact/govuk"
 
-    expect(find_field('Your email address').value).to eq 'a@a.com'
-    expect(find_field('textdetails').value).to eq 'test text details'
+    expect(find_field("Your email address").value).to eq "a@a.com"
+    expect(find_field("textdetails").value).to eq "test text details"
 
     no_post_calls_should_have_been_made
   end
@@ -149,8 +149,8 @@ RSpec.describe "Contact", type: :request do
 
     i_should_be_on "/contact/govuk"
 
-    expect(find_field('Your name').value).to eq 'test name'
-    expect(find_field('textdetails').value).to eq 'test text details'
+    expect(find_field("Your name").value).to eq "test name"
+    expect(find_field("textdetails").value).to eq "test text details"
 
     no_post_calls_should_have_been_made
   end
@@ -186,8 +186,8 @@ RSpec.describe "Contact", type: :request do
         location: "specific",
         name: "test name",
         email: "test@test.com",
-        textdetails: "test text details"
-      }
+        textdetails: "test text details",
+      },
     }
     headers = { "HTTP_USER_AGENT" => "T1000 (Bazinga)" }
     post "/contact/govuk", params: params, headers: headers
@@ -209,8 +209,8 @@ RSpec.describe "Contact", type: :request do
         name: "test name",
         email: "test@test.com",
         textdetails: "test text details",
-        referrer: "https://www.dev.gov.uk/referring_url"
-      }
+        referrer: "https://www.dev.gov.uk/referring_url",
+      },
     }
     post "/contact/govuk", params: params
 
@@ -255,7 +255,7 @@ RSpec.describe "Contact", type: :request do
         textdetails: "test text details",
       },
     }
-    post "/contact/govuk", params: params, headers: { 'HTTP_REFERER' => "https://www.dev.gov.uk/referring_url" }
+    post "/contact/govuk", params: params, headers: { "HTTP_REFERER" => "https://www.dev.gov.uk/referring_url" }
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -277,7 +277,7 @@ RSpec.describe "Contact", type: :request do
     click_on "Return to the GOV.UK home page"
 
     cookies = page.driver.browser.manage.all_cookies
-    contact_referrer_cookie = cookies.find { |c| c[:name] == 'govuk_contact_referrer' }
+    contact_referrer_cookie = cookies.find { |c| c[:name] == "govuk_contact_referrer" }
     expect(contact_referrer_cookie).not_to be_nil
     expect(contact_referrer_cookie[:value]).to match(/\/thankyou$/)
   end

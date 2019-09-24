@@ -1,4 +1,4 @@
-require 'uri'
+require "uri"
 
 class Ticket
   include ActiveModel::Validations
@@ -35,7 +35,7 @@ class Ticket
   end
 
   def referrer=(new_referrer)
-    @referrer = (new_referrer == 'unknown' ? nil : new_referrer)
+    @referrer = (new_referrer == "unknown" ? nil : new_referrer)
   end
 
   def referrer

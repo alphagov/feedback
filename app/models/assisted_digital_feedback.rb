@@ -1,4 +1,4 @@
-require 'uri'
+require "uri"
 
 class AssistedDigitalFeedback < Ticket
   attr_accessor :assistance_received,
@@ -36,25 +36,25 @@ class AssistedDigitalFeedback < Ticket
             if: :assistance_provided_by_other?
 
   validates :assistance_satisfaction_rating,
-            inclusion: { in: ('1'..'5').to_a },
+            inclusion: { in: ("1".."5").to_a },
             presence: true,
             if: :assistance_provided_by_other_or_government_staff?
 
   validates :assistance_improvement_comments,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
             },
             if: :assistance_provided_by_other_or_government_staff?
 
   validates :service_satisfaction_rating,
             presence: { message: "You must select a rating" },
-            inclusion: { in: ('1'..'5').to_a }
+            inclusion: { in: ("1".."5").to_a }
 
   validates :improvement_comments,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
             }
 
   validates :slug, length: { maximum: 512 }
@@ -105,11 +105,11 @@ private
   attr_reader :created_at
 
   def assistance_received?
-    assistance_received.present? && assistance_received == 'yes'
+    assistance_received.present? && assistance_received == "yes"
   end
 
   def assistance_provided_by_other?
-    assistance_received? ? assistance_provided_by.present? && assistance_provided_by == 'other' : false
+    assistance_received? ? assistance_provided_by.present? && assistance_provided_by == "other" : false
   end
 
   def assistance_provided_by_other_or_government_staff?

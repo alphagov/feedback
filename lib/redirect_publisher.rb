@@ -21,9 +21,9 @@ class RedirectPublisher
         {
           "path" => current_base_path,
           "type" => type,
-          "destination" => destination_path
-        }
-      ]
+          "destination" => destination_path,
+        },
+      ],
     }
 
     publishing_api.put_content(content_id, redirect)
