@@ -8,7 +8,7 @@ else
   gem 'slimmer', '~> 13.1.0'
 end
 
-gem 'govuk_publishing_components', '~> 21.4.0'
+gem 'govuk_publishing_components', '~> 21.4.1'
 
 gem 'plek', '~> 3.0.0'
 
