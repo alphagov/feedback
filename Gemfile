@@ -41,7 +41,7 @@ group :development, :test do
   gem 'govuk_test'
   gem 'pry-byebug'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 3.9'
   gem 'shoulda-matchers', '~> 4.1.2'
   gem 'webmock', '~> 3.7.6', require: false
 end
