@@ -4,6 +4,7 @@ require "gds_api/exceptions"
 class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :robot_script_submission_detected
   rescue_from GdsApi::BaseError, with: :unable_to_create_ticket_error
+  rescue_from GdsApi::HTTPForbidden, with: :error_403
 
   include Slimmer::Template
 
@@ -37,6 +38,10 @@ protected
         render json: { status: "error", message: response }, status: 503
       end
     end
+  end
+
+  def error_403(exception)
+    head(:forbidden)
   end
 
   def hide_report_a_problem_form_in_response
