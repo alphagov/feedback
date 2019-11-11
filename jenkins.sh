@@ -7,7 +7,7 @@ git clean -fdx
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment
 
 if [[ ${GIT_BRANCH} != "origin/master" ]]; then
-  bundle exec govuk-lint-ruby \
+  bundle exec rubocop \
     --rails \
     --format html --out rubocop-${GIT_COMMIT}.html \
     --format clang \
