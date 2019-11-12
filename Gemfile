@@ -37,11 +37,11 @@ gem 'govuk_app_config', '~> 2.0.1'
 group :development, :test do
   gem 'ci_reporter_rspec'
   gem 'govuk-content-schema-test-helpers'
-  gem 'govuk-lint'
   gem 'govuk_test'
   gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.9'
+  gem 'rubocop-govuk'
   gem 'shoulda-matchers', '~> 4.1.2'
   gem 'webmock', '~> 3.7.6', require: false
 end
