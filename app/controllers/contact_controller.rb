@@ -30,7 +30,7 @@ class ContactController < ApplicationController
 
     if ticket.valid?
       GovukStatsd.increment("#{type}.successful_submission")
-      @contact_provided = (not data[:email].blank?)
+      @contact_provided = data[:email].present?
 
       respond_to_valid_submission(ticket)
     else
@@ -103,7 +103,7 @@ private
   end
 
   def referrer_attribute
-    referrer = contact_params[:referrer] || params[:referrer] || request.referrer
+    referrer = contact_params[:referrer] || params[:referrer] || request.referer
     referrer = referrer.gsub(/[^\s=\/?&]+(?:@|%40)[^\s=\/?&]+/, "[email]") if referrer.present?
     referrer.present? ? { referrer: referrer } : {}
   end

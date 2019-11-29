@@ -9,7 +9,7 @@ module Contact
 
         if ticket.valid?
           GovukStatsd.increment("email_survey_signup.successful_submission")
-          @contact_provided = (not data[:email].blank?)
+          @contact_provided = data[:email].present?
 
           respond_to_valid_submission(ticket)
         else

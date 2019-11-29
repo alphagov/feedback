@@ -53,7 +53,7 @@ namespace :publishing_api do
   end
 
   desc "Publish special routes via publishing api"
-  task :publish_special_routes do
+  task publish_special_routes: :environment do
     logger = Logger.new(STDOUT)
     special_route_publisher = GdsApi::PublishingApi::SpecialRoutePublisher.new(
       logger: logger,

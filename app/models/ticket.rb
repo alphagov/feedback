@@ -46,6 +46,6 @@ private
 
   def validate_giraffe
     # giraffe is used as a naive bot-preventor
-    @errors.add :giraffe unless giraffe.blank?
+    @errors.add :giraffe if giraffe.present?
   end
 end
