@@ -21,7 +21,7 @@ class ContactTicket < Ticket
   end
 
   def link
-    @link.present? ? @link : nil
+    @link.presence
   end
 
   def save

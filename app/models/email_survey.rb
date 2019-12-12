@@ -6,7 +6,7 @@ class EmailSurvey
     self.url = url
     self.start_time = start_time
     self.end_time = end_time
-    self.name = name.present? ? name : id.humanize
+    self.name = name.presence || id.humanize
   end
 
   def active?(at: Time.zone.now)

@@ -11,7 +11,7 @@ class ServiceFeedback < Ticket
   validates_length_of :slug, maximum: 512
 
   def improvement_comments
-    @improvement_comments.present? ? @improvement_comments : nil
+    @improvement_comments.presence
   end
 
   def save

@@ -89,15 +89,15 @@ class AssistedDigitalFeedback < Ticket
   end
 
   def assistance_received_comments
-    @assistance_received_comments.present? ? @assistance_received_comments : nil
+    @assistance_received_comments.presence
   end
 
   def assistance_improvement_comments
-    @assistance_improvement_comments.present? ? @assistance_improvement_comments : nil
+    @assistance_improvement_comments.presence
   end
 
   def improvement_comments
-    @improvement_comments.present? ? @improvement_comments : nil
+    @improvement_comments.presence
   end
 
 private
