@@ -81,7 +81,7 @@ GEM
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.3)
-    gds-api-adapters (63.1.1)
+    gds-api-adapters (63.2.0)
       addressable
       link_header
       null_logger
@@ -188,7 +188,7 @@ GEM
     public_suffix (4.0.3)
     puma (4.3.1)
       nio4r (~> 2.0)
-    rack (2.0.8)
+    rack (2.1.1)
     rack-cache (1.11.0)
       rack (>= 0.4)
     rack-test (1.1.0)
@@ -367,7 +367,7 @@ PLATFORMS
 DEPENDENCIES
   asset_bom_removal-rails (~> 1.0.2)
   ci_reporter_rspec
-  gds-api-adapters (= 63.1.1)
+  gds-api-adapters (= 63.2.0)
   google-api-client (~> 0.36)
   govuk-content-schema-test-helpers
   govuk_app_config (~> 2.0.1)
