@@ -1,5 +1,7 @@
 @charset "UTF-8";
 $govuk-compatibility-govuktemplate: true;
+$govuk-use-legacy-palette: false;
+
 @import "govuk_publishing_components/all_components";
 
 .app-link-as-heading {
