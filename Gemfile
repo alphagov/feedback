@@ -43,5 +43,5 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.9'
   gem 'rubocop-govuk'
   gem 'shoulda-matchers', '~> 4.2.0'
-  gem 'webmock', '~> 3.8.0', require: false
+  gem 'webmock', '~> 3.8.1', require: false
 end
