@@ -112,7 +112,7 @@ GEM
       sentry-raven (>= 2.7.1, < 2.14.0)
       statsd-ruby (~> 1.4.0)
       unicorn (>= 5.4, < 5.6)
-    govuk_publishing_components (21.24.0)
+    govuk_publishing_components (21.26.0)
       gds-api-adapters
       govuk_app_config
       kramdown
@@ -371,7 +371,7 @@ DEPENDENCIES
   google-api-client (~> 0.36)
   govuk-content-schema-test-helpers
   govuk_app_config (~> 2.0.3)
-  govuk_publishing_components (~> 21.24.0)
+  govuk_publishing_components (~> 21.26.0)
   govuk_test
   invalid_utf8_rejector
   notifications-ruby-client
