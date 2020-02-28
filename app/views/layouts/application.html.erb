@@ -11,7 +11,10 @@
   </head>
   <body>
     <div id="wrapper">
-      <%= render 'govuk_publishing_components/components/breadcrumbs', breadcrumbs: @breadcrumbs %>
+      <%= render 'govuk_publishing_components/components/breadcrumbs', {
+        breadcrumbs: @breadcrumbs,
+        collapse_on_mobile: true
+      } %>
       <main id="content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
