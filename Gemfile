@@ -5,7 +5,7 @@ gem 'rails', '5.2.3'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 13.2.0'
+  gem 'slimmer', '~> 13.2.2'
 end
 
 gem 'govuk_publishing_components', '~> 21.27.0'
