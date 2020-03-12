@@ -112,7 +112,7 @@ GEM
       sentry-raven (>= 2.7.1, < 2.14.0)
       statsd-ruby (~> 1.4.0)
       unicorn (>= 5.4, < 5.6)
-    govuk_publishing_components (21.28.1)
+    govuk_publishing_components (21.29.0)
       gds-api-adapters
       govuk_app_config
       kramdown
@@ -227,7 +227,7 @@ GEM
     raindrops (0.19.1)
     rake (13.0.1)
     rb-fsevent (0.10.3)
-    rb-inotify (0.10.0)
+    rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (1.6.0)
     representable (3.0.4)
@@ -374,7 +374,7 @@ DEPENDENCIES
   google-api-client (~> 0.36)
   govuk-content-schema-test-helpers
   govuk_app_config (~> 2.1.0)
-  govuk_publishing_components (~> 21.28.1)
+  govuk_publishing_components (~> 21.29.0)
   govuk_test
   invalid_utf8_rejector
   notifications-ruby-client
