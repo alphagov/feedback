@@ -40,7 +40,7 @@ group :development, :test do
   gem "govuk_test"
   gem "pry-byebug"
   gem "rails-controller-testing"
-  gem "rspec-rails", "~> 3.9"
+  gem "rspec-rails", "~> 4.0"
   gem "rubocop-govuk", "~> 3.3.1"
   gem "shoulda-matchers", "~> 4.3.0"
   gem "webmock", "~> 3.8.3", require: false
