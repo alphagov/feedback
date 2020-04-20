@@ -15,7 +15,7 @@ module Feedback
     config.active_support.escape_html_entities_in_json = true
 
     config.assets.enabled = true
-    config.assets.precompile += %w[feedback.js feedback.css feedback-ie6.css]
+    config.assets.precompile += %w(feedback.css feedback-ie6.css)
     config.assets.prefix = "/feedback" # this has to match the path configured in puppet and deploy scripts.
     config.assets.version = "1.0"
 
