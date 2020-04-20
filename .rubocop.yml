@@ -15,3 +15,7 @@ AllCops:
 
 Rails/OutputSafety:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'lib/tasks/**/*.rake'
