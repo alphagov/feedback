@@ -36,7 +36,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
 
   context "when the Support API isn't available" do
     it "responds with an error" do
-      support_api_isnt_available
+      stub_support_api_isnt_available
 
       post "/contact/govuk/content_improvement",
            params: { description: "Huh?" }.to_json,

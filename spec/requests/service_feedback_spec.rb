@@ -98,7 +98,7 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   it "should handle the support-api being unavailable" do
-    support_api_isnt_available
+    stub_support_api_isnt_available
 
     submit_service_feedback
 

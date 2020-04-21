@@ -43,7 +43,7 @@ RSpec.describe "Page improvements", type: :request do
 
   context "when the Support API isn't available" do
     it "responds with an error" do
-      support_api_isnt_available
+      stub_support_api_isnt_available
 
       post "/contact/govuk/page_improvements",
            params: { description: "The title is the wrong colour." }.to_json,
