@@ -87,7 +87,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should show an error message when the support app isn't available" do
-    support_isnt_available
+    stub_support_isnt_available
 
     visit "/contact/govuk"
 

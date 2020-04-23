@@ -11,7 +11,7 @@ RSpec.describe ServiceFeedback, type: :model do
     it { is_expected.to be_valid }
 
     it "should raise an exception if the support-api isn't available" do
-      support_api_isnt_available
+      stub_support_api_isnt_available
       expect { subject.save }.to raise_error(GdsApi::BaseError)
     end
 
