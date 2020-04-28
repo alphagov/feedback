@@ -1,7 +1,6 @@
 require "rails_helper"
 require "gds_api/test_helpers/support_api"
 
-
 RSpec.describe "Assisted digital help with fees submission", type: :request do
   include GdsApi::TestHelpers::SupportApi
   include ActiveSupport::Testing::TimeHelpers
