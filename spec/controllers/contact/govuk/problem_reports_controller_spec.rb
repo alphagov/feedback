@@ -16,13 +16,13 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
 
         it "should save the ticket" do
           stub_ticket = double("Ticket")
-          expect(ReportAProblemTicket).to receive(:new).
-            with(hash_including(
-                   url: "http://www.example.com/somewhere",
-                   what_doing: "Nothing",
-                   what_wrong: "Something",
-                   user_agent: "Rails Testing",
-            )).and_return(stub_ticket)
+          expect(ReportAProblemTicket).to receive(:new)
+            .with(hash_including(
+                    url: "http://www.example.com/somewhere",
+                    what_doing: "Nothing",
+                    what_wrong: "Something",
+                    user_agent: "Rails Testing",
+                  )).and_return(stub_ticket)
           expect(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)
 
@@ -72,9 +72,9 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
         describe "no 'url' value explicitly set" do
           it "should use the referrer URL to set the 'url' for the model" do
             stub_ticket = double("Ticket")
-            expect(ReportAProblemTicket).to receive(:new).
-              with(hash_including(url: "http://www.gov.uk/referral-city")).
-              and_return(stub_ticket)
+            expect(ReportAProblemTicket).to receive(:new)
+              .with(hash_including(url: "http://www.gov.uk/referral-city"))
+              .and_return(stub_ticket)
             expect(stub_ticket).to receive(:valid?).and_return(true)
             expect(stub_ticket).to receive(:save).and_return(true)
 
@@ -100,14 +100,14 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
 
         it "should save the ticket" do
           stub_ticket = double("Ticket")
-          expect(ReportAProblemTicket).to receive(:new).
-            with(hash_including(
-                   url: "http://www.example.com/somewhere",
-                   what_doing: "Nothing",
-                   what_wrong: "Something",
-                   user_agent: "Rails Testing",
-                   javascript_enabled: "true",
-            )).and_return(stub_ticket)
+          expect(ReportAProblemTicket).to receive(:new)
+            .with(hash_including(
+                    url: "http://www.example.com/somewhere",
+                    what_doing: "Nothing",
+                    what_wrong: "Something",
+                    user_agent: "Rails Testing",
+                    javascript_enabled: "true",
+                  )).and_return(stub_ticket)
           allow(stub_ticket).to receive(:valid?).and_return(true)
           expect(stub_ticket).to receive(:save).and_return(true)
 

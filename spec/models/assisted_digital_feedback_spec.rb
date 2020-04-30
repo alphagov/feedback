@@ -45,7 +45,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
 
   context "validations" do
     it { is_expected.not_to allow_value(nil).for(:assistance_received) }
-    it { is_expected.to validate_inclusion_of(:assistance_received).in_array(%w(yes no)) }
+    it { is_expected.to validate_inclusion_of(:assistance_received).in_array(%w[yes no]) }
 
     context "when no assistance was received" do
       subject { described_class.new(assistance_received: "no") }
@@ -63,7 +63,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
       it { is_expected.not_to allow_value(nil).for(:assistance_received_comments) }
       it { is_expected.to validate_length_of(:assistance_received_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
       it { is_expected.not_to allow_value(nil).for(:assistance_provided_by) }
-      it { is_expected.to validate_inclusion_of(:assistance_provided_by).in_array(%w(friend-relative work-colleague government-staff other)) }
+      it { is_expected.to validate_inclusion_of(:assistance_provided_by).in_array(%w[friend-relative work-colleague government-staff other]) }
       it { is_expected.to allow_value(nil).for(:assistance_improvement_comments) }
 
       context 'and assistance was provided by "other"' do

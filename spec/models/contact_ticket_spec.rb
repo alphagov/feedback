@@ -83,7 +83,7 @@ RSpec.describe ContactTicket, type: :model do
     expected_javascript_state = true
 
     ticket = anon_ticket(user_agent: expected_user_agent,
-      javascript_enabled: expected_javascript_state)
+                         javascript_enabled: expected_javascript_state)
 
     expect(ticket.user_agent).to eq expected_user_agent
     expect(ticket.javascript_enabled).to eq expected_javascript_state

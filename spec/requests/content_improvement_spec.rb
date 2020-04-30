@@ -55,7 +55,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
         status: 422,
         body: { status: "error", errors: [{ description: "can't be blank" }] }.to_json,
         headers: { "Content-Type" => "application/json; charset=utf-8" },
-    )
+      )
 
     post "/contact/govuk/content_improvement",
          params: {}.to_json,
