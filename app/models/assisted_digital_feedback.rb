@@ -15,7 +15,7 @@ class AssistedDigitalFeedback < Ticket
 
   validates :assistance_received,
             presence: { message: "You must select if you received assistance with this service" },
-            inclusion: { in: %w(yes no) }
+            inclusion: { in: %w[yes no] }
 
   validates :assistance_received_comments,
             length: {
@@ -26,7 +26,7 @@ class AssistedDigitalFeedback < Ticket
             if: :assistance_received?
 
   validates :assistance_provided_by,
-            inclusion: { in: %w(friend-relative work-colleague government-staff other) },
+            inclusion: { in: %w[friend-relative work-colleague government-staff other] },
             presence: true,
             if: :assistance_received?
 
@@ -113,7 +113,7 @@ private
   end
 
   def assistance_provided_by_other_or_government_staff?
-    assistance_received? ? assistance_provided_by.present? && %w(government-staff other).include?(assistance_provided_by) : false
+    assistance_received? ? assistance_provided_by.present? && %w[government-staff other].include?(assistance_provided_by) : false
   end
 
   def path

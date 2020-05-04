@@ -1,7 +1,7 @@
 require "gds_api/support"
 
 class ReportAProblemTicket < Ticket
-  SOURCE_WHITELIST = %w(mainstream inside_government page_not_found).freeze
+  SOURCE_WHITELIST = %w[mainstream inside_government page_not_found].freeze
 
   attr_accessor :what_wrong, :what_doing, :referrer
   attr_writer :page_owner, :javascript_enabled, :source
@@ -34,9 +34,8 @@ class ReportAProblemTicket < Ticket
 private
 
   def ticket_details
-    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].inject({}) do |details, field|
+    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].each_with_object({}) do |field, details|
       details[field] = send(field)
-      details
     end
   end
 end

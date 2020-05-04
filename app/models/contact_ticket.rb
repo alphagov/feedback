@@ -7,14 +7,14 @@ class ContactTicket < Ticket
   attr_writer :javascript_enabled, :referrer, :link
 
   validate :validate_link
-  validates_length_of :link, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validates_presence_of :textdetails, message: "The message field cannot be empty"
-  validates_length_of :textdetails, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
-  validates_length_of :name, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates :link, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The page field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
+  validates :textdetails, presence: { message: "The message field cannot be empty" }
+  validates :textdetails, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
+  validates :name, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The name field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
   validates :email, email: { message: "The email address must be valid" }, allow_blank: true
-  validates_length_of :email, maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters"
+  validates :email, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The email field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
   validate :validate_mail_name_connection
-  validates_presence_of :location, message: "Please tell us what your contact is to do with"
+  validates :location, presence: { message: "Please tell us what your contact is to do with" }
 
   def javascript_enabled
     !!@javascript_enabled

@@ -12,8 +12,8 @@ class Ticket
   FIELD_MAXIMUM_CHARACTER_COUNT = 1250
 
   validate :validate_giraffe
-  validates_length_of :url, maximum: 2048
-  validates_length_of :user_agent, maximum: 2048
+  validates :url, length: { maximum: 2048 }
+  validates :user_agent, length: { maximum: 2048 }
 
   def initialize(attributes = {})
     attributes.each do |key, value|

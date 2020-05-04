@@ -1,6 +1,10 @@
 module UrlNormaliser
   def self.valid_url?(candidate, relative_only: false)
-    url = URI.parse(candidate) rescue false
+    url = begin
+            URI.parse(candidate)
+          rescue StandardError
+            false
+          end
     if relative_only
       url.is_a?(URI::Generic) && url.relative? && candidate.starts_with?("/")
     else

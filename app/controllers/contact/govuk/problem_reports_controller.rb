@@ -1,9 +1,9 @@
 class Contact::Govuk::ProblemReportsController < ContactController
-  DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " +
-    "<p>If you have more extensive feedback, " +
-    "please visit the <a href='/contact'>contact page</a>.</p>"
-  DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> " +
-    "<p>Please tell us what you were doing or what went wrong.</p>"
+  DONE_OK_TEXT = "<h2>Thank you for your help.</h2> " \
+    "<p>If you have more extensive feedback, " \
+    "please visit the <a href='/contact'>contact page</a>.</p>".freeze
+  DONE_INVALID_TEXT = "<h2>Sorry, we're unable to send your message as you haven't given us any information.</h2> " \
+    "<p>Please tell us what you were doing or what went wrong.</p>".freeze
 
   def create
     attributes = params.merge(technical_attributes)
