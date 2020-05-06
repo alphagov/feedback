@@ -18,8 +18,8 @@ RSpec.describe "Content Improvement Feedback", type: :request do
 
     expected_request = a_request(:post, support_api_url + "/anonymous-feedback/content_improvement")
       .with(body: {
-              "description" => "I need this page to exist",
-            })
+        "description" => "I need this page to exist",
+      })
 
     expect(expected_request).to have_been_made
   end
