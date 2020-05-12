@@ -36,7 +36,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     travel_to(the_past) do
       submit_service_feedback
 
-      expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
+      expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with do |request|
         values = JSON.parse(request.body)["values"][0]
         values == [
           "yes",
@@ -55,7 +55,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
           "https://www.gov.uk/done/some-transaction",
           the_past.iso8601(3),
         ]
-      }).to have_been_requested
+      end).to have_been_requested
     end
   end
 
@@ -86,9 +86,9 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       posted_params[:service_feedback].delete(:referrer)
       submit_service_feedback(params: posted_params)
 
-      expect(a_request(:post, %r{/service-feedback}).with { |request|
+      expect(a_request(:post, %r{/service-feedback}).with do |request|
         JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
-      }).to have_been_requested
+      end).to have_been_requested
     end
 
     it "uses the referrer from the service_feedback params" do
@@ -97,9 +97,9 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
       submit_service_feedback(params: posted_params)
 
-      expect(a_request(:post, %r{/service-feedback}).with { |request|
+      expect(a_request(:post, %r{/service-feedback}).with do |request|
         JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
-      }).to have_been_requested
+      end).to have_been_requested
     end
 
     it "uses the referrer from the request header" do
@@ -108,9 +108,9 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       posted_params[:service_feedback].delete(:referrer)
       submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-came-from-here" })
 
-      expect(a_request(:post, %r{/service-feedback}).with { |request|
+      expect(a_request(:post, %r{/service-feedback}).with do |request|
         JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
-      }).to have_been_requested
+      end).to have_been_requested
     end
 
     it "prefers the referrer from the service_feedback params if all are present header" do
@@ -119,18 +119,18 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       posted_params[:service_feedback][:referrer] = "http://referrer.example.com/i-came-from-here"
       submit_service_feedback(params: posted_params, headers: { "HTTP_REFERER" => "http://referrer.example.com/i-did-not-come-from-here-either" })
 
-      expect(a_request(:post, %r{/service-feedback}).with { |request|
+      expect(a_request(:post, %r{/service-feedback}).with do |request|
         JSON.parse(request.body)["service_feedback"]["referrer"] == "http://referrer.example.com/i-came-from-here"
-      }).to have_been_requested
+      end).to have_been_requested
     end
   end
 
   it "should include the user_agent if available" do
     submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
 
-    expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with { |request|
+    expect(a_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*}).with do |request|
       JSON.parse(request.body)["values"][0][9] == "Shamfari/3.14159 (Fooey)"
-    }).to have_been_requested
+    end).to have_been_requested
   end
 
   it "should handle the google storage service failing" do
