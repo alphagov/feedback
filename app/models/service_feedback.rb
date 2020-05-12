@@ -24,7 +24,7 @@ class ServiceFeedback < Ticket
       details: improvement_comments,
       slug: slug,
       user_agent: user_agent,
-      javascript_enabled: !!javascript_enabled,
+      javascript_enabled: javascript_enabled.present?,
       referrer: referrer,
       path: path,
       url: url,
