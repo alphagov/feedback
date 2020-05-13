@@ -114,11 +114,11 @@ RSpec.describe "Email survey sign-up request", type: :request do
     submit_email_survey_sign_up
 
     notify_request = a_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
-      .with { |request|
+      .with do |request|
         json_payload = JSON.parse(request.body)
         (json_payload["email_address"] == "i_like_surveys@example.com") &&
           (json_payload["personalisation"]["survey_url"] == "http://survey.example.com/1?c=%2Fdone%2Fsome-transaction")
-      }
+      end
     expect(notify_request).to have_been_requested
   end
 

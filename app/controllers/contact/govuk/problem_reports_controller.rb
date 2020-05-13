@@ -12,7 +12,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
     # from the HTTP referer. This is an edge case in the app as there
     # should only be a finite number of places where this occurs.
     # Specifially, the 40X pages on GOV.UK.
-    attributes = attributes.merge(url: request.referer) unless params.has_key? :url
+    attributes = attributes.merge(url: request.referer) unless params.key? :url
 
     ticket = ReportAProblemTicket.new(attributes)
 

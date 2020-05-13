@@ -17,7 +17,7 @@ class ContactTicket < Ticket
   validates :location, presence: { message: "Please tell us what your contact is to do with" }
 
   def javascript_enabled
-    !!@javascript_enabled
+    @javascript_enabled.present?
   end
 
   def link

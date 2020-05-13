@@ -80,7 +80,7 @@ class AssistedDigitalFeedback < Ticket
       improvement_comments,
       slug,
       user_agent,
-      !!javascript_enabled,
+      javascript_enabled.present?,
       referrer,
       path,
       url,
