@@ -1,8 +1,10 @@
 require "gds_api/support"
 
 class ContactTicket < Ticket
-  attr_accessor :location, :textdetails,
-                :name, :email
+  attr_accessor :location,
+                :textdetails,
+                :name,
+                :email
 
   attr_writer :javascript_enabled, :referrer, :link
 
