@@ -7,11 +7,12 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
     context "with a valid report_a_problem submission" do
       context "html request" do
         def do_submit(attrs = {})
-          post :create, params: {
-            url: "http://www.example.com/somewhere",
-            what_doing: "Nothing",
-            what_wrong: "Something",
-          }.merge(attrs)
+          post :create,
+               params: {
+                 url: "http://www.example.com/somewhere",
+                 what_doing: "Nothing",
+                 what_wrong: "Something",
+               }.merge(attrs)
         end
 
         it "should save the ticket" do
@@ -79,23 +80,26 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
             expect(stub_ticket).to receive(:save).and_return(true)
 
             @request.env["HTTP_REFERER"] = "http://www.gov.uk/referral-city"
-            post :create, params: {
-              what_doing: "Nothing",
-              what_wrong: "Something",
-            }
+            post :create,
+                 params: {
+                   what_doing: "Nothing",
+                   what_wrong: "Something",
+                 }
           end
         end
       end
 
       context "ajax submission" do
         def do_submit(attrs = {})
-          post :create, params: {
-            url: "http://www.example.com/somewhere",
-            what_doing: "Nothing",
-            what_wrong: "Something",
-            javascript_enabled: "true",
-            referrer: "https://www.gov.uk/some-url/",
-          }.merge(attrs), xhr: true
+          post :create,
+               params: {
+                 url: "http://www.example.com/somewhere",
+                 what_doing: "Nothing",
+                 what_wrong: "Something",
+                 javascript_enabled: "true",
+                 referrer: "https://www.gov.uk/some-url/",
+               }.merge(attrs),
+               xhr: true
         end
 
         it "should save the ticket" do

@@ -18,7 +18,7 @@ class EmailSurvey
   end
 
   def self.find(id)
-    SURVEYS.fetch(id) { |not_found_id| raise NotFoundError.new(not_found_id) }
+    SURVEYS.fetch(id) { |not_found_id| raise NotFoundError, not_found_id }
   end
 
   # TODO: allow for surveys with no start/end time?

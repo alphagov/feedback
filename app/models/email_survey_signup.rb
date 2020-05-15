@@ -3,13 +3,16 @@ class EmailSurveySignup
   attr_accessor :survey_id, :email_address, :ga_client_id
   attr_reader :survey_source
 
-  validates :email_address, presence: true,
-                            email: { message: "The email address must be valid" },
-                            length: { maximum: 1250 }
-  validates :survey_source, presence: true,
-                            length: { maximum: 2048 }
-  validates :survey_id, presence: true,
-                        inclusion: { in: ->(_instance) { EmailSurvey.all.map(&:id) } }
+  validates :email_address,
+            presence: true,
+            email: { message: "The email address must be valid" },
+            length: { maximum: 1250 }
+  validates :survey_source,
+            presence: true,
+            length: { maximum: 2048 }
+  validates :survey_id,
+            presence: true,
+            inclusion: { in: ->(_instance) { EmailSurvey.all.map(&:id) } }
   validate :survey_is_active, if: :survey
   validate :survey_source_is_relative, if: :survey_source
 
