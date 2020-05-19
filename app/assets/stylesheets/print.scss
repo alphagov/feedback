@@ -1,1 +1,5 @@
-@import 'govuk_publishing_components/all_components_print';
+@import "govuk_publishing_components/govuk_frontend_support";
+@import "govuk_publishing_components/components/print/button";
+@import "govuk_publishing_components/components/print/feedback";
+@import "govuk_publishing_components/components/print/textarea";
+@import "govuk_publishing_components/components/print/title";

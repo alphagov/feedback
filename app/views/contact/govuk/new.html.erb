@@ -9,94 +9,129 @@
 
     <%= render partial: "shared/spam_honeypot", locals: { form_name: 'contact' } %>
     <% if @errors %>
-    <%= render "govuk_publishing_components/components/error_summary", {
-      id: "error-summary",
-      title: "Please check the form",
-      # app adds a spam protection giraffe error, 
-      # which we do not want to display in the error summary
-      # so we filter it out
-      items: @errors.keys.reject { |key| key == :giraffe }.map do |key| 
-        {
-          text: @errors[key].first,
-          href: "##{key.to_s}error"
-        }
-      end
-    } %>
+      <%= render "govuk_publishing_components/components/error_summary", {
+        id: "error-summary",
+        title: "Please check the form",
+        # app adds a spam protection giraffe error,
+        # which we do not want to display in the error summary
+        # so we filter it out
+        items: @errors.keys.reject { |key| key == :giraffe }.map do |key|
+          {
+            text: @errors[key].first,
+            href: "##{key.to_s}"
+          }
+        end
+      } %>
     <% end %>
 
-    <fieldset class="govuk-fieldset govuk-!-margin-top-6">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What's it to do with?</legend>
-      <div class="govuk-radios" data-module="govuk-radios">
-        <div class="gem-c-radio govuk-radios__item">
-          <input type="radio" name="contact[location]" id="location-all" value="all" class="govuk-radios__input" <%= @old ? (@old[:location] == "all" ? "checked" : "" ) : "checked" %> >
-          <label for="location-all" class="gem-c-label govuk-label govuk-radios__label">
-            The whole site
-          </label>
-        </div>
-        <div class="gem-c-radio govuk-radios__item">
-          <input type="radio" name="contact[location]" id="location-specific" value="specific" class="govuk-radios__input" data-aria-controls="conditional-specific" <%= @old ? (@old[:location] == "specific" ? "checked" : "" ) : "" %> >
-          <label for="location-specific" class="gem-c-label govuk-label govuk-radios__label">
-          A specific page
-          </label>
-        </div>
-        <div class="govuk-radios__conditional" id="conditional-specific">
-        <% if @errors && @errors[:link] %>
-        <span class="gem-c-error-message govuk-error-message" id="linkerror"><%= @errors[:link].first %></span>
-        <% end %>
-        <label for="link" class="govuk-label gem-c-label">Enter URL or name of page</label>
-        <input type="text" class="govuk-input gem-c-input" name="contact[link]" id="link" placeholder="Enter URL or name of page" value=<%= (@old ? @old[:link] : '') %> >
-        </div>
-      </div>
-    </fieldset>
+    <%
+      value = @old ? @old[:link] : ''
+      if @errors && @errors[:link]
+        linkerror = @errors[:link].first
+      end
+    %>
 
-    <fieldset class="govuk-fieldset govuk-!-margin-top-6">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What are the details?</legend>
-        <span class="govuk-hint gem-c-hint">For example if you were searching for something, what did you type into the search box?</span>
-        
-        <%= render "govuk_publishing_components/components/warning_text", {
-          text: "Don’t include personal or financial information, for example your National Insurance number or credit card details."
-        } %>
+    <% conditional = capture do %>
+      <%= render "govuk_publishing_components/components/input", {
+        label: {
+          text: "Enter URL or name of page"
+        },
+        name: "contact[link]",
+        id: "link",
+        value: value,
+        error_message: linkerror
+      } %>
+    <% end %>
 
-        <label for="textdetails" class="visuallyhidden">Detail</label>
-        <% if @errors && @errors[:textdetails] %>
-          <span class="gem-c-error-message govuk-error-message" id="textdetailserror"><%= @errors[:textdetails].first %></span>
-        <% end %>
-        <textarea name='contact[textdetails]' class="govuk-textarea counted" id="textdetails" rows="10"
-                  required aria-required="true"><%= (@old ? @old[:textdetails] : '') %></textarea>
+    <%= render "govuk_publishing_components/components/radio", {
+      heading: "What's it to do with?",
+      name: "contact[location]",
+      id_prefix: "location",
+      items: [
+        {
+          value: "all",
+          text: "The whole site",
+          checked: @old ? (@old[:location] == "all" ? true : false ) : true,
+        },
+        {
+          value: "specific",
+          text: "A specific page",
+          checked: @old ? (@old[:location] == "specific" ? true : false ) : false,
+          conditional: conditional
+        }
+      ]
+    } %>
 
-        <span class="" id="textdetailscounter" aria-live="polite" aria-atomic="false">(Limit is 1200 characters)</span>
-    </fieldset>
+    <%
+      if @errors && @errors[:textdetails]
+        textdetailserror = @errors[:textdetails].first
+      end
+    %>
 
-    <fieldset class="govuk-fieldset govuk-!-margin-top-6">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want a reply?</legend>
+    <% hint = capture do %>
+      <p>For example if you were searching for something, what did you type into the search box?</p>
+      <%= render "govuk_publishing_components/components/warning_text", {
+        text: "Don’t include personal or financial information, for example your National Insurance number or credit card details."
+      } %>
+    <% end %>
 
+    <%= render "govuk_publishing_components/components/character_count", {
+      textarea: {
+        label: {
+          text: "What are the details?",
+          heading_size: "m"
+        },
+        name: "contact[textdetails]",
+        value: @old ? @old[:textdetails] : '',
+        hint: hint,
+        error_message: textdetailserror
+      },
+      id: "textdetails",
+      maxlength: 1200
+    } %>
+
+    <%= render "govuk_publishing_components/components/fieldset", {
+      legend_text: "Do you want a reply?",
+      heading_size: "m"
+    } do %>
       <p class="govuk-body">If you'd like us to get back to you, please leave your details below.</p>
-      <% if @errors && @errors[:name] %>
-      <div class="govuk-form-group govuk-form-group--error">
-      <% else %>
-      <div class="govuk-form-group">
-      <% end %> 
-      <label class="gem-c-label govuk-label" for="name">Your name</label>
-      <% if @errors && @errors[:name] %>
-        <span class="gem-c-error-message govuk-error-message" id="nameerror"><%= @errors[:name].first %></span>
-      <% end %>
-      <input name="contact[name]" id="name" type="text" class="gem-c-input govuk-input <%= 'govuk-input--error' if @errors && @errors[:name] %>" value="<%= (@old ? @old[:name] : '') %>">
-      </div>
-      <% if @errors && @errors[:email] %>
-      <div class="govuk-form-group govuk-form-group--error">
-      <% else %>
-      <div class="govuk-form-group">
-      <% end %>    
-        <label class="gem-c-label govuk-label" for="email">Your email address</label>
-        <% if @errors && @errors[:email] %>
-          <span class="gem-c-error-message govuk-error-message" id="emailerror"><%= @errors[:email].first %></span>
-        <% end %>
-        <input name="contact[email]" id="email" type="email" class="gem-c-input govuk-input <%= 'govuk-input--error' if @errors && @errors[:email] %>" value="<%= (@old ? @old[:email] : '') %>">
-      </div>
+
+      <%
+        if @errors && @errors[:name]
+          name_error = @errors[:name].first
+        end
+      %>
+      <%= render "govuk_publishing_components/components/input", {
+        label: {
+          text: "Your name"
+        },
+        name: "contact[name]",
+        id: "name",
+        value: @old ? @old[:name] : '',
+        error_message: name_error
+      } %>
+
+      <%
+        if @errors && @errors[:email]
+          email_error = @errors[:email].first
+        end
+      %>
+      
+      <%= render "govuk_publishing_components/components/input", {
+        label: {
+          text: "Your email address"
+        },
+        name: "contact[email]",
+        type: "email",
+        id: "email",
+        value: @old ? @old[:email] : '',
+        error_message: email_error
+      } %>
+
       <%= render "govuk_publishing_components/components/hint", {
         text: "We'll only use this to reply to your message."
       } %>
-    </fieldset>
-    
+    <% end %>
+
     <%= render "govuk_publishing_components/components/button", text: "Send message" %>
   <% end %>

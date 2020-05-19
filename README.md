@@ -19,6 +19,15 @@ submitted via an anonymous contact form in the [feedback app][feedback].
 via a form that will require you to identify yourself. This data is sent directly
 to the `support` app.
 
+## Pages rendered by the application
+
+Note that this list may not be complete.
+
+- https://www.gov.uk/contact/
+- https://www.gov.uk/contact/govuk
+- https://www.gov.uk/contact/govuk/thankyou
+- https://www.gov.uk/contact/govuk/anonymous-feedback/thankyou
+
 ## Technical documentation
 
 This is a public facing Ruby on Rails application that collects feedback from users in multiple ways:
@@ -101,4 +110,3 @@ NOT be stored in `feedback`.
 
 A more thorough explanation of how email surveys work can be found in the docs:
 [docs/email_survey_signup.md](docs/email_survey_signups.md).
-

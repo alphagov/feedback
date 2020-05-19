@@ -45,7 +45,7 @@ RSpec.describe "Contact", type: :request do
     visit "/contact/govuk"
     expect(page).to have_title "Contact GOV.UK"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in_valid_contact_details_and_description
     contact_submission_should_be_successful
 
@@ -55,7 +55,7 @@ RSpec.describe "Contact", type: :request do
   it "should not accept spam (ie a request with honeypot field filled in)" do
     visit "/contact/govuk"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in_valid_contact_details_and_description
     fill_in "giraffe", with: "test val"
     click_on "Send message"
@@ -79,7 +79,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in "textdetails", with: "test text details"
     anonymous_submission_should_be_successful
 
@@ -91,7 +91,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-specific"
+    choose "location-1" # A specific page
     fill_in_valid_contact_details_and_description
     fill_in "link", with: "some url"
     click_on "Send message"
@@ -110,7 +110,7 @@ RSpec.describe "Contact", type: :request do
   it "should not proceed if the user hasn't filled in all required fields" do
     visit "/contact/govuk"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in "Your name", with: "test name"
     fill_in "Your email address", with: "a@a.com"
     click_on "Send message"
@@ -126,7 +126,7 @@ RSpec.describe "Contact", type: :request do
   it "should not let the user submit a request with email without name" do
     visit "/contact/govuk"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in "Your email address", with: "a@a.com"
     fill_in "textdetails", with: "test text details"
     click_on "Send message"
@@ -142,7 +142,7 @@ RSpec.describe "Contact", type: :request do
   it "should not let the user submit a request with name without email" do
     visit "/contact/govuk"
 
-    choose "location-all"
+    choose "location-0" # The whole site
     fill_in "Your name", with: "test name"
     fill_in "textdetails", with: "test text details"
     click_on "Send message"
@@ -160,7 +160,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-specific"
+    choose "location-1" # A specific page
     fill_in_valid_contact_details_and_description
     fill_in "link", with: "some url"
     click_on "Send message"
