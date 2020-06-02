@@ -5,6 +5,7 @@
     <%=  stylesheet_link_tag 'application', integrity: false %>
     <%=  stylesheet_link_tag 'print.css', media: 'print', integrity: false %>
     <!--[if IE 6]><%= stylesheet_link_tag "application-ie6.css" %><![endif]-->
+    <%= javascript_include_tag "test-dependencies" if Rails.env.test? %>
     <%=  javascript_include_tag 'application', integrity: false %>
     <title><%= yield :title %></title>
     <%= yield :section_meta_tags %>
