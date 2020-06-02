@@ -16,8 +16,12 @@ module Feedback
 
     config.assets.enabled = true
     config.assets.precompile += %w[application-ie6.css]
-    config.assets.prefix = "/feedback" # this has to match the path configured in puppet and deploy scripts.
+    config.assets.prefix = "/assets/feedback"
     config.assets.version = "1.0"
+
+    # allow overriding the asset host with an enironment variable, useful for
+    # when router is proxying to this app but asset proxying isn't set up.
+    config.asset_host = ENV["ASSET_HOST"]
 
     config.eager_load_paths += %W[#{config.root}/lib]
 
