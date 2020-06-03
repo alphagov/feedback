@@ -9,9 +9,6 @@ Rails.application.configure do
 
   config.assets.compress = false
   config.assets.debug = true
-  if ENV["GOVUK_ASSET_ROOT"].present?
-    config.asset_host = ENV["GOVUK_ASSET_ROOT"]
-  end
 
   config.cache_classes = false
 
