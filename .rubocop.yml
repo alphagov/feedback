@@ -6,16 +6,3 @@ inherit_gem:
 inherit_mode:
   merge:
     - Exclude
-
-AllCops:
-  Exclude:
-    - spec/spec_helper.rb
-    - spec/rails_helper.rb
-  TargetRubyVersion: 2.6.3
-
-Rails/OutputSafety:
-  Enabled: false
-
-Metrics/BlockLength:
-  Exclude:
-    - 'lib/tasks/**/*.rake'
