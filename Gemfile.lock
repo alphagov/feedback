@@ -81,7 +81,7 @@ GEM
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
-    gds-api-adapters (63.6.0)
+    gds-api-adapters (67.0.0)
       addressable
       link_header
       null_logger
@@ -367,7 +367,7 @@ PLATFORMS
 DEPENDENCIES
   asset_bom_removal-rails (~> 1.0.2)
   ci_reporter_rspec
-  gds-api-adapters (= 63.6.0)
+  gds-api-adapters (= 67.0.0)
   google-api-client (~> 0.38)
   govuk-content-schema-test-helpers
   govuk_app_config (~> 2.1.2)
