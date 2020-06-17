@@ -1,5 +1,11 @@
 //= require vendor/jquery.inputevent
-//= require govuk_publishing_components/all_components
+//= require govuk_publishing_components/lib
+//= require govuk_publishing_components/components/button
+//= require govuk_publishing_components/components/character-count
+//= require govuk_publishing_components/components/details
+//= require govuk_publishing_components/components/error-summary
+//= require govuk_publishing_components/components/feedback
+//= require govuk_publishing_components/components/radio
 
 (function(){
   "use strict";
@@ -42,7 +48,7 @@
     var charNoun = 'character' + ((remainingNumber === -1 || remainingNumber === 1) ? '' : 's')
     var displayNumber = Math.abs(remainingNumber)
     $(counterId).html((displayNumber) + ' ' + charNoun + ' ' + charVerb + " (limit is " + maxLength + " characters)");
-    
+
     // remove aria attributes when users start typing
     $(counterId).removeAttr('aria-live aria-atomic')
 
