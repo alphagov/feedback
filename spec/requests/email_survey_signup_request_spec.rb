@@ -45,7 +45,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_xhr: true
 
       expect(response).to have_http_status(:ok)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
 
@@ -53,7 +53,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_xhr: true, params: {}
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
       expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>"
@@ -67,7 +67,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_xhr: true
 
       expect(response).to have_http_status(:service_unavailable)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
       expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>"
@@ -80,7 +80,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_js: true
 
       expect(response).to have_http_status(:ok)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
 
@@ -88,7 +88,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_js: true, params: {}
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
       expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>"
@@ -102,7 +102,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       submit_email_survey_sign_up as_js: true
 
       expect(response).to have_http_status(:service_unavailable)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key "message"
       expect(json_response["message"]).to eq "<h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>"
