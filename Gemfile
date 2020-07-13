@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem "rails", "6.0.3.2"
+
 gem "asset_bom_removal-rails"
 gem "gds-api-adapters"
 gem "google-api-client"
@@ -9,7 +11,6 @@ gem "invalid_utf8_rejector"
 gem "notifications-ruby-client"
 gem "plek"
 gem "rack_strip_client_ip"
-gem "rails", "5.2.3"
 gem "sass"
 gem "sass-rails"
 gem "slimmer"
