@@ -1,5 +1,5 @@
 require "rails_helper"
-require "./lib/redirect_publisher"
+require "./app/lib/redirect_publisher"
 require "govuk-content-schema-test-helpers/rspec_matchers"
 
 RSpec.describe RedirectPublisher do

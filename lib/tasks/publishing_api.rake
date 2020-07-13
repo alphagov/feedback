@@ -1,4 +1,4 @@
-require "./lib/redirect_publisher"
+require "./app/lib/redirect_publisher"
 
 require "logger"
 require "gds_api/publishing_api"
