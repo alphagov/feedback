@@ -60,7 +60,9 @@ private
   end
 
   def respond_to_valid_submission(ticket)
+    # rubocop:disable Rails/SaveBang
     ticket.save
+    # rubocop:enable Rails/SaveBang
     confirm_submission
   end
 
