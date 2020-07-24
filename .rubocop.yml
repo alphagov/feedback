@@ -6,3 +6,7 @@ inherit_gem:
 inherit_mode:
   merge:
     - Exclude
+
+# This app does not have a DB
+Rails/SaveBang:
+  Enabled: false
