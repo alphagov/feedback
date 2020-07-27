@@ -15,13 +15,13 @@ that we don't send emails when the survey has closed.  Unlike their counterparts
 in static they do not have match rules on the path - response that gets past an
 `survey_id` check and is in the `active?` time period will be sent an email.
 
-The email is sent using GOV.UK Notify using the "GOV.UK Surveys" service and a
+The email is sent using GOV.UK Notify using the "GOV.UK Public" service and a
 hardcoded email template (name: `email_survey_signup`, id: `8fe8ab4f-a6ac-44a1-9d8b-f611a493231b`)
 that belongs to that service.  This means that all running instances must use
 API keys for the same service or the template won't exist.  The API key is
 provided with the env var:
 
-    SURVEY_NOTIFY_SERVICE_API_KEY
+    GOVUK_NOTIFY_API_KEY
 
 Deployed environments have this filled in via puppet and our standard mechanism
 for handling keys.  On the GOV.UK dev vm you'll want to join the service on
