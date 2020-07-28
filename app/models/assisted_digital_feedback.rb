@@ -61,7 +61,7 @@ class AssistedDigitalFeedback < Ticket
 
   def initialize(*args)
     super(*args)
-    @created_at = Time.current
+    @created_at = Time.zone.now
   end
 
   def save
