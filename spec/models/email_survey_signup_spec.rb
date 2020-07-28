@@ -167,7 +167,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     subject { email_survey_signup.to_notify_params }
 
     it "includes the default template_id" do
-      expect(subject[:template_id]).to eq "8fe8ab4f-a6ac-44a1-9d8b-f611a493231b"
+      expect(subject[:template_id]).to eq "fake-test-template-id"
     end
 
     it "includes the email address" do

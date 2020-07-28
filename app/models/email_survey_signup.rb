@@ -60,7 +60,7 @@ class EmailSurveySignup
       # this is our default template for emails, a future version might
       # want to make this configurable per survey, but then we'd almost
       # certainly need to make the `personalisation` parts configurable too
-      template_id: "8fe8ab4f-a6ac-44a1-9d8b-f611a493231b",
+      template_id: template_id,
       email_address: email_address,
       personalisation: {
         # Note that notify will error if we don't supply all the keys the
@@ -73,6 +73,10 @@ class EmailSurveySignup
   end
 
 private
+
+  def template_id
+    @template_id ||= ENV.fetch("GOVUK_NOTIFY_TEMPLATE_ID", "fake-test-template-id")
+  end
 
   def survey_source_is_relative
     errors.add(:survey_source, :is_not_a_relative_url) unless UrlNormaliser.valid_url?(survey_source, relative_only: true)
