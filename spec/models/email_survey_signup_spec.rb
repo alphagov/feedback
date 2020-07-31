@@ -170,6 +170,10 @@ RSpec.describe EmailSurveySignup, type: :model do
       expect(subject[:template_id]).to eq "fake-test-template-id"
     end
 
+    it "includes the default reply_to_id" do
+      expect(subject[:email_reply_to_id]).to eq "fake-test-reply-to-id"
+    end
+
     it "includes the email address" do
       expect(subject[:email_address]).to eq "i_like_taking_surveys@example.com"
     end

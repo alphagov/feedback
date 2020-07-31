@@ -69,10 +69,15 @@ class EmailSurveySignup
         survey_url: survey_url,
       },
       reference: "email-survey-signup-#{object_id}",
+      email_reply_to_id: reply_to_id,
     }
   end
 
 private
+
+  def reply_to_id
+    @reply_to_id ||= ENV.fetch("GOVUK_NOTIFY_REPLY_TO_ID", "fake-test-reply-to-id")
+  end
 
   def template_id
     @template_id ||= ENV.fetch("GOVUK_NOTIFY_TEMPLATE_ID", "fake-test-template-id")
