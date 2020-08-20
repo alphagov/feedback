@@ -17,7 +17,9 @@ class Contact::Govuk::ProblemReportsController < ContactController
     ticket = ReportAProblemTicket.new(attributes)
 
     if ticket.valid?
+      # rubocop:disable Rails/SaveBang
       ticket.save
+      # rubocop:enable Rails/SaveBang
 
       hide_report_a_problem_form_in_response
       @message = DONE_OK_TEXT.html_safe

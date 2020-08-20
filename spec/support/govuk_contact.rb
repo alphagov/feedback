@@ -12,8 +12,7 @@ RSpec.shared_examples_for "a GOV.UK contact" do
     end
 
     it "should return 406 when text/html isn't acceptable" do
-      request.env["HTTP_ACCEPT"] = "nothing"
-      get :new
+      get :new, format: "nothing"
 
       expect(response.code).to eq("406")
     end
@@ -23,8 +22,7 @@ RSpec.shared_examples_for "a GOV.UK contact" do
     it "should return 406 when text/html isn't acceptable" do
       stub_request(:any, /.*/)
 
-      request.env["HTTP_ACCEPT"] = "nothing"
-      post :create, params: valid_params
+      post :create, params: valid_params, format: "nothing"
 
       expect(response.code).to eq("406")
     end

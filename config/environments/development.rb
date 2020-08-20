@@ -17,4 +17,8 @@ Rails.application.configure do
   config.eager_load = false
 
   config.whiny_nils = true
+
+  config.hosts += [
+    "feedback.dev.gov.uk",
+  ]
 end

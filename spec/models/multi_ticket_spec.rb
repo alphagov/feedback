@@ -77,7 +77,9 @@ RSpec.describe MultiTicket, type: :model do
         expect(service_ticket).to receive(:save)
         expect(assisted_digital_ticket).to receive(:save)
 
+        # rubocop:disable Rails/SaveBang
         subject.save
+        # rubocop:enable Rails/SaveBang
       end
 
       it "it does not continue to the next ticket and raises the error if one of the tickets errors out while saving" do
