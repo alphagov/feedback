@@ -22,9 +22,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
     context "#save" do
       it "sends the item to be stored in the google spreadsheet as row data" do
         expect(Rails.application.config.assisted_digital_spreadsheet).to receive(:store).with(subject.as_row_data)
-        # rubocop:disable Rails/SaveBang
         subject.save
-        # rubocop:enable Rails/SaveBang
       end
 
       it "should raise an exception if the google spreadsheet communication doesn't work" do
@@ -40,9 +38,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
     context "#save" do
       it "does not send the options to be stored in the google spreadsheet" do
         expect(Rails.application.config.assisted_digital_spreadsheet).not_to receive(:store)
-        # rubocop:disable Rails/SaveBang
         subject.save
-        # rubocop:enable Rails/SaveBang
       end
     end
   end
