@@ -107,6 +107,7 @@
         },
         name: "contact[name]",
         id: "name",
+        autocomplete: "name",
         value: @old ? @old[:name] : '',
         error_message: name_error
       } %>
@@ -124,6 +125,7 @@
         name: "contact[email]",
         type: "email",
         id: "email",
+        autocomplete: "email",
         value: @old ? @old[:email] : '',
         error_message: email_error
       } %>
