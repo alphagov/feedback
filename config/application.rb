@@ -25,8 +25,6 @@ module Feedback
     # when router is proxying to this app but asset proxying isn't set up.
     config.asset_host = ENV["ASSET_HOST"]
 
-    config.filter_parameters += %i[password name email email_confirmation textdetails what_doing what_wrong]
-
     # Using a sass css compressor causes a scss file to be processed twice
     # (once to build, once to compress) which breaks the usage of "unquote"
     # to use CSS that has same function names as SCSS such as max.
