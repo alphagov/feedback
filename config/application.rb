@@ -21,11 +21,6 @@ module Feedback
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
-    config.assets.enabled = true
-    config.assets.precompile += %w[application-ie6.css]
-    config.assets.prefix = "/assets/feedback"
-    config.assets.version = "1.0"
-
     # allow overriding the asset host with an enironment variable, useful for
     # when router is proxying to this app but asset proxying isn't set up.
     config.asset_host = ENV["ASSET_HOST"]
