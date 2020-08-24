@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   include Slimmer::Template
 
+  skip_forgery_protection
+
   if ENV["BASIC_AUTH_USERNAME"]
     http_basic_authenticate_with(
       name: ENV.fetch("BASIC_AUTH_USERNAME"),
