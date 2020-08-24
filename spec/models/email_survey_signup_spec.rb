@@ -25,9 +25,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     context "#save" do
       it "sends an email to the email address using GOV.UK notify" do
         expect(Rails.application.config.survey_notify_service).to receive(:send_email).with(subject)
-        # rubocop:disable Rails/SaveBang
         subject.save
-        # rubocop:enable Rails/SaveBang
       end
 
       it "should raise an exception if the GOV.UK notify call doesn't work" do
@@ -43,9 +41,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     context "#save" do
       it "does not send an email using GOV.UK notify" do
         expect(Rails.application.config.survey_notify_service).not_to receive(:send_email)
-        # rubocop:disable Rails/SaveBang
         subject.save
-        # rubocop:enable Rails/SaveBang
       end
     end
   end
