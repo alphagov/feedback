@@ -34,8 +34,8 @@ class ReportAProblemTicket < Ticket
 private
 
   def ticket_details
-    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].index_with({}) do |field, details|
-      details[field] = send(field)
+    %i[what_wrong what_doing path user_agent javascript_enabled referrer source page_owner].index_with do |field|
+      send(field)
     end
   end
 end
