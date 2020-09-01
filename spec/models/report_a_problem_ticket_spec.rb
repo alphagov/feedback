@@ -1,8 +1,30 @@
 require "rails_helper"
 
 RSpec.describe ReportAProblemTicket, type: :model do
+  let(:support_api) { Rails.application.config.support_api }
+
   def ticket(params = {})
     ReportAProblemTicket.new(params)
+  end
+
+  it "should create a ticket" do
+    allow(support_api).to receive(:create_problem_report).and_return(true)
+
+    expect(ticket(
+      what_wrong: "The page is broken",
+      what_doing: "Submitting a form",
+    ).save).to be_truthy
+
+    expect(support_api).to have_received(:create_problem_report).with(
+      javascript_enabled: false,
+      page_owner: nil,
+      path: nil,
+      referrer: nil,
+      source: nil,
+      user_agent: nil,
+      what_wrong: "The page is broken",
+      what_doing: "Submitting a form",
+    )
   end
 
   it "should validate the presence of 'what_wrong'" do
