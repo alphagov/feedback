@@ -22,24 +22,24 @@ RSpec.describe EmailSurvey, type: :model do
 
   describe "#active?" do
     it "is not active when the start_time is in the future" do
-      expect(subject).not_to be_active(at: 2.days.ago)
+      expect(subject.active?(at: 2.days.ago)).to eq(false)
     end
 
     it "is not active when the end_time is in the past" do
-      expect(subject).not_to be_active(at: 2.days.from_now)
+      expect(subject.active?(at: 2.days.from_now)).to eq(false)
     end
 
     it "is active on the start time" do
-      expect(subject).to be_active(at: subject.start_time)
+      expect(subject.active?(at: subject.start_time)).to eq(true)
     end
 
     it "is active on the end time" do
-      expect(subject).to be_active(at: subject.end_time)
+      expect(subject.active?(at: subject.end_time)).to eq(true)
     end
 
     it "is active between the start and end time" do
-      expect(subject).to be_active(at: subject.start_time + 1.second)
-      expect(subject).to be_active(at: subject.end_time - 1.second)
+      expect(subject.active?(at: subject.start_time + 1.second)).to eq(true)
+      expect(subject.active?(at: subject.end_time - 1.second)).to eq(true)
     end
   end
 end
