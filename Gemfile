@@ -25,5 +25,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop-govuk"
   gem "shoulda-matchers"
+  gem "simplecov"
   gem "webmock", require: false
 end
