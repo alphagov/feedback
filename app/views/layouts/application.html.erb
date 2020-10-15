@@ -6,7 +6,7 @@
     <%=  stylesheet_link_tag 'print.css', media: 'print', integrity: false %>
     <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
     <%= javascript_include_tag 'application', integrity: false %>
-    <title><%= yield :title %></title>
+    <title><%= yield :title %> - GOV.UK</title>
     <%= yield :section_meta_tags %>
   </head>
   <body>
