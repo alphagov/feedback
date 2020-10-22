@@ -26,7 +26,7 @@ RSpec.describe "Contact", type: :request do
 
   it "should display an index page" do
     visit "/contact"
-    expect(page).to have_title "Contact"
+    expect(page).to have_title "Find contact details for services - GOV.UK"
   end
 
   it "should let the user submit a request with contact details" do
