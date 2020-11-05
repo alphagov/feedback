@@ -16,7 +16,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
       get contact_anonymous_feedback_thankyou_path
 
-      expect(response.body).to include("Thank you for your feedback")
+      expect(response.body).to include("Thank you for contacting GOV.UK")
     end
 
     it "should accept invalid submissions, just not do anything with them (because the form itself lives
@@ -26,7 +26,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
       get contact_anonymous_feedback_thankyou_path
 
-      expect(response.body).to include("Thank you for your feedback")
+      expect(response.body).to include("Thank you for contacting GOV.UK")
     end
 
     it "should handle the GOV.UK notify service failing" do

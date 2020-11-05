@@ -23,7 +23,7 @@ RSpec.describe "Service feedback submission", type: :request do
     expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
     get contact_anonymous_feedback_thankyou_path
 
-    expect(response.body).to include("Thank you for your feedback")
+    expect(response.body).to include("Thank you for contacting GOV.UK")
     assert_requested(stub_post)
   end
 
@@ -94,7 +94,7 @@ RSpec.describe "Service feedback submission", type: :request do
     expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
     get contact_anonymous_feedback_thankyou_path
 
-    expect(response.body).to include("Thank you for your feedback")
+    expect(response.body).to include("Thank you for contacting GOV.UK")
   end
 
   it "should handle the support-api being unavailable" do
