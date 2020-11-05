@@ -17,7 +17,7 @@ end
 def anonymous_submission_should_be_successful
   click_on "Send message"
   i_should_be_on "/contact/govuk/anonymous-feedback/thankyou"
-  expect(page).to have_content("Thank you for your feedback")
+  expect(page).to have_content("Thank you for contacting GOV.UK")
 end
 
 RSpec.describe "Contact", type: :request do
@@ -26,7 +26,7 @@ RSpec.describe "Contact", type: :request do
 
   it "should display an index page" do
     visit "/contact"
-    expect(page).to have_title "Contact"
+    expect(page).to have_title "Find contact details for services - GOV.UK"
   end
 
   it "should let the user submit a request with contact details" do
