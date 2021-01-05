@@ -3,5 +3,9 @@
 library("govuk")
 
 node {
-  govuk.buildProject(sassLint: false, brakeman: true)
+  govuk.buildProject(
+    beforeTest: { sh("yarn install") },
+    sassLint: false,
+    brakeman: true,
+  )
 }
