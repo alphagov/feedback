@@ -3,7 +3,6 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path("config/application", __dir__)
-require "ci/reporter/rake/rspec" unless Rails.env.production?
 
 Rails.application.load_tasks
 
