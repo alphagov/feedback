@@ -88,9 +88,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
     execjs (2.7.0)
-    faraday (1.1.0)
+    faraday (1.3.0)
+      faraday-net_http (~> 1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
+    faraday-net_http (1.0.0)
     ffi (1.13.1)
     gds-api-adapters (67.2.1)
       addressable
@@ -118,11 +120,11 @@ GEM
       signet (~> 0.14)
     govuk-content-schema-test-helpers (1.6.1)
       json-schema (~> 2.8.0)
-    govuk_app_config (2.8.0)
-      logstasher (>= 1.2.2, < 1.4.0)
+    govuk_app_config (2.8.1)
+      logstasher (>= 1.2.2, < 2.2.0)
       sentry-raven (~> 3.1.1)
       statsd-ruby (~> 1.4.0)
-      unicorn (>= 5.4, < 5.8)
+      unicorn (>= 5.4, < 5.9)
     govuk_publishing_components (23.10.1)
       govuk_app_config
       kramdown
@@ -141,7 +143,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    i18n (1.8.5)
+    i18n (1.8.7)
       concurrent-ruby (~> 1.0)
     invalid_utf8_rejector (0.0.4)
     json (2.3.1)
@@ -152,10 +154,8 @@ GEM
     kramdown (2.3.0)
       rexml
     link_header (0.0.8)
-    logstash-event (1.2.02)
-    logstasher (1.3.0)
-      activesupport (>= 4.0)
-      logstash-event (~> 1.2.0)
+    logstasher (2.1.5)
+      activesupport (>= 5.2)
       request_store
     loofah (2.8.0)
       crass (~> 1.0.2)
@@ -172,7 +172,7 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.2)
+    minitest (5.14.3)
     multi_json (1.15.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
@@ -359,7 +359,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
-    unicorn (5.7.0)
+    unicorn (5.8.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     valid_email (0.1.3)
