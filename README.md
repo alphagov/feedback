@@ -58,6 +58,16 @@ survey. However, it does not collect the answers. More documentation about that 
 
 ### Running the application
 
+To start the app using [govuk-docker](https://github.com/alphagov/govuk-docker), after making the app via the instructions in the govuk-docker repo, navigate to your local repo directory and run:
+
+    govuk-docker-up
+
+You can also run the following from outside the repo:
+
+    govuk-docker up feedback-app
+
+The app will then be available locally via http://feedback.dev.gov.uk/contact
+
 To start the app using `bowler`:
 
     bowl feedback
@@ -73,6 +83,10 @@ This will start the app on port `3028`.
 To run unit tests, execute the following:
 
     bundle exec rake
+
+You can also run these via govuk-docker (if using):
+
+    govuk-docker-run bundle exec rake
 
 #### Manual testing with a mock signon strategy
 
