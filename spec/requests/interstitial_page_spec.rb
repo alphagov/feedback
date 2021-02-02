@@ -7,7 +7,7 @@ RSpec.describe "Interstitial page", type: :request do
   end
 
   it "displays popular contact links" do
-    within "#popular-links" do
+    within first(".gem-c-document-list") do
       CONTACT_LINKS.popular.each do |link|
         expect(page).to have_link(link["Title"], href: link["URL"])
       end

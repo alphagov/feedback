@@ -46,6 +46,7 @@ class ContactController < ApplicationController
   end
 
 private
+
   def filtered_links(array)
     array.map do |item|
       {
