@@ -55,7 +55,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
         it "should render the thankyou template assigning the message string" do
           do_submit
           expect(response).to render_template("thankyou")
-          expect(assigns[:message]).to eq("<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>")
+          expect(assigns[:message]).to eq("<h1 class='govuk-heading-l'>Thank you for your help.</h1> <p class='govuk-body'>If you have more extensive feedback, please visit the <a class='govuk-link' href='/contact'>contact page</a>.</p>")
           expect(assigns[:message]).to be_html_safe
         end
 
@@ -121,7 +121,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
         it "should return json indicating success" do
           do_submit
           data = JSON.parse(response.body)
-          expect(data).to eq("status" => "success", "message" => "<h2>Thank you for your help.</h2> <p>If you have more extensive feedback, please visit the <a href='/contact'>contact page</a>.</p>")
+          expect(data).to eq("status" => "success", "message" => "<h1 class='govuk-heading-l'>Thank you for your help.</h1> <p class='govuk-body'>If you have more extensive feedback, please visit the <a class='govuk-link' href='/contact'>contact page</a>.</p>")
         end
 
         it "should return json indicating failure when ticket creation fails" do
