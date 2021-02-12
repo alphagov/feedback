@@ -1,14 +1,14 @@
 <% content_for :title do "Find contact details for services" end %>
-  <ul id="popular-links" class="govuk-list">
-    <%= render partial: "contact-link", collection: @popular_links, as: :link %>
-  </ul>
+  <%= render "govuk_publishing_components/components/document_list", {
+    items: @popular_links
+  } %>
 
   <%= render "govuk_publishing_components/components/details", {
     title: "More topics"
   } do %>
-    <ul class="govuk-list">
-      <%= render partial: "contact-link", collection: @long_tail_links, as: :link %>
-    </ul>
+    <%= render "govuk_publishing_components/components/document_list", {
+      items: @long_tail_links
+    } %>
   <% end %>
 <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <p class="govuk-body">Use the <a class="govuk-link" href="/contact/govuk">GOV.UK form</a> to send your questions or comments about the website.</p>

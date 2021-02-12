@@ -2,12 +2,13 @@ require "slimmer/headers"
 
 class ContactController < ApplicationController
   include Slimmer::Headers
+  include ApplicationHelper
 
   before_action :set_cache_control, only: %i[new index]
 
   def index
-    @popular_links = CONTACT_LINKS.popular
-    @long_tail_links = CONTACT_LINKS.long_tail
+    @popular_links = filtered_links(CONTACT_LINKS.popular)
+    @long_tail_links = filtered_links(CONTACT_LINKS.long_tail)
     @breadcrumbs = [breadcrumbs.first]
   end
 
@@ -45,6 +46,20 @@ class ContactController < ApplicationController
   end
 
 private
+
+  def filtered_links(array)
+    array.map do |item|
+      {
+        link: {
+          text: item["Title"],
+          path: item["URL"],
+          description: item["Description"],
+          full_size_description: true,
+          rel: external_link?(item["URL"]) ? "external" : "",
+        },
+      }
+    end
+  end
 
   def breadcrumbs
     [

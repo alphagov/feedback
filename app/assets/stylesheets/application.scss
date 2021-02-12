@@ -7,6 +7,7 @@ $govuk-use-legacy-palette: false;
 @import "govuk_publishing_components/components/button";
 @import "govuk_publishing_components/components/character-count";
 @import "govuk_publishing_components/components/details";
+@import "govuk_publishing_components/components/document-list";
 @import "govuk_publishing_components/components/error-message";
 @import "govuk_publishing_components/components/error-summary";
 @import "govuk_publishing_components/components/feedback";
@@ -18,7 +19,3 @@ $govuk-use-legacy-palette: false;
 @import "govuk_publishing_components/components/textarea";
 @import "govuk_publishing_components/components/title";
 @import "govuk_publishing_components/components/warning-text";
-
-.app-link-as-heading {
-  @include govuk-font($size:24, $weight: bold, $line-height: 1.8);
-}
