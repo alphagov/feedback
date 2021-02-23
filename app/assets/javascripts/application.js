@@ -81,7 +81,9 @@
     specificPage = specificPage.replace(emailPattern, '[email]')
 
     // Preopulate specific page field
-    $('#link').val(specificPage)
+    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage).startsWith('/contact'))) {
+      $('#link').val(specificPage)
+    }
 
     // Choose "A specific page" option if the form was linked to directly
     if (specificPage && !(GOVUK.feedback.getPathFor(specificPage) === '/contact')) {
