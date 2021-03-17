@@ -47,3 +47,7 @@ bundle exec rake
 - [Testing with real authorisation](docs/testing_with_real_authorization.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
+
+## Licence
+
+[MIT License](LICENCE)
