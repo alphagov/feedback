@@ -44,7 +44,7 @@ bundle exec rake
 
 ## Further documentation
 
-- [Testing with real authorisation](docs/testing_with_real_authorization.md)
+- [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
 
