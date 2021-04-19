@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
+  get "/healthcheck/ready", to: GovukHealthcheck.rack_response
+
   mount GovukPublishingComponents::Engine, at: "/component-guide"
 
   get "/contact", format: false, to: "contact#index"
