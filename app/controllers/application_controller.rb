@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
     )
   end
 
+  slimmer_template :gem_layout_no_feedback_form
+
 protected
 
   def robot_script_submission_detected
