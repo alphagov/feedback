@@ -16,7 +16,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, support_api_url + "/anonymous-feedback/content_improvement")
+    expected_request = a_request(:post, "#{support_api_url}/anonymous-feedback/content_improvement")
       .with(body: {
         "description" => "I need this page to exist",
       })
@@ -48,7 +48,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
   end
 
   it "returns an error if the required attributes aren't supplied" do
-    url = support_api_url + "/anonymous-feedback/content_improvement"
+    url = "#{support_api_url}/anonymous-feedback/content_improvement"
     stub_http_request(:post, url)
       .with(body: {}.to_json)
       .to_return(
@@ -76,7 +76,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, Plek.current.find("support-api") + "/anonymous-feedback/content_improvement")
+    expected_request = a_request(:post, "#{Plek.current.find('support-api')}/anonymous-feedback/content_improvement")
       .with(body: { "description" => "The title is the wrong colour." })
 
     expect(expected_request).to have_been_made

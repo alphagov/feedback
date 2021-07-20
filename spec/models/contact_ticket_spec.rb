@@ -67,7 +67,7 @@ RSpec.describe ContactTicket, type: :model do
   end
 
   it "should return contact error with too long email" do
-    expect(named_ticket(email: (build_random_string 1251) + "@a.com").errors[:email].size).to eq(2)
+    expect(named_ticket(email: "#{build_random_string 1251}@a.com").errors[:email].size).to eq(2)
   end
 
   it "should return contact error with location specific but without link" do

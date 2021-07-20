@@ -11,11 +11,11 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "should validate the length of URLs" do
-    expect(Ticket.new(url: "https://www.gov.uk/" + ("a" * 2048)).errors[:url].size).to eq(1)
+    expect(Ticket.new(url: "https://www.gov.uk/#{'a' * 2048}").errors[:url].size).to eq(1)
   end
 
   it "should validate the length of the user agent" do
-    expect(Ticket.new(user_agent: "Mozilla " + ("a" * 2048)).errors[:user_agent].size).to eq(1)
+    expect(Ticket.new(user_agent: "Mozilla #{'a' * 2048}").errors[:user_agent].size).to eq(1)
   end
 
   it "should filter 'url' to either nil or a valid URL" do
@@ -31,7 +31,7 @@ RSpec.describe Ticket, type: :model do
   it "should filter 'referrer' to either nil or a valid URL" do
     expect(Ticket.new(referrer: "https://www.gov.uk").referrer).to eq("https://www.gov.uk")
     expect(Ticket.new(referrer: "http://bla.example.org:9292/méh/fào?bar").referrer).to be_nil
-    expect(Ticket.new(referrer: nil).referrer). to be_nil
+    expect(Ticket.new(referrer: nil).referrer).to be_nil
   end
 
   it "should treat a 'unknown' referrer as nil" do

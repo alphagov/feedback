@@ -7,7 +7,7 @@ require "gds_api/publishing_api/special_route_publisher"
 namespace :publishing_api do
   desc "Publish special routes via publishing api"
   task publish_special_routes: :environment do
-    logger = Logger.new(STDOUT)
+    logger = Logger.new($stdout)
     special_route_publisher = GdsApi::PublishingApi::SpecialRoutePublisher.new(
       logger: logger,
       publishing_api: GdsApi.publishing_api,

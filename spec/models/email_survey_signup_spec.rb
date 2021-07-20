@@ -71,7 +71,7 @@ RSpec.describe EmailSurveySignup, type: :model do
     it { is_expected.not_to allow_value(nil).for(:survey_source) }
     it "ensures `survey_source` has a length of at most 2048" do
       # at the boundary it's ok
-      subject.survey_source = "/" + ("a" * 2047)
+      subject.survey_source = "/#{'a' * 2047}"
       subject.valid?
       expect(subject.errors[:survey_source]).not_to include "is too long (maximum is 2048 characters)"
 
