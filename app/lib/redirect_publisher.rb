@@ -1,7 +1,7 @@
 class RedirectPublisher
   attr_reader :logger, :publishing_app, :type, :publishing_api
 
-  def initialize(logger:, publishing_app:, type: "exact", publishing_api:)
+  def initialize(logger:, publishing_app:, publishing_api:, type: "exact")
     @logger = logger
     @publishing_app = publishing_app
     @type = type

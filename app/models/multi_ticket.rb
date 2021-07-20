@@ -1,5 +1,6 @@
 class MultiTicket
   attr_reader :ticket_types
+
   def initialize(*ticket_types)
     @ticket_types = ticket_types
   end
@@ -10,6 +11,7 @@ class MultiTicket
 
   class Instance
     attr_reader :tickets
+
     def initialize(tickets)
       @tickets = tickets
     end

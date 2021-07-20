@@ -27,13 +27,11 @@ class ContactTicket < Ticket
   end
 
   def save
-    if valid?
-      unless bad_email_address?
-        if anonymous?
-          Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
-        else
-          Rails.application.config.support.create_named_contact(ticket_details)
-        end
+    if valid? && !bad_email_address?
+      if anonymous?
+        Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
+      else
+        Rails.application.config.support.create_named_contact(ticket_details)
       end
     end
   end

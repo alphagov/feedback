@@ -7,6 +7,7 @@ class GoogleSpreadsheetStore
 
   class Error < StandardError
     attr_reader :cause
+
     def initialize(message, cause: nil)
       super(message)
       @cause = cause
