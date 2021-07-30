@@ -111,8 +111,8 @@ GEM
       null_logger
       plek (>= 1.9.0)
       rest-client (~> 2.0)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (0.5.1)
+      activesupport (>= 5.0)
     google-api-client (0.44.2)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.9)
@@ -136,7 +136,7 @@ GEM
       sentry-raven (~> 3.1.1)
       statsd-ruby (~> 1.5.0)
       unicorn (>= 5.4, < 5.9)
-    govuk_publishing_components (24.21.1)
+    govuk_publishing_components (25.0.0)
       govuk_app_config
       kramdown
       plek
