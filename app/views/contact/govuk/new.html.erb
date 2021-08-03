@@ -117,11 +117,12 @@
           email_error = @errors[:email].first
         end
       %>
-      
+
       <%= render "govuk_publishing_components/components/input", {
         label: {
           text: "Your email address"
         },
+        hint: "We'll only use this to reply to your message.",
         name: "contact[email]",
         type: "email",
         id: "email",
@@ -129,11 +130,7 @@
         value: @old ? @old[:email] : '',
         error_message: email_error
       } %>
-
-      <%= render "govuk_publishing_components/components/hint", {
-        text: "We'll only use this to reply to your message."
-      } %>
     <% end %>
 
-    <%= render "govuk_publishing_components/components/button", text: "Send message" %>
+    <%= render "govuk_publishing_components/components/button", text: "Send message", margin_bottom: true %>
   <% end %>
