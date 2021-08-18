@@ -38,37 +38,6 @@
     $('#verifyemail').on('keydown', GOVUK.feedback.checkOnKeyDownEmail)
   }
 
-  GOVUK.feedback.handleCounter = function (counted) {
-    var counterId = '#' + counted.id + 'counter'
-    var maxLength = 1200
-    var currentLength = counted.value.length
-    var remainingNumber = maxLength - currentLength
-    var thresholdValue = maxLength * 90 / 100 // 90% of the total maximum length
-    var charVerb = (remainingNumber < 0) ? 'too many' : 'remaining'
-    var charNoun = 'character' + ((remainingNumber === -1 || remainingNumber === 1) ? '' : 's')
-    var displayNumber = Math.abs(remainingNumber)
-    $(counterId).html((displayNumber) + ' ' + charNoun + ' ' + charVerb + ' (limit is ' + maxLength + ' characters)')
-
-    // remove aria attributes when users start typing
-    $(counterId).removeAttr('aria-live aria-atomic')
-
-    // only add the screenreader anouncements when threshold is reached
-    if (currentLength > thresholdValue) {
-      $(counterId).attr({
-        'aria-live': 'polite',
-        'aria-atomic': 'false'
-      })
-    }
-  }
-
-  GOVUK.feedback.initCounters = function () {
-    $('.counted').each(function (index) {
-      $(this).on('txtinput', function () {
-        GOVUK.feedback.handleCounter(this)
-      })
-    })
-  }
-
   GOVUK.feedback.saveReferrerToCookie = function () {
     GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 })
   }
@@ -98,7 +67,6 @@
   }
 
   GOVUK.feedback.init = function () {
-    GOVUK.feedback.initCounters()
     GOVUK.feedback.initUserDetails()
 
     if (window.location.pathname === '/contact') {
