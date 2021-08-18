@@ -28,13 +28,13 @@
     var linkInput = form.querySelector('input[name="contact[link]"]')
     var locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
 
-    // Preopulate specific page field
-    if (specificPage && linkInput && !(specificPagePath.startsWith('/contact'))) {
+    // Prepopulate specific page if one is not already set
+    if (linkInput && !linkInput.value && specificPagePath !== '/contact') {
       linkInput.value = specificPage
     }
 
-    // Choose "A specific page" option if the form was linked to directly
-    if (specificPage && locationSpecificInput && !(specificPagePath === '/contact')) {
+    // Choose "A specific page" option if there is a direct link value
+    if (locationSpecificInput && linkInput && linkInput.value) {
       locationSpecificInput.checked = true
     }
   }
