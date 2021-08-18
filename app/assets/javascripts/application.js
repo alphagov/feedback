@@ -13,30 +13,6 @@
 
   GOVUK.feedback = {}
 
-  GOVUK.feedback.checkEmail = function (input) {
-    if (input.setCustomValidity) {
-      if (input.value !== $('#email').val()) {
-        input.setCustomValidity('The two email addresses must match.')
-      } else {
-        input.setCustomValidity('')
-      }
-    }
-  }
-
-  GOVUK.feedback.checkOnInputEmail = function () {
-    this.onkeydown = null
-    GOVUK.feedback.checkEmail(this)
-  }
-
-  GOVUK.feedback.checkOnKeyDownEmail = function () {
-    GOVUK.feedback.checkEmail(this)
-  }
-
-  GOVUK.feedback.initUserDetails = function () {
-    $('#verifyemail').on('input', GOVUK.feedback.checkOnInputEmail)
-    $('#verifyemail').on('keydown', GOVUK.feedback.checkOnKeyDownEmail)
-  }
-
   GOVUK.feedback.saveReferrerToCookie = function () {
     GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 })
   }
@@ -66,8 +42,6 @@
   }
 
   GOVUK.feedback.init = function () {
-    GOVUK.feedback.initUserDetails()
-
     if (window.location.pathname === '/contact') {
       GOVUK.feedback.saveReferrerToCookie()
     }
