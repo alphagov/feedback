@@ -17,21 +17,25 @@
     GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 })
   }
 
-  GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
+  GOVUK.feedback.prepopulateFormBasedOnReferrer = function (form) {
     var specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer
 
     // Mask email addresses
     var emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
     specificPage = specificPage.replace(emailPattern, '[email]')
 
+    var specificPagePath = GOVUK.feedback.getPathFor(specificPage)
+    var linkInput = form.querySelector('input[name="contact[link]"]')
+    var locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
+
     // Preopulate specific page field
-    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage).startsWith('/contact'))) {
-      $('#link').val(specificPage)
+    if (specificPage && linkInput && !(specificPagePath.startsWith('/contact'))) {
+      linkInput.value = specificPage
     }
 
     // Choose "A specific page" option if the form was linked to directly
-    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage) === '/contact')) {
-      $('#location-specific').click()
+    if (specificPage && locationSpecificInput && !(specificPagePath === '/contact')) {
+      locationSpecificInput.checked = true
     }
   }
 
@@ -41,15 +45,31 @@
     return link.pathname
   }
 
+  GOVUK.feedback.appendHiddenInputs = function (form) {
+    var jsInput = document.createElement('input')
+    jsInput.type = 'hidden'
+    jsInput.name = 'contact[javascript_enabled]'
+    jsInput.value = 'true'
+    form.appendChild(jsInput)
+
+    var referrerInput = document.createElement('input')
+    referrerInput.type = 'hidden'
+    referrerInput.name = 'contact[referrer]'
+    referrerInput.value = document.referrer
+    form.appendChild(referrerInput)
+  }
+
   GOVUK.feedback.init = function () {
     if (window.location.pathname === '/contact') {
       GOVUK.feedback.saveReferrerToCookie()
     }
 
-    GOVUK.feedback.prepopulateFormBasedOnReferrer()
-    $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>')
-    $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>')
+    var form = document.querySelector('form.contact-form')
+    if (!form) return
+
+    GOVUK.feedback.prepopulateFormBasedOnReferrer(form)
+    GOVUK.feedback.appendHiddenInputs(form)
   }
 
-  $(GOVUK.feedback.init)
+  GOVUK.feedback.init()
 }())
