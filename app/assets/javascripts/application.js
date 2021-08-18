@@ -24,7 +24,7 @@
     var emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
     specificPage = specificPage.replace(emailPattern, '[email]')
 
-    var specificPagePath = GOVUK.feedback.getPathFor(specificPage)
+    var specificPagePath = this.getPathFor(specificPage)
     var linkInput = form.querySelector('input[name="contact[link]"]')
     var locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
 
@@ -61,14 +61,14 @@
 
   GOVUK.feedback.init = function () {
     if (window.location.pathname === '/contact') {
-      GOVUK.feedback.saveReferrerToCookie()
+      this.saveReferrerToCookie()
     }
 
     var form = document.querySelector('form.contact-form')
     if (!form) return
 
-    GOVUK.feedback.prepopulateFormBasedOnReferrer(form)
-    GOVUK.feedback.appendHiddenInputs(form)
+    this.prepopulateFormBasedOnReferrer(form)
+    this.appendHiddenInputs(form)
   }
 
   GOVUK.feedback.init()
