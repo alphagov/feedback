@@ -1,4 +1,3 @@
-//= require vendor/jquery.inputevent
 //= require govuk_publishing_components/lib
 //= require govuk_publishing_components/components/button
 //= require govuk_publishing_components/components/character-count
@@ -14,80 +13,29 @@
 
   GOVUK.feedback = {}
 
-  GOVUK.feedback.checkEmail = function (input) {
-    if (input.setCustomValidity) {
-      if (input.value !== $('#email').val()) {
-        input.setCustomValidity('The two email addresses must match.')
-      } else {
-        input.setCustomValidity('')
-      }
-    }
-  }
-
-  GOVUK.feedback.checkOnInputEmail = function () {
-    this.onkeydown = null
-    GOVUK.feedback.checkEmail(this)
-  }
-
-  GOVUK.feedback.checkOnKeyDownEmail = function () {
-    GOVUK.feedback.checkEmail(this)
-  }
-
-  GOVUK.feedback.initUserDetails = function () {
-    $('#verifyemail').on('input', GOVUK.feedback.checkOnInputEmail)
-    $('#verifyemail').on('keydown', GOVUK.feedback.checkOnKeyDownEmail)
-  }
-
-  GOVUK.feedback.handleCounter = function (counted) {
-    var counterId = '#' + counted.id + 'counter'
-    var maxLength = 1200
-    var currentLength = counted.value.length
-    var remainingNumber = maxLength - currentLength
-    var thresholdValue = maxLength * 90 / 100 // 90% of the total maximum length
-    var charVerb = (remainingNumber < 0) ? 'too many' : 'remaining'
-    var charNoun = 'character' + ((remainingNumber === -1 || remainingNumber === 1) ? '' : 's')
-    var displayNumber = Math.abs(remainingNumber)
-    $(counterId).html((displayNumber) + ' ' + charNoun + ' ' + charVerb + ' (limit is ' + maxLength + ' characters)')
-
-    // remove aria attributes when users start typing
-    $(counterId).removeAttr('aria-live aria-atomic')
-
-    // only add the screenreader anouncements when threshold is reached
-    if (currentLength > thresholdValue) {
-      $(counterId).attr({
-        'aria-live': 'polite',
-        'aria-atomic': 'false'
-      })
-    }
-  }
-
-  GOVUK.feedback.initCounters = function () {
-    $('.counted').each(function (index) {
-      $(this).on('txtinput', function () {
-        GOVUK.feedback.handleCounter(this)
-      })
-    })
-  }
-
   GOVUK.feedback.saveReferrerToCookie = function () {
     GOVUK.cookie('govuk_contact_referrer', document.referrer, { days: 1 })
   }
 
-  GOVUK.feedback.prepopulateFormBasedOnReferrer = function () {
+  GOVUK.feedback.prepopulateFormBasedOnReferrer = function (form) {
     var specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer
 
     // Mask email addresses
     var emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
     specificPage = specificPage.replace(emailPattern, '[email]')
 
-    // Preopulate specific page field
-    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage).startsWith('/contact'))) {
-      $('#link').val(specificPage)
+    var specificPagePath = this.getPathFor(specificPage)
+    var linkInput = form.querySelector('input[name="contact[link]"]')
+    var locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
+
+    // Prepopulate specific page if one is not already set
+    if (linkInput && !linkInput.value && specificPagePath !== '/contact') {
+      linkInput.value = specificPage
     }
 
-    // Choose "A specific page" option if the form was linked to directly
-    if (specificPage && !(GOVUK.feedback.getPathFor(specificPage) === '/contact')) {
-      $('#location-specific').click()
+    // Choose "A specific page" option if there is a direct link value
+    if (locationSpecificInput && linkInput && linkInput.value) {
+      locationSpecificInput.checked = true
     }
   }
 
@@ -97,18 +45,31 @@
     return link.pathname
   }
 
-  GOVUK.feedback.init = function () {
-    GOVUK.feedback.initCounters()
-    GOVUK.feedback.initUserDetails()
+  GOVUK.feedback.appendHiddenInputs = function (form) {
+    var jsInput = document.createElement('input')
+    jsInput.type = 'hidden'
+    jsInput.name = 'contact[javascript_enabled]'
+    jsInput.value = 'true'
+    form.appendChild(jsInput)
 
-    if (window.location.pathname === '/contact') {
-      GOVUK.feedback.saveReferrerToCookie()
-    }
-
-    GOVUK.feedback.prepopulateFormBasedOnReferrer()
-    $('form.contact-form').append('<input type="hidden" name="contact[javascript_enabled]" value="true"/>')
-    $('form.contact-form').append('<input type="hidden" name="contact[referrer]" value="' + document.referrer + '"/>')
+    var referrerInput = document.createElement('input')
+    referrerInput.type = 'hidden'
+    referrerInput.name = 'contact[referrer]'
+    referrerInput.value = document.referrer
+    form.appendChild(referrerInput)
   }
 
-  $(GOVUK.feedback.init)
+  GOVUK.feedback.init = function () {
+    if (window.location.pathname === '/contact') {
+      this.saveReferrerToCookie()
+    }
+
+    var form = document.querySelector('form.contact-form')
+    if (!form) return
+
+    this.prepopulateFormBasedOnReferrer(form)
+    this.appendHiddenInputs(form)
+  }
+
+  GOVUK.feedback.init()
 }())
