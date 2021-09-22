@@ -1,0 +1,40 @@
+<% content_for :title, question_title %>
+<% content_for :context, "Request accessible document" %>
+
+<form action="<%= contact_govuk_request_accessible_format_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
+
+  <% question_inputs.each do |input| %>
+    <% if input[:component] == "radio" %>
+      <%= render "govuk_publishing_components/components/radio", {
+        name: input["key"],
+        heading: question_caption,
+        items: input[:options],
+      } %>
+    <% elsif input[:component] == "textarea"%>
+        <%= render "govuk_publishing_components/components/textarea", {
+        name: input["key"],
+        label: {text: question_caption },
+      } %>
+    <% elsif input[:component] == "input"%>
+      <%= render "govuk_publishing_components/components/input", {
+        heading: question_title,
+        name: input[:key],
+        label: {text: input[:label]},
+      } %>
+    <% end %>
+  <% end %>
+
+  <% permitted_params.each do |key, value| %>
+    <input type="hidden" name="<%= key %>" value="<%= value %>">
+  <% end %>
+
+  <% unless last_question? %>
+    <input type="hidden" name="question_number" value="<%= next_question_number %>">
+  <% end %>
+
+  <div class="govuk-form-footer">
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Continue"
+    } %>
+  </div>
+</form>
