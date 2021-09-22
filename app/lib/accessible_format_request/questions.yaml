@@ -2,6 +2,7 @@ questions:
   - group: set-format
     title: Which accessible format do you need for
     caption: Request accessible document
+    optional: false
     inputs:
       - component: radio
         key: format_type
@@ -22,12 +23,16 @@ questions:
   - group: custom_format
     title: What accessible format do you need?
     caption: Please enter your details here
+    optional: true
+    trigger-key: format_type
+    trigger-value: custom
     inputs:
       - component: textarea
         key: custom_details
   - group: contact_details
     title: Contact information
     caption: Request accessible document
+    optional: false
     inputs:
       - component: input
         label: Email address
