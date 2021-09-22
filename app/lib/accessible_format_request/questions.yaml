@@ -1,0 +1,34 @@
+questions:
+  - group: set-format
+    title: Which accessible format would you like for
+    caption: Please choose one
+    inputs:
+      - component: radio
+        key: format_type
+        options:
+          - text: Audio format
+            value: audio
+          - text: Braille
+            value: braille
+          - text: British Sign Language
+            value: british_sign_language
+          - text: Large print version
+            value: large_print
+          - text: Not seeing what you're looking for?
+            value: custom
+  - group: custom_format
+    title: What accessible format do you require?
+    caption: Please enter your details here
+    inputs:
+      - component: textarea
+        key: custom_details
+  - group: contact_details
+    title: In order for us to reach you about your request
+    caption: Enter your contact details
+    inputs:
+      - component: input
+        label: Name
+        key: contact_name
+      - component: input
+        label: Email address
+        key: contact_email
