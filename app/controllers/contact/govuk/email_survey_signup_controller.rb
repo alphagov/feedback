@@ -1,7 +1,7 @@
 module Contact
   module Govuk
     class EmailSurveySignupController < ContactController
-      rescue_from SurveyNotifyService::Error, with: :respond_to_notify_error
+      rescue_from NotifyService::Error, with: :respond_to_notify_error
 
       def create
         data = contact_params.merge(browser_attributes)

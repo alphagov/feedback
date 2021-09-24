@@ -21,7 +21,7 @@ service running per environment. The API key is provided with the env var:
     GOVUK_NOTIFY_API_KEY
 
 The email template is provided with the env var:
-    GOVUK_NOTIFY_TEMPLATE_ID
+    GOVUK_NOTIFY_SURVEY_SIGNUP_TEMPLATE_ID
 
 Deployed environments have this filled in via puppet and our standard mechanism
 for handling keys.  On the GOV.UK dev vm you'll want to join the service on
