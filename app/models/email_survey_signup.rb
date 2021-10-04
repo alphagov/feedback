@@ -27,7 +27,7 @@ class EmailSurveySignup
   end
 
   def save
-    Rails.application.config.survey_notify_service.send_email(self) if valid?
+    Rails.application.config.notify_service.send_email(self) if valid?
   end
 
   def survey_source=(new_survey_source)
@@ -80,7 +80,7 @@ private
   end
 
   def template_id
-    @template_id ||= ENV.fetch("GOVUK_NOTIFY_TEMPLATE_ID", "fake-test-template-id")
+    @template_id ||= ENV.fetch("GOVUK_NOTIFY_SURVEY_SIGNUP_TEMPLATE_ID", "fake-test-template-id")
   end
 
   def survey_source_is_relative

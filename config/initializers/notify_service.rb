@@ -1,4 +1,4 @@
-require "survey_notify_service"
+require "notify_service"
 
 api_key = if Rails.env.test?
             # This is not a valid key, but it has the right form so the client
@@ -8,4 +8,4 @@ api_key = if Rails.env.test?
             ENV["GOVUK_NOTIFY_API_KEY"]
           end
 
-Rails.application.config.survey_notify_service = SurveyNotifyService.new(api_key)
+Rails.application.config.notify_service = NotifyService.new(api_key)

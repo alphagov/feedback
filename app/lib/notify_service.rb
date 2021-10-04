@@ -1,7 +1,7 @@
 require "notifications/client"
 require "notifications/client/response_notification"
 
-class SurveyNotifyService
+class NotifyService
   class Error < StandardError
     attr_reader :cause
 
@@ -15,8 +15,8 @@ class SurveyNotifyService
     @api_key = api_key
   end
 
-  def send_email(survey_signup)
-    client.send_email(survey_signup.to_notify_params)
+  def send_email(email_parameters)
+    client.send_email(email_parameters.to_notify_params)
   rescue Notifications::Client::RequestError => e
     raise Error.new("Communication with notify service failed", e)
   end

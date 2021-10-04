@@ -1,7 +1,7 @@
 require "rails_helper"
-require "survey_notify_service"
+require "notify_service"
 
-RSpec.describe SurveyNotifyService do
+RSpec.describe NotifyService do
   include EmailSurveyHelpers
 
   let(:education_email_survey) { create_education_email_survey }
