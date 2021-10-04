@@ -76,7 +76,7 @@ class EmailSurveySignup
 private
 
   def reply_to_id
-    @reply_to_id ||= ENV.fetch("GOVUK_NOTIFY_REPLY_TO_ID", "fake-test-reply-to-id")
+    @reply_to_id ||= ENV.fetch("GOVUK_NOTIFY_SURVEY_SIGNUP_REPLY_TO_ID", "fake-test-reply-to-id")
   end
 
   def template_id
