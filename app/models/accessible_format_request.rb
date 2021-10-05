@@ -17,4 +17,33 @@ class AccessibleFormatRequest
       send("#{key}=", value) if respond_to? "#{key}="
     end
   end
+
+  def to_notify_params
+    {
+      template_id: template_id,
+      email_address: alternative_format_email,
+      personalisation: {
+        # Note that notify will error if we don't supply all the keys the
+        # template uses, but it will also error if we supply extra keys the
+        # template doesn't use.  Take care here.
+        contact_name: contact_name,
+        contact_email: contact_email,
+        format_type: format_type,
+        document_title: document_title,
+        publication_path: publication_path,
+      },
+      reference: "accessible-format-request-#{object_id}",
+      email_reply_to_id: reply_to_id,
+    }
+  end
+
+private
+
+  def template_id
+    @template_id ||= ENV.fetch("GOVUK_NOTIFY_ACCESSIBLE_FORMAT_REQUEST_TEMPLATE_ID", "fake-test-accessible-format-request-template-id")
+  end
+
+  def reply_to_id
+    @reply_to_id ||= ENV.fetch("GOVUK_NOTIFY_ACCESSIBLE_FORMAT_REQUEST_REPLY_TO_ID", "fake-test-accessible-format-request-reply-to-id")
+  end
 end
