@@ -28,9 +28,10 @@ class AccessibleFormatRequest
         # template doesn't use.  Take care here.
         contact_name: contact_name,
         contact_email: contact_email,
-        format_type: format_type,
         document_title: document_title,
         publication_path: publication_path,
+        format_type: presented_format_type,
+        custom_details: presented_custom_details,
       },
       reference: "accessible-format-request-#{object_id}",
       email_reply_to_id: reply_to_id,
@@ -38,6 +39,14 @@ class AccessibleFormatRequest
   end
 
 private
+
+  def presented_format_type
+    format_type.gsub("-", " ").humanize
+  end
+
+  def presented_custom_details
+    custom_details.presence || "Not provided"
+  end
 
   def template_id
     @template_id ||= ENV.fetch("GOVUK_NOTIFY_ACCESSIBLE_FORMAT_REQUEST_TEMPLATE_ID", "fake-test-accessible-format-request-template-id")
