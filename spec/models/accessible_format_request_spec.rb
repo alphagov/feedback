@@ -4,7 +4,7 @@ RSpec.describe AccessibleFormatRequest, type: :model do
   subject(:accessible_format_request) { described_class.new(request_options) }
   let(:document_title) { "An example title" }
   let(:publication_path) { "/example/path" }
-  let(:format_type) { "braille" }
+  let(:format_type) { "large-print" }
   let(:contact_name) { "J Doe" }
   let(:contact_email) { "test@example.com" }
   let(:alternative_format_email) { "department@example.com" }
@@ -52,10 +52,6 @@ RSpec.describe AccessibleFormatRequest, type: :model do
       expect(subject[:personalisation][:contact_email]).to eq contact_email
     end
 
-    it "includes the accessible format request format" do
-      expect(subject[:personalisation][:format_type]).to eq format_type
-    end
-
     it "includes the document title" do
       expect(subject[:personalisation][:document_title]).to eq document_title
     end
@@ -70,6 +66,38 @@ RSpec.describe AccessibleFormatRequest, type: :model do
 
     it "includes the default reply_to_id" do
       expect(subject[:email_reply_to_id]).to eq "fake-test-accessible-format-request-reply-to-id"
+    end
+
+    context "when a standard format type has been selected" do
+      it "includes the format type capitalized with underscores removed" do
+        expect(subject[:personalisation][:format_type]).to eq "Large print"
+      end
+
+      it "includes the default text for custom details" do
+        expect(subject[:personalisation][:custom_details]).to eq "Not provided"
+      end
+    end
+
+    context "when a custom format has been selected" do
+      let(:format_type) { "custom_details" }
+      let(:custom_details) { "I would like it in a different format please" }
+      let(:request_options) do
+        {
+          content_id: "123456abc",
+          format_type: format_type,
+          custom_details: custom_details,
+          contact_name: contact_name,
+          contact_email: contact_email,
+        }
+      end
+
+      it "includes the format type capitalized with underscores removed" do
+        expect(subject[:personalisation][:format_type]).to eq "Custom details"
+      end
+
+      it "includes the custom format text" do
+        expect(subject[:personalisation][:custom_details]).to eq custom_details
+      end
     end
   end
 end
