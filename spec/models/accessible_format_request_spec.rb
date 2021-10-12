@@ -107,4 +107,16 @@ RSpec.describe AccessibleFormatRequest, type: :model do
       end
     end
   end
+
+  describe "#save" do
+    it "sends an email to the email address using GOV.UK notify" do
+      expect(Rails.application.config.notify_service).to receive(:send_email).with(accessible_format_request)
+      subject.save
+    end
+
+    it "should raise an exception if the GOV.UK notify call doesn't work" do
+      allow(Rails.application.config.notify_service).to receive(:send_email).and_raise(NotifyService::Error.new("uh-oh!"))
+      expect { subject.save }.to raise_error(NotifyService::Error, "uh-oh!")
+    end
+  end
 end
