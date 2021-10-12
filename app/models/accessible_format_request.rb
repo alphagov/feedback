@@ -18,6 +18,10 @@ class AccessibleFormatRequest
     end
   end
 
+  def save
+    Rails.application.config.notify_service.send_email(self) if valid?
+  end
+
   def to_notify_params
     {
       template_id: template_id,
