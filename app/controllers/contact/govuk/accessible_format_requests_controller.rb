@@ -1,6 +1,7 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
+  rescue_from NotifyService::Error, with: :unable_to_create_ticket_error
   helper_method :question_component, :question_title, :question_caption, :question_inputs, :question_options, :question_key, :last_question?, :next_question_number, :submission_path, :permitted_params
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
@@ -17,11 +18,21 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
       alternative_format_email: alternative_format_email,
     )
 
-    format_request.save if format_request.valid?
-
     @content_title = content_item["title"]
     @content_base_path = content_base_path
-    render "contact/govuk/accessible_format_requests/sent"
+    if format_request.valid? && format_request.save
+      render "contact/govuk/accessible_format_requests/sent"
+    else
+      render "contact/govuk/accessible_format_requests/error"
+    end
+  end
+
+protected
+
+  def unable_to_create_ticket_error(exception)
+    log_exception(exception)
+
+    render "contact/govuk/accessible_format_requests/error"
   end
 
 private

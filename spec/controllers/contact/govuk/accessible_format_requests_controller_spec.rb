@@ -136,24 +136,24 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
 
     before { stub_publishing_api_has_item(content_item) }
 
+    let(:stub_format_request) do
+      double("Request",
+             save: true,
+             valid?: true)
+    end
+
+    def do_submit
+      post :sent,
+           params: {
+             'content_id': content_id,
+             'attachment_id': attachment_id,
+             'format_type': format_type,
+             'contact_name': contact_name,
+             'contact_email': contact_email,
+           }
+    end
+
     context "with a valid accesible format request" do
-      let(:stub_format_request) do
-        double("Request",
-               save: true,
-               valid?: true)
-      end
-
-      def do_submit
-        post :sent,
-             params: {
-               'content_id': content_id,
-               'attachment_id': attachment_id,
-               'format_type': format_type,
-               'contact_name': contact_name,
-               'contact_email': contact_email,
-             }
-      end
-
       it "initilises an AccessibleFormatRequest with data from the params and content item" do
         expect(AccessibleFormatRequest).to receive(:new)
         .with(hash_including(
@@ -190,6 +190,76 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         do_submit
 
         expect(response).to render_template("sent")
+      end
+    end
+
+    context "with an invalid accessible format request" do
+      let(:stub_invalid_format_request) do
+        double("Request",
+               valid?: false,
+               document_title: nil,
+               publication_path: nil)
+      end
+
+      it "renders the accessible format request error view" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_invalid_format_request)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+
+      it "assigns the document title and publication base path" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        do_submit
+
+        expect(assigns[:content_title]).to eq(content_title)
+        expect(assigns[:content_base_path]).to eq(base_path)
+      end
+    end
+
+    context "with a valid accessible format request that failed to save" do
+      let(:stub_unsaved_format_request) do
+        double("Request",
+               valid?: true,
+               save: false,
+               document_title: content_title,
+               publication_path: base_path)
+      end
+      it "renders the accessible format request error view" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_unsaved_format_request)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+
+      it "assigns the document title or base path if available" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_unsaved_format_request)
+        do_submit
+
+        expect(assigns[:content_title]).to eq(content_title)
+        expect(assigns[:content_base_path]).to eq(base_path)
+      end
+    end
+
+    describe "when the Notify service causes an error" do
+      it "should log the error and render the error page" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        allow(stub_format_request).to receive(:save).and_raise(NotifyService::Error.new("uh oh"))
+        expect(GovukError).to receive(:notify).with(NotifyService::Error)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+    end
+
+    describe "when the PublishingAPI service causes an error" do
+      it "should log the error and render the error page" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        allow(stub_format_request).to receive(:save).and_raise(GdsApi::BaseError)
+        expect(GovukError).to receive(:notify).with(GdsApi::BaseError)
+        do_submit
+
+        expect(response).to render_template("error")
       end
     end
   end
