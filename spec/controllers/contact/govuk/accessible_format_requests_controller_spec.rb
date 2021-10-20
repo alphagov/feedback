@@ -136,20 +136,20 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
   end
 
   describe "#sent" do
+    let(:stub_format_request) { double("Request", save: true, valid?: true) }
+
+    def do_submit
+      post :sent,
+           params: {
+             'content_id': content_id,
+             'attachment_id': attachment_id,
+             'format_type': format_type,
+             'contact_name': contact_name,
+             'contact_email': contact_email,
+           }
+    end
+
     context "with a valid accesible format request" do
-      let(:stub_format_request) { double("Request", save: true, valid?: true) }
-
-      def do_submit
-        post :sent,
-             params: {
-               'content_id': content_id,
-               'attachment_id': attachment_id,
-               'format_type': format_type,
-               'contact_name': contact_name,
-               'contact_email': contact_email,
-             }
-      end
-
       it "initilises an AccessibleFormatRequest with data from the params and content item" do
         expect(AccessibleFormatRequest).to receive(:new)
         .with(hash_including(
@@ -185,6 +185,77 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         do_submit
 
         expect(response.body).to have_link(content_title, href: base_path)
+      end
+    end
+
+    context "with an invalid accessible format request" do
+      let(:stub_invalid_format_request) do
+        double("Request",
+               valid?: false,
+               document_title: nil,
+               publication_path: nil)
+      end
+
+      it "renders the accessible format request error view" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_invalid_format_request)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+    end
+
+    context "with a valid accessible format request that failed to save" do
+      let(:stub_unsaved_format_request) do
+        double("Request",
+               valid?: true,
+               save: false,
+               document_title: content_title,
+               publication_path: base_path)
+      end
+      it "renders the accessible format request error view" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_unsaved_format_request)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+    end
+
+    describe "when the Notify service causes an error" do
+      it "should log the error and render the error page" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        allow(stub_format_request).to receive(:save).and_raise(NotifyService::Error.new("uh oh"))
+        expect(GovukError).to receive(:notify).with(NotifyService::Error)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+    end
+
+    describe "when the PublishingAPI service causes an error" do
+      it "should log the error and render the error page" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        allow(stub_format_request).to receive(:save).and_raise(GdsApi::BaseError)
+        expect(GovukError).to receive(:notify).with(GdsApi::BaseError)
+        do_submit
+
+        expect(response).to render_template("error")
+      end
+
+      describe "when a requested attachment can not be found" do
+        it "should log the error and render the error page" do
+          expect(GovukError).to receive(:notify).with(UnfoundAttachmentError)
+
+          post :sent,
+               params: {
+                 'content_id': content_id,
+                 'attachment_id': "unfound_id",
+                 'format_type': format_type,
+                 'contact_name': contact_name,
+                 'contact_email': contact_email,
+               }
+
+          expect(response).to render_template("error")
+        end
       end
     end
   end

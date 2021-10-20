@@ -1,6 +1,8 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
+  rescue_from UnfoundAttachmentError, with: :unable_to_create_ticket_error
+  rescue_from NotifyService::Error, with: :unable_to_create_ticket_error
   helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
@@ -17,9 +19,19 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
       alternative_format_email: alternative_format_email,
     )
 
-    format_request.save if format_request.valid?
+    if format_request.valid? && format_request.save
+      render "contact/govuk/accessible_format_requests/sent"
+    else
+      render "contact/govuk/accessible_format_requests/error"
+    end
+  end
 
-    render "contact/govuk/accessible_format_requests/sent"
+protected
+
+  def unable_to_create_ticket_error(exception)
+    log_exception(exception)
+
+    render "contact/govuk/accessible_format_requests/error"
   end
 
 private
@@ -111,6 +123,12 @@ private
 
   def requested_attachment
     @requested_attachment ||= content_attachments.find { |a| a["id"] == params[:attachment_id] }
+
+    if @requested_attachment.blank?
+      raise UnfoundAttachmentError, "content_id: #{params[:content_id]}, attachent_id: #{params[:attachment_id]}"
+    end
+
+    @requested_attachment
   end
 
   def requested_document_title
