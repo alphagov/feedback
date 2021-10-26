@@ -1,8 +1,26 @@
+require "gds_api/publishing_api"
+
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
-  helper_method :question_title, :question_caption, :question_inputs, :last_question?, :next_question_number, :permitted_params
+  helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :permitted_params
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
   def form; end
+
+  def sent
+    format_request = AccessibleFormatRequest.new(
+      document_title: requested_document_title,
+      publication_path: content_base_path,
+      format_type: params[:format_type],
+      custom_details: params[:custom_details],
+      contact_name: params[:contact_name],
+      contact_email: params[:contact_email],
+      alternative_format_email: alternative_format_email,
+    )
+
+    format_request.save if format_request.valid?
+
+    render "contact/govuk/accessible_format_requests/sent"
+  end
 
 private
 
@@ -69,5 +87,33 @@ private
     trigger_key = current_question[:"trigger-key"]
     trigger_value = current_question[:"trigger-value"]
     params[trigger_key] == trigger_value
+  end
+
+  def content_item
+    @content_item ||= GdsApi.publishing_api.get_content(params[:content_id]).to_h
+  end
+
+  def content_base_path
+    content_item["base_path"]
+  end
+
+  def content_title
+    content_item["title"]
+  end
+
+  def content_attachments
+    content_item.dig("details", "attachments")
+  end
+
+  def requested_attachment
+    @requested_attachment ||= content_attachments.find { |a| a["id"] == params[:attachment_id] }
+  end
+
+  def requested_document_title
+    requested_attachment["title"]
+  end
+
+  def alternative_format_email
+    requested_attachment["alternative_format_contact_email"]
   end
 end
