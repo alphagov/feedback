@@ -1,7 +1,6 @@
 <% content_for :title, question_title %>
 
-<form action="<%= contact_govuk_request_accessible_format_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
-
+<form action="<%= submission_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
   <% if question_component == "radio" %>
     <%= render "govuk_publishing_components/components/radio", {
       name: question_key,

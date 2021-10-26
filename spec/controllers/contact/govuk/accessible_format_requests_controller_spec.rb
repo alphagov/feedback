@@ -38,6 +38,10 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
       it "increments the previous question number as a hidden input" do
         expect(response.body).to have_css("input[name=question_number][value=3]", visible: false)
       end
+
+      it "will submit to the #form controller method" do
+        expect(response.body).to have_css("form#request-accessible-format[action=\"/contact/govuk/request-accessible-format\"]")
+      end
     end
 
     context "on an optional question" do
@@ -83,6 +87,10 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         submitted_params.each do |param, value|
           expect(response.body).to have_css("input[name=\"#{param}\"][value=\"#{value}\"]", visible: false)
         end
+      end
+
+      it "will submit to the #sent controller method" do
+        expect(response.body).to have_css("form#request-accessible-format[action=\"/contact/govuk/request-accessible-format/sent\"]")
       end
     end
   end
