@@ -1,7 +1,7 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
-  helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :permitted_params
+  helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
   def form; end
@@ -71,6 +71,10 @@ private
 
   def next_question_number
     question_number + 1
+  end
+
+  def submission_path
+    last_question? ? contact_govuk_request_accessible_format_sent_path : contact_govuk_request_accessible_format_path
   end
 
   def permitted_params
