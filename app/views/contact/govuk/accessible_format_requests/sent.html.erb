@@ -1,0 +1,25 @@
+<% content_for :title, "Request sent" %>
+<%= render "govuk_publishing_components/components/panel", {
+  title: "Request sent",
+  heading_level: 1,
+} %>
+<%= render "govuk_publishing_components/components/heading", {
+  text: "What happens next",
+  heading_level: 2,
+  font_size: "l",
+} %>
+
+<p class="govuk-body">We will email you:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>if we need more information about your request</li>
+  <li>to confirm we can provide the accessible format you've requested</li>
+</ul>
+
+<p class="govuk-body">
+  <a href="<%= @content_base_path%>" class="govuk-link">Return to <%= @content_title%></a>
+</p>
+
+<p class="govuk-body">
+  <a href="https://surveys.publishing.service.gov.uk/s/accessible_format/" class="govuk-link">Give us feedback on requesting accessible documents on GOV.UK</a> (takes 2 minutes)
+</p>

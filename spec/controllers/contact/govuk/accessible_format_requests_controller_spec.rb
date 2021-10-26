@@ -1,6 +1,8 @@
 require "rails_helper"
+require "gds_api/test_helpers/publishing_api"
 
 RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :controller do
+  include GdsApi::TestHelpers::PublishingApi
   render_views
 
   describe "#form" do
@@ -81,6 +83,105 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         submitted_params.each do |param, value|
           expect(response.body).to have_css("input[name=\"#{param}\"][value=\"#{value}\"]", visible: false)
         end
+      end
+    end
+  end
+
+  describe "#sent" do
+    let(:content_id) { "123abc" }
+    let(:attachment_id) { "456def" }
+    let(:format_type) { "Braille" }
+    let(:contact_name) { "J Doe" }
+    let(:contact_email) { "doe@example.com" }
+    let(:content_title) { "A document with some inaccessible attachments" }
+    let(:attachment_title) { "Inaccessible CSV" }
+    let(:base_path) { "/government/publications/example-document" }
+    let(:alternative_format_contact_email) { "format_request@example.com" }
+    let(:inaccessible_attachment) do
+      {
+        id: attachment_id,
+        url: "/government/publications/example-document/inacessible-spreadsheet",
+        title: attachment_title,
+        accessible: false,
+        alternative_format_contact_email: alternative_format_contact_email,
+      }
+    end
+
+    let(:content_item) do
+      {
+        base_path: base_path,
+        content_id: content_id,
+        title: content_title,
+        details: {
+          attachments: [
+            {
+              id: "123",
+              url: "/government/publications/example-document/acessible-html",
+              title: "Accessible HTML",
+              attachment_type: "html",
+            },
+            inaccessible_attachment,
+          ],
+        },
+      }
+    end
+
+    before { stub_publishing_api_has_item(content_item) }
+
+    context "with a valid accesible format request" do
+      let(:stub_format_request) do
+        double("Request",
+               save: true,
+               valid?: true)
+      end
+
+      def do_submit
+        post :sent,
+             params: {
+               'content_id': content_id,
+               'attachment_id': attachment_id,
+               'format_type': format_type,
+               'contact_name': contact_name,
+               'contact_email': contact_email,
+             }
+      end
+
+      it "initilises an AccessibleFormatRequest with data from the params and content item" do
+        expect(AccessibleFormatRequest).to receive(:new)
+        .with(hash_including(
+                document_title: attachment_title,
+                publication_path: base_path,
+                format_type: format_type,
+                custom_details: nil,
+                contact_name: contact_name,
+                contact_email: contact_email,
+                alternative_format_email: alternative_format_contact_email,
+              )).and_return(stub_format_request)
+
+        do_submit
+      end
+
+      it "validates and saves the request" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        expect(stub_format_request).to receive(:valid?)
+        expect(stub_format_request).to receive(:save)
+
+        do_submit
+      end
+
+      it "assigns the content item title and base path to class variables" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        do_submit
+
+        expect(assigns[:content_title]).to eq(content_title)
+        expect(assigns[:content_base_path]).to eq(base_path)
+      end
+
+      it "renders the accessible format request sent view" do
+        expect(AccessibleFormatRequest).to receive(:new).and_return(stub_format_request)
+        do_submit
+
+        expect(response).to render_template("sent")
       end
     end
   end

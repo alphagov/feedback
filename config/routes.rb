@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       post "content_improvement", to: "content_improvement#create", defaults: { format: :js }
       resources "page_improvements", only: [:create], format: false
       post "request-accessible-format", to: "accessible_format_requests#form", format: false
+      post "request-accessible-format/sent", to: "accessible_format_requests#sent", format: false
     end
   end
 
