@@ -1,0 +1,10 @@
+<%= render partial: "/contact/govuk/accessible_format_requests/inputs/caption" %>
+<%= render "govuk_publishing_components/components/textarea", {
+  label: {
+    is_page_heading: true,
+    heading_size: "l",
+    text: question_title
+  },
+  name: "response",
+  id: "response",
+} %>

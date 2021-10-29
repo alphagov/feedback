@@ -1,0 +1,19 @@
+<%= render partial: "/contact/govuk/accessible_format_requests/inputs/caption" %>
+<%= render "govuk_publishing_components/components/fieldset", {
+  legend_text: question_title,
+  heading_level: 1,
+  heading_size: "l",
+} do %>
+  <% question_inputs.each do |input| %>
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: input[:label]
+      },
+      name: input[:key],
+      id: input[:key],
+      type: input[:type],
+      error_message: input[:error_message],
+      autocomplete: input[:autocomplete]
+    } %>
+  <% end %>
+<% end %>

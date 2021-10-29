@@ -1,10 +1,13 @@
-<% content_for :title, "Request error" %>
+<% content_for :title, "Sorry, there is a problem with the service" %>
 
-<p class="govuk-heading-1">Sorry there is a problem with the service</p>
+<%= render "govuk_publishing_components/components/heading", {
+  text: "Sorry, there is a problem with the service",
+  heading_level: 1,
+  font_size: "l",
+} %>
 
-<p class="govuk-body">We are unable to fulfill your request</p>
-
-<p class="govuk-body">Please try again later</p>
+<p class="govuk-body">We are unable to fulfill your request.</p>
+<p class="govuk-body">Try again later.</p>
 
 <% if @content_base_path && @content_title %>
   <p class="govuk-body">
@@ -13,5 +16,11 @@
 <% end %>
 
 <p class="govuk-body">
-  <a href="https://surveys.publishing.service.gov.uk/s/accessible_format/" class="govuk-link">Give us feedback on requesting accessible documents on GOV.UK</a> (takes 2 minutes)
+  <a href="https://surveys.publishing.service.gov.uk/s/accessible_format/" 
+    class="govuk-link"
+    data-module="gem-track-click"
+    data-track-category="External Link Clicked"
+    data-track-action="https://surveys.publishing.service.gov.uk/s/accessible_format/"
+    data-track-label="Give us feedback on requesting accessible documents on GOV.UK">
+    Give us feedback on requesting accessible documents on GOV.UK</a> (takes 2 minutes)
 </p>

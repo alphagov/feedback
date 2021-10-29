@@ -2,26 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <%=  stylesheet_link_tag 'application', integrity: false %>
-    <%=  stylesheet_link_tag 'print.css', media: 'print', integrity: false %>
-    <title><%= yield :title %> - GOV.UK</title>
+    <%= stylesheet_link_tag 'application', integrity: false %>
+    <%= stylesheet_link_tag 'print.css', media: 'print', integrity: false %>
+    <title><%= yield :context %> <%= yield :title %> - GOV.UK</title>
     <%= yield :section_meta_tags %>
   </head>
   <body>
-    <div id="wrapper">
-      <%= render 'govuk_publishing_components/components/breadcrumbs', {
-        breadcrumbs: @breadcrumbs,
-        collapse_on_mobile: true
-      } %>
-      <main id="content" role="main">
+    <div id="wrapper" class="govuk-width-container">
+      <%= yield :back_link %>
+
+      <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
-            <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
             <%= yield %>
           </div>
         </div>
       </main>
     </div>
+
     <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
     <%= javascript_include_tag 'application', integrity: false %>
   </body>

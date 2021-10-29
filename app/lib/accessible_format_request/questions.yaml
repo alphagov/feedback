@@ -1,21 +1,24 @@
 questions:
   - group: set-format
-    title: Which accessible format would you like for
-    caption: Please choose one
+    title: Which accessible format do you need for
+    caption: Request accessible document
     optional: false
     inputs:
       - component: radio
         key: format_type
         options:
-          - text: Audio format
+          - text: Audio
             value: audio
           - text: Braille
             value: braille
           - text: British Sign Language
             value: british_sign_language
-          - text: Large print version
-            value: large_print
-          - text: Not seeing what you're looking for?
+          - text: Easy read
+            value: easy-read
+          - text: Magnified print
+            hint_text: Printed at double the original scale
+            value: magnified_print
+          - text: Another accessible format
             value: custom
   - group: custom_format
     title: What accessible format do you require?
@@ -26,14 +29,19 @@ questions:
     inputs:
       - component: textarea
         key: custom_details
+        error_message:
   - group: contact_details
-    title: In order for us to reach you about your request
-    caption: Enter your contact details
+    title: Contact information 
+    caption: Request accessible document
     optional: false
     inputs:
       - component: input
-        label: Name
-        key: contact_name
-      - component: input
         label: Email address
         key: contact_email
+        type: email
+        error_message:
+        autocomplete: email
+      - component: input
+        label: Full name (optional)
+        key: contact_name
+        type: text

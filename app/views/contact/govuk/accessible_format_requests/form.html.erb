@@ -1,38 +1,43 @@
 <% content_for :title, question_title %>
+<% content_for :context, "Request accessible document" %>
+<% content_for :back_link do %>
+  <%= render "govuk_publishing_components/components/back_link", {
+    href: "#"
+  } %>
+<% end %>
 
 <form action="<%= submission_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
   <% if question_component == "radio" %>
-    <%= render "govuk_publishing_components/components/radio", {
-      name: question_key,
-      heading: question_caption,
-      items: question_options
-    } %>
-  <% elsif question_component == "textarea"%>
-      <%= render "govuk_publishing_components/components/textarea", {
-      name: question_key,
-      label: {text: question_caption },
-    } %>
-  <% elsif question_component == "input"%>
-    <% question_inputs.each do |row| %>
-      <%= render "govuk_publishing_components/components/input", {
-        heading: question_title,
-        name: row[:key],
-        label: {text: row[:label]},
-    } %>
-    <% end %>
+    <%= render partial: "/contact/govuk/accessible_format_requests/inputs/radio_question" %>
+  <% elsif question_component == "textarea" %>
+    <%= render partial: "/contact/govuk/accessible_format_requests/inputs/textarea_question" %>
+  <% elsif question_component == "input" %>
+    <%= render partial: "/contact/govuk/accessible_format_requests/inputs/inputs_question" %>
   <% end %>
 
   <% permitted_params.each do |key, value| %>
-      <input type="hidden" name="<%= key %>" value="<%= value %>">
+    <input type="hidden" name="<%= key %>" value="<%= value %>">
   <% end %>
 
   <% unless last_question? %>
     <input type="hidden" name="question_number" value="<%= next_question_number %>">
   <% end %>
 
+  <%= debug(params) %>
+
   <div class="govuk-form-footer">
     <%= render "govuk_publishing_components/components/button", {
-      text: "Continue"
+      text: "Continue",
+      margin_bottom: true,
+      data_attributes: if last_question?
+        {
+          module: "gem-track-click",
+          "data-track-category": "requestAccessible",
+          "data-track-action": "Braille - Cabinet Office",
+          "data-track-label": "COVID-19 Winter Plan"
+        }
+      end
     } %>
   </div>
+
 </form>
