@@ -1,0 +1,10 @@
+<%= render "govuk_publishing_components/components/radio", {
+  name: input[:key],
+  id: input[:key],
+  heading: question_title,
+  heading_size: "l",
+  heading_caption: question_caption,
+  heading_level: 1,
+  items: input[:options],
+  error_message: flash["input_errors"]&.[](question_key)
+} %>

@@ -4,25 +4,11 @@
 <form action="<%= submission_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
   <% question_inputs.each do |input| %>
     <% if input[:component] == "radio" %>
-      <%= render "govuk_publishing_components/components/radio", {
-        name: input["key"],
-        heading: question_caption,
-        items: input[:options],
-        error_message: flash["input_errors"]&.[](question_key)
-      } %>
-    <% elsif input[:component] == "textarea"%>
-        <%= render "govuk_publishing_components/components/textarea", {
-        name: input["key"],
-        label: {text: question_caption },
-        error_message: flash["input_errors"]&.[](question_key)
-      } %>
-    <% elsif input[:component] == "input"%>
-      <%= render "govuk_publishing_components/components/input", {
-        heading: question_title,
-        name: input[:key],
-        label: {text: input[:label]},
-        error_message: flash["input_errors"]&.[](input[:key])
-      } %>
+      <%= render partial: "/contact/govuk/accessible_format_requests/inputs/radio_question", locals: { input: input } %>
+    <% elsif input[:component] == "textarea" %>
+      <%= render partial: "/contact/govuk/accessible_format_requests/inputs/textarea_question", locals: { input: input } %>
+    <% elsif input[:component] == "input" %>
+      <%= render partial: "/contact/govuk/accessible_format_requests/inputs/inputs_question", locals: { input: input } %>
     <% end %>
   <% end %>
 

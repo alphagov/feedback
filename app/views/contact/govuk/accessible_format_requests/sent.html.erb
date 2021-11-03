@@ -21,12 +21,4 @@
   <a href="<%= content_base_path%>" class="govuk-link">Return to <%= content_title%></a>
 </p>
 
-<p class="govuk-body">
-  <a href="https://surveys.publishing.service.gov.uk/s/accessible_format/"
-    class="govuk-link"
-    data-module="gem-track-click"
-    data-track-category="External Link Clicked"
-    data-track-action="https://surveys.publishing.service.gov.uk/s/accessible_format/"
-    data-track-label="Give us feedback on requesting accessible documents on GOV.UK">
-    Give us feedback on requesting accessible documents on GOV.UK</a> (takes 2 minutes)
-</p>
+<%= render partial: "/contact/govuk/accessible_format_requests/survey_link" %>
