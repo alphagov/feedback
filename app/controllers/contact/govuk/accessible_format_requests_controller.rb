@@ -4,6 +4,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   rescue_from UnfoundAttachmentError, with: :unable_to_create_ticket_error
   rescue_from NotifyService::Error, with: :unable_to_create_ticket_error
   helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params
+  before_action :show_previous_with_errors_if_missing_input
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
   def form; end
@@ -92,7 +93,7 @@ private
   def permitted_params
     document_params = %i[content_id attachment_id]
     question_keys = questions.map { |q| q["inputs"].pluck(:key) }.flatten
-    params.permit(*question_keys, *document_params)
+    params.permit(*question_keys, *document_params, :question_number)
   end
 
   def optional_question?
@@ -137,5 +138,24 @@ private
 
   def alternative_format_email
     requested_attachment["alternative_format_contact_email"]
+  end
+
+  def show_previous_with_errors_if_missing_input
+    return unless params[:previous_question_number]
+
+    previous_question = questions[(params[:previous_question_number].to_i - 1)]
+
+    input_errors = previous_question["inputs"].each_with_object({}) do |input, errors|
+      key = input["key"]
+      error_message = input["error_message"]
+      if params[key].blank? && error_message
+        errors[key] = error_message
+      end
+    end
+
+    if input_errors.any?
+      flash[:input_errors] = input_errors
+      redirect_post(request.original_url, params: permitted_params.to_h.merge(question_number: params[:previous_question_number]))
+    end
   end
 end

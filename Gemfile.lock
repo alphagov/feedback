@@ -257,6 +257,7 @@ GEM
     raindrops (0.20.0)
     rake (13.0.6)
     regexp_parser (2.2.0)
+    repost (0.3.8)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -413,6 +414,7 @@ DEPENDENCIES
   rack_strip_client_ip
   rails (= 6.1.4.4)
   rails-controller-testing
+  repost
   rspec-rails
   rubocop-govuk
   sassc-rails

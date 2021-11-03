@@ -6,6 +6,7 @@ questions:
     inputs:
       - component: radio
         key: format_type
+        error_message: Select an accessible format
         options:
           - text: Audio
             value: audio
@@ -29,6 +30,7 @@ questions:
     inputs:
       - component: textarea
         key: custom_details
+        error_message: Enter the accessible format you need
   - group: contact_details
     title: Contact information
     caption: Request accessible document
@@ -37,6 +39,7 @@ questions:
       - component: input
         label: Email address
         key: contact_email
+        error_message: Enter your email address
         type: email
         autocomplete: email
       - component: input

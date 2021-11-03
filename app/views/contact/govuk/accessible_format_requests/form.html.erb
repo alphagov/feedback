@@ -8,17 +8,20 @@
         name: input["key"],
         heading: question_caption,
         items: input[:options],
+        error_message: flash["input_errors"]&.[](question_key)
       } %>
     <% elsif input[:component] == "textarea"%>
         <%= render "govuk_publishing_components/components/textarea", {
         name: input["key"],
         label: {text: question_caption },
+        error_message: flash["input_errors"]&.[](question_key)
       } %>
     <% elsif input[:component] == "input"%>
       <%= render "govuk_publishing_components/components/input", {
         heading: question_title,
         name: input[:key],
         label: {text: input[:label]},
+        error_message: flash["input_errors"]&.[](input[:key])
       } %>
     <% end %>
   <% end %>
@@ -27,9 +30,8 @@
     <input type="hidden" name="<%= key %>" value="<%= value %>">
   <% end %>
 
-  <% unless last_question? %>
-    <input type="hidden" name="question_number" value="<%= next_question_number %>">
-  <% end %>
+  <input type="hidden" name="question_number" value="<%= next_question_number %>">
+  <input type="hidden" name="previous_question_number" value="<%= next_question_number - 1 %>">
 
   <div class="govuk-form-footer">
     <%= render "govuk_publishing_components/components/button", {

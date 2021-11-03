@@ -1,0 +1,363 @@
+{
+  "analytics_identifier": null,
+  "base_path": "/government/statistics/country-and-regional-analysis-2021",
+  "content_id": "123",
+  "document_type": "national_statistics",
+  "first_published_at": "2021-11-24T09:30:11.000+00:00",
+  "locale": "en",
+  "phase": "live",
+  "public_updated_at": "2021-11-24T09:30:11.000+00:00",
+  "publishing_app": "whitehall",
+  "publishing_scheduled_at": "2021-11-24T09:30:00.000+00:00",
+  "rendering_app": "government-frontend",
+  "scheduled_publishing_delay_seconds": 16,
+  "schema_name": "publication",
+  "title": "Country and regional analysis: 2021",
+  "updated_at": "2021-11-24T09:31:04.176Z",
+  "withdrawn_notice": {},
+  "publishing_request_id": "27950-1637667995.618-10.13.3.142-2262",
+  "links": {
+    "children": [
+      {
+        "content_id": "49742861-3b63-46f8-9f9e-1046a4e5c16b",
+        "title": "Country and regional analysis: November 2021",
+        "locale": "en",
+        "api_path": "/api/content/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021",
+        "base_path": "/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021",
+        "document_type": "html_publication",
+        "public_updated_at": "2021-11-23T11:42:25Z",
+        "schema_name": "html_publication",
+        "withdrawn": false,
+        "links": {
+          "parent": [
+            {
+              "content_id": "3fdc15d2-301a-487b-bded-171127d9bae6",
+              "title": "Country and regional analysis: 2021",
+              "locale": "en",
+              "api_path": "/api/content/government/statistics/country-and-regional-analysis-2021",
+              "base_path": "/government/statistics/country-and-regional-analysis-2021",
+              "document_type": "national_statistics",
+              "public_updated_at": "2021-11-24T09:30:11Z",
+              "schema_name": "publication",
+              "withdrawn": false,
+              "links": {},
+              "api_url": "https://www.gov.uk/api/content/government/statistics/country-and-regional-analysis-2021",
+              "web_url": "https://www.gov.uk/government/statistics/country-and-regional-analysis-2021"
+            }
+          ]
+        },
+        "api_url": "https://www.gov.uk/api/content/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021",
+        "web_url": "https://www.gov.uk/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021"
+      },
+      {
+        "content_id": "e1c7a861-d74a-4c82-a502-ea7021345394",
+        "title": "Country and regional analysis: guidance",
+        "locale": "en",
+        "api_path": "/api/content/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance",
+        "base_path": "/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance",
+        "document_type": "html_publication",
+        "public_updated_at": "2021-11-23T11:44:06Z",
+        "schema_name": "html_publication",
+        "withdrawn": false,
+        "links": {
+          "parent": [
+            {
+              "content_id": "3fdc15d2-301a-487b-bded-171127d9bae6",
+              "title": "Country and regional analysis: 2021",
+              "locale": "en",
+              "api_path": "/api/content/government/statistics/country-and-regional-analysis-2021",
+              "base_path": "/government/statistics/country-and-regional-analysis-2021",
+              "document_type": "national_statistics",
+              "public_updated_at": "2021-11-24T09:30:11Z",
+              "schema_name": "publication",
+              "withdrawn": false,
+              "links": {},
+              "api_url": "https://www.gov.uk/api/content/government/statistics/country-and-regional-analysis-2021",
+              "web_url": "https://www.gov.uk/government/statistics/country-and-regional-analysis-2021"
+            }
+          ]
+        },
+        "api_url": "https://www.gov.uk/api/content/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance",
+        "web_url": "https://www.gov.uk/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance"
+      }
+    ],
+    "government": [
+      {
+        "content_id": "d4fbc1b9-d47d-4386-af04-ac909f868f92",
+        "title": "2015 Conservative government",
+        "locale": "en",
+        "api_path": "/api/content/government/2015-conservative-government",
+        "base_path": "/government/2015-conservative-government",
+        "document_type": "government",
+        "details": {
+          "started_on": "2015-05-08T00:00:00+00:00",
+          "ended_on": null,
+          "current": true
+        },
+        "links": {},
+        "api_url": "https://www.gov.uk/api/content/government/2015-conservative-government",
+        "web_url": "https://www.gov.uk/government/2015-conservative-government"
+      }
+    ],
+    "organisations": [
+      {
+        "content_id": "1994e0e4-bd19-4966-bbd7-f293d6e90a6b",
+        "title": "HM Treasury",
+        "locale": "en",
+        "analytics_identifier": "D15",
+        "api_path": "/api/content/government/organisations/hm-treasury",
+        "base_path": "/government/organisations/hm-treasury",
+        "document_type": "organisation",
+        "schema_name": "organisation",
+        "withdrawn": false,
+        "details": {
+          "logo": {
+            "crest": "single-identity",
+            "formatted_title": "HM Treasury"
+          },
+          "brand": "hm-treasury",
+          "default_news_image": {
+            "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s300_HMT_buiding_plaque.jpg",
+            "high_resolution_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s960_HMT_buiding_plaque.jpg"
+          },
+          "organisation_govuk_status": {
+            "url": null,
+            "status": "live",
+            "updated_at": null
+          }
+        },
+        "links": {},
+        "api_url": "https://www.gov.uk/api/content/government/organisations/hm-treasury",
+        "web_url": "https://www.gov.uk/government/organisations/hm-treasury"
+      }
+    ],
+    "original_primary_publishing_organisation": [
+      {
+        "content_id": "1994e0e4-bd19-4966-bbd7-f293d6e90a6b",
+        "title": "HM Treasury",
+        "locale": "en",
+        "analytics_identifier": "D15",
+        "api_path": "/api/content/government/organisations/hm-treasury",
+        "base_path": "/government/organisations/hm-treasury",
+        "document_type": "organisation",
+        "schema_name": "organisation",
+        "withdrawn": false,
+        "details": {
+          "logo": {
+            "crest": "single-identity",
+            "formatted_title": "HM Treasury"
+          },
+          "brand": "hm-treasury",
+          "default_news_image": {
+            "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s300_HMT_buiding_plaque.jpg",
+            "high_resolution_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s960_HMT_buiding_plaque.jpg"
+          },
+          "organisation_govuk_status": {
+            "url": null,
+            "status": "live",
+            "updated_at": null
+          }
+        },
+        "links": {},
+        "api_url": "https://www.gov.uk/api/content/government/organisations/hm-treasury",
+        "web_url": "https://www.gov.uk/government/organisations/hm-treasury"
+      }
+    ],
+    "primary_publishing_organisation": [
+      {
+        "content_id": "1994e0e4-bd19-4966-bbd7-f293d6e90a6b",
+        "title": "HM Treasury",
+        "locale": "en",
+        "analytics_identifier": "D15",
+        "api_path": "/api/content/government/organisations/hm-treasury",
+        "base_path": "/government/organisations/hm-treasury",
+        "document_type": "organisation",
+        "schema_name": "organisation",
+        "withdrawn": false,
+        "details": {
+          "logo": {
+            "crest": "single-identity",
+            "formatted_title": "HM Treasury"
+          },
+          "brand": "hm-treasury",
+          "default_news_image": {
+            "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s300_HMT_buiding_plaque.jpg",
+            "high_resolution_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/default_news_organisation_image_data/file/1/s960_HMT_buiding_plaque.jpg"
+          },
+          "organisation_govuk_status": {
+            "url": null,
+            "status": "live",
+            "updated_at": null
+          }
+        },
+        "links": {},
+        "api_url": "https://www.gov.uk/api/content/government/organisations/hm-treasury",
+        "web_url": "https://www.gov.uk/government/organisations/hm-treasury"
+      }
+    ],
+    "available_translations": [
+      {
+        "title": "Country and regional analysis: 2021",
+        "public_updated_at": "2021-11-24T09:30:11Z",
+        "document_type": "national_statistics",
+        "schema_name": "publication",
+        "base_path": "/government/statistics/country-and-regional-analysis-2021",
+        "api_path": "/api/content/government/statistics/country-and-regional-analysis-2021",
+        "withdrawn": false,
+        "content_id": "3fdc15d2-301a-487b-bded-171127d9bae6",
+        "locale": "en",
+        "api_url": "https://www.gov.uk/api/content/government/statistics/country-and-regional-analysis-2021",
+        "web_url": "https://www.gov.uk/government/statistics/country-and-regional-analysis-2021",
+        "links": {}
+      }
+    ]
+  },
+  "description": "Statistical estimates for the allocation of identifiable expenditure between the regions and nations of the United Kingdom.",
+  "details": {
+    "body": "<div class=\"govspeak\"><p>The Country and Regional Analysis (<abbr title=\"Country and regional analysis\">CRA</abbr>) presents statistical estimates for the allocation of identifiable expenditure between the regions and nations of the UK. This year’s dataset covers the outturn period 2016-17 to 2020-21.</p>\n\n<h3 id=\"data-analysis-tools\">Data analysis tools</h3>\n\n<p>Alongside the main <abbr title=\"Country and regional analysis\">CRA</abbr> release, the Treasury has published further analysis tools in the form of “interactive tables” and the full <abbr title=\"Country and regional analysis\">CRA</abbr> database. These tools will allow users to manipulate the data to create their own views. The database contains the underlying “segment” level data used to construct the published tables in <abbr title=\"Country and regional analysis\">CRA</abbr> 2021. Figures are in nominal terms. The “interactive tables” include both nominal and real terms data, but exclude the “segment” level information.</p>\n\n<p>For statistical enquiries, please contact <a href=\"mailto:Pesa.document@hmtreasury.gov.uk\" class=\"govuk-link\">Pesa.document@hmtreasury.gov.uk</a></p>\n\n</div>",
+    "tags": {
+      "topics": [],
+      "browse_pages": []
+    },
+    "documents": [
+      "<section class=\"attachment embedded\" id=\"attachment_6098961\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-html-b0465911e56983d98c70f0e25fba24bc206d37e8c83d4addf6421dcf6022c6cd.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021\">Country and regional analysis: November 2021</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">HTML</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098963\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-html-b0465911e56983d98c70f0e25fba24bc206d37e8c83d4addf6421dcf6022c6cd.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance\">Country and regional analysis: guidance</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">HTML</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098965\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035320/CRA_2021_Chapter_A_tables.xlsx\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-spreadsheet-471052e0d03e940bbc62528a05ac204a884b553e4943e63c8bffa6b8baef8967.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035320/CRA_2021_Chapter_A_tables.xlsx\">Country and regional analysis 2020: A tables</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">MS Excel Spreadsheet</span>, <span class=\"file-size\">302KB</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098967\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035322/CRA_2021_Chapter_B_tables.xlsx\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-spreadsheet-471052e0d03e940bbc62528a05ac204a884b553e4943e63c8bffa6b8baef8967.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035322/CRA_2021_Chapter_B_tables.xlsx\">Country and regional analysis 2020: B tables</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">MS Excel Spreadsheet</span>, <span class=\"file-size\">139KB</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098968\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035323/CRA_2021_methodology_notes.xlsx\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-spreadsheet-471052e0d03e940bbc62528a05ac204a884b553e4943e63c8bffa6b8baef8967.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035323/CRA_2021_methodology_notes.xlsx\">Country and regional analysis 2021: methodology</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">MS Excel Spreadsheet</span>, <span class=\"file-size\">96.4KB</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098969\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035324/CRA_2021_Database_for_Publication.xlsx\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-spreadsheet-471052e0d03e940bbc62528a05ac204a884b553e4943e63c8bffa6b8baef8967.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035324/CRA_2021_Database_for_Publication.xlsx\">Country and regional analysis 2021: database in Excel format</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">MS Excel Spreadsheet</span>, <span class=\"file-size\">2.19MB</span>\n    </p>\n\n\n  </div>\n</section>",
+      "<section class=\"attachment embedded\" id=\"attachment_6098971\">\n  <div class=\"attachment-thumb\">\n      <a aria-hidden=\"true\" class=\"thumbnail\" tabindex=\"-1\" href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035326/CRA_2021_Interactive_Table.xlsx\"><img alt=\"\" src=\"https://www.gov.uk/assets/whitehall/pub-cover-spreadsheet-471052e0d03e940bbc62528a05ac204a884b553e4943e63c8bffa6b8baef8967.png\" /></a>\n  </div>\n  <div class=\"attachment-details\">\n    <h3 class=\"title govuk-!-font-size-27 govuk-!-font-weight-regular\"><a href=\"https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035326/CRA_2021_Interactive_Table.xlsx\">Country and regional analysis 2021: interactive tables in Excel format</a></h3>\n    <p class=\"metadata\">\n        <span class=\"type\">MS Excel Spreadsheet</span>, <span class=\"file-size\">376KB</span>\n    </p>\n\n\n  </div>\n</section>"
+    ],
+    "political": false,
+    "attachments": [
+      {
+        "id": "456",
+        "url": "/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-november-2021",
+        "isbn": "",
+        "title": "Country and regional analysis: November 2021",
+        "attachment_type": "html",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false
+      },
+      {
+        "id": "6098963",
+        "url": "/government/statistics/country-and-regional-analysis-2021/country-and-regional-analysis-guidance",
+        "isbn": "",
+        "title": "Country and regional analysis: guidance",
+        "attachment_type": "html",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false
+      },
+      {
+        "id": "6098965",
+        "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035320/CRA_2021_Chapter_A_tables.xlsx",
+        "isbn": "",
+        "title": "Country and regional analysis 2020: A tables",
+        "filename": "CRA_2021_Chapter_A_tables.xlsx",
+        "file_size": 309736,
+        "accessible": true,
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "attachment_type": "file",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false,
+        "alternative_format_contact_email": "digital.communications@hmtreasury.gov.uk"
+      },
+      {
+        "id": "6098967",
+        "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035322/CRA_2021_Chapter_B_tables.xlsx",
+        "isbn": "",
+        "title": "Country and regional analysis 2020: B tables",
+        "filename": "CRA_2021_Chapter_B_tables.xlsx",
+        "file_size": 142225,
+        "accessible": true,
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "attachment_type": "file",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false,
+        "alternative_format_contact_email": "digital.communications@hmtreasury.gov.uk"
+      },
+      {
+        "id": "6098968",
+        "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035323/CRA_2021_methodology_notes.xlsx",
+        "isbn": "",
+        "title": "Country and regional analysis 2021: methodology",
+        "filename": "CRA_2021_methodology_notes.xlsx",
+        "file_size": 98680,
+        "accessible": true,
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "attachment_type": "file",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false,
+        "alternative_format_contact_email": "digital.communications@hmtreasury.gov.uk"
+      },
+      {
+        "id": "6098969",
+        "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035324/CRA_2021_Database_for_Publication.xlsx",
+        "isbn": "",
+        "title": "Country and regional analysis 2021: database in Excel format",
+        "filename": "CRA_2021_Database_for_Publication.xlsx",
+        "file_size": 2301188,
+        "accessible": true,
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "attachment_type": "file",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false,
+        "alternative_format_contact_email": "digital.communications@hmtreasury.gov.uk"
+      },
+      {
+        "id": "6098971",
+        "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1035326/CRA_2021_Interactive_Table.xlsx",
+        "isbn": "",
+        "title": "Country and regional analysis 2021: interactive tables in Excel format",
+        "filename": "CRA_2021_Interactive_Table.xlsx",
+        "file_size": 385256,
+        "accessible": true,
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "attachment_type": "file",
+        "hoc_paper_number": "",
+        "unique_reference": "",
+        "command_paper_number": "",
+        "unnumbered_hoc_paper": false,
+        "unnumbered_command_paper": false,
+        "alternative_format_contact_email": "digital.communications@hmtreasury.gov.uk"
+      }
+    ],
+    "change_history": [
+      {
+        "note": "First published.",
+        "public_timestamp": "2021-11-24T09:30:11.000+00:00"
+      }
+    ],
+    "first_public_at": "2021-11-24T09:30:11.000+00:00",
+    "featured_attachments": [
+      "6098961",
+      "6098963",
+      "6098965",
+      "6098967",
+      "6098968",
+      "6098969",
+      "6098971"
+    ],
+    "emphasised_organisations": [
+      "1994e0e4-bd19-4966-bbd7-f293d6e90a6b"
+    ]
+  }
+}

@@ -133,6 +133,69 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         expect(response.body).to have_css("form#request-accessible-format[action=\"/contact/govuk/request-accessible-format/sent\"]")
       end
     end
+
+    # Questions can have a mix of required (e.g email address) and non-required (e.g name) inputs.
+    # If a user submits a form without entering a required input the page should reload with all
+    # existing parameters and display an error message.
+    context "displaying error messages for missing user input" do
+      # The required_keys are set in the following context blocks
+      let(:required_inputs) { Hash[required_keys.collect { |v| [v.to_sym, example_param] }] }
+
+      context "questions with required user inputs" do
+        let(:required_input_question) { format_request_questions.detect { |question| question["inputs"][0]["error_message"] } }
+        let(:required_input_question_number) { format_request_questions.find_index(required_input_question) + 1 }
+
+        describe "when a required user input is not entered" do
+          before { post :form, params: base_params.merge({ 'question_number': required_input_question_number + 1, 'previous_question_number': required_input_question_number }) }
+
+          it "reposts a form requesting the previous question" do
+            expect(response.body).to have_css("input[name=question_number][value=#{required_input_question_number}]", visible: false)
+          end
+
+          it "sets the error messages in the flash" do
+            keys_and_messages = required_input_question["inputs"].collect do |input|
+              { input["key"] => input["error_message"] }
+            end
+
+            keys_and_messages.each do |key, message|
+              expect(flash["input_errors"][key]).to eq message
+            end
+          end
+        end
+
+        describe "when all required user inputs are entered" do
+          let(:required_keys) { required_input_question["inputs"].filter_map { |input| input["key"] if input["error_message"] } }
+
+          before { post :form, params: required_inputs.merge(base_params.merge({ 'question_number': required_input_question_number + 1, 'previous_question_number': required_input_question_number })) }
+
+          it "proceeds to the next question" do
+            expect(response.body).to have_css("input[name=question_number][value=#{required_input_question_number + 1}]", visible: false)
+          end
+
+          it "does not set error messages in the flash" do
+            expect(flash["input_errors"]).to eq nil
+          end
+        end
+      end
+
+      context "questions with unrequired user inputs" do
+        let(:unrequired_input_question) { format_request_questions.find { |question| question["inputs"].detect { |input| input["error_message"].nil? } } }
+        let(:unrequired_input_question_number) { format_request_questions.find_index(unrequired_input_question) + 1 }
+        let(:required_keys) { unrequired_input_question["inputs"].filter_map { |input| input["key"] if input["error_message"] } }
+
+        describe "when an unrequired user input is not entered" do
+          before { post :form, params: required_inputs.merge(base_params.merge({ 'question_number': unrequired_input_question_number + 1, 'previous_question_number': unrequired_input_question_number })) }
+
+          it "proceeds to the next question" do
+            expect(response.body).to have_css("input[name=question_number][value=#{unrequired_input_question_number + 1}]", visible: false)
+          end
+
+          it "does not set error messages in the flash" do
+            expect(flash["input_errors"]).to eq nil
+          end
+        end
+      end
+    end
   end
 
   describe "#sent" do
