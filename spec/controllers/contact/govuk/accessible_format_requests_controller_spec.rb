@@ -47,8 +47,6 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
 
   describe "#form" do
     let(:format_request_questions) { YAML.load_file(Rails.root.join("app/lib/accessible_format_request/questions.yaml"))["questions"] }
-    let(:content_id) { "123abc" }
-    let(:attachment_id) { "456def" }
     let(:base_params) { { content_id: content_id, attachment_id: attachment_id } }
     let(:example_param) { "custom" }
     let(:optional_question) { format_request_questions.detect { |question| question["optional"] } }

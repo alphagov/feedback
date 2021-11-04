@@ -1,5 +1,10 @@
 <% content_for :title, question_title %>
 <% content_for :context, "Request accessible document" %>
+<% content_for :back_link do %>
+  <%= render "govuk_publishing_components/components/back_link", {
+    href: content_base_path
+  } %>
+<% end %>
 
 <form action="<%= submission_path %>" method="POST" id="request-accessible-format" class="gem-c-title">
   <% question_inputs.each do |input| %>
