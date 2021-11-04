@@ -26,7 +26,15 @@
 
   <div class="govuk-form-footer">
     <%= render "govuk_publishing_components/components/button", {
-      text: "Continue"
+      text: "Continue",
+      margin_bottom: true,
+      data_attributes: last_question? ?
+        {
+          module: "gem-track-click",
+          "data-track-category": "requestAccessible",
+          "data-track-action":  "#{requested_format} - #{content_department}",
+          "data-track-label": content_title
+        } : {}
     } %>
   </div>
 </form>

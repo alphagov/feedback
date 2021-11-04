@@ -11,6 +11,7 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
   let(:contact_name) { "J Doe" }
   let(:contact_email) { "doe@example.com" }
   let(:content_title) { "A document with some inaccessible attachments" }
+  let(:department_title) { "Example Department" }
   let(:attachment_title) { "Inaccessible CSV" }
   let(:base_path) { "/government/publications/example-document" }
   let(:alternative_format_contact_email) { "format_request@example.com" }
@@ -29,6 +30,11 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
       base_path: base_path,
       content_id: content_id,
       title: content_title,
+      links: {
+        primary_publishing_organisation: [
+          { title: department_title },
+        ],
+      },
       details: {
         attachments: [
           {

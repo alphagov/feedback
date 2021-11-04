@@ -3,7 +3,7 @@ require "gds_api/publishing_api"
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   rescue_from UnfoundAttachmentError, with: :unable_to_create_ticket_error
   rescue_from NotifyService::Error, with: :unable_to_create_ticket_error
-  helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params
+  helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params, :content_department, :requested_format
   before_action :show_previous_with_errors_if_missing_input
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
@@ -13,7 +13,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
     format_request = AccessibleFormatRequest.new(
       document_title: requested_document_title,
       publication_path: content_base_path,
-      format_type: params[:format_type],
+      format_type: requested_format,
       custom_details: params[:custom_details],
       contact_name: params[:contact_name],
       contact_email: params[:contact_email],
@@ -118,6 +118,10 @@ private
     content_item["title"]
   end
 
+  def content_department
+    content_item["links"]["primary_publishing_organisation"].first["title"]
+  end
+
   def content_attachments
     content_item.dig("details", "attachments")
   end
@@ -138,6 +142,10 @@ private
 
   def alternative_format_email
     requested_attachment["alternative_format_contact_email"]
+  end
+
+  def requested_format
+    params[:format_type]
   end
 
   def show_previous_with_errors_if_missing_input
