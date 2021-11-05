@@ -44,8 +44,15 @@ RSpec.describe AccessibleFormatRequest, type: :model do
       expect(subject[:email_address]).to eq alternative_format_email
     end
 
-    it "includes the users name" do
+    it "includes the users contact name" do
       expect(subject[:personalisation][:contact_name]).to eq contact_name
+    end
+
+    context "when a contact name is not provided" do
+      let(:contact_name) { nil }
+      it "includes the default text when users name is not provided" do
+        expect(subject[:personalisation][:contact_name]).to eq "Not provided"
+      end
     end
 
     it "includes the users email address" do

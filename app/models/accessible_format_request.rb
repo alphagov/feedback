@@ -26,7 +26,7 @@ class AccessibleFormatRequest
         # Note that notify will error if we don't supply all the keys the
         # template uses, but it will also error if we supply extra keys the
         # template doesn't use.  Take care here.
-        contact_name: contact_name,
+        contact_name: presented_contact_name,
         contact_email: contact_email,
         document_title: document_title,
         publication_path: publication_path,
@@ -46,6 +46,10 @@ private
 
   def presented_custom_details
     custom_details.presence || "Not provided"
+  end
+
+  def presented_contact_name
+    contact_name.presence || "Not provided"
   end
 
   def template_id
