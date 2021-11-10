@@ -51,6 +51,23 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
 
   before { stub_publishing_api_has_item(content_item) }
 
+  describe "#unfulfilled_request" do
+    it "should render the unfulfilled_request page if missing content_id" do
+      get :form, params: { attachment_id: attachment_id }
+      expect(response).to render_template("unfulfilled_request")
+    end
+
+    it "should render the unfulfilled_request page if missing attachment_id" do
+      get :form, params: { content_id: content_id }
+      expect(response).to render_template("unfulfilled_request")
+    end
+
+    it "should not render the unfulfilled_request page if content_id and attachment_id are present" do
+      get :form, params: { content_id: content_id, attachment_id: attachment_id }
+      expect(response).not_to render_template("unfulfilled_request")
+    end
+  end
+
   describe "#form" do
     let(:format_request_questions) { YAML.load_file(Rails.root.join("app/lib/accessible_format_request/questions.yaml"))["questions"] }
     let(:base_params) { { content_id: content_id, attachment_id: attachment_id } }

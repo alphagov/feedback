@@ -4,6 +4,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   rescue_from UnfoundAttachmentError, with: :unable_to_create_ticket_error
   rescue_from NotifyService::Error, with: :unable_to_create_ticket_error
   helper_method :question_title, :question_caption, :question_inputs, :content_base_path, :content_title, :last_question?, :next_question_number, :submission_path, :permitted_params, :content_department, :requested_format
+  before_action :unfulfilled_request, only: [:form]
   before_action :show_previous_with_errors_if_missing_input
   before_action :increment_question_number_if_optional_skipped, only: [:form]
 
@@ -165,5 +166,11 @@ private
       flash[:input_errors] = input_errors
       redirect_post(request.original_url, params: permitted_params.to_h.merge(question_number: params[:previous_question_number]))
     end
+  end
+
+  def unfulfilled_request
+    return if params[:content_id] && params[:attachment_id]
+
+    render "contact/govuk/accessible_format_requests/unfulfilled_request"
   end
 end
