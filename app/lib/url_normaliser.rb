@@ -13,9 +13,12 @@ module UrlNormaliser
   end
 
   def self.url_if_valid(candidate)
-    if !valid_url?(candidate) then nil
-    elsif URI.parse(candidate).relative? then Plek.new.website_root + candidate
-    else candidate
+    return unless valid_url?(candidate)
+
+    if URI.parse(candidate).relative?
+      Plek.new.website_root + candidate
+    else
+      candidate
     end
   end
 
