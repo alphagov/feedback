@@ -30,5 +30,7 @@ module Feedback
     # to use CSS that has same function names as SCSS such as max.
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
+
+    config.max_age = ENV["MAX_AGE"] || 300
   end
 end

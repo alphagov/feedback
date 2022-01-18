@@ -4,7 +4,7 @@ class ContactController < ApplicationController
   include Slimmer::Headers
   include ApplicationHelper
 
-  before_action :set_cache_control, only: %i[new index]
+  before_action :set_expiry, only: %i[new index]
 
   def index
     @popular_links = filtered_links(CONTACT_LINKS.popular)
@@ -109,8 +109,8 @@ private
     params[type] || {}
   end
 
-  def set_cache_control
-    expires_in 10.minutes, public: true unless Rails.env.development?
+  def set_expiry
+    expires_in Rails.application.config.max_age, public: true unless Rails.env.development?
   end
 
   def browser_attributes
