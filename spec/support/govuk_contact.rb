@@ -5,9 +5,9 @@ RSpec.shared_examples_for "a GOV.UK contact" do
       expect(response).to be_successful
     end
 
-    it "should set cache control headers for 10 mins" do
+    it "should set cache control headers for 5 mins" do
       get :new
-      expect(response.headers["Cache-Control"]).to eq("max-age=600, public")
+      expect(response.headers["Cache-Control"]).to eq("max-age=300, public")
       expect(response).to be_successful
     end
 
