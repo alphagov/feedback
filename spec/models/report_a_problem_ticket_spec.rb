@@ -35,6 +35,14 @@ RSpec.describe ReportAProblemTicket, type: :model do
     expect(ticket(what_doing: "").errors[:what_doing].size).to eq(1)
   end
 
+  it "should validate the absence of 'giraffe'" do
+    expect(ticket(giraffe: "").errors[:giraffe].size).to eq(0)
+  end
+
+  it "should invalidate the presence of 'giraffe' (suspected spam)" do
+    expect(ticket(giraffe: "Lorem ipsum dolor sit amet, consectetur adipiscing elit").errors[:giraffe].size).to eq(1)
+  end
+
   it "should filter 'javascript_enabled'" do
     expect(ticket(javascript_enabled: "true").javascript_enabled).to be_truthy
 
