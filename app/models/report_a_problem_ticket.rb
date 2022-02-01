@@ -3,7 +3,7 @@ require "gds_api/support"
 class ReportAProblemTicket < Ticket
   SOURCE_WHITELIST = %w[mainstream inside_government page_not_found].freeze
 
-  attr_accessor :what_wrong, :what_doing, :referrer
+  attr_accessor :what_wrong, :what_doing, :giraffe, :referrer
   attr_writer :page_owner, :javascript_enabled, :source
 
   validates :what_wrong, presence: true, if: proc { |ticket| ticket.what_doing.blank? }
