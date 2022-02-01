@@ -1,0 +1,42 @@
+<%= render "govuk_publishing_components/components/back_link", { href: @back_path } %>
+
+<% if flash[:input_errors]&.any? %>
+  <%= render "govuk_publishing_components/components/error_summary", {
+    id: "error-summary",
+    title: t("controllers.contact.govuk.accessible_format_requests.error_summary"),
+    items: flash[:input_errors].map { |err| { text: err } },
+  }%>
+<% end %>
+
+<%= tag.span(t("controllers.contact.govuk.accessible_format_requests.caption"), class: "govuk-caption-l") %>
+
+<%= render "govuk_publishing_components/components/heading", text: t("controllers.contact.govuk.accessible_format_requests.contact_information_heading"), heading_level: 1 %>
+
+<p><%= t("controllers.contact.govuk.accessible_format_requests.information_use") %></p>
+
+<%= form_with url: contact_govuk_request_accessible_format_send_request_path, method: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: { text: t("controllers.contact.govuk.accessible_format_requests.email_address") },
+    name: "email_address",
+    value: params[:email_address],
+    error_message: flash[:email_address_error],
+  }
+  %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: { text: t("controllers.contact.govuk.accessible_format_requests.full_name") },
+    name: "full_name",
+    value: params[:full_name],
+  }
+  %>
+
+  <%= hidden_field_tag :content_id, params["content_id"]%>
+  <%= hidden_field_tag :attachment_id, params["attachment_id"]%>
+  <%= hidden_field_tag :format_type, params["format_type"]%>
+  <%= hidden_field_tag :other_format, params["other_format"]%>
+
+  <div class="govuk-form-footer">
+    <%= render "govuk_publishing_components/components/button", text: t("controllers.contact.govuk.accessible_format_requests.continue") %>
+  </div>
+<% end %>

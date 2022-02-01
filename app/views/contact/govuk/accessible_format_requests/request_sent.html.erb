@@ -1,0 +1,9 @@
+<%= render "govuk_publishing_components/components/panel", title: t("controllers.contact.govuk.accessible_format_requests.request_sent_panel") %>
+
+<%= render "govuk_publishing_components/components/heading", text: t("controllers.contact.govuk.accessible_format_requests.request_sent_heading") %>
+
+<%= raw t("controllers.contact.govuk.accessible_format_requests.request_sent_body") %>
+
+<% if content_path %>
+  <%= link_to t("controllers.contact.govuk.accessible_format_requests.return_to", attachment_title: attachment_title), content_path %>
+<% end %>

@@ -23,6 +23,10 @@ Rails.application.routes.draw do
       post "email-survey-signup.js", to: "email_survey_signup#create", defaults: { format: :js }
       post "content_improvement", to: "content_improvement#create", defaults: { format: :js }
       resources "page_improvements", only: [:create], format: false
+      get "request-accessible-format", to: "accessible_format_requests#format_type", format: false
+      post "request-accessible-format/contact-details", to: "accessible_format_requests#contact_details", format: false
+      post "request-accessible-format/send-request", to: "accessible_format_requests#send_request", format: false
+      get "request-accessible-format/request-sent", to: "accessible_format_requests#request_sent", format: false
     end
   end
 

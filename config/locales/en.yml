@@ -12,3 +12,38 @@ en:
         email_survey_signup:
           done_invalid_email: <h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>
           service_unavailable: <h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>
+        accessible_format_requests:
+          caption: Request accessible document
+          continue: Continue
+          error_summary: There is a problem
+          format_type_heading: Which accessible format do you need for %{attachment_title}
+          format_type_error: Select an accessible format
+          other_format_error: Enter the accessible format you need
+          contact_information_heading: Contact Information
+          information_use: We'll only use this information to contact you about your request
+          email_address: Email address
+          full_name: Full name (optional)
+          email_missing_error: Enter your email address
+          email_invalid_error: Enter a valid email address
+          request_sent_panel: Request Sent
+          request_sent_heading: What happens next
+          request_sent_body: <p>We'll email you:</p> <ul> <li>if we need more information about your request</li> <li>to confirm we can provide the accessible format you've requested</li> </ul>
+          return_to: Return to %{attachment_title}
+          missing_content_body: <p>Select ‘Request an accessible format of this document’ next to a GOV.UK attachment.</p><p><a href="/search">Search GOV.UK</a> to find the document you're looking for.</p>
+  models:
+    accessible_format_options:
+      - text: Audio
+        value: audio
+      - text: Braille
+        value: braille
+      - text: British Sign Language
+        value: british_sign_language
+      - text: Easy read
+        value: easy_read
+      - text: Magnified Print
+        value: magnified_print
+        hint_text: Printed at double the original scale
+      - text: Other Accessible Format
+        value: other
+        conditional_label: What accessible format do you need?
+        conditional_name: other_format
