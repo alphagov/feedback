@@ -9,4 +9,6 @@ Rails.application.config.problem_report_spam_matchers = [
   # either single words or missing completely
   ->(ticket) { ticket.what_wrong.exclude?(" ") && ticket.what_doing.exclude?(" ") },
   ->(ticket) { ticket.giraffe.present? },
+  # mark duplicate values in "what_wrong" and "what_doing" fields as spam
+  ->(ticket) { ticket.what_wrong == ticket.what_doing },
 ].freeze

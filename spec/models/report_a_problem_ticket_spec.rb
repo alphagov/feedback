@@ -82,6 +82,10 @@ RSpec.describe ReportAProblemTicket, type: :model do
       expect(ticket(what_wrong: "WCRTESTINP scanning")).to be_spam
     end
 
+    it "should mark duplicate values in 'what_doing' and 'what_wrong' fields as spam" do
+      expect(ticket(what_doing: "Lorem ipsum dolor sit amet", what_wrong: "Lorem ipsum dolor sit amet")).to be_spam
+    end
+
     it "should allow genuine submissions" do
       expect(ticket(what_doing: "browsing", what_wrong: "it broke")).to_not be_spam
     end
