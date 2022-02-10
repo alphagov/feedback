@@ -59,8 +59,12 @@
     form.appendChild(referrerInput)
   }
 
+  GOVUK.feedback.getLocationPathname = function () {
+    return window.location.pathname
+  }
+
   GOVUK.feedback.init = function () {
-    if (window.location.pathname === '/contact') {
+    if (this.getLocationPathname() === '/contact') {
       this.saveReferrerToCookie()
     }
 
