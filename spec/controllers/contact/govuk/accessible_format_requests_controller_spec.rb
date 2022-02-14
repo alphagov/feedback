@@ -117,7 +117,7 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
     it "shows the request sent confirmation view" do
       get :request_sent, params: base_params
 
-      expect(response.body).to include("Request Sent")
+      expect(response.body).to include("Request sent")
     end
   end
 end

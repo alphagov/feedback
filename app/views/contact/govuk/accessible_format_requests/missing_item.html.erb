@@ -1,3 +1,7 @@
-<%= render "govuk_publishing_components/components/heading", text: t("controllers.contact.govuk.accessible_format_requests.caption") %>
+<%= render "govuk_publishing_components/components/heading", {
+  text: t("controllers.contact.govuk.accessible_format_requests.missing_content_caption"),
+  heading_level: 1,
+  font_size: "l",
+} %>
 
 <%= raw t("controllers.contact.govuk.accessible_format_requests.missing_content_body") %>

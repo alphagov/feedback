@@ -5,6 +5,8 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   helper_method :content_path
   before_action :check_content_specified, except: :request_sent
 
+  layout "accessible_format_requests"
+
   def format_type
     @back_path = content_path
   end

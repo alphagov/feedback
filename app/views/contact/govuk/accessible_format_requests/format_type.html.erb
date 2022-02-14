@@ -1,3 +1,12 @@
+<% content_for :title do %>
+  <% if flash[:input_errors]&.any? %>
+    <%= t("controllers.contact.govuk.accessible_format_requests.error_summary") %> - 
+  <% end %>
+  <%= t("controllers.contact.govuk.accessible_format_requests.format_type_heading") + 
+    " - " + t("controllers.contact.govuk.accessible_format_requests.caption") 
+  %>
+<% end %>
+
 <%= render "govuk_publishing_components/components/back_link", { href: @back_path } %>
 
 <% if flash[:input_errors]&.any? %>
@@ -9,22 +18,21 @@
 <% end %>
 
 <%= form_with url: contact_govuk_request_accessible_format_contact_details_path, method: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+  <%= render "govuk_publishing_components/components/radio", {
+    name: :format_type,
+    id: :format_type,
+    heading: t("controllers.contact.govuk.accessible_format_requests.format_type_heading", attachment_title: attachment_title),
+    heading_size: "l",
+    heading_caption: t("controllers.contact.govuk.accessible_format_requests.caption"),
+    heading_level: 1,
+    items: accessible_format_options_to_radio_items(params[:format_type]),
+    error_message: flash[:format_type_error],
+  }%>
 
-    <%= render "govuk_publishing_components/components/radio", {
-      name: :format_type,
-      id: :format_type,
-      heading: t("controllers.contact.govuk.accessible_format_requests.format_type_heading", attachment_title: attachment_title),
-      heading_size: "l",
-      heading_caption: t("controllers.contact.govuk.accessible_format_requests.caption"),
-      heading_level: 1,
-      items: accessible_format_options_to_radio_items(params[:format_type]),
-      error_message: flash[:format_type_error],
-    }%>
+  <%= hidden_field_tag :content_id, params["content_id"]%>
+  <%= hidden_field_tag :attachment_id, params["attachment_id"]%>
 
-    <%= hidden_field_tag :content_id, params["content_id"]%>
-    <%= hidden_field_tag :attachment_id, params["attachment_id"]%>
-
-    <div class="govuk-form-footer">
+  <p class="govuk-body govuk-!-margin-bottom-0">
     <%= render "govuk_publishing_components/components/button", text: t("controllers.contact.govuk.accessible_format_requests.continue") %>
-    </div>
-  <% end %>
+  </p>
+<% end %>
