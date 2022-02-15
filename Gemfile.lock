@@ -169,6 +169,16 @@ GEM
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
     invalid_utf8_rejector (0.0.4)
+    jasmine (3.99.0)
+      jasmine-core (= 3.99.0)
+      phantomjs
+      rack (>= 2.1.4)
+      rake
+      webrick
+    jasmine-core (3.99.0)
+    jasmine_selenium_runner (3.0.0)
+      jasmine (~> 3.0)
+      selenium-webdriver (~> 3.8)
     json (2.6.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
@@ -208,6 +218,7 @@ GEM
     parallel (1.21.0)
     parser (3.1.0.0)
       ast (~> 2.4.1)
+    phantomjs (2.1.1.0)
     plek (4.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -389,6 +400,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -407,6 +419,8 @@ DEPENDENCIES
   govuk_publishing_components
   govuk_test
   invalid_utf8_rejector
+  jasmine
+  jasmine_selenium_runner
   notifications-ruby-client
   plek
   pry-byebug

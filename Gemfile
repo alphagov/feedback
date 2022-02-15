@@ -18,6 +18,8 @@ gem "valid_email"
 group :development, :test do
   gem "govuk-content-schema-test-helpers"
   gem "govuk_test"
+  gem "jasmine"
+  gem "jasmine_selenium_runner"
   gem "pry-byebug"
   gem "rails-controller-testing"
   gem "rspec-rails"
