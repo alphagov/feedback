@@ -1,9 +1,9 @@
 <% content_for :title do %>
   <% if flash[:input_errors]&.any? %>
-    <%= t("controllers.contact.govuk.accessible_format_requests.error_summary") %> - 
+    <%= t("controllers.contact.govuk.accessible_format_requests.error_summary") %> -
   <% end %>
-  <%= t("controllers.contact.govuk.accessible_format_requests.format_type_heading") + 
-    " - " + t("controllers.contact.govuk.accessible_format_requests.caption") 
+  <%= t("controllers.contact.govuk.accessible_format_requests.format_type_heading", attachment_title: attachment_title) + 
+    " - " + t("controllers.contact.govuk.accessible_format_requests.caption")
   %>
 <% end %>
 

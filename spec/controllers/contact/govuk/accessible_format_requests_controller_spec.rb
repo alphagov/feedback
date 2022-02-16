@@ -65,6 +65,34 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
         expect(response.body).to include("find the document you're looking for")
       end
     end
+
+    context "with the publishing api down" do
+      before { stub_publishing_api_isnt_available }
+
+      it "shows the content error page" do
+        get :format_type, params: base_params
+
+        expect(response.body).to include("We are unable to fulfil your request")
+      end
+    end
+
+    context "with a content id that isn't found" do
+      before { stub_publishing_api_does_not_have_item("123") }
+
+      it "shows the content error page" do
+        get :format_type, params: { content_id: "123", attachment_id: "456def" }
+
+        expect(response.body).to include("We are unable to fulfil your request")
+      end
+    end
+
+    context "with an attachment id that isn't found in the content" do
+      it "shows the content error page" do
+        get :format_type, params: { content_id: "123abc", attachment_id: "456" }
+
+        expect(response.body).to include("We are unable to fulfil your request")
+      end
+    end
   end
 
   describe "Contact Details" do
@@ -108,7 +136,7 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
       end
 
       it "redirects to the sent request confirmation view" do
-        expect(subject).to redirect_to(contact_govuk_request_accessible_format_request_sent_path)
+        expect(subject).to redirect_to(contact_govuk_request_accessible_format_request_sent_path(base_params))
       end
     end
   end

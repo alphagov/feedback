@@ -3,7 +3,10 @@ require "gds_api/publishing_api"
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   helper_method :attachment_title
   helper_method :content_path
-  before_action :check_content_specified, except: :request_sent
+  before_action :check_content_specified
+
+  rescue_from GdsApi::BaseError, with: :content_item_error
+  rescue_from AttachmentNotFoundError, with: :content_item_error
 
   layout "accessible_format_requests"
 
@@ -57,7 +60,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
     format_request.save
 
-    redirect_to contact_govuk_request_accessible_format_request_sent_path
+    redirect_to contact_govuk_request_accessible_format_request_sent_path(content_id: params[:content_id], attachment_id: params[:attachment_id])
   end
 
   def request_sent; end

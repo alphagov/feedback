@@ -1,0 +1,1 @@
+class AttachmentNotFoundError < StandardError; end
