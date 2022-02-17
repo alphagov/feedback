@@ -12,19 +12,25 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
   def format_type
     @back_path = content_path
+
+    if params[:error] == "format-type-missing"
+      flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error"), "format_type"]]
+      flash.now[:format_type_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error")
+    end
+
+    if params[:error] == "other-format-missing"
+      flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.other_format_error"), "other_format"]]
+      flash.now[:other_format_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.other_format_error")
+    end
   end
 
   def contact_details
     if params[:format_type].blank?
-      flash[:input_errors] = [I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error")]
-      flash[:format_type_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error")
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id]))
+      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], error: "format-type-missing"))
     end
 
     if params[:format_type] == "other" && params[:other_format].blank?
-      flash[:input_errors] = [I18n.t("controllers.contact.govuk.accessible_format_requests.other_format_error")]
-      flash[:other_format_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.other_format_error")
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other"))
+      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other", error: "other-format-missing"))
     end
 
     @back_path = contact_govuk_request_accessible_format_path(
@@ -37,13 +43,13 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
   def send_request
     if params[:email_address].blank?
-      flash.now[:input_errors] = [I18n.t("controllers.contact.govuk.accessible_format_requests.email_missing_error")]
+      flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.email_missing_error"), "email_address"]]
       flash.now[:email_address_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.email_missing_error")
       return render("contact_details")
     end
 
     unless ValidateEmail.valid?(params[:email_address])
-      flash.now[:input_errors] = [I18n.t("controllers.contact.govuk.accessible_format_requests.email_invalid_error")]
+      flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.email_invalid_error"), "email_address"]]
       flash.now[:email_address_error] = I18n.t("controllers.contact.govuk.accessible_format_requests.email_invalid_error")
       return render("contact_details")
     end
@@ -71,10 +77,6 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
   def content_path
     content_item["base_path"]
-  end
-
-  def permitted_params
-    params.permit(:content_id, :attachment_id, :format_type, :other_format, :email_address, :full_name)
   end
 
 private

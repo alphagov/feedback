@@ -13,7 +13,7 @@
   <%= render "govuk_publishing_components/components/error_summary", {
     id: "error-summary",
     title: t("controllers.contact.govuk.accessible_format_requests.error_summary"),
-    items: flash[:input_errors].map { |err| { text: err } },
+    items: flash[:input_errors].map { |err, href_target| { text: err, href: "\##{href_target}" } },
   } %>
 <% end %>
 
@@ -28,10 +28,10 @@
 
     <%= render "govuk_publishing_components/components/input", {
       label: { text: t("controllers.contact.govuk.accessible_format_requests.email_address") },
+      id: 'email_address',
       name: "email_address",
       value: params[:email_address],
       error_message: flash[:email_address_error],
-      type: "email",
       hint: t("controllers.contact.govuk.accessible_format_requests.email_address_hint"),
     } %>
 

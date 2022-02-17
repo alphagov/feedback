@@ -2,7 +2,7 @@
   <% if flash[:input_errors]&.any? %>
     <%= t("controllers.contact.govuk.accessible_format_requests.error_summary") %> -
   <% end %>
-  <%= t("controllers.contact.govuk.accessible_format_requests.format_type_heading", attachment_title: attachment_title) + 
+  <%= t("controllers.contact.govuk.accessible_format_requests.format_type_heading", attachment_title: attachment_title) +
     " - " + t("controllers.contact.govuk.accessible_format_requests.caption")
   %>
 <% end %>
@@ -13,7 +13,7 @@
   <%= render "govuk_publishing_components/components/error_summary", {
     id: "error-summary",
     title: t("controllers.contact.govuk.accessible_format_requests.error_summary"),
-    items: flash[:input_errors].map { |err| { text: err } },
+    items: flash[:input_errors].map { |err, href_target| { text: err, href: "\##{href_target}" } },
   }%>
 <% end %>
 

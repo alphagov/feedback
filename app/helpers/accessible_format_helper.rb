@@ -14,6 +14,7 @@ module AccessibleFormatHelper
 
   def render_conditional(item)
     render("govuk_publishing_components/components/input", {
+      id: item[:conditional_name],
       label: { text: item[:conditional_label] },
       name: item[:conditional_name],
       error_message: flash["#{item[:conditional_name]}_error".to_sym],
