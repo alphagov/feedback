@@ -27,7 +27,7 @@ en:
           email_address_hint: (you can use your email address or someone else’s if they can receive emails for you)
           full_name: Full name (optional)
           email_missing_error: Enter an email address
-          email_invalid_error: Enter a valid email address
+          email_invalid_error: Enter an email address in the correct format, like name@example.com
           request_sent_panel: Request sent
           request_sent_heading: What happens next
           request_sent_body: <p class="govuk-body">We will email you (or the person you have told us to email):</p><ul class="govuk-list govuk-list--bullet"><li>if we need more information about your request</li><li>to confirm we can provide the accessible format you've requested</li></ul>

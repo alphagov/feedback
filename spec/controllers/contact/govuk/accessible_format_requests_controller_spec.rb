@@ -156,7 +156,7 @@ RSpec.describe Contact::Govuk::AccessibleFormatRequestsController, type: :contro
       it "shows the missing email address error" do
         post :send_request, params: { format_type: "other", other_format: "a bespoke format", email_address: "ff" }.merge(base_params)
 
-        expect(response.body).to include("Enter a valid email address")
+        expect(response.body).to include("Enter an email address in the correct format, like name@example.com")
       end
     end
 
