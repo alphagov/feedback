@@ -1,20 +1,39 @@
-FROM ruby:2.7.5
-RUN apt-get update -qq && apt-get upgrade -y
+ARG base_image=ruby:2.7.5-slim-buster
+FROM $base_image AS builder
 
-RUN apt-get install -y build-essential nodejs && apt-get clean
+ENV RAILS_ENV=production
+# TODO: have a separate build image which already contains the build-only deps.
+RUN apt-get update -qy && \
+    apt-get upgrade -y && \
+    apt-get install -y build-essential nodejs && \ 
+    apt-get clean
 
-ENV GOVUK_APP_NAME feedback
-ENV PORT 3028
-ENV RAILS_ENV development
+RUN mkdir /app
+WORKDIR /app
+COPY Gemfile* .ruby-version /app/
+RUN bundle config set deployment 'true' && \
+    bundle config set without 'development test' && \
+    bundle install -j8 --retry=2
 
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
+COPY . /app
+# TODO: We probably don't want assets in the image; remove this once we have a proper deployment process which uploads to (e.g.) S3.
+RUN GOVUK_WEBSITE_ROOT=https://www.gov.uk \
+    GOVUK_APP_DOMAIN=www.gov.uk \
+    bundle exec rails assets:precompile
 
-WORKDIR $APP_HOME
-ADD Gemfile* $APP_HOME/
-ADD .ruby-version $APP_HOME/
-RUN bundle install
 
-ADD . $APP_HOME
+FROM $base_image
 
-CMD bash -c "bundle exec rails s -p $PORT -b '0.0.0.0'"
+ENV RAILS_ENV=production GOVUK_APP_NAME=feedback
+
+RUN apt-get update -qy && \
+    apt-get upgrade -y && \
+    apt-get install -y nodejs && \
+    apt-get clean
+
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder /app /app/
+
+WORKDIR /app
+
+CMD bundle exec puma
