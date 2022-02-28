@@ -31,8 +31,8 @@ class MultiTicket
     def errors
       errors = ActiveModel::Errors.new(self)
       @tickets.map(&:errors).each do |ticket_errors|
-        ticket_errors.each do |attribute, error|
-          errors.add(attribute, error)
+        ticket_errors.each do |error|
+          errors.add(error.attribute, error.message)
         end
       end
       errors
