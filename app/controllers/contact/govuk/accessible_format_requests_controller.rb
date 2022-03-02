@@ -86,6 +86,10 @@ private
     render("missing_item") unless params[:content_id] && params[:attachment_id]
   end
 
+  def content_item_error
+    render("content_item_error")
+  end
+
   def content_item
     @content_item ||= GdsApi.publishing_api.get_content(params[:content_id]).to_h
   end
@@ -96,5 +100,8 @@ private
 
   def requested_attachment
     @requested_attachment ||= content_attachments.find { |a| a["id"] == params[:attachment_id] }
+    raise(AttachmentNotFoundError) if @requested_attachment.nil?
+
+    @requested_attachment
   end
 end

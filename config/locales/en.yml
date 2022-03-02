@@ -34,6 +34,8 @@ en:
           return_to: Return to %{attachment_title}
           missing_content_body: <p class="govuk-body">Select 'Request an accessible format of this document' next to a GOV.UK attachment.</p><p class="govuk-body govuk-!-margin-bottom-0"><a href="/search" class="govuk-link">Search GOV.UK</a> to find the document you're looking for.</p>
           missing_content_caption: Request accessible documents
+          content_item_error_body: <p class="govuk-body">We are unable to fulfil your request.</p><p class="govuk-body">Try again later.</p><p class="govuk-body govuk-!-margin-bottom-0">
+          content_item_error_caption: Sorry, there is a problem with the service
   models:
     accessible_format_options:
       - text: Audio
