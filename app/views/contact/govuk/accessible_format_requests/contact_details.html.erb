@@ -17,7 +17,7 @@
   } %>
 <% end %>
 
-<%= form_with url: contact_govuk_request_accessible_format_send_request_path, method: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+<%= form_with url: contact_govuk_request_accessible_format_send_request_path, method: :post, authenticity_token: false, html: { class: "contact-form", novalidate: "novalidate" } do |f| %>
   <%= field_set_tag nil, class: 'govuk-fieldset' do %>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
       <%= tag.span(t("controllers.contact.govuk.accessible_format_requests.caption"), class: "govuk-caption-l") %>
@@ -30,6 +30,8 @@
       label: { text: t("controllers.contact.govuk.accessible_format_requests.email_address") },
       id: 'email_address',
       name: "email_address",
+      type: 'email',
+      autocomplete: "email",
       value: params[:email_address],
       error_message: flash[:email_address_error],
       hint: t("controllers.contact.govuk.accessible_format_requests.email_address_hint"),
