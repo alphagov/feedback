@@ -22,6 +22,15 @@ namespace :publishing_api do
       rendering_app: "feedback",
     )
 
+    special_route_publisher.publish(
+      content_id: "34761d23-eafa-4025-82bf-0d127e06e8be",
+      title: "Request accessible format",
+      base_path: "/contact/govuk/request-accessible-format",
+      type: "exact",
+      publishing_app: "feedback",
+      rendering_app: "feedback",
+    )
+
     redirect_publisher = RedirectPublisher.new(
       logger: logger,
       publishing_app: "feedback",
