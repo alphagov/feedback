@@ -25,20 +25,18 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   end
 
   def contact_details
-    if params[:format_type].blank?
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], error: "format-type-missing"))
-    end
-
-    if params[:format_type] == "other" && params[:other_format].blank?
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other", error: "other-format-missing"))
-    end
-
     @back_path = contact_govuk_request_accessible_format_path(
       content_id: params[:content_id],
       attachment_id: params[:attachment_id],
       format_type: params[:format_type],
       other_format: params[:other_format],
     )
+
+    if params[:format_type].blank?
+      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], error: "format-type-missing"))
+    elsif params[:format_type] == "other" && params[:other_format].blank?
+      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other", error: "other-format-missing"))
+    end
   end
 
   def send_request
