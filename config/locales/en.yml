@@ -23,8 +23,7 @@ en:
           other_format_error: Enter the accessible format you need
           contact_information_heading: Contact information
           information_use: We'll use this information to contact you about your request
-          email_address: Email address
-          email_address_hint: (you can use your email address or someone else’s if they can receive emails for you)
+          email_address: Email address (you can use your email address or someone else's if they can receive emails for you)
           full_name: Full name (optional)
           email_missing_error: Enter an email address
           email_invalid_error: Enter an email address in the correct format, like name@example.com
