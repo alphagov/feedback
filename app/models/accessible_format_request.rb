@@ -1,5 +1,5 @@
 class AccessibleFormatRequest
-  include ActiveModel::Validations
+  include ActiveModel::Model
   attr_accessor :document_title, :publication_path, :format_type, :custom_details, :contact_name, :alternative_format_email, :contact_email
 
   validates :document_title, presence: true
@@ -11,12 +11,6 @@ class AccessibleFormatRequest
   validates :contact_email,
             presence: true,
             email: { message: "The email address must be valid" }
-
-  def initialize(attributes = {})
-    attributes.each do |key, value|
-      send("#{key}=", value)
-    end
-  end
 
   def save
     Rails.application.config.notify_service.send_email(self) if valid?
