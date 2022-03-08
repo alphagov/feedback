@@ -17,10 +17,8 @@ module AccessibleFormatHelper
     values = I18n.translate("models.accessible_format_options").map do |item|
       radio_item = item.dup
       radio_item.merge!(conditional: render_conditional(item)) if item[:conditional_label]
-      radio_item.delete(:conditional_label)
-      radio_item.delete(:conditional_name)
       radio_item.merge!(checked: true) if item[:value] == checked
-      radio_item
+      radio_item.except(:conditional_label, :conditional_name)
     end
     Rails.logger.info(values.to_s)
     values
