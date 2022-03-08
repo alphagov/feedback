@@ -1,4 +1,18 @@
+require "gds_api/publishing_api"
+
 module AccessibleFormatHelper
+  def attachment_title
+    requested_attachment["title"]
+  end
+
+  def alternative_format_contact_email
+    requested_attachment["alternative_format_contact_email"]
+  end
+
+  def content_path
+    content_item["base_path"]
+  end
+
   def accessible_format_options_to_radio_items(checked = nil)
     values = I18n.translate("models.accessible_format_options").map do |item|
       radio_item = item.dup
@@ -10,6 +24,18 @@ module AccessibleFormatHelper
     end
     Rails.logger.info(values.to_s)
     values
+  end
+
+private
+
+  def content_item
+    @content_item ||= GdsApi.publishing_api.get_content(params[:content_id]).to_h
+  end
+
+  def requested_attachment
+    content_attachments = content_item.dig("details", "attachments")
+    attachment = content_attachments.find { |a| a["id"] == params[:attachment_id] }
+    attachment || raise(Contact::Govuk::AccessibleFormatRequestsController::AttachmentNotFoundError)
   end
 
   def render_conditional(item)

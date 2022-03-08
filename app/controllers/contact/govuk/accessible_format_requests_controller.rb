@@ -1,9 +1,9 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
-  helper_method :attachment_title
-  helper_method :content_path
   before_action :check_content_specified
+
+  class AttachmentNotFoundError < StandardError; end
 
   rescue_from GdsApi::BaseError, with: :content_item_error
   rescue_from AttachmentNotFoundError, with: :content_item_error
@@ -11,7 +11,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   layout "accessible_format_requests"
 
   def format_type
-    @back_path = content_path
+    @back_path = helpers.content_path
 
     if params[:error] == "format-type-missing"
       flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error"), "format_type"]]
@@ -53,13 +53,13 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
     end
 
     format_request = AccessibleFormatRequest.new(
-      document_title: requested_attachment["title"],
-      publication_path: content_path,
+      document_title: helpers.attachment_title,
+      publication_path: helpers.content_path,
       format_type: params["format_type"],
       custom_details: params["other_format"],
       contact_name: params["full_name"],
       contact_email: params["email_address"],
-      alternative_format_email: requested_attachment["alternative_format_contact_email"],
+      alternative_format_email: helpers.alternative_format_contact_email,
     )
 
     format_request.save
@@ -68,14 +68,6 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   end
 
   def request_sent; end
-
-  def attachment_title
-    requested_attachment["title"]
-  end
-
-  def content_path
-    content_item["base_path"]
-  end
 
 private
 
@@ -86,20 +78,5 @@ private
 
   def content_item_error
     render("content_item_error")
-  end
-
-  def content_item
-    @content_item ||= GdsApi.publishing_api.get_content(params[:content_id]).to_h
-  end
-
-  def content_attachments
-    content_item.dig("details", "attachments")
-  end
-
-  def requested_attachment
-    @requested_attachment ||= content_attachments.find { |a| a["id"] == params[:attachment_id] }
-    raise(AttachmentNotFoundError) if @requested_attachment.nil?
-
-    @requested_attachment
   end
 end
