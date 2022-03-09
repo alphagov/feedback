@@ -4,29 +4,15 @@ require "gds_api/test_helpers/publishing_api"
 RSpec.describe "Requests for accessible formats of documents", type: :request do
   include GdsApi::TestHelpers::PublishingApi
 
-  let(:base_params) { { content_id: "123abc", attachment_id: "456def" } }
-  let(:base_param_string) { "content_id=123abc&attachment_id=456def" }
-  let(:content_id) { "123abc" }
-  let(:attachment_id) { "456def" }
-  let(:content_title) { "A document with some inaccessible attachments" }
-  let(:attachment_title) { "Inaccessible CSV" }
-  let(:base_path) { "/government/publications/example-document" }
-  let(:alternative_format_contact_email) { "format_request@example.com" }
-  let(:inaccessible_attachment) do
-    {
-      id: attachment_id,
-      url: "/government/publications/example-document/inaccessible-spreadsheet",
-      title: attachment_title,
-      accessible: false,
-      alternative_format_contact_email: alternative_format_contact_email,
-    }
-  end
+  let(:content_id) { "aaaaaaaa-bbbb-cccc-dddd-eeff0011223" }
+  let(:base_params) { { content_id: content_id, attachment_id: "456def" } }
+  let(:base_param_string) { "content_id=#{content_id}&attachment_id=456def" }
 
   let(:content_item) do
     {
-      base_path: base_path,
+      base_path: "/government/publications/example-document",
       content_id: content_id,
-      title: content_title,
+      title: "A document with some inaccessible attachments",
       details: {
         attachments: [
           {
@@ -35,13 +21,21 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
             title: "Accessible HTML",
             attachment_type: "html",
           },
-          inaccessible_attachment,
+          {
+            id: "456def",
+            url: "/government/publications/example-document/inaccessible-spreadsheet",
+            title: "Inaccessible CSV",
+            accessible: false,
+            alternative_format_contact_email: "format_request@example.com",
+          },
         ],
       },
     }
   end
 
-  before { stub_publishing_api_has_item(content_item) }
+  before do
+    stub_publishing_api_has_item(content_item)
+  end
 
   describe "Format type" do
     it "shows the format type form" do
@@ -91,7 +85,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
 
     context "with an attachment id that isn't found in the content" do
       it "shows the content error page" do
-        visit("/contact/govuk/request-accessible-format?content_id=123abc&attachment_id=654defnotthere")
+        visit("/contact/govuk/request-accessible-format?content_id=#{content_id}&attachment_id=654defnotthere")
 
         expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
       end
@@ -187,16 +181,17 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
       end
 
       it "initializes an AccessibleFormatRequest with data from the params and content item" do
+        attachment_info = content_item[:details][:attachments][1]
         expect(AccessibleFormatRequest).to receive(:new)
           .with(
             hash_including(
-              document_title: attachment_title,
-              publication_path: base_path,
+              document_title: attachment_info[:title],
+              publication_path: content_item[:base_path],
               format_type: "other",
               custom_details: "a bespoke format",
               contact_name: "",
               contact_email: "a@example.com",
-              alternative_format_email: alternative_format_contact_email,
+              alternative_format_email: attachment_info[:alternative_format_contact_email],
             ),
           ).and_return(stub_format_request)
 
