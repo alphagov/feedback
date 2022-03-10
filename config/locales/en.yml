@@ -10,5 +10,44 @@ en:
     contact:
       govuk:
         email_survey_signup:
+          survey_body: Give us feedback on requesting accessible documents on GOV.UK
+          short_survey: (short survey)
           done_invalid_email: <h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>
           service_unavailable: <h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>
+        accessible_format_requests:
+          caption: Request accessible format
+          continue: Continue
+          error_summary: There is a problem
+          format_type_heading: Which accessible format would you like for %{attachment_title}
+          format_type_error: Select an accessible format
+          other_format_error: Enter the accessible format you need
+          contact_information_heading: Contact information
+          information_use: We'll use this information to contact you about your request
+          email_address: Email address
+          full_name: Full name (optional)
+          email_missing_error: Enter an email address
+          email_invalid_error: Enter an email address in the correct format, like name@example.com
+          request_sent_panel: Request sent
+          request_sent_heading: What happens next
+          request_sent_body: <p class="govuk-body">We will email you (or the person you have told us to email):</p><ul class="govuk-list govuk-list--bullet"><li>if we need more information about your request</li><li>to confirm we can provide the accessible format you've requested</li></ul>
+          return_to: Return to %{attachment_title}
+          missing_content_body: <p class="govuk-body">Select 'Request an accessible format of this document' next to a GOV.UK attachment.</p><p class="govuk-body govuk-!-margin-bottom-0"><a href="/search" class="govuk-link">Search GOV.UK</a> to find the document you're looking for.</p>
+          missing_content_caption: Request accessible documents
+          content_item_error_body: <p class="govuk-body">We are unable to fulfil your request.</p><p class="govuk-body">Try again later.</p><p class="govuk-body govuk-!-margin-bottom-0">
+          content_item_error_caption: Sorry, there is a problem with the service
+  models:
+    accessible_format_options:
+      - text: Audio
+        value: audio
+      - text: Braille
+        value: braille
+      - text: British sign language
+        value: british_sign_language
+      - text: Easy read
+        value: easy_read
+      - text: Large print
+        value: large_print
+      - text: Another accessible format
+        value: other
+        conditional_label: What accessible format do you need?
+        conditional_name: other_format

@@ -1,0 +1,32 @@
+<% content_for :title do %>
+  <%= t("controllers.contact.govuk.accessible_format_requests.request_sent_heading") %>
+<% end %>
+
+<%= render "govuk_publishing_components/components/panel", {
+  title: t("controllers.contact.govuk.accessible_format_requests.request_sent_panel"),
+  heading_level: 1,
+} %>
+
+<%= render "govuk_publishing_components/components/heading", {
+  text: t("controllers.contact.govuk.accessible_format_requests.request_sent_heading"),
+  heading_level: 2,
+  font_size: "l",
+} %>
+
+<%= raw t("controllers.contact.govuk.accessible_format_requests.request_sent_body") %>
+
+<% if content_path %>
+  <p class="govuk-body">
+    <%= link_to t("controllers.contact.govuk.accessible_format_requests.return_to", attachment_title: attachment_title), content_path, class: "govuk-link" %>
+  </p>
+<% end %>
+
+<p class="govuk-body govuk-!-margin-bottom-0">
+  <%= link_to t("controllers.contact.govuk.email_survey_signup.survey_body"), "https://surveys.publishing.service.gov.uk/s/4JA0FG/", data: {
+    track_module: "gem-track-click",
+    track_action: "https://surveys.publishing.service.gov.uk/s/4JA0FG/",
+    track_label: t("controllers.contact.govuk.email_survey_signup.survey_body"),
+    track_category: "External Link Clicked", }, class: "govuk-link"
+  %>
+  <%= t("controllers.contact.govuk.email_survey_signup.short_survey") %>
+</p>

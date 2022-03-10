@@ -1,0 +1,62 @@
+<% content_for :title do %>
+  <% if flash[:input_errors]&.any? %>
+    <%= t("controllers.contact.govuk.accessible_format_requests.error_summary") %> -
+  <% end %>
+  <%= t("controllers.contact.govuk.accessible_format_requests.contact_information_heading") +
+    " - " + t("controllers.contact.govuk.accessible_format_requests.caption")
+  %>
+<% end %>
+
+<%= render "govuk_publishing_components/components/back_link", { href: @back_path } %>
+
+<% if flash[:input_errors]&.any? %>
+  <%= render "govuk_publishing_components/components/error_summary", {
+    id: "error-summary",
+    title: t("controllers.contact.govuk.accessible_format_requests.error_summary"),
+    items: flash[:input_errors].map { |err, href_target| { text: err, href: "\##{href_target}" } },
+  } %>
+<% end %>
+
+<%= form_with url: contact_govuk_request_accessible_format_send_request_path, method: :post, authenticity_token: false, html: { class: "contact-form", novalidate: "novalidate" } do |f| %>
+  <%= field_set_tag nil, class: 'govuk-fieldset' do %>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <%= tag.span(t("controllers.contact.govuk.accessible_format_requests.caption"), class: "govuk-caption-l") %>
+      <%= tag.h1 t("controllers.contact.govuk.accessible_format_requests.contact_information_heading"), class: "govuk-fieldset__heading govuk-!-margin-bottom-4" %>
+    </legend>
+
+    <p class="govuk-body"><%= t("controllers.contact.govuk.accessible_format_requests.information_use") %></p>
+
+    <%= render "govuk_publishing_components/components/input", {
+      label: { text: t("controllers.contact.govuk.accessible_format_requests.email_address") },
+      id: 'email_address',
+      name: "email_address",
+      type: 'email',
+      autocomplete: "email",
+      value: params[:email_address],
+      error_message: flash[:email_address_error],
+    } %>
+
+    <%= render "govuk_publishing_components/components/input", {
+      label: { text: t("controllers.contact.govuk.accessible_format_requests.full_name") },
+      name: "full_name",
+      value: params[:full_name],
+    } %>
+
+    <%= hidden_field_tag :content_id, params["content_id"]%>
+    <%= hidden_field_tag :attachment_id, params["attachment_id"]%>
+    <%= hidden_field_tag :format_type, params["format_type"]%>
+    <%= hidden_field_tag :other_format, params["other_format"]%>
+  <% end %>
+
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    <%= render "govuk_publishing_components/components/button", {
+      text: t("controllers.contact.govuk.accessible_format_requests.continue"),
+      data_attributes: {
+        module: "gem-track-click",
+        "data-track-category": "requestAccessible",
+        "data-track-action": params["format_type"]&.capitalize + " - Cabinet Office",
+        "data-track-label": params["attachment_title"]
+      }
+    } %>
+  </p>
+<% end %>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <%=  stylesheet_link_tag 'application', integrity: false %>
+    <%=  stylesheet_link_tag 'print.css', media: 'print', integrity: false %>
+    <title><%= yield :title %> - GOV.UK</title>
+    <%= yield :section_meta_tags %>
+  </head>
+  <body>
+    <div id="wrapper" class="govuk-width-container">
+      <main class="govuk-main-wrapper" id="content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <%= yield %>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
+    <%= javascript_include_tag 'application', integrity: false %>
+  </body>
+</html>
