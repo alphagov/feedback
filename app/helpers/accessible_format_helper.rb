@@ -27,7 +27,7 @@ module AccessibleFormatHelper
 private
 
   def content_item
-    @content_item ||= GdsApi.publishing_api.get_content(params[:content_id]).to_h
+    @content_item ||= GdsApi.publishing_api.get_live_content(params[:content_id]).to_h
   end
 
   def requested_attachment

@@ -12,6 +12,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
     {
       base_path: "/government/publications/example-document",
       content_id: content_id,
+      publication_state: "published",
       title: "A document with some inaccessible attachments",
       details: {
         attachments: [
