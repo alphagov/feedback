@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "rails", "6.1.4.6"
 
 gem "gds-api-adapters"
-gem "google-api-client"
+gem "google-apis-sheets_v4"
 gem "govuk_app_config"
 gem "govuk_publishing_components"
 gem "invalid_utf8_rejector"
