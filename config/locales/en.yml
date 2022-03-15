@@ -35,6 +35,22 @@ en:
           missing_content_caption: Request accessible documents
           content_item_error_body: <p class="govuk-body">We are unable to fulfil your request.</p><p class="govuk-body">Try again later.</p><p class="govuk-body govuk-!-margin-bottom-0">
           content_item_error_caption: Sorry, there is a problem with the service
+          start_page:
+            request_heading: Request an accessible format
+            condition_impairment_body: |-
+              You can request an accessible version of COVID-19 Winter Plan (Welsh) if you have a condition or impairment. You might need an accessible version if you have:
+            condition_impairment_list_items:
+              - dyslexia, autism or cognitive difficulties
+              - sensory disabilities, like a visual or hearing impairment
+              - physical disabilities, like reduced dexterity or limited mobility
+            requirements_body: |-
+              You’ll need to:
+            requirements_list_items:
+              - tell us which format you need
+              - provide a contact email address
+            department_email_confirmation_body: The department will then email you about your request.
+            help_text: If you need any other help or want to contact a service or department through another route, <a href="https://www.gov.uk/contact" class="govuk-link">visit the GOV.UK contact page</a>.
+            start_now: Start now
   models:
     accessible_format_options:
       - text: Audio
