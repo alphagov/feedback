@@ -163,6 +163,7 @@ GEM
       puma
       selenium-webdriver (>= 4.0)
     hashdiff (1.0.1)
+    hiredis (0.6.3)
     http-accept (1.7.0)
     http-cookie (1.0.4)
       domain_name (~> 0.5)
@@ -275,6 +276,7 @@ GEM
     rainbow (3.1.1)
     raindrops (0.20.0)
     rake (13.0.6)
+    redis (4.6.0)
     regexp_parser (2.4.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -429,6 +431,7 @@ DEPENDENCIES
   govuk_app_config
   govuk_publishing_components
   govuk_test
+  hiredis
   invalid_utf8_rejector
   notifications-ruby-client
   plek
@@ -437,6 +440,7 @@ DEPENDENCIES
   rack_strip_client_ip
   rails (= 7.0.3)
   rails-controller-testing
+  redis
   rspec-rails
   rubocop-govuk
   sassc-rails

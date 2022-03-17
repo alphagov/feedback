@@ -3,6 +3,8 @@
 
 # Is this likely to affect the accessible request form if a lot of errors?
 
+Rack::Attack.cache.store = Redis.new(url: ENV["REDIS_URL"]) if ENV["REDIS_URL"]
+
 RATE_LIMIT_COUNT = ENV["RATE_LIMIT_COUNT"]&.to_i || 1
 RATE_LIMIT_PERIOD = (ENV["RATE_LIMIT_PERIOD_SECONDS"]&.to_i || 60).seconds
 
