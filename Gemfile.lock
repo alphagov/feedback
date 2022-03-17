@@ -237,6 +237,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-attack (6.6.1)
+      rack (>= 1.0, < 3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rack_strip_client_ip (0.0.2)
@@ -431,6 +433,7 @@ DEPENDENCIES
   notifications-ruby-client
   plek
   pry-byebug
+  rack-attack
   rack_strip_client_ip
   rails (= 7.0.3)
   rails-controller-testing
