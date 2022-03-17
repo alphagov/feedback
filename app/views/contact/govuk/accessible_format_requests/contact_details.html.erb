@@ -53,9 +53,9 @@
       text: t("controllers.contact.govuk.accessible_format_requests.continue"),
       data_attributes: {
         module: "gem-track-click",
-        "data-track-category": "requestAccessible",
-        "data-track-action": params["format_type"]&.capitalize + " - Cabinet Office",
-        "data-track-label": params["attachment_title"]
+        "track-category": "requestAccessible",
+        "track-action": params["format_type"]&.capitalize + " - Cabinet Office",
+        "track-label": attachment_title
       }
     } %>
   </p>
