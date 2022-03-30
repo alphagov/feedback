@@ -48,6 +48,6 @@ bundle exec rake
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
 
-## Licence
+## License
 
-[MIT License](LICENCE)
+[MIT License](LICENSE)
