@@ -1,7 +1,7 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
-  before_action :check_content_specified
+  before_action :check_content, except: :request_sent
 
   class AttachmentNotFoundError < StandardError; end
 
@@ -78,9 +78,17 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
 private
 
-  def check_content_specified
+  def check_content
     slimmer_template(:gem_layout_no_feedback_form)
-    render("missing_item") unless params[:content_id] && params[:attachment_id]
+    render("missing_item") unless content_specified? && content_available?
+  end
+
+  def content_specified?
+    params[:content_id] && params[:attachment_id]
+  end
+
+  def content_available?
+    helpers.document_and_attachment_available?
   end
 
   def content_item_error

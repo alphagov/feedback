@@ -24,6 +24,10 @@ module AccessibleFormatHelper
     values
   end
 
+  def document_and_attachment_available?
+    content_item && requested_attachment
+  end
+
 private
 
   def content_item
