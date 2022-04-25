@@ -1,7 +1,7 @@
 require "gds_api/publishing_api"
 
 class Contact::Govuk::AccessibleFormatRequestsController < ContactController
-  before_action :check_content_specified
+  before_action :check_content, except: :request_sent
 
   class AttachmentNotFoundError < StandardError; end
 
@@ -10,8 +10,15 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
   layout "accessible_format_requests"
 
-  def format_type
+  def start_page
     @back_path = helpers.content_path
+  end
+
+  def format_type
+    @back_path = contact_govuk_request_accessible_format_path(
+      content_id: params[:content_id],
+      attachment_id: params[:attachment_id],
+    )
 
     if params[:error] == "format-type-missing"
       flash.now[:input_errors] = [[I18n.t("controllers.contact.govuk.accessible_format_requests.format_type_error"), "format_type"]]
@@ -25,7 +32,7 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
   end
 
   def contact_details
-    @back_path = contact_govuk_request_accessible_format_path(
+    @back_path = contact_govuk_request_accessible_format_format_type_path(
       content_id: params[:content_id],
       attachment_id: params[:attachment_id],
       format_type: params[:format_type],
@@ -33,9 +40,9 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
     )
 
     if params[:format_type].blank?
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], error: "format-type-missing"))
+      redirect_to(contact_govuk_request_accessible_format_format_type_path(content_id: params[:content_id], attachment_id: params[:attachment_id], error: "format-type-missing"))
     elsif params[:format_type] == "other" && params[:other_format].blank?
-      redirect_to(contact_govuk_request_accessible_format_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other", error: "other-format-missing"))
+      redirect_to(contact_govuk_request_accessible_format_format_type_path(content_id: params[:content_id], attachment_id: params[:attachment_id], format_type: "other", error: "other-format-missing"))
     end
   end
 
@@ -71,9 +78,17 @@ class Contact::Govuk::AccessibleFormatRequestsController < ContactController
 
 private
 
-  def check_content_specified
+  def check_content
     slimmer_template(:gem_layout_no_feedback_form)
-    render("missing_item") unless params[:content_id] && params[:attachment_id]
+    render("missing_item") unless content_specified? && content_available?
+  end
+
+  def content_specified?
+    params[:content_id] && params[:attachment_id]
+  end
+
+  def content_available?
+    helpers.document_and_attachment_available?
   end
 
   def content_item_error

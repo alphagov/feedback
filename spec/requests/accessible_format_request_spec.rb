@@ -5,8 +5,9 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
   include GdsApi::TestHelpers::PublishingApi
 
   let(:content_id) { "aaaaaaaa-bbbb-cccc-dddd-eeff0011223" }
-  let(:base_params) { { content_id: content_id, attachment_id: "456def" } }
-  let(:base_param_string) { "content_id=#{content_id}&attachment_id=456def" }
+  let(:attachment_id) { "456def" }
+  let(:base_params) { { content_id: content_id, attachment_id: attachment_id } }
+  let(:base_param_string) { "content_id=#{content_id}&attachment_id=#{attachment_id}" }
 
   let(:content_item) do
     {
@@ -38,12 +39,45 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
     stub_publishing_api_has_item(content_item)
   end
 
-  describe "Format type" do
-    it "shows the format type form" do
+  describe "Start page" do
+    it "shows the start page" do
       visit("/contact/govuk/request-accessible-format?#{base_param_string}")
 
-      expect(page).to have_content(I18n.translate("models.accessible_format_options").first[:text])
-      expect(page).to have_content(I18n.translate("models.accessible_format_options").last[:text])
+      expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.start_page.request_heading"))
+    end
+
+    context "with the publishing api down" do
+      before { stub_publishing_api_isnt_available }
+
+      it "shows the content error page" do
+        visit("/contact/govuk/request-accessible-format?#{base_param_string}")
+
+        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
+      end
+    end
+
+    context "with a content id that isn't found" do
+      let(:content_id) { "123" }
+
+      before do
+        stub_publishing_api_does_not_have_item("123")
+      end
+
+      it "shows the content error page" do
+        visit("/contact/govuk/request-accessible-format?#{base_param_string}")
+
+        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
+      end
+    end
+
+    context "with an attachment id that isn't found in the content" do
+      let(:attachment_id) { "789notfound" }
+
+      it "shows the content error page" do
+        visit("/contact/govuk/request-accessible-format?#{base_param_string}")
+
+        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
+      end
     end
 
     context "without a content_id" do
@@ -63,38 +97,22 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
         expect(page).to have_content("to find the document you're looking for")
       end
     end
+  end
 
-    context "with the publishing api down" do
-      before { stub_publishing_api_isnt_available }
-
-      it "shows the content error page" do
-        visit("/contact/govuk/request-accessible-format?#{base_param_string}")
-
-        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
-      end
+  describe "Format type" do
+    before do
+      visit "/contact/govuk/request-accessible-format?#{base_param_string}"
+      click_on "Start"
     end
 
-    context "with a content id that isn't found" do
-      before { stub_publishing_api_does_not_have_item("123") }
-
-      it "shows the content error page" do
-        visit("/contact/govuk/request-accessible-format?content_id=123&attachment_id=456def")
-
-        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
-      end
-    end
-
-    context "with an attachment id that isn't found in the content" do
-      it "shows the content error page" do
-        visit("/contact/govuk/request-accessible-format?content_id=#{content_id}&attachment_id=654defnotthere")
-
-        expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.content_item_error_caption"))
-      end
+    it "shows the format type form" do
+      expect(page).to have_content(I18n.translate("models.accessible_format_options").first[:text])
+      expect(page).to have_content(I18n.translate("models.accessible_format_options").last[:text])
     end
 
     context "with an error for a missing format_type" do
       it "shows the missing format type error" do
-        visit("/contact/govuk/request-accessible-format?#{base_param_string}&error=format-type-missing")
+        click_on "Continue"
 
         expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.format_type_error"))
       end
@@ -102,7 +120,8 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
 
     context "with an error for a missing other_format" do
       it "shows the missing other format error" do
-        visit("/contact/govuk/request-accessible-format?#{base_param_string}&error=other-format-missing")
+        choose "Another accessible format"
+        click_on "Continue"
 
         expect(page).to have_content(I18n.translate("controllers.contact.govuk.accessible_format_requests.other_format_error"))
       end
@@ -112,13 +131,14 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
   describe "Contact Details" do
     before do
       visit "/contact/govuk/request-accessible-format?#{base_param_string}"
+      click_on "Start"
     end
 
     context "with missing format_type" do
       it "redirects to the format page with an error" do
         click_on "Continue"
 
-        i_should_be_on contact_govuk_request_accessible_format_path(base_params.merge(error: "format-type-missing"))
+        i_should_be_on contact_govuk_request_accessible_format_format_type_path(base_params.merge(error: "format-type-missing"))
       end
     end
 
@@ -127,7 +147,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
         choose "Another accessible format"
         click_on "Continue"
 
-        i_should_be_on contact_govuk_request_accessible_format_path(base_params.merge(format_type: "other", error: "other-format-missing"))
+        i_should_be_on contact_govuk_request_accessible_format_format_type_path(base_params.merge(format_type: "other", error: "other-format-missing"))
       end
     end
 
@@ -150,6 +170,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
   describe "Send request" do
     before do
       visit "/contact/govuk/request-accessible-format?#{base_param_string}"
+      click_on "Start"
       choose "Another accessible format"
       fill_in "What accessible format do you need?", with: "a bespoke format"
       click_on "Continue"

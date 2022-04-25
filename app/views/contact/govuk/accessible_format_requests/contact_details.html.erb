@@ -7,7 +7,7 @@
   %>
 <% end %>
 
-<%= render "govuk_publishing_components/components/back_link", { href: @back_path } %>
+<% content_for :back_link, @back_path %>
 
 <% if flash[:input_errors]&.any? %>
   <%= render "govuk_publishing_components/components/error_summary", {
