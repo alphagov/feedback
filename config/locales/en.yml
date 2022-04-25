@@ -38,7 +38,7 @@ en:
           start_page:
             request_heading: Request an accessible format
             condition_impairment_body: |-
-              You can request an accessible version of COVID-19 Winter Plan (Welsh) if you have a condition or impairment. You might need an accessible version if you have:
+              You can request an accessible version of %{attachment_title} if you have a condition or impairment. You might need an accessible version if you have:
             condition_impairment_list_items:
               - dyslexia, autism or cognitive difficulties
               - sensory disabilities, like a visual or hearing impairment
