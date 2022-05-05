@@ -59,8 +59,6 @@ en:
         value: braille
       - text: British sign language
         value: british_sign_language
-      - text: Easy read
-        value: easy_read
       - text: Large print
         value: large_print
       - text: Another accessible format
