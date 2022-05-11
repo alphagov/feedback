@@ -51,6 +51,17 @@ RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
       post "/contact/govuk", params: valid_params.deep_merge(contact: { email: "new.email@test.com" })
       expect(response.status).to eq(302)
     end
+
+    context "With bypass token" do
+      it "allows requests without throttling" do
+        post "/contact/govuk", params: valid_params, headers: { "Rate-Limit-Token" => "bypass-please!" }
+        expect(response.status).to eq(302)
+        3.times do
+          post "/contact/govuk", params: valid_params, headers: { "Rate-Limit-Token" => "bypass-please!" }
+          expect(response.status).to eq(302)
+        end
+      end
+    end
   end
 
   context "by provided email" do
