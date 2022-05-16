@@ -4,7 +4,6 @@ require "rails"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_support/time"
-require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
 
