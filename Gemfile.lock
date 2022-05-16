@@ -452,6 +452,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   slimmer
+  sprockets-rails
   uglifier
   valid_email
   webmock

@@ -12,6 +12,7 @@ gem "plek"
 gem "rack_strip_client_ip"
 gem "sassc-rails"
 gem "slimmer"
+gem "sprockets-rails"
 gem "uglifier"
 gem "valid_email"
 
