@@ -24,7 +24,7 @@ RUN GOVUK_WEBSITE_ROOT=https://www.gov.uk \
 
 FROM $base_image
 
-ENV RAILS_ENV=production GOVUK_APP_NAME=feedback
+ENV GOVUK_PROMETHEUS_EXPORTER=true RAILS_ENV=production GOVUK_APP_NAME=feedback
 
 RUN apt-get update -qy && \
     apt-get upgrade -y && \
