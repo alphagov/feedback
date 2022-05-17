@@ -1,0 +1,17 @@
+{
+  "srcDir": "public/assets/feedback",
+  "srcFiles": [
+    "test-dependencies-*.js",
+    "application-*.js"
+  ],
+  "cssFiles": [
+    "application-*.css"
+  ],
+  "specDir": "spec/javascripts",
+  "specFiles": [
+    "**/*[sS]pec.js"
+  ],
+  "helpers": [
+  ],
+  "browser": "headlessChrome"
+}
