@@ -2,6 +2,8 @@ require "rails_helper"
 require "gds_api/test_helpers/support"
 require "gds_api/test_helpers/support_api"
 
+# Note - rate limit exemptions are tested in accessible_format_request_spec.rb
+
 RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
   include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi

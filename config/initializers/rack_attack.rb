@@ -1,7 +1,5 @@
 # Throttle by IP address and by provided email address to 1 rpm on any contact forms
-# endpoint.
-
-# Is this likely to affect the accessible request form if a lot of errors?
+# endpoint except the request-accessible-format endpoints
 
 Rack::Attack.cache.store = Redis.new(url: ENV["REDIS_URL"]) if ENV["REDIS_URL"]
 
@@ -14,16 +12,23 @@ else
   Rack::Attack.throttle("requests by ip", limit: RATE_LIMIT_COUNT, period: RATE_LIMIT_PERIOD) do |request|
     # Only need this log message once, as it'll cover both throttles.
     Rails.logger.info("Request bypassing rate limiter with token") if bypass_token?(request)
-    if request.path.start_with?("/contact/govuk") && request.post? && !bypass_token?(request)
+    if throttled_path?(request.path) && request.post? && !bypass_token?(request)
       request.ip
     end
   end
 
   Rack::Attack.throttle("non-anonymous requests by email address", limit: RATE_LIMIT_COUNT, period: RATE_LIMIT_PERIOD) do |request|
-    if request.path.start_with?("/contact/govuk") && request.post? && has_email?(request) && !bypass_token?(request)
+    if throttled_path?(request.path) && request.post? && has_email?(request) && !bypass_token?(request)
       normalised_email(request)
     end
   end
+end
+
+def throttled_path?(path)
+  # RAF has two posts in quick succession, so exempt it for now
+  return false if path.start_with?("/contact/govuk/request-accessible-format")
+
+  path.start_with?("/contact/govuk")
 end
 
 def bypass_token?(request)
