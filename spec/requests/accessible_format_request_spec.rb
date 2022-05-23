@@ -180,7 +180,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
 
     context "with a missing email address" do
       it "shows the missing email address error" do
-        click_on "Continue"
+        click_on "Send request"
 
         expect(page).to have_content("Enter an email address")
       end
@@ -189,7 +189,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
     context "with an invalid email address" do
       it "shows the missing email address error" do
         fill_in :email_address, with: "ff"
-        click_on "Continue"
+        click_on "Send request"
 
         expect(page).to have_content("Enter an email address in the correct format, like name@example.com")
       end
@@ -218,12 +218,12 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
           ).and_return(stub_format_request)
 
         fill_in :email_address, with: "a@example.com"
-        click_on "Continue"
+        click_on "Send request"
       end
 
       it "redirects to the sent request confirmation view" do
         fill_in :email_address, with: "a@example.com"
-        click_on "Continue"
+        click_on "Send request"
 
         i_should_be_on contact_govuk_request_accessible_format_request_sent_path(base_params)
       end
@@ -244,7 +244,7 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
           fill_in "What accessible format do you need?", with: "a bespoke format"
           click_on "Continue"
           fill_in :email_address, with: "a@example.com"
-          click_on "Continue"
+          click_on "Send request"
 
           i_should_be_on contact_govuk_request_accessible_format_request_sent_path(base_params)
         end

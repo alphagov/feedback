@@ -16,6 +16,7 @@ en:
           service_unavailable: <h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>
         accessible_format_requests:
           caption: Request accessible format
+          confirm: Send request
           continue: Continue
           error_summary: There is a problem
           format_type_heading: Which accessible format would you like for %{attachment_title}
