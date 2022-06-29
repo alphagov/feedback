@@ -175,6 +175,25 @@ RSpec.describe "Contact", type: :request do
     end
   end
 
+  it "should escape user malicious user input when rendering it back to the user" do
+    visit "/contact/govuk"
+    malicious_input = "<script>alert(0)</script>"
+
+    choose "location-0" # The whole site
+    fill_in "Your name", with: malicious_input
+    fill_in "Your email address", with: malicious_input
+    fill_in "textdetails", with: malicious_input
+    click_on "Send message"
+
+    # submission isn't accepted because email address is invalid
+    i_should_be_on "/contact/govuk"
+
+    expect(page.html).to include("&lt;script&gt;alert(0)&lt;/script&gt;")
+    expect(page.html).not_to include(malicious_input)
+
+    no_post_calls_should_have_been_made
+  end
+
   it "should include the user agent if available" do
     stub_support_named_contact_creation
 
