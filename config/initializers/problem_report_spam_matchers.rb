@@ -11,10 +11,6 @@ Rails.application.config.problem_report_spam_matchers = [
   ->(ticket) { ticket.giraffe.present? },
   # mark duplicate values in "what_wrong" and "what_doing" fields as spam
   ->(ticket) { ticket.what_wrong == ticket.what_doing },
-  # prevent a bot inserting text by modifying the DOM values
-  ->(ticket) { ticket.javascript_enabled && ticket.pastes.to_i.zero? && ticket.keypresses.to_i.zero? },
-  # prevent a bot only pasting and not typing anything
-  ->(ticket) { ticket.javascript_enabled && ticket.pastes.to_i.positive? && ticket.keypresses.to_i.zero? },
   # prevent a bot that might submit the form quickly
   ->(ticket) { ticket.javascript_enabled && ticket.timer.to_i <= 3 },
 ].freeze
