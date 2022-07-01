@@ -94,6 +94,7 @@ RSpec.describe ReportAProblemTicket, type: :model do
     it "should allow genuine submissions" do
       expect(ticket(what_doing: "browsing", what_wrong: "it broke")).to_not be_spam
       expect(ticket(what_doing: "browsing", what_wrong: "it broke", javascript_enabled: "true", timer: "4")).to_not be_spam
+      expect(ticket(what_doing: "browsing", what_wrong: "it broke", javascript_enabled: "false", timer: "0")).to_not be_spam
     end
   end
 end
