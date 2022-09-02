@@ -66,8 +66,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     brakeman (5.2.3)
     builder (3.2.4)
@@ -233,7 +233,7 @@ GEM
     pry-byebug (3.10.1)
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
-    public_suffix (4.0.7)
+    public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -407,7 +407,7 @@ GEM
       activemodel
       mail (>= 2.6.1)
       simpleidn
-    webmock (3.14.0)
+    webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
