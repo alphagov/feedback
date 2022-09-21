@@ -86,14 +86,14 @@ RSpec.describe ReportAProblemTicket, type: :model do
       expect(ticket(what_doing: "Lorem ipsum dolor sit amet", what_wrong: "Lorem ipsum dolor sit amet")).to be_spam
     end
 
-    it "should mark submissions sent in three seconds or less as spam" do
+    it "should mark submissions sent in four seconds or less as spam" do
       expect(ticket(what_doing: "Lorem ipsum 1", what_wrong: "Lorem ipsum dolor sit amet", javascript_enabled: "true", timer: "0")).to be_spam
-      expect(ticket(what_doing: "Lorem ipsum 2", what_wrong: "Lorem ipsum dolor sit", javascript_enabled: "true", timer: "3")).to be_spam
+      expect(ticket(what_doing: "Lorem ipsum 2", what_wrong: "Lorem ipsum dolor sit", javascript_enabled: "true", timer: "4")).to be_spam
     end
 
     it "should allow genuine submissions" do
       expect(ticket(what_doing: "browsing", what_wrong: "it broke")).to_not be_spam
-      expect(ticket(what_doing: "browsing", what_wrong: "it broke", javascript_enabled: "true", timer: "4")).to_not be_spam
+      expect(ticket(what_doing: "browsing", what_wrong: "it broke", javascript_enabled: "true", timer: "5")).to_not be_spam
       expect(ticket(what_doing: "browsing", what_wrong: "it broke", javascript_enabled: "false", timer: "0")).to_not be_spam
     end
   end
