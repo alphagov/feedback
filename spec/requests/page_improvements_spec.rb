@@ -19,7 +19,7 @@ RSpec.describe "Page improvements", type: :request do
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, "#{Plek.current.find('support-api')}/page-improvements")
+    expected_request = a_request(:post, "#{Plek.find('support-api')}/page-improvements")
       .with(body: {
         "description" => "The title is the wrong colour.",
         "url" => "https://gov.uk/path/to/page",
@@ -55,7 +55,7 @@ RSpec.describe "Page improvements", type: :request do
   end
 
   it "returns an error if the required attributes aren't supplied" do
-    url = "#{Plek.current.find('support-api')}/page-improvements"
+    url = "#{Plek.find('support-api')}/page-improvements"
     stub_request(:post, url)
       .with(body: {}.to_json)
       .to_return(
@@ -83,7 +83,7 @@ RSpec.describe "Page improvements", type: :request do
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, "#{Plek.current.find('support-api')}/page-improvements")
+    expected_request = a_request(:post, "#{Plek.find('support-api')}/page-improvements")
       .with(body: { "description" => "The title is the wrong colour." })
 
     expect(expected_request).to have_been_made
