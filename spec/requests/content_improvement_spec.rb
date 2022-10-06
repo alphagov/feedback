@@ -5,7 +5,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
   include GdsApi::TestHelpers::SupportApi
 
   let(:common_headers) { { "Accept" => "application/json", "Content-Type" => "application/json" } }
-  let(:support_api_url) { Plek.current.find("support-api") }
+  let(:support_api_url) { Plek.find("support-api") }
 
   it "submits the feedback to the support api" do
     stub_any_support_api_call
@@ -76,7 +76,7 @@ RSpec.describe "Content Improvement Feedback", type: :request do
          }.to_json,
          headers: common_headers
 
-    expected_request = a_request(:post, "#{Plek.current.find('support-api')}/anonymous-feedback/content_improvement")
+    expected_request = a_request(:post, "#{Plek.find('support-api')}/anonymous-feedback/content_improvement")
       .with(body: { "description" => "The title is the wrong colour." })
 
     expect(expected_request).to have_been_made
