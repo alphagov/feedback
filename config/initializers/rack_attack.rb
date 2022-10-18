@@ -4,14 +4,18 @@
 cache_enabled = true
 
 if ENV["DISABLE_THROTTLE"]&.downcase == "true"
+  Rails.logger.warn "DISABLE_THROTTLE : #{ENV['DISABLE_THROTTLE']}"
   Rails.logger.warn("Request throttling disabled by DISABLE_THROTTLE env var")
   cache_enabled = false
 elsif Rails.env.test?
+  Rails.logger.warn "Rails.env is test!"
   # noop - in test we use memory cache
 elsif ENV["REDIS_URL"].blank?
+  Rails.logger.warn "REDIS_URL IS BLANK"
   Rails.logger.warn("Request throttling disabled because no redis instance specified")
   cache_enabled = false
 else
+  Rails.logger.warn "REDIS_URL : #{ENV['REDIS_URL']}"
   Rack::Attack.cache.store = Redis.new(url: ENV["REDIS_URL"])
 end
 
