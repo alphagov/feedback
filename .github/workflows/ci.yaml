@@ -12,3 +12,4 @@ jobs:
     uses: alphagov/govuk-infrastructure/.github/workflows/test-rails.yaml@main
     with:
        requiresJavaScript: true
+       requiresRedis: true
