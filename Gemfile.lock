@@ -165,7 +165,6 @@ GEM
       puma
       selenium-webdriver (>= 4.0)
     hashdiff (1.0.1)
-    hiredis (0.6.3)
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
@@ -234,8 +233,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
-    rack-attack (6.6.1)
-      rack (>= 1.0, < 3)
     rack-proxy (0.7.4)
       rack
     rack-test (2.0.2)
@@ -429,12 +426,10 @@ DEPENDENCIES
   govuk_app_config
   govuk_publishing_components
   govuk_test
-  hiredis
   invalid_utf8_rejector
   notifications-ruby-client
   plek
   pry-byebug
-  rack-attack
   rack_strip_client_ip
   rails (= 7.0.4)
   rails-controller-testing
