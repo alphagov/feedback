@@ -227,28 +227,6 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
 
         i_should_be_on contact_govuk_request_accessible_format_request_sent_path(base_params)
       end
-
-      context "with rate limiting turned on" do
-        before do
-          Rack::Attack.enabled = true
-        end
-
-        after do
-          Rack::Attack.enabled = false
-        end
-
-        it "allows us to complete the request despite two POSTs" do
-          visit "/contact/govuk/request-accessible-format?#{base_param_string}"
-          click_on "Start"
-          choose "Another accessible format"
-          fill_in "What accessible format do you need?", with: "a bespoke format"
-          click_on "Continue"
-          fill_in :email_address, with: "a@example.com"
-          click_on "Send request"
-
-          i_should_be_on contact_govuk_request_accessible_format_request_sent_path(base_params)
-        end
-      end
     end
   end
 

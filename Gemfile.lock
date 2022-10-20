@@ -84,7 +84,6 @@ GEM
     childprocess (4.1.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
-    connection_pool (2.3.0)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -165,7 +164,6 @@ GEM
       puma
       selenium-webdriver (>= 4.0)
     hashdiff (1.0.1)
-    hiredis (0.6.3)
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
@@ -234,8 +232,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
-    rack-attack (6.6.1)
-      rack (>= 1.0, < 3)
     rack-proxy (0.7.4)
       rack
     rack-test (2.0.2)
@@ -274,10 +270,6 @@ GEM
     rainbow (3.1.1)
     raindrops (0.20.0)
     rake (13.0.6)
-    redis (5.0.5)
-      redis-client (>= 0.9.0)
-    redis-client (0.10.0)
-      connection_pool
     regexp_parser (2.5.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -429,16 +421,13 @@ DEPENDENCIES
   govuk_app_config
   govuk_publishing_components
   govuk_test
-  hiredis
   invalid_utf8_rejector
   notifications-ruby-client
   plek
   pry-byebug
-  rack-attack
   rack_strip_client_ip
   rails (= 7.0.4)
   rails-controller-testing
-  redis
   rspec-rails
   rubocop-govuk
   sassc-rails
