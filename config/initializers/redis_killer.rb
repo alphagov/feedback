@@ -1,6 +1,6 @@
 require "redis/client"
 
-module Redis
+class Redis
   class Client
     def call(*_command, **_kwargs)
       # rubocop:disable Rails/Exit
