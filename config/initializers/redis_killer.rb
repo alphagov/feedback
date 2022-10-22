@@ -10,5 +10,14 @@ class Redis
       # rubocop:enable Rails/Output
       # rubocop:enable Rails/Exit
     end
+
+    def call_pipeline(*_command, **_kwargs)
+      # rubocop:disable Rails/Exit
+      # rubocop:disable Rails/Output
+      puts caller
+      exit
+      # rubocop:enable Rails/Output
+      # rubocop:enable Rails/Exit
+    end
   end
 end
