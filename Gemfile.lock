@@ -367,8 +367,7 @@ GEM
     simplecov_json_formatter (0.1.4)
     simpleidn (0.2.1)
       unf (~> 0.1.4)
-    slimmer (17.0.0)
-      activesupport
+    slimmer (18.0.0)
       json
       nokogiri (~> 1.7)
       null_logger
