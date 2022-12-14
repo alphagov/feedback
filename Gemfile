@@ -8,6 +8,7 @@ gem "govuk_app_config"
 gem "govuk_publishing_components"
 gem "hiredis"
 gem "invalid_utf8_rejector"
+gem "mail", "~> 2.7.1"  # TODO: remove once https://github.com/mikel/mail/issues/1489 is fixed.
 gem "notifications-ruby-client"
 gem "plek"
 gem "rack-attack"
