@@ -1,12 +1,9 @@
 require "rails_helper"
 require "./app/lib/redirect_publisher"
-require "govuk-content-schema-test-helpers/rspec_matchers"
+require "govuk_schemas/rspec_matchers"
 
 RSpec.describe RedirectPublisher do
-  GovukContentSchemaTestHelpers.configure do |config|
-    config.schema_type = "publisher_v2"
-    config.project_root = Rails.root
-  end
+  RSpec.configuration.include GovukSchemas::RSpecMatchers
 
   let(:logger) { double(:logger) }
 
@@ -58,7 +55,7 @@ RSpec.describe RedirectPublisher do
     destination_path = "/contact"
 
     api = double(:publishing_api)
-    expect(api).to receive(:put_content).with(an_instance_of(String), be_valid_against_schema("redirect"))
+    expect(api).to receive(:put_content).with(an_instance_of(String), be_valid_against_publisher_schema("redirect"))
     expect(api).to receive(:publish).once.with(content_id)
 
     expect(logger).to receive(:info)
