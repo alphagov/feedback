@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "7.0.4"
 
+gem "bootsnap", require: false
 gem "gds-api-adapters"
 gem "google-api-client"
 gem "govuk_app_config"
