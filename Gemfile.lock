@@ -438,7 +438,6 @@ DEPENDENCIES
   govuk_test
   hiredis
   invalid_utf8_rejector
-  mail (~> 2.8.0)
   notifications-ruby-client
   plek
   pry-byebug
