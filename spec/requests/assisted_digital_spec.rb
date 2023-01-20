@@ -1,11 +1,14 @@
 require "rails_helper"
 require "gds_api/test_helpers/support_api"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe "Assisted digital help with fees submission", type: :request do
   include GdsApi::TestHelpers::SupportApi
   include ActiveSupport::Testing::TimeHelpers
+  include GdsApi::TestHelpers::ContentStore
 
   before do
+    stub_content_store_has_item("/#{slug}", schema_name: format)
     stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*})
     stub_support_api_service_feedback_creation
     # Set auth to nil, and this won't try to incur extra requests
@@ -14,16 +17,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
   it "shows the standard thank you message on success" do
     submit_service_feedback
-
-    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
-    get contact_anonymous_feedback_thankyou_path
-
-    expect(response.body).to include("Thank you for contacting GOV.UK")
-  end
-
-  it "should accept invalid submissions, just not do anything with them (because the form itself lives
-    in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
-    submit_service_feedback params: {}
 
     expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
     get contact_anonymous_feedback_thankyou_path
@@ -143,7 +136,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/assisted-digital-survey-feedback", params: params, headers: headers
+    post "/done/register-flood-risk-exemption", params: params, headers: headers
   end
 
   def valid_params
@@ -159,5 +152,13 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       },
       referrer: "https://www.some-transaction.service.gov/uk/completed",
     }
+  end
+
+  def format
+    "completed_transaction"
+  end
+
+  def slug
+    "done/register-flood-risk-exemption"
   end
 end
