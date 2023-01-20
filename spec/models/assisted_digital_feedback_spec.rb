@@ -1,8 +1,14 @@
 require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe AssistedDigitalFeedback, type: :model do
   include ValidatorHelper
   include ActiveSupport::Testing::TimeHelpers
+  include GdsApi::TestHelpers::ContentStore
+
+  before do
+    stub_content_store_has_item("/#{slug}", schema_name: format)
+  end
 
   context "a minimal valid feedback item" do
     subject { described_class.new(options) }
@@ -70,9 +76,9 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
         subject { described_class.new(assistance_received: "yes", assistance_provided_by: "other") }
 
         it { is_expected.not_to allow_value(nil).for(:assistance_provided_by_other) }
-        it { is_expected.not_to allow_value(nil).for(:assistance_satisfaction_rating) }
-        it { is_expected.to validate_inclusion_of(:assistance_satisfaction_rating).in_array(("1".."5").to_a) }
-        it { is_expected.to validate_length_of(:assistance_improvement_comments).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
+        it { is_expected.not_to allow_value(nil).for(:assistance_satisfaction_rating_other) }
+        it { is_expected.to validate_inclusion_of(:assistance_satisfaction_rating_other).in_array(("1".."5").to_a) }
+        it { is_expected.to validate_length_of(:assistance_improvement_comments_other).is_at_most(Ticket::FIELD_MAXIMUM_CHARACTER_COUNT).with_long_message(/can be max 1250 characters/) }
       end
 
       context 'and assistance was provided by "government-staff"' do
@@ -116,8 +122,8 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
         assistance_received_comments: "I was walked through the online process on my own computer",
         assistance_provided_by: "other",
         assistance_provided_by_other: "A helpful librarian at my local drop-in center",
-        assistance_satisfaction_rating: "5",
-        assistance_improvement_comments: "Make it easy to book a session",
+        assistance_satisfaction_rating_other: "5",
+        assistance_improvement_comments_other: "Make it easy to book a session",
         service_satisfaction_rating: "4",
         improvement_comments: "it was fine",
         slug: "some-transaction",
@@ -153,17 +159,25 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
           expect(subject[3]).to eq "A helpful librarian at my local drop-in center"
         end
 
-        it "exposes `assistance_satisfaction_rating` in the fifth cell as an integer" do
+        it "exposes `assistance_satisfaction_rating_other` in the fifth cell as an integer" do
           expect(subject[4]).to eq 5
         end
 
-        it "exposes `assistance_improvement_comments` in the sixth cell" do
+        it "exposes `assistance_improvement_comments_other` in the sixth cell" do
           expect(subject[5]).to eq "Make it easy to book a session"
         end
       end
 
       context 'when assistance was provided by "government-staff"' do
-        let(:params) { super().merge(assistance_provided_by: "government-staff") }
+        let(:params) do
+          super().merge(
+            assistance_provided_by: "government-staff",
+            assistance_satisfaction_rating: "5",
+            assistance_satisfaction_rating_other: "",
+            assistance_improvement_comments: "Make it easy to book a session",
+            assistance_improvement_comments_other: "",
+          )
+        end
 
         it "exposes nil in the fourth cell" do
           expect(subject[3]).to be_nil
@@ -300,7 +314,12 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
     end
 
     context "with empty assistance_improvement_comments" do
-      let(:params) { super().merge(assistance_improvement_comments: "") }
+      let(:params) do
+        super().merge(
+          assistance_improvement_comments: "",
+          assistance_improvement_comments_other: "",
+        )
+      end
 
       it "exposes a nil value in the assistance_improvement_comments cell" do
         expect(subject[5]).to be_nil
@@ -350,5 +369,13 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
         expect(subject[11]).to eq "#{Plek.new.website_root}/some-transaction/completed"
       end
     end
+  end
+
+  def format
+    "completed_transaction"
+  end
+
+  def slug
+    "done/some-transaction"
   end
 end
