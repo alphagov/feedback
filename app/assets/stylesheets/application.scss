@@ -18,3 +18,8 @@ $govuk-include-default-font-face: false;
 @import "govuk_publishing_components/components/panel";
 @import "govuk_publishing_components/components/radio";
 @import "govuk_publishing_components/components/warning-text";
+
+.promotion {
+  background: govuk-colour("light-grey");
+  padding: govuk-spacing(3);
+}

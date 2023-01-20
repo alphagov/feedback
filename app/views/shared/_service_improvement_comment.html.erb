@@ -1,0 +1,14 @@
+<%= render "govuk_publishing_components/components/character_count", {
+    textarea: {
+      label: {
+        text: t("controllers.contact.govuk.service_feedback.how_improve"),
+        bold: true,
+      },
+      name: "service_feedback[improvement_comments]",
+      hint: t("controllers.contact.govuk.service_feedback.no_pii_hint"),
+      value: @value_improvement_comments,
+      error_message: @error_message_improvement_comments,
+      id: @error_id_improvement_comments
+    },
+    maxlength: 1250
+  } %>

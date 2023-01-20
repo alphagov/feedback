@@ -52,6 +52,28 @@ en:
             department_email_confirmation_body: The department will then email you about your request.
             help_text: If you need any other help or want to contact a service or department through another route, <a href="https://www.gov.uk/contact" class="govuk-link">visit the GOV.UK contact page</a>.
             start_now: Start now
+        service_feedback:
+          electric_car_promotion: Electric car promotion
+          error_messages: There is a problem
+          dissatisfied: Dissatisfied
+          get_mot_reminders: Get MOT reminders
+          how_improve: How could we improve this service?
+          heading: Satisfaction survey
+          make_next_car_electric: Make your next car electric
+          mot_reminder: Get a text or email reminder when your MOT is due.
+          mot_promotion: MOT promotion
+          no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
+          neither: Neither satisfied or dissatisfied
+          organ_donation: Organ donation
+          register_to_donate: Register a decision to donate
+          satisfied: Satisfied
+          send_feedback: Send feedback
+          service_satisfaction_rating: Overall, how did you feel about the service you received today?
+          switch_to_electric_vehicle: Find out how much money you can save on fuel by switching to an electric vehicle.
+          tell_family_organ_donation: Tell your family about your organ donation decision
+          thanks_for_visiting: Thanks for visiting GOV.UK.
+          very_dissatisfied: Very dissatisfied
+          very_satisfied: Very satisfied
   models:
     accessible_format_options:
       - text: Audio

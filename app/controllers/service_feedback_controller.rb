@@ -1,4 +1,14 @@
 class ServiceFeedbackController < ContactController
+  # These 2 legacy completed transactions are linked to from multiple
+  # transactions. The user satisfaction survey should not be shown for these as
+  # it would generate noisy data for the linked organisation.
+  LEGACY_SLUGS = [
+    "done/transaction-finished",
+    "done/driving-transaction-finished",
+  ].freeze
+
+  layout "service_feedback"
+
   def new
     @publication = helpers.publication
 
@@ -36,6 +46,9 @@ class ServiceFeedbackController < ContactController
   end
 
 private
+
+  helper_method :show_survey?
+
   def ticket_class
     ServiceFeedback
   end
@@ -47,6 +60,11 @@ private
   def confirm_submission
     redirect_to contact_anonymous_feedback_thankyou_path
   end
+
+  def show_survey?
+    LEGACY_SLUGS.exclude?(params[:slug])
+  end
+
   def set_form_field_values
     # Set form values so that responses are not lost when the form reloads due to errors
     if params["service_feedback"].presence
