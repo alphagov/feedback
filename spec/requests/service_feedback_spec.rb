@@ -1,10 +1,16 @@
 require "rails_helper"
 require "gds_api/test_helpers/support"
 require "gds_api/test_helpers/support_api"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe "Service feedback submission", type: :request do
   include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi
+  include GdsApi::TestHelpers::ContentStore
+
+  before do
+    stub_content_store_has_item("/#{slug}", schema_name: format)
+  end
 
   it "should pass the feedback through the support-api" do
     stub_post = stub_support_api_service_feedback_creation(
@@ -87,16 +93,6 @@ RSpec.describe "Service feedback submission", type: :request do
     end
   end
 
-  it "should accept invalid submissions, just not do anything with them (because the form itself lives
-    in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
-    post "/contact/govuk/service-feedback"
-
-    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
-    get contact_anonymous_feedback_thankyou_path
-
-    expect(response.body).to include("Thank you for contacting GOV.UK")
-  end
-
   it "should handle the support-api being unavailable" do
     stub_support_api_isnt_available
 
@@ -107,7 +103,7 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/service-feedback", params:, headers:
+    post "/done/some-transaction", params:, headers:
   end
 
   def valid_params
@@ -120,5 +116,13 @@ RSpec.describe "Service feedback submission", type: :request do
         referrer: "https://www.some-transaction.service.gov/uk/completed",
       },
     }
+  end
+
+  def format
+    "completed_transaction"
+  end
+
+  def slug
+    "done/some-transaction"
   end
 end
