@@ -1,0 +1,55 @@
+<%= render partial: "shared/error_messages" %>
+
+<%= render "govuk_publishing_components/components/heading", {
+  text: t("controllers.contact.govuk.service_feedback.heading"),
+  margin_bottom: 4
+} %>
+
+<form action=<%= "#{publication.slug.gsub("done/", "")}" %> method="post" data-module="transaction-survey-form" class="service-feedback">
+  <input type="hidden" id="service_slug" name="service_feedback[slug]" value=<%= publication.slug %>/>
+  <input type="hidden" id="service_done_page_url" name="service_feedback[url]" value="<%= publication.web_url %>" />
+  <%= render partial: "shared/spam_honeypot", locals: { form_name: "service_feedback" } %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "service_feedback[service_satisfaction_rating]",
+    heading: t("controllers.contact.govuk.service_feedback.service_satisfaction_rating"),
+    heading_size: "s",
+    error_message: @error_message_service_satisfaction_rating,
+    id: @error_id_service_satisfaction_rating,
+    id_prefix: "service-satisfaction-rating",
+    items: [
+      {
+        value: 5,
+        text: t("controllers.contact.govuk.service_feedback.very_satisfied"),
+        checked: @value_service_satisfaction_rating == "5"
+      },
+      {
+        value: 4,
+        text: t("controllers.contact.govuk.service_feedback.satisfied"),
+        checked: @value_service_satisfaction_rating == "4"
+      },
+      {
+        value: 3,
+        text: t("controllers.contact.govuk.service_feedback.neither"),
+        checked: @value_service_satisfaction_rating == "3"
+      },
+      {
+        value: 2,
+        text: t("controllers.contact.govuk.service_feedback.dissatisfied"),
+        checked: @value_service_satisfaction_rating == "2"
+      },
+      {
+        value: 1,
+        text: t("controllers.contact.govuk.service_feedback.very_dissatisfied"),
+        checked: @value_service_satisfaction_rating == "1"
+      },
+    ]
+  } %>
+
+  <%= render partial: "shared/service_improvement_comment" %>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: t("controllers.contact.govuk.service_feedback.send_feedback"),
+    margin_bottom: true
+  } %>
+</form>

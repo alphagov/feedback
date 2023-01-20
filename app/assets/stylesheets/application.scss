@@ -2,3 +2,8 @@
 // for components and views on pages where they are needed.
 
 // https://github.com/alphagov/govuk_publishing_components/blob/main/docs/set-up-individual-component-css-loading.md
+
+.promotion {
+  background: govuk-colour("light-grey");
+  padding: govuk-spacing(3);
+}
