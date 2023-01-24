@@ -8,38 +8,121 @@ RSpec.describe "Service feedback submission", type: :request do
   include GdsApi::TestHelpers::SupportApi
   include GdsApi::TestHelpers::ContentStore
 
+  let(:payload) do
+    {
+      base_path: "/done/some-transaction",
+      schema_name: "completed_transaction",
+      document_type: "completed_transaction",
+      external_related_links: [],
+      title: "Some Transaction",
+    }
+  end
+
   before do
     stub_content_store_has_item("/#{slug}", schema_name: format)
   end
 
-  it "should pass the feedback through the support-api" do
-    stub_post = stub_support_api_service_feedback_creation(
-      service_satisfaction_rating: 5,
-      details: "the transaction is ace",
-      slug: "some-transaction",
-      user_agent: nil,
-      javascript_enabled: false,
-      referrer: "https://www.some-transaction.service.gov/uk/completed",
-      path: "/done/some-transaction",
-      url: "https://www.gov.uk/done/some-transaction",
-    )
+  context "render a Service Feedback form" do
+    it "displays title from the completed transaction's content item" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
 
-    submit_service_feedback
+      expect(page).to have_content("Some Transaction")
+    end
 
-    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
-    get contact_anonymous_feedback_thankyou_path
+    # Runs specs in support/service_feedback.rb
+    include_examples "Service Feedback", "/done/some-transaction"
 
-    expect(response.body).to include("Thank you for contacting GOV.UK")
-    assert_requested(stub_post)
+    it "displays service satisfaction rating radio buttons" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+
+      expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.service_satisfaction_rating"))
+      expect(page).to have_field("service-satisfaction-rating-0", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-1", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-2", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-3", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-4", type: "radio")
+    end
+
+    it "displays service feedback improvement comments text area" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      expect(page).to have_field(I18n.translate("controllers.contact.govuk.service_feedback.how_improve", type: "textarea"))
+      expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.no_pii_hint"))
+    end
   end
 
-  it "should include the user_agent if available" do
-    stub_support_api_service_feedback_creation
+  context "form submission" do
+    before do
+      stub_support_api_service_feedback_creation
+    end
 
-    submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
+    it "submits with valid data" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+      expect(page).to have_content "Thank you for contacting GOV.UK"
+    end
 
-    assert_requested(:post, %r{/service-feedback}) do |request|
-      JSON.parse(request.body)["service_feedback"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+    it "displays validation error when Service Satisfaction Rating is blank" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+      expect(page).to have_content "Service satisfaction rating: You must select a rating"
+    end
+
+    it "displays validation error when Service Improvement comments exceeds maximum character count" do
+      long_comment = "a" * 1255
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: long_comment
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+
+      expect(page).to have_content "Improvement comments: The message field can be max 1250 characters"
+    end
+  end
+
+  context "posting data to the Support API" do
+    it "should pass the feedback through the support-api" do
+      stub_post = stub_support_api_service_feedback_creation(
+        service_satisfaction_rating: 5,
+        details: "the transaction is ace",
+        slug: "some-transaction",
+        user_agent: nil,
+        javascript_enabled: false,
+        referrer: "https://www.some-transaction.service.gov/uk/completed",
+        path: "/done/some-transaction",
+        url: "https://www.gov.uk/done/some-transaction",
+      )
+
+      submit_service_feedback
+
+      expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
+      get contact_anonymous_feedback_thankyou_path
+
+      expect(response.body).to include("Thank you for contacting GOV.UK")
+      assert_requested(stub_post)
+    end
+
+    it "should include the user_agent if available" do
+      stub_support_api_service_feedback_creation
+
+      submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
+
+      assert_requested(:post, %r{/service-feedback}) do |request|
+        JSON.parse(request.body)["service_feedback"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+      end
     end
   end
 
