@@ -1,0 +1,49 @@
+cy:
+  controllers:
+    contact:
+      govuk:
+        assisted_digital_feedback:
+          assistance_question: A gawsoch chi unrhyw gymorth i ddefnyddio'r gwasanaeth hwn heddiw?
+          dissatisfied: Anfodlon
+          friend_or_relative: Ffrind neu berthynas
+          government_staff: Aelod o staff o'r adran gyfrifol o'r llywodraeth
+          help_improve: Helpwch ni i wella'r gwasanaeth hwn
+          how_improve: Sut allen ni wella'r gwasanaeth hwn?
+          neither: Ddim yn fodlon nac yn anfodlon
+          no: Nac oes
+          no_pii_hint: Peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd
+          online_satisfaction_check: Ar y cyfan, pa mor fodlon ydych chi gyda'r gwasanaeth ar-lein?
+          other: Arall (nodwch)
+          other_person: Dywedwch wrthon ni pwy oedd y person arall
+          pii_warning: Pan fyddwch chi'n llenwi'r arolwg hwn, peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd.
+          satisfaction_check: Pa mor fodlon ydych chi gyda'r cymorth a gawsoch?
+          satisfied: Bodlon
+          send_feedback: Anfon adborth
+          what_assistance: Pa gymorth gawsoch chi?
+          who_assisted: Pwy roddodd y cymorth?
+          work_colleague: Cydweithiwr
+          very_satisfied: Bodlon iawn
+          very_dissatisfied: Anfodlon iawn
+          yes: Oes
+        service_feedback:
+          electric_car_promotion:
+          error_messages: Mae yna broblem
+          dissatisfied: Anfodlon
+          get_mot_reminders:
+          how_improve: Sut allen ni wella'r gwasanaeth hwn?
+          heading: Arolwg boddhad
+          make_next_car_electric:
+          mot_reminder: Mynnwch neges destun neu e-bost i'ch atgoffa pan fydd angen adnewyddu'ch MOT.
+          mot_promotion:
+          no_pii_hint: Peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd
+          neither: Ddim yn fodlon nac yn anfodlon
+          organ_donation:
+          register_to_donate:
+          satisfied: Bodlon
+          send_feedback: Anfon adborth
+          service_satisfaction_rating: Ar y cyfan, sut oeddech chi'n teimlo am y gwasanaeth a gawsoch heddiw?
+          switch_to_electric_vehicle:
+          tell_family_organ_donation:
+          thanks_for_visiting:
+          very_dissatisfied: Anfodlon iawn
+          very_satisfied: Bodlon iawn

@@ -39,4 +39,13 @@ RSpec.describe ServiceFeedbackHelper, type: :helper do
       expect(helper.publication).to be_a(ContentItemPresenter)
     end
   end
+
+  describe "set_locale" do
+    it "sets the default locale to Welsh when locale is cy" do
+      payload.merge!({ locale: "cy" })
+      stub_content_store_has_item("/#{slug}", payload)
+
+      expect(helper.set_locale).to eql("cy")
+    end
+  end
 end

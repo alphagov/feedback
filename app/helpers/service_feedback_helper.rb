@@ -9,6 +9,14 @@ module ServiceFeedbackHelper
     @publication ||= ContentItemPresenter.new(content_item_hash)
   end
 
+  def set_locale
+    I18n.locale = if publication.locale && I18n.available_locales.map(&:to_s).include?(publication.locale)
+                    publication.locale
+                  else
+                    I18n.default_locale
+                  end
+  end
+
 private
 
   def completed_transaction_content_item
