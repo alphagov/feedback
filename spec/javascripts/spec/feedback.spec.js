@@ -96,4 +96,34 @@ describe('Feedback', function () {
       })
     })
   })
+
+  describe('when there is a service feedback form on the page', function () {
+    var serviceFeedbackForm, javascriptEnabledInput, referrerInput
+
+    beforeAll(function () {
+      serviceFeedbackForm = document.createElement('form')
+      serviceFeedbackForm.setAttribute('class', 'service-feedback')
+
+      document.body.appendChild(serviceFeedbackForm)
+    })
+
+    beforeEach(function () {
+      GOVUK.feedback.init()
+      javascriptEnabledInput = serviceFeedbackForm.querySelector('[name="service_feedback[javascript_enabled]"]')
+      referrerInput = serviceFeedbackForm.querySelector('[name="service_feedback[referrer]"]')
+    })
+
+    afterEach(function () {
+      javascriptEnabledInput.remove()
+      referrerInput.remove()
+    })
+
+    it('appends a hidden field indicating javascript was enabled', function () {
+      expect(javascriptEnabledInput.value).toBe('true')
+    })
+
+    it('appends a hidden field recording the referrer', function () {
+      expect(referrerInput.value).toBe(document.referrer)
+    })
+  })
 })
