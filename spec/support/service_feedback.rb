@@ -25,7 +25,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
     organ_donation_promotion_payload = payload.merge(details: {
       promotion: {
         url: "https://energysavingtrust.org.uk/advice/electric-vehicles/",
-        category: "organ_donation",
+        category: "organ_donor",
       },
     })
 
