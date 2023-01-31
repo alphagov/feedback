@@ -52,6 +52,10 @@ describe('Feedback', function () {
       referrerInput.remove()
     })
 
+    afterAll(function () {
+      document.body.removeChild(contactForm)
+    })
+
     it('appends a hidden field indicating javascript was enabled', function () {
       expect(javascriptEnabledInput.value).toBe('true')
     })
@@ -94,6 +98,40 @@ describe('Feedback', function () {
       it('masks all email addresses in the URL', function () {
         expect(linkInput.value).toBe(document.referrer + '?email=[email]')
       })
+    })
+  })
+
+  describe('when there is a service feedback form on the page', function () {
+    var serviceFeedbackForm, javascriptEnabledInput, referrerInput
+
+    beforeAll(function () {
+      serviceFeedbackForm = document.createElement('form')
+      serviceFeedbackForm.setAttribute('class', 'service-feedback')
+
+      document.body.appendChild(serviceFeedbackForm)
+    })
+
+    beforeEach(function () {
+      GOVUK.feedback.init()
+      javascriptEnabledInput = serviceFeedbackForm.querySelector('[name="service_feedback[javascript_enabled]"]')
+      referrerInput = serviceFeedbackForm.querySelector('[name="service_feedback[referrer]"]')
+    })
+
+    afterEach(function () {
+      javascriptEnabledInput.remove()
+      referrerInput.remove()
+    })
+
+    afterAll(function () {
+      document.body.removeChild(serviceFeedbackForm)
+    })
+
+    it('appends a hidden field indicating javascript was enabled', function () {
+      expect(javascriptEnabledInput.value).toBe('true')
+    })
+
+    it('appends a hidden field recording the referrer', function () {
+      expect(referrerInput.value).toBe(document.referrer)
     })
   })
 })
