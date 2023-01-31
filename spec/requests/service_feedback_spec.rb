@@ -91,6 +91,14 @@ RSpec.describe "Service feedback submission", type: :request do
 
       expect(page).to have_content "Improvement comments: The message field can be max 1250 characters"
     end
+
+    it "displays Welsh translation when locale is set to cy" do
+      payload.merge!({ locale: "cy" })
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+
+      expect(page).to have_content "Arolwg boddhad"
+    end
   end
 
   context "posting data to the Support API" do
