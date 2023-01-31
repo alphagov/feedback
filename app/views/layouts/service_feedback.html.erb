@@ -8,18 +8,23 @@
     <%= yield :section_meta_tags %>
   </head>
   <body>
-    <div id="wrapper" class="govuk-width-container">
-      <% if content_for?(:back_link) %>
-        <%= render 'govuk_publishing_components/components/back_link', { href: yield(:back_link) } %>
-      <% end %>
+    <div id="wrapper" class="completed_transaction service govuk-width-container">
+      <%= render 'govuk_publishing_components/components/breadcrumbs', {
+        breadcrumbs: [
+          {
+            title: "Home",
+            url: "/"
+          }
+        ],
+        collapse_on_mobile: true
+      } %>
       <main class="govuk-main-wrapper" id="content" role="main" <%= @lang_attribute %>>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
-          <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
+            <%= render 'govuk_publishing_components/components/title', margin_top: 0, title: yield(:title) %>
             <%= yield %>
             <%= render 'shared/publication_metadata', :publication => publication %>
           </div>
-
           <div class="govuk-grid-column-one-third">
             <%= render 'govuk_publishing_components/components/contextual_sidebar',
               content_item: content_item_hash
