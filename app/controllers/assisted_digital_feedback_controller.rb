@@ -1,5 +1,13 @@
 class AssistedDigitalFeedbackController < ContactController
   rescue_from GoogleSpreadsheetStore::Error, with: :unable_to_create_ticket_error
+
+  LEGACY_SLUGS = [
+    "done/transaction-finished",
+    "done/driving-transaction-finished",
+  ].freeze
+
+  layout "service_feedback"
+
   def new
     @publication = helpers.publication
 
@@ -34,7 +42,11 @@ class AssistedDigitalFeedbackController < ContactController
       respond_to_invalid_submission(ticket)
     end
   end
+
 private
+
+  helper_method :show_survey?
+
   def ticket_class
     MultiTicket.new(AssistedDigitalFeedback, ServiceFeedback)
   end
@@ -50,6 +62,11 @@ private
   def confirm_submission
     redirect_to contact_anonymous_feedback_thankyou_path
   end
+
+  def show_survey?
+    LEGACY_SLUGS.exclude?(params[:slug])
+  end
+
   def set_form_field_values
     # Set form values so that responses are not lost when the form reloads due to errors
     if params["service_feedback"].presence
