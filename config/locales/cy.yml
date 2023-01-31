@@ -1,0 +1,57 @@
+cy:
+  controllers:
+    contact:
+      govuk:
+        assisted_digital_feedback:
+          assistance_question: A gawsoch chi unrhyw gymorth i ddefnyddio'r gwasanaeth hwn heddiw?
+          dissatisfied: Anfodlon
+          friend_or_relative: Ffrind neu berthynas
+          government_staff: Aelod o staff o'r adran gyfrifol o'r llywodraeth
+          help_improve: Helpwch ni i wella'r gwasanaeth hwn
+          how_improve: Sut allen ni wella'r gwasanaeth hwn?
+          neither: Ddim yn fodlon nac yn anfodlon
+          no: Nac oes
+          no_pii_hint: Peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd
+          online_satisfaction_check: Ar y cyfan, pa mor fodlon ydych chi gyda'r gwasanaeth ar-lein?
+          other: Arall (nodwch)
+          other_person: Dywedwch wrthon ni pwy oedd y person arall
+          pii_warning: Pan fyddwch chi'n llenwi'r arolwg hwn, peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd.
+          satisfaction_check: Pa mor fodlon ydych chi gyda'r cymorth a gawsoch?
+          satisfied: Bodlon
+          send_feedback: Anfon adborth
+          what_assistance: Pa gymorth gawsoch chi?
+          who_assisted: Pwy roddodd y cymorth?
+          work_colleague: Cydweithiwr
+          very_satisfied: Bodlon iawn
+          very_dissatisfied: Anfodlon iawn
+          yes: Oes
+        service_feedback:
+          electric_vehicle:
+            title: Hyrwyddiad ceir trydan
+            description: Darganfyddwch faint o arian y gallwch ei arbed ar danwydd trwy newid i gerbyd trydan.
+            link_text: Sicrhewch y bydd eich car nesaf yn un trydan
+          mot_reminder:
+            title: Hyrwyddiad MOT
+            description: Derbyniwch neges destun neu e-bost i'ch atgoffa pryd ddylech gael MOT.
+            link_text: Derbyniwch negeseuon i'ch atgoffa am eich MOT
+          organ_donor:
+            title: Rhoi organau
+            description: Hysbyswch eich teulu am eich penderfyniad i roi organ.
+            link_text: Cofrestrwch benderfyniad i roi organ
+          photo_id:
+            title:
+            description:
+            link_text:
+          error_messages: Mae yna broblem
+          dissatisfied: Anfodlon
+          how_improve: Sut allen ni wella'r gwasanaeth hwn?
+          heading: Arolwg boddhad
+          mot_reminder: Mynnwch neges destun neu e-bost i'ch atgoffa pan fydd angen adnewyddu'ch MOT.
+          no_pii_hint: Peidiwch â chynnwys unrhyw wybodaeth bersonol nac ariannol, er enghraifft eich rhif Yswiriant Gwladol neu rif cerdyn credyd
+          neither: Ddim yn fodlon nac yn anfodlon
+          satisfied: Bodlon
+          send_feedback: Anfon adborth
+          service_satisfaction_rating: Ar y cyfan, sut oeddech chi'n teimlo am y gwasanaeth a gawsoch heddiw?
+          thanks_for_visiting: Diolch am ymweld â GOV.UK
+          very_dissatisfied: Anfodlon iawn
+          very_satisfied: Bodlon iawn

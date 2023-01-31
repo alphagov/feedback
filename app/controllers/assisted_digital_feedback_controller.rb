@@ -1,5 +1,8 @@
 class AssistedDigitalFeedbackController < ContactController
+  include LocaleHelper
   rescue_from GoogleSpreadsheetStore::Error, with: :unable_to_create_ticket_error
+
+  before_action :set_locale, if: -> { request.format.html? }
 
   LEGACY_SLUGS = [
     "done/transaction-finished",
@@ -46,6 +49,10 @@ class AssistedDigitalFeedbackController < ContactController
 private
 
   helper_method :show_survey?
+
+  def set_locale
+    helpers.set_locale
+  end
 
   def ticket_class
     MultiTicket.new(AssistedDigitalFeedback, ServiceFeedback)

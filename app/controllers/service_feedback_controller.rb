@@ -1,4 +1,5 @@
 class ServiceFeedbackController < ContactController
+  include LocaleHelper
   # These 2 legacy completed transactions are linked to from multiple
   # transactions. The user satisfaction survey should not be shown for these as
   # it would generate noisy data for the linked organisation.
@@ -9,8 +10,11 @@ class ServiceFeedbackController < ContactController
 
   layout "service_feedback"
 
+  before_action :set_locale, if: -> { request.format.html? }
+
   def new
     @publication = helpers.publication
+    @lang_attribute = lang_attribute(helpers.publication.locale.presence)
 
     respond_to do |format|
       format.html do
@@ -36,6 +40,7 @@ class ServiceFeedbackController < ContactController
 
       @errors = ticket.errors.to_hash
       @publication = helpers.publication
+      @lang_attribute = lang_attribute(helpers.publication.locale.presence)
 
       set_form_field_values
       set_error_message_per_component
@@ -48,6 +53,10 @@ class ServiceFeedbackController < ContactController
 private
 
   helper_method :show_survey?
+
+  def set_locale
+    helpers.set_locale
+  end
 
   def ticket_class
     ServiceFeedback

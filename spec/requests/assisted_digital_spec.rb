@@ -126,6 +126,14 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
       expect(page).to have_field("service_feedback[assistance_improvement_comments_other]", type: "textarea")
     end
+
+    it "displays Welsh translation when locale is set to cy" do
+      payload.merge!({ locale: "cy" })
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/register-flood-risk-exemption")
+
+      expect(page).to have_content "Helpwch ni i wella'r gwasanaeth hwn"
+    end
   end
 
   context "form submission" do

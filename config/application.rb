@@ -27,5 +27,12 @@ module Feedback
     config.assets.css_compressor = nil
 
     config.max_age = ENV["MAX_AGE"] || 300
+
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
+    config.i18n.available_locales = %i[
+      en
+      cy
+    ]
   end
 end
