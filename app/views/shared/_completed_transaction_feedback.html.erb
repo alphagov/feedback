@@ -9,7 +9,7 @@
   <% end %>
   <% if publication.promotion %>
     <div class="promotion">
-      <% if publication.promotion["category"] == "organ_donation" %>
+      <% if publication.promotion["category"] == "organ_donor" %>
         <%= render "govuk_publishing_components/components/heading", {
           text: t("controllers.contact.govuk.service_feedback.organ_donation"),
           font_size: "s",
