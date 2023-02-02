@@ -232,7 +232,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
         click_on I18n.translate("controllers.contact.govuk.assisted_digital_feedback.send_feedback")
       end
 
-      expect(page).to have_content "Assistance satisfaction rating: Can't be blank"
+      expect(page).to have_content "Assistance satisfaction rating: You must select a rating"
     end
 
     it "displays an error message when assistance was provided by government staff and how could we improve this service? is too long" do
@@ -262,7 +262,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
       end
 
       expect(page).to have_content "Assistance provided by other: Can't be blank"
-      expect(page).to have_content "Assistance satisfaction rating other: Can't be blank"
+      expect(page).to have_content "Assistance satisfaction rating other: You must select a rating"
     end
 
     it "displays an error message when assistance was provided by other and How could we improve this service? is too long" do

@@ -1,4 +1,20 @@
 cy:
+  activemodel:
+    errors:
+      models:
+        email_survey_signup:
+          attributes:
+            survey_id:
+              is_not_currently_running: "The survey is not currently active"
+        service_feedback:
+          select_rating: Mae'n rhaid i chi ddewis mesur
+          max_character_count: Gall maes y neges gynnwys hyd at %{field_maximum_character_count} nod
+        assisted_digital_feedback:
+          select_assistance_received: Mae'n rhaid i chi ddewis a gawsoch chi gymorth â'r gwasanaeth hwn
+          max_character_count: Gall maes y neges gynnwys hyd at %{field_maximum_character_count} nod
+          cant_be_blank: Ni all fod yn wag
+          select_rating: Mae'n rhaid i chi ddewis mesur
+
   controllers:
     contact:
       govuk:

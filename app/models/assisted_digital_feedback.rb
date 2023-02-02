@@ -16,59 +16,59 @@ class AssistedDigitalFeedback < Ticket
               :assistance_improvement_comments_other
 
   validates :assistance_received,
-            presence: { message: "You must select if you received assistance with this service" },
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.select_assistance_received") },
             inclusion: { in: %w[yes no] }
 
   validates :assistance_received_comments,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
+              message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.max_character_count", field_maximum_character_count: FIELD_MAXIMUM_CHARACTER_COUNT),
             },
-            presence: true,
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.cant_be_blank") },
             if: :assistance_received?
 
   validates :assistance_provided_by,
-            presence: true,
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.cant_be_blank") },
             inclusion: { in: %w[friend-relative work-colleague government-staff other] },
             if: :assistance_received?
 
   validates :assistance_provided_by_other,
-            presence: true,
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.cant_be_blank") },
             length: { maximum: 512 },
             if: :assistance_provided_by_other?
 
   validates :assistance_satisfaction_rating,
-            presence: true,
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.select_rating") },
             inclusion: { in: ("1".."5").to_a },
             if: :assistance_provided_by_government_staff?
 
   validates :assistance_satisfaction_rating_other,
-            presence: true,
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.select_rating") },
             inclusion: { in: ("1".."5").to_a },
             if: :assistance_provided_by_other?
 
   validates :assistance_improvement_comments,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
+              message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.max_character_count", field_maximum_character_count: FIELD_MAXIMUM_CHARACTER_COUNT),
             },
             if: :assistance_provided_by_government_staff?
 
   validates :assistance_improvement_comments_other,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
+              message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.max_character_count", field_maximum_character_count: FIELD_MAXIMUM_CHARACTER_COUNT),
             },
             if: :assistance_provided_by_other?
 
   validates :service_satisfaction_rating,
-            presence: { message: "You must select a rating" },
+            presence: { message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.select_rating") },
             inclusion: { in: ("1".."5").to_a }
 
   validates :improvement_comments,
             length: {
               maximum: FIELD_MAXIMUM_CHARACTER_COUNT,
-              message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters",
+              message: I18n.translate("activemodel.errors.models.assisted_digital_feedback.max_character_count", field_maximum_character_count: FIELD_MAXIMUM_CHARACTER_COUNT),
             }
 
   validates :slug, length: { maximum: 512 }
