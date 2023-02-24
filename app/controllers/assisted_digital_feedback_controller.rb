@@ -48,7 +48,7 @@ class AssistedDigitalFeedbackController < ContactController
 
 private
 
-  helper_method :show_survey?
+  helper_method :show_survey?, :promotion
 
   def set_locale
     helpers.set_locale
@@ -72,6 +72,10 @@ private
 
   def show_survey?
     LEGACY_SLUGS.exclude?(params[:slug])
+  end
+
+  def promotion
+    @publication.promotion
   end
 
   def set_form_field_values

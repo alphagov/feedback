@@ -8,6 +8,33 @@ class ServiceFeedbackController < ContactController
     "done/driving-transaction-finished",
   ].freeze
 
+  # The Photo ID promo should only appear on these pages. This has been
+  # hardcoded as it is a short campaign and will be removed manually when
+  # the campaign has ended.
+  PHOTO_ID_PROMO_SLUGS = %w[
+    done/find-pension-contact-details
+    done/lost-stolen-passport
+    done/use-lasting-power-of-attorney
+    done/vehicle-operator-licensing
+    done/apply-first-provisional-driving-licence
+    done/apply-blue-badge
+    done/get-state-pension
+    done/check-driving-licence
+    done/blue-badge
+    done/renew-medical-driving-licence
+    done/apply-driver-digital-tachograph-card
+    done/prove-right-to-work
+    done/report-driving-medical-condition
+    done/brp-not-arrived
+    done/send-prisoner-money
+    done/brp-report-lost-stolen
+    done/brp-collection-problem
+    done/view-prove-your-rights-uk
+    done/brp-report-problem
+    done/find-driving-schools-and-lessons
+    done/register-to-vot
+  ].freeze
+
   layout "service_feedback"
 
   before_action :set_locale, if: -> { request.format.html? }
@@ -52,7 +79,7 @@ class ServiceFeedbackController < ContactController
 
 private
 
-  helper_method :show_survey?
+  helper_method :show_survey?, :promotion
 
   def set_locale
     helpers.set_locale
@@ -72,6 +99,16 @@ private
 
   def show_survey?
     LEGACY_SLUGS.exclude?(params[:slug])
+  end
+
+  def promotion
+    @publication.promotion || photo_id_promotion
+  end
+
+  # To copy the same structure that a promo would appear in the
+  # content item, means we don't need to modify any other code.
+  def photo_id_promotion
+    { 'category': "photo_id", 'url': "/how-to-vote/photo-id-youll-need" }.with_indifferent_access if PHOTO_ID_PROMO_SLUGS.include?(params[:slug])
   end
 
   def set_form_field_values

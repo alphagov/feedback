@@ -7,50 +7,8 @@
   <% unless show_survey? %>
     <p class="govuk-body"><%= t("controllers.contact.govuk.service_feedback.thanks_for_visiting") %></p>
   <% end %>
-  <% if publication.promotion %>
-    <div class="promotion">
-      <% if publication.promotion["category"] == "organ_donor" %>
-        <%= render "govuk_publishing_components/components/heading", {
-          text: t("controllers.contact.govuk.service_feedback.organ_donation"),
-          font_size: "s",
-          margin_bottom: 3
-        } %>
-
-        <p class="govuk-body">
-          <%= t("controllers.contact.govuk.service_feedback.tell_family_organ_donation") %>
-        </p>
-
-        <p class="govuk-body govuk-!-margin-bottom-0">
-          <%= link_to t("controllers.contact.govuk.service_feedback.register_to_donate"), publication.promotion["url"], { class: "govuk-link" } %>
-        </p>
-      <% elsif publication.promotion["category"] == "mot_reminder" %>
-        <%= render "govuk_publishing_components/components/heading", {
-          text: t("controllers.contact.govuk.service_feedback.mot_promotion"),
-          font_size: "s",
-          margin_bottom: 3
-        } %>
-
-        <p class="govuk-body">
-          <%= t("controllers.contact.govuk.service_feedback.mot_reminder") %>
-        </p>
-
-        <p class="govuk-body govuk-!-margin-bottom-0">
-          <%= link_to t("controllers.contact.govuk.service_feedback.get_mot_reminders"), publication.promotion["url"], { class: "govuk-link" } %>
-        </p>
-      <% elsif publication.promotion["category"] == "electric_vehicle" %>
-        <%= render "govuk_publishing_components/components/heading", {
-          text: t("controllers.contact.govuk.service_feedback.electric_car_promotion"),
-          font_size: "s",
-          margin_bottom: 3
-        } %>
-
-        <p class="govuk-body"><%= t("controllers.contact.govuk.service_feedback.switch_to_electric_vehicle") %></p>
-
-        <p class="govuk-body govuk-!-margin-bottom-0">
-          <%= link_to t("controllers.contact.govuk.service_feedback.make_next_car_electric"), publication.promotion["url"], { class: "govuk-link" } %>
-      </p>
-      <% end %>
-    </div>
+  <% if promotion %>
+    <%= render "shared/promo", t("controllers.contact.govuk.service_feedback.#{promotion['category']}").merge({ link_href: promotion['url'] }) %>
     <hr class="govuk-section-break govuk-section-break--l">
   <% end %>
   <% if show_survey? %>

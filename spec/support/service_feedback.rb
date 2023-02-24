@@ -18,7 +18,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
 
     visit(path)
 
-    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.electric_car_promotion"))
+    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.electric_vehicle.title"))
   end
 
   it "displays an organ donation promotion when found in the content item" do
@@ -33,7 +33,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
 
     visit(path)
 
-    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.organ_donation"))
+    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.organ_donor.title"))
   end
 
   it "displays an MOT promotion when found in the content item" do
@@ -48,7 +48,22 @@ RSpec.shared_examples_for "Service Feedback" do |path|
 
     visit(path)
 
-    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.mot_promotion"))
+    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.mot_reminder.title"))
+  end
+
+  it "displays a Photo ID promotion when path included in PHOTO_ID_PROMO_SLUGS" do
+    path = "/done/find-pension-contact-details"
+    photo_id_promo_page_payload = payload.merge({
+      base_path: path,
+    })
+
+    stub_content_store_has_item(path, photo_id_promo_page_payload)
+
+    visit(path)
+
+    expect(page).to have_selector(".promotion")
+
+    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.photo_id.title"))
   end
 
   it "does not show survey for legacy slugs" do

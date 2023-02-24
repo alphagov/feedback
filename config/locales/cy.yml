@@ -69,5 +69,7 @@ cy:
           send_feedback: Anfon adborth
           service_satisfaction_rating: Ar y cyfan, sut oeddech chi'n teimlo am y gwasanaeth a gawsoch heddiw?
           thanks_for_visiting: Diolch am ymweld â GOV.UK
+          tell_family_organ_donation:
+          thanks_for_visiting:
           very_dissatisfied: Anfodlon iawn
           very_satisfied: Bodlon iawn

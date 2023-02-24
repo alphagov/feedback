@@ -85,23 +85,31 @@ en:
           very_dissatisfied: Very dissatisfied
           yes: Yes
         service_feedback:
-          electric_car_promotion: Electric car promotion
+          electric_vehicle:
+            title: Electric car promotion
+            description: Find out how much money you can save on fuel by switching to an electric vehicle.
+            link_text: Make your next car electric
+          mot_reminder:
+            title: MOT promotion
+            description: Get a text or email reminder when your MOT is due.
+            link_text: Get MOT reminders
+          organ_donor:
+            title: Organ donation
+            description: Tell your family about your organ donation decision.
+            link_text: Register a decision to donate
+          photo_id:
+            title: Bring photo ID to vote
+            description: From 4 May 2023 you’ll need to show photo ID when you vote in person in some UK elections or referendums.
+            link_text: Check which photo ID you’ll need to vote
           error_messages: There is a problem
           dissatisfied: Dissatisfied
-          get_mot_reminders: Get MOT reminders
           how_improve: How could we improve this service?
           heading: Satisfaction survey
-          make_next_car_electric: Make your next car electric
-          mot_reminder: Get a text or email reminder when your MOT is due.
-          mot_promotion: MOT promotion
           no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
           neither: Neither satisfied or dissatisfied
-          organ_donation: Organ donation
-          register_to_donate: Register a decision to donate
           satisfied: Satisfied
           send_feedback: Send feedback
           service_satisfaction_rating: Overall, how did you feel about the service you received today?
-          switch_to_electric_vehicle: Find out how much money you can save on fuel by switching to an electric vehicle.
           tell_family_organ_donation: Tell your family about your organ donation decision
           thanks_for_visiting: Thanks for visiting GOV.UK.
           very_dissatisfied: Very dissatisfied
