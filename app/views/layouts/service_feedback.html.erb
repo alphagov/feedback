@@ -9,19 +9,13 @@
   </head>
   <body>
     <div id="wrapper" class="completed_transaction service govuk-width-container">
-      <%= render 'govuk_publishing_components/components/breadcrumbs', {
-        breadcrumbs: [
-          {
-            title: "Home",
-            url: "/"
-          }
-        ],
-        collapse_on_mobile: true
-      } %>
+      <%= render 'govuk_publishing_components/components/contextual_breadcrumbs', content_item: content_item_hash %>
       <main class="govuk-main-wrapper" id="content" role="main" <%= @lang_attribute %>>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
             <%= render 'govuk_publishing_components/components/title', margin_top: 0, title: yield(:title) %>
+          </div>
+          <div class="govuk-grid-column-two-thirds">
             <%= yield %>
             <%= render 'shared/publication_metadata', :publication => publication %>
           </div>
