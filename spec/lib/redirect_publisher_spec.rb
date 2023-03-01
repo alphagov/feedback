@@ -36,16 +36,16 @@ RSpec.describe RedirectPublisher do
       .with("Registering redirect #{content_id}: '#{current_base_path}' -> '#{destination_path}'")
 
     redirect_publisher = RedirectPublisher.new(
-      logger: logger,
+      logger:,
       publishing_app: "feedback",
       type: "exact",
       publishing_api: api,
     )
 
     redirect_publisher.call(
-      content_id: content_id,
-      current_base_path: current_base_path,
-      destination_path: destination_path,
+      content_id:,
+      current_base_path:,
+      destination_path:,
     )
   end
 
@@ -62,16 +62,16 @@ RSpec.describe RedirectPublisher do
       .with("Registering redirect #{content_id}: '#{current_base_path}' -> '#{destination_path}'")
 
     redirect_publisher = RedirectPublisher.new(
-      logger: logger,
+      logger:,
       publishing_app: "feedback",
       type: "exact",
       publishing_api: api,
     )
 
     redirect_publisher.call(
-      content_id: content_id,
-      current_base_path: current_base_path,
-      destination_path: destination_path,
+      content_id:,
+      current_base_path:,
+      destination_path:,
     )
   end
 end

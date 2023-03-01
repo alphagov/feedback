@@ -209,7 +209,7 @@ RSpec.describe "Contact", type: :request do
       },
     }
     headers = { "HTTP_USER_AGENT" => "T1000 (Bazinga)" }
-    post "/contact/govuk", params: params, headers: headers
+    post("/contact/govuk", params:, headers:)
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -231,7 +231,7 @@ RSpec.describe "Contact", type: :request do
         referrer: "https://www.dev.gov.uk/referring_url",
       },
     }
-    post "/contact/govuk", params: params
+    post("/contact/govuk", params:)
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -253,7 +253,7 @@ RSpec.describe "Contact", type: :request do
       },
       referrer: "https://www.dev.gov.uk/referring_url",
     }
-    post "/contact/govuk", params: params
+    post("/contact/govuk", params:)
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
@@ -274,7 +274,7 @@ RSpec.describe "Contact", type: :request do
         textdetails: "test text details",
       },
     }
-    post "/contact/govuk", params: params, headers: { "HTTP_REFERER" => "https://www.dev.gov.uk/referring_url" }
+    post "/contact/govuk", params:, headers: { "HTTP_REFERER" => "https://www.dev.gov.uk/referring_url" }
 
     assert_requested(:post, %r{/named_contacts}) do |request|
       response = JSON.parse(request.body)["named_contact"]
