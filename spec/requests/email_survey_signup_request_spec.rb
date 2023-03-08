@@ -126,10 +126,10 @@ RSpec.describe "Email survey sign-up request", type: :request do
     url = "/contact/govuk/email-survey-signup"
 
     if as_xhr
-      post url, params: params, headers: headers, xhr: true
+      post url, params:, headers:, xhr: true
     else
       url << ".js" if as_js
-      post url, params: params, headers: headers
+      post url, params:, headers:
     end
   end
 

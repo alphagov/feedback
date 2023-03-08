@@ -120,7 +120,7 @@ private
   def referrer_attribute
     referrer = contact_params[:referrer] || params[:referrer] || request.referer
     referrer = referrer.gsub(/[^\s=\/?&]+(?:@|%40)[^\s=\/?&]+/, "[email]") if referrer.present?
-    referrer.present? ? { referrer: referrer } : {}
+    referrer.present? ? { referrer: } : {}
   end
 
   def technical_attributes

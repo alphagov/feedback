@@ -22,12 +22,12 @@ class ServiceFeedback < Ticket
     {
       service_satisfaction_rating: service_satisfaction_rating.to_i,
       details: improvement_comments,
-      slug: slug,
-      user_agent: user_agent,
+      slug:,
+      user_agent:,
       javascript_enabled: javascript_enabled.present?,
-      referrer: referrer,
-      path: path,
-      url: url,
+      referrer:,
+      path:,
+      url:,
     }
   end
 

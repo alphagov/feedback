@@ -18,16 +18,16 @@ class AccessibleFormatRequest
 
   def to_notify_params
     {
-      template_id: template_id,
+      template_id:,
       email_address: alternative_format_email,
       personalisation: {
         # Note that notify will error if we don't supply all the keys the
         # template uses, but it will also error if we supply extra keys the
         # template doesn't use.  Take care here.
         contact_name: presented_contact_name,
-        contact_email: contact_email,
-        document_title: document_title,
-        publication_path: publication_path,
+        contact_email:,
+        document_title:,
+        publication_path:,
         format_type: presented_format_type,
         custom_details: presented_custom_details,
       },

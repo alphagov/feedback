@@ -41,15 +41,15 @@ private
   def ticket_details
     details = {
       details: textdetails,
-      link: link, # needed for the `support` app
+      link:, # needed for the `support` app
       user_specified_url: link, # needed for the `support-api` app
-      user_agent: user_agent,
-      referrer: referrer,
-      javascript_enabled: javascript_enabled,
-      url: url,
+      user_agent:,
+      referrer:,
+      javascript_enabled:,
+      url:,
       path: url ? URI(url).path : nil, # needed for the `support-api` app
     }
-    details[:requester] = { name: name, email: email } unless anonymous?
+    details[:requester] = { name:, email: } unless anonymous?
     details
   end
 

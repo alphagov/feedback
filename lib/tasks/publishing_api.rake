@@ -9,7 +9,7 @@ namespace :publishing_api do
   task publish_special_routes: :environment do
     logger = Logger.new($stdout)
     special_route_publisher = GdsApi::PublishingApi::SpecialRoutePublisher.new(
-      logger: logger,
+      logger:,
       publishing_api: GdsApi.publishing_api,
     )
 
@@ -23,7 +23,7 @@ namespace :publishing_api do
     )
 
     redirect_publisher = RedirectPublisher.new(
-      logger: logger,
+      logger:,
       publishing_app: "feedback",
       publishing_api: GdsApi.publishing_api,
     )

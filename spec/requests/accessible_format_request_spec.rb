@@ -6,13 +6,13 @@ RSpec.describe "Requests for accessible formats of documents", type: :request do
 
   let(:content_id) { "aaaaaaaa-bbbb-cccc-dddd-eeff0011223" }
   let(:attachment_id) { "456def" }
-  let(:base_params) { { content_id: content_id, attachment_id: attachment_id } }
+  let(:base_params) { { content_id:, attachment_id: } }
   let(:base_param_string) { "content_id=#{content_id}&attachment_id=#{attachment_id}" }
 
   let(:content_item) do
     {
       base_path: "/government/publications/example-document",
-      content_id: content_id,
+      content_id:,
       publication_state: "published",
       title: "A document with some inaccessible attachments",
       details: {

@@ -107,7 +107,7 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/service-feedback", params: params, headers: headers
+    post "/contact/govuk/service-feedback", params:, headers:
   end
 
   def valid_params

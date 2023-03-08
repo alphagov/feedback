@@ -10,12 +10,12 @@ RSpec.describe AccessibleFormatRequest, type: :model do
   let(:alternative_format_email) { "department@example.com" }
   let(:request_options) do
     {
-      document_title: document_title,
-      publication_path: publication_path,
-      format_type: format_type,
-      contact_name: contact_name,
-      contact_email: contact_email,
-      alternative_format_email: alternative_format_email,
+      document_title:,
+      publication_path:,
+      format_type:,
+      contact_name:,
+      contact_email:,
+      alternative_format_email:,
     }
   end
 
@@ -92,10 +92,10 @@ RSpec.describe AccessibleFormatRequest, type: :model do
       let(:custom_details) { "I would like it in a different format please" }
       let(:request_options) do
         {
-          format_type: format_type,
-          custom_details: custom_details,
-          contact_name: contact_name,
-          contact_email: contact_email,
+          format_type:,
+          custom_details:,
+          contact_name:,
+          contact_email:,
         }
       end
 

@@ -43,7 +43,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
         response = { message: @message, status: status_text }
         response[:errors] = ticket.errors.full_messages unless ticket.valid?
 
-        render json: response, status: status
+        render json: response, status:
       end
     end
   end

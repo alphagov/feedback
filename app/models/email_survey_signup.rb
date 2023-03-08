@@ -60,13 +60,13 @@ class EmailSurveySignup
       # this is our default template for emails, a future version might
       # want to make this configurable per survey, but then we'd almost
       # certainly need to make the `personalisation` parts configurable too
-      template_id: template_id,
-      email_address: email_address,
+      template_id:,
+      email_address:,
       personalisation: {
         # Note that notify will error if we don't supply all the keys the
         # template uses, but it will also error if we supply extra keys the
         # template doesn't use.  Take care here.
-        survey_url: survey_url,
+        survey_url:,
       },
       reference: "email-survey-signup-#{object_id}",
       email_reply_to_id: reply_to_id,
