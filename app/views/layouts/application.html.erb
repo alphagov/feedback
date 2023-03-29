@@ -1,3 +1,20 @@
+<% content_for :body do %>
+  <div id="wrapper">
+    <%= render 'govuk_publishing_components/components/breadcrumbs', {
+      breadcrumbs: @breadcrumbs,
+      collapse_on_mobile: true
+    } %>
+    <main id="content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
+          <%= yield %>
+        </div>
+      </div>
+    </main>
+  </div>
+<% end %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,23 +22,14 @@
     <%=  stylesheet_link_tag 'application', :media => "all", integrity: false %>
     <title><%= yield :title %> - GOV.UK</title>
     <%= yield :section_meta_tags %>
+    <%=
+      render_component_stylesheets
+    %>
   </head>
   <body>
-    <div id="wrapper">
-      <%= render 'govuk_publishing_components/components/breadcrumbs', {
-        breadcrumbs: @breadcrumbs,
-        collapse_on_mobile: true
-      } %>
-      <main id="content" role="main">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
-            <%= yield %>
-          </div>
-        </div>
-      </main>
-    </div>
+    <%= yield :body %>
     <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
     <%= javascript_include_tag 'application', integrity: false %>
   </body>
 </html>
+

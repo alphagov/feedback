@@ -7,14 +7,4 @@ $govuk-new-link-styles: true;
 // not needed here.
 $govuk-include-default-font-face: false;
 
-@import "govuk_publishing_components/govuk_frontend_support";
-@import "govuk_publishing_components/components/back-link";
-@import "govuk_publishing_components/components/character-count";
-@import "govuk_publishing_components/components/details";
-@import "govuk_publishing_components/components/document-list";
-@import "govuk_publishing_components/components/error-summary";
-@import "govuk_publishing_components/components/fieldset";
-@import "govuk_publishing_components/components/inset-text";
-@import "govuk_publishing_components/components/panel";
-@import "govuk_publishing_components/components/radio";
-@import "govuk_publishing_components/components/warning-text";
+
