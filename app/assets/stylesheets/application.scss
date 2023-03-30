@@ -1,20 +1,4 @@
-$govuk-compatibility-govuktemplate: false;
-$govuk-use-legacy-palette: false;
-$govuk-new-link-styles: true;
+// The AssetHelper module is configured for this application to load individual stylesheets
+// for components and views on pages where they are needed.
 
-// This flag stops the font from being included in this application's
-// stylesheet - the font is being served by Static across all of GOV.UK, so is
-// not needed here.
-$govuk-include-default-font-face: false;
-
-@import "govuk_publishing_components/govuk_frontend_support";
-@import "govuk_publishing_components/components/back-link";
-@import "govuk_publishing_components/components/character-count";
-@import "govuk_publishing_components/components/details";
-@import "govuk_publishing_components/components/document-list";
-@import "govuk_publishing_components/components/error-summary";
-@import "govuk_publishing_components/components/fieldset";
-@import "govuk_publishing_components/components/inset-text";
-@import "govuk_publishing_components/components/panel";
-@import "govuk_publishing_components/components/radio";
-@import "govuk_publishing_components/components/warning-text";
+// https://github.com/alphagov/govuk_publishing_components/blob/main/docs/set-up-individual-component-css-loading.md
