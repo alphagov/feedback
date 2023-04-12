@@ -6,6 +6,9 @@
     <%=  stylesheet_link_tag 'application', :media => "all", integrity: false %>
     <title><%= yield :title %> - GOV.UK</title>
     <%= yield :section_meta_tags %>
+    <%=
+      render_component_stylesheets
+    %>
   </head>
   <body>
     <div id="wrapper" class="completed_transaction service govuk-width-container">

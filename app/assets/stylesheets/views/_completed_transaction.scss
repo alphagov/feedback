@@ -1,0 +1,7 @@
+@import "govuk_publishing_components/govuk_frontend_support";
+@import "govuk_publishing_components/individual_component_support";
+
+.promotion {
+  background: govuk-colour("light-grey");
+  padding: govuk-spacing(3);
+}
