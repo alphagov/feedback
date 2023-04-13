@@ -38,9 +38,8 @@ class AssistedDigitalFeedbackController < ContactController
 
       @errors = ticket.errors.to_hash
       @publication = helpers.publication
-      set_form_field_values
-      set_error_message_per_component
-      set_error_message_id_per_component
+
+      handle_form_errors
 
       respond_to_invalid_submission(ticket)
     end
@@ -72,6 +71,12 @@ private
 
   def show_survey?
     LEGACY_SLUGS.exclude?(params[:slug])
+  end
+
+  def handle_form_errors
+    set_form_field_values
+    set_error_message_per_component
+    set_error_message_id_per_component
   end
 
   def promotion
