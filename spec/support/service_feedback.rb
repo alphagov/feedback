@@ -51,21 +51,6 @@ RSpec.shared_examples_for "Service Feedback" do |path|
     expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.mot_reminder.title"))
   end
 
-  it "displays a Photo ID promotion when path included in PHOTO_ID_PROMO_SLUGS" do
-    path = "/done/find-pension-contact-details"
-    photo_id_promo_page_payload = payload.merge({
-      base_path: path,
-    })
-
-    stub_content_store_has_item(path, photo_id_promo_page_payload)
-
-    visit(path)
-
-    expect(page).to have_selector(".promotion")
-
-    expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.photo_id.title"))
-  end
-
   it "does not show survey for legacy slugs" do
     do_not_show_survey_for_legacy_slugs_payload = payload.merge({
       base_path: "/done/transaction-finished",

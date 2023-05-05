@@ -54,10 +54,6 @@ cy:
             title: Rhoi organau
             description: Hysbyswch eich teulu am eich penderfyniad i roi organ.
             link_text: Cofrestrwch benderfyniad i roi organ
-          photo_id:
-            title:
-            description:
-            link_text:
           error_messages: Mae yna broblem
           dissatisfied: Anfodlon
           how_improve: Sut allen ni wella'r gwasanaeth hwn?
