@@ -1,24 +1,17 @@
 # Throttle by IP address and by provided email address to 1 rpm on any contact forms
 # endpoint except the request-accessible-format endpoints
 
-cache_enabled = true
+rate_limit_enabled = true
 
 if ENV["DISABLE_THROTTLE"]&.downcase == "true"
   Rails.logger.warn("Request throttling disabled by DISABLE_THROTTLE env var")
-  cache_enabled = false
-elsif Rails.env.test?
-  # noop - in test we use memory cache
-elsif ENV["REDIS_URL"].blank?
-  Rails.logger.warn("Request throttling disabled because no redis instance specified")
-  cache_enabled = false
-else
-  Rack::Attack.cache.store = Redis.new(url: ENV["REDIS_URL"])
+  rate_limit_enabled = false
 end
 
 RATE_LIMIT_COUNT = ENV["RATE_LIMIT_COUNT"]&.to_i || 1
 RATE_LIMIT_PERIOD = (ENV["RATE_LIMIT_PERIOD_SECONDS"]&.to_i || 60).seconds
 
-if cache_enabled
+if rate_limit_enabled
   Rack::Attack.throttle("requests by ip", limit: RATE_LIMIT_COUNT, period: RATE_LIMIT_PERIOD) do |request|
     # Only need this log message once, as it'll cover both throttles.
     Rails.logger.info("Request bypassing rate limiter with token") if bypass_token?(request)
