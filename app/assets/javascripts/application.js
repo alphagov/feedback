@@ -3,6 +3,7 @@
 //= require govuk_publishing_components/components/details
 //= require govuk_publishing_components/components/error-summary
 //= require govuk_publishing_components/components/radio
+//= require govuk_publishing_components/components/step-by-step-nav
 
 (function () {
   'use strict'
@@ -43,16 +44,16 @@
     return link.pathname
   }
 
-  GOVUK.feedback.appendHiddenInputs = function (form) {
+  GOVUK.feedback.appendHiddenInputs = function (form, formName) {
     var jsInput = document.createElement('input')
     jsInput.type = 'hidden'
-    jsInput.name = 'contact[javascript_enabled]'
+    jsInput.name = formName + '[javascript_enabled]'
     jsInput.value = 'true'
     form.appendChild(jsInput)
 
     var referrerInput = document.createElement('input')
     referrerInput.type = 'hidden'
-    referrerInput.name = 'contact[referrer]'
+    referrerInput.name = formName + '[referrer]'
     referrerInput.value = document.referrer
     form.appendChild(referrerInput)
   }
@@ -67,10 +68,14 @@
     }
 
     var form = document.querySelector('form.contact-form')
-    if (!form) return
+    var serviceFeedbackForm = document.querySelector('form.service-feedback')
 
-    this.prepopulateFormBasedOnReferrer(form)
-    this.appendHiddenInputs(form)
+    if (form) {
+      this.prepopulateFormBasedOnReferrer(form)
+      this.appendHiddenInputs(form, 'contact')
+    } else if (serviceFeedbackForm) {
+      this.appendHiddenInputs(serviceFeedbackForm, 'service_feedback')
+    }
   }
 
   GOVUK.feedback.init()

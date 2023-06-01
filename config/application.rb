@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 
 module Feedback
   class Application < Rails::Application
+    include GovukPublishingComponents::AppHelpers::AssetHelper
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
@@ -26,6 +27,15 @@ module Feedback
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
 
+    config.assets.precompile << get_component_css_paths
+
     config.max_age = ENV["MAX_AGE"] || 300
+
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
+    config.i18n.available_locales = %i[
+      en
+      cy
+    ]
   end
 end

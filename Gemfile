@@ -4,6 +4,7 @@ gem "rails", "7.0.4.3"
 
 gem "bootsnap", require: false
 gem "dalli"
+gem "dotenv-rails"
 gem "gds-api-adapters"
 gem "google-api-client"
 gem "govuk_app_config"

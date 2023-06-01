@@ -1,0 +1,141 @@
+<%= render partial: "shared/error_messages" %>
+
+<%= render "govuk_publishing_components/components/heading", {
+  text: t("controllers.contact.govuk.assisted_digital_feedback.help_improve"),
+  margin_bottom: 4
+} %>
+
+<form action=<%= "#{publication.slug.gsub("done/", "")}" %> method="post" data-module="transaction-survey-form" class="service-feedback">
+  <input type="hidden" id="service_slug" name="service_feedback[slug]" value=<%= publication.slug %>/>
+  <input type="hidden" id="service_done_page_url" name="service_feedback[url]" value="<%= publication.web_url %>" />
+  <%= render partial: "shared/spam_honeypot", locals: { form_name: "service_feedback" } %>
+
+  <div id="transaction-completed-form-notice">
+    <p class="govuk-body"><%= t("controllers.contact.govuk.assisted_digital_feedback.pii_warning") %></p>
+  </div>
+
+  <% government_staff = capture do %>
+    <%= render 'assistance_received', locals: {
+      id_prefix: 'government-staff'
+    }
+    %>
+  <% end %>
+
+  <% other_person = capture do %>
+    <%= render 'assistance_received_other', locals: {
+      id_prefix: 'other'
+    } %>
+  <% end %>
+
+  <% did_you_receive_assistance = capture do %>
+    <%= render "govuk_publishing_components/components/character_count", {
+      textarea: {
+        label: {
+          text: t("controllers.contact.govuk.assisted_digital_feedback.what_assistance"),
+          bold: true,
+        },
+        name: "service_feedback[assistance_received_comments]",
+        value: @value_assistance_received_comments,
+        error_message: @error_message_assistance_received_comments,
+        id: @error_id_assistance_received_comments,
+      },
+      maxlength: 1250
+    } %>
+
+    <%= render "govuk_publishing_components/components/radio", {
+      name: "service_feedback[assistance_provided_by]",
+      heading: t("controllers.contact.govuk.assisted_digital_feedback.who_assisted"),
+      heading_size: "s",
+      error_message: @error_message_assistance_provided_by,
+      id: @error_id_assistance_provided_by,
+      items: [
+        {
+          value: "friend-relative",
+          text: t("controllers.contact.govuk.assisted_digital_feedback.friend_or_relative"),
+          checked: @value_assistance_provided_by == "friend-relative"
+        },
+        {
+          value: "work-colleague",
+          text: t("controllers.contact.govuk.assisted_digital_feedback.work_colleague"),
+          checked: @value_assistance_provided_by == "work-colleague"
+        },
+        {
+          value: "government-staff",
+          text: t("controllers.contact.govuk.assisted_digital_feedback.government_staff"),
+          checked: @value_assistance_provided_by == "government-staff",
+          conditional: government_staff
+        },
+        {
+          value: "other",
+          text: t("controllers.contact.govuk.assisted_digital_feedback.other"),
+          checked: @value_assistance_provided_by == "other",
+          conditional: other_person
+        },
+      ]
+    } %>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "service_feedback[assistance_received]",
+    heading: t("controllers.contact.govuk.assisted_digital_feedback.assistance_question"),
+    heading_size: "s",
+    error_message: @error_message_assistance_received,
+    id: @error_id_assistance_received,
+    items: [
+      {
+        value: "yes",
+        text: t("controllers.contact.govuk.assisted_digital_feedback.yes"),
+        checked: @value_assistance_received == "yes",
+        conditional: did_you_receive_assistance
+      },
+      {
+        value: "no",
+        text: t("controllers.contact.govuk.assisted_digital_feedback.no"),
+        checked: @value_assistance_received == "no"
+      }
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "service_feedback[service_satisfaction_rating]",
+    heading: t("controllers.contact.govuk.assisted_digital_feedback.online_satisfaction_check"),
+    heading_size: "s",
+    error_message: @error_message_service_satisfaction_rating,
+    id: @error_id_service_satisfaction_rating,
+    id_prefix: "service-satisfaction-rating",
+    items: [
+      {
+        value: 5,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.very_satisfied"),
+        checked: @value_service_satisfaction_rating == "5"
+      },
+      {
+        value: 4,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.satisfied"),
+        checked: @value_service_satisfaction_rating == "4"
+      },
+      {
+        value: 3,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.neither"),
+        checked: @value_service_satisfaction_rating == "3"
+      },
+      {
+        value: 2,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.dissatisfied"),
+        checked: @value_service_satisfaction_rating == "2"
+      },
+      {
+        value: 1,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.very_dissatisfied"),
+        checked: @value_service_satisfaction_rating == "1"
+      },
+    ]
+  } %>
+
+  <%= render partial: "shared/service_improvement_comment" %>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: t("controllers.contact.govuk.assisted_digital_feedback.send_feedback"),
+    margin_bottom: true
+  } %>
+</form>

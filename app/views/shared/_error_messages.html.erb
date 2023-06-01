@@ -1,0 +1,12 @@
+<% if @errors %>
+  <%# Generate error summary using field keys %>
+  <%= render "govuk_publishing_components/components/error_summary", {
+   title: t("controllers.contact.govuk.service_feedback.error_messages"),
+   items: @errors.map { |k,v|
+     {
+       text: "#{k.to_s.gsub("_", " ").capitalize}: #{v[0].capitalize}",
+       href: "#error-#{k.to_s}".gsub("_", "-")
+     }
+    }
+   } %>
+<% end %>

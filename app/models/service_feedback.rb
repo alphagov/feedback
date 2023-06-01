@@ -5,9 +5,9 @@ class ServiceFeedback < Ticket
   attr_accessor :service_satisfaction_rating, :slug, :javascript_enabled, :referrer
   attr_writer :improvement_comments
 
-  validates :service_satisfaction_rating, presence: { message: "You must select a rating" }
+  validates :service_satisfaction_rating, presence: { message: I18n.translate("activemodel.errors.models.service_feedback.select_rating") }
   validates :service_satisfaction_rating, inclusion: { in: ("1".."5").to_a }
-  validates :improvement_comments, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: "The message field can be max #{FIELD_MAXIMUM_CHARACTER_COUNT} characters" }
+  validates :improvement_comments, length: { maximum: FIELD_MAXIMUM_CHARACTER_COUNT, message: I18n.translate("activemodel.errors.models.service_feedback.max_character_count", field_maximum_character_count: FIELD_MAXIMUM_CHARACTER_COUNT) }
   validates :slug, length: { maximum: 512 }
 
   def improvement_comments

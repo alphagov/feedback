@@ -6,6 +6,15 @@ en:
           attributes:
             survey_id:
               is_not_currently_running: "The survey is not currently active"
+        service_feedback:
+          select_rating: You must select a rating
+          max_character_count: The message field can be max %{field_maximum_character_count} characters
+        assisted_digital_feedback:
+          select_assistance_received: You must select if you received assistance with this service
+          max_character_count: The message field can be max %{field_maximum_character_count} characters
+          cant_be_blank: Can't be blank
+          select_rating: You must select a rating
+
   controllers:
     contact:
       govuk:
@@ -52,6 +61,55 @@ en:
             department_email_confirmation_body: The department will then email you about your request.
             help_text: If you need any other help or want to contact a service or department through another route, <a href="https://www.gov.uk/contact" class="govuk-link">visit the GOV.UK contact page</a>.
             start_now: Start now
+        assisted_digital_feedback:
+          assistance_question: Did you receive any assistance to use this service today?
+          dissatisfied: Dissatisfied
+          friend_or_relative: A friend or relative
+          government_staff: A staff member of the responsible government department
+          help_improve: Help us improve this service
+          how_improve: How could we improve this service?
+          neither: Neither satisfied or dissatisfied
+          no: No
+          no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
+          online_satisfaction_check: Overall, how satisfied are you with the online service?
+          other: Other (please specify)
+          other_person: Tell us who the other person was
+          pii_warning: When filling in this survey please don't include any personal or financial information, for example your National Insurance or credit card numbers.
+          satisfaction_check: How satisfied are you with the assistance received?
+          satisfied: Satisfied
+          send_feedback: Send feedback
+          what_assistance: What assistance did you receive?
+          who_assisted: Who provided the assistance?
+          work_colleague: A work colleague
+          very_satisfied: Very satisfied
+          very_dissatisfied: Very dissatisfied
+          yes: Yes
+        service_feedback:
+          electric_vehicle:
+            title: Electric car promotion
+            description: Find out how much money you can save on fuel by switching to an electric vehicle.
+            link_text: Make your next car electric
+          mot_reminder:
+            title: MOT promotion
+            description: Get a text or email reminder when your MOT is due.
+            link_text: Get MOT reminders
+          organ_donor:
+            title: Organ donation
+            description: Tell your family about your organ donation decision.
+            link_text: Register a decision to donate
+          error_messages: There is a problem
+          dissatisfied: Dissatisfied
+          how_improve: How could we improve this service?
+          heading: Satisfaction survey
+          no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
+          neither: Neither satisfied or dissatisfied
+          satisfied: Satisfied
+          send_feedback: Send feedback
+          service_satisfaction_rating: Overall, how did you feel about the service you received today?
+          tell_family_organ_donation: Tell your family about your organ donation decision
+          thanks_for_visiting: Thanks for visiting GOV.UK.
+          very_dissatisfied: Very dissatisfied
+          very_satisfied: Very satisfied
   models:
     accessible_format_options:
       - text: Audio

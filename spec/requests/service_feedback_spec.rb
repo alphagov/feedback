@@ -1,39 +1,136 @@
 require "rails_helper"
 require "gds_api/test_helpers/support"
 require "gds_api/test_helpers/support_api"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe "Service feedback submission", type: :request do
   include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi
+  include GdsApi::TestHelpers::ContentStore
 
-  it "should pass the feedback through the support-api" do
-    stub_post = stub_support_api_service_feedback_creation(
-      service_satisfaction_rating: 5,
-      details: "the transaction is ace",
-      slug: "some-transaction",
-      user_agent: nil,
-      javascript_enabled: false,
-      referrer: "https://www.some-transaction.service.gov/uk/completed",
-      path: "/done/some-transaction",
-      url: "https://www.gov.uk/done/some-transaction",
-    )
-
-    submit_service_feedback
-
-    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
-    get contact_anonymous_feedback_thankyou_path
-
-    expect(response.body).to include("Thank you for contacting GOV.UK")
-    assert_requested(stub_post)
+  let(:payload) do
+    {
+      base_path: "/done/some-transaction",
+      schema_name: "completed_transaction",
+      document_type: "completed_transaction",
+      external_related_links: [],
+      title: "Some Transaction",
+    }
   end
 
-  it "should include the user_agent if available" do
-    stub_support_api_service_feedback_creation
+  before do
+    stub_content_store_has_item("/#{slug}", schema_name: format)
+  end
 
-    submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
+  context "render a Service Feedback form" do
+    it "displays title from the completed transaction's content item" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
 
-    assert_requested(:post, %r{/service-feedback}) do |request|
-      JSON.parse(request.body)["service_feedback"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+      expect(page).to have_content("Some Transaction")
+    end
+
+    # Runs specs in support/service_feedback.rb
+    include_examples "Service Feedback", "/done/some-transaction"
+
+    it "displays service satisfaction rating radio buttons" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+
+      expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.service_satisfaction_rating"))
+      expect(page).to have_field("service-satisfaction-rating-0", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-1", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-2", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-3", type: "radio")
+      expect(page).to have_field("service-satisfaction-rating-4", type: "radio")
+    end
+
+    it "displays service feedback improvement comments text area" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      expect(page).to have_field(I18n.translate("controllers.contact.govuk.service_feedback.how_improve", type: "textarea"))
+      expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.no_pii_hint"))
+    end
+  end
+
+  context "form submission" do
+    before do
+      stub_support_api_service_feedback_creation
+    end
+
+    it "submits with valid data" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+      expect(page).to have_content "Thank you for contacting GOV.UK"
+    end
+
+    it "displays validation error when Service Satisfaction Rating is blank" do
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+      expect(page).to have_content "Service satisfaction rating: You must select a rating"
+    end
+
+    it "displays validation error when Service Improvement comments exceeds maximum character count" do
+      long_comment = "a" * 1255
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: long_comment
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+
+      expect(page).to have_content "Improvement comments: The message field can be max 1250 characters"
+    end
+
+    it "displays Welsh translation when locale is set to cy" do
+      payload.merge!({ locale: "cy" })
+      stub_content_store_has_item("/#{slug}", payload)
+      visit("/done/some-transaction")
+
+      expect(page).to have_content "Arolwg boddhad"
+    end
+  end
+
+  context "posting data to the Support API" do
+    it "should pass the feedback through the support-api" do
+      stub_post = stub_support_api_service_feedback_creation(
+        service_satisfaction_rating: 5,
+        details: "the transaction is ace",
+        slug: "some-transaction",
+        user_agent: nil,
+        javascript_enabled: false,
+        referrer: "https://www.some-transaction.service.gov/uk/completed",
+        path: "/done/some-transaction",
+        url: "https://www.gov.uk/done/some-transaction",
+      )
+
+      submit_service_feedback
+
+      expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
+      get contact_anonymous_feedback_thankyou_path
+
+      expect(response.body).to include("Thank you for contacting GOV.UK")
+      assert_requested(stub_post)
+    end
+
+    it "should include the user_agent if available" do
+      stub_support_api_service_feedback_creation
+
+      submit_service_feedback(headers: { "HTTP_USER_AGENT" => "Shamfari/3.14159 (Fooey)" })
+
+      assert_requested(:post, %r{/service-feedback}) do |request|
+        JSON.parse(request.body)["service_feedback"]["user_agent"] == "Shamfari/3.14159 (Fooey)"
+      end
     end
   end
 
@@ -87,16 +184,6 @@ RSpec.describe "Service feedback submission", type: :request do
     end
   end
 
-  it "should accept invalid submissions, just not do anything with them (because the form itself lives
-    in the feedback app and re-rendering it with the user's original feedback isn't straightforward" do
-    post "/contact/govuk/service-feedback"
-
-    expect(response).to redirect_to(contact_anonymous_feedback_thankyou_path)
-    get contact_anonymous_feedback_thankyou_path
-
-    expect(response.body).to include("Thank you for contacting GOV.UK")
-  end
-
   it "should handle the support-api being unavailable" do
     stub_support_api_isnt_available
 
@@ -107,7 +194,7 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   def submit_service_feedback(params: valid_params, headers: {})
-    post "/contact/govuk/service-feedback", params:, headers:
+    post "/done/some-transaction", params:, headers:
   end
 
   def valid_params
@@ -120,5 +207,13 @@ RSpec.describe "Service feedback submission", type: :request do
         referrer: "https://www.some-transaction.service.gov/uk/completed",
       },
     }
+  end
+
+  def format
+    "completed_transaction"
+  end
+
+  def slug
+    "done/some-transaction"
   end
 end

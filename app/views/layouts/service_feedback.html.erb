@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8" />
+    <%=  stylesheet_link_tag 'application', :media => "all", integrity: false %>
+    <title><%= yield :title %> - GOV.UK</title>
+    <%= yield :section_meta_tags %>
+    <%=
+      render_component_stylesheets
+    %>
+  </head>
+  <body>
+    <div id="wrapper" class="completed_transaction service govuk-width-container">
+      <%= render 'govuk_publishing_components/components/contextual_breadcrumbs', content_item: content_item_hash %>
+      <main class="govuk-main-wrapper" id="content" role="main" <%= @lang_attribute %>>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <%= render 'govuk_publishing_components/components/title', margin_top: 0, title: yield(:title) %>
+          </div>
+          <div class="govuk-grid-column-two-thirds">
+            <%= yield %>
+            <%= render 'shared/publication_metadata', :publication => publication %>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <%= render 'govuk_publishing_components/components/contextual_sidebar',
+              content_item: content_item_hash
+            %>
+          </div>
+          <div class="govuk-grid-column-two-thirds">
+            <%= render 'govuk_publishing_components/components/contextual_footer',
+              content_item: content_item_hash
+            %>
+          </div>
+        </div>
+      </main>
+    </div>
+    <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
+    <%= javascript_include_tag 'application', integrity: false %>
+  </body>
+</html>

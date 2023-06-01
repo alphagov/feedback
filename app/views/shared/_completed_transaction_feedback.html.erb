@@ -1,0 +1,16 @@
+<% content_for :extra_headers do %>
+  <meta name="robots" content="noindex, nofollow" />
+<% end %>
+<% content_for :title do %>
+  <%= publication.title %>
+<% end %>
+  <% unless show_survey? %>
+    <p class="govuk-body"><%= t("controllers.contact.govuk.service_feedback.thanks_for_visiting") %></p>
+  <% end %>
+  <% if promotion %>
+    <%= render "shared/promo", t("controllers.contact.govuk.service_feedback.#{promotion['category']}").merge({ link_href: promotion['url'] }) %>
+    <hr class="govuk-section-break govuk-section-break--l">
+  <% end %>
+  <% if show_survey? %>
+    <%= render survey, publication: publication %>
+  <% end %>

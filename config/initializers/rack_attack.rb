@@ -28,8 +28,8 @@ if rate_limit_enabled
 end
 
 def throttled_path?(path)
-  # RAF has two posts in quick succession, so exempt it for now
-  return false if path.start_with?("/contact/govuk/request-accessible-format")
+  # RAF and /done/completed_transaction pages make two requests in quick succession, so are exempt for now
+  return false if path.start_with?("/contact/govuk/request-accessible-format") || path.match?(%r{contact/govuk/done/.+})
 
   path.start_with?("/contact/govuk")
 end

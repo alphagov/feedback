@@ -1,0 +1,54 @@
+<%
+  add_view_stylesheet("completed_transaction")
+%>
+<%= render "govuk_publishing_components/components/radio", {
+    name: "service_feedback[assistance_satisfaction_rating]",
+    id_prefix: locals[:id_prefix],
+    heading: t("controllers.contact.govuk.assisted_digital_feedback.satisfaction_check"),
+    heading_size: "s",
+    error_message: @error_message_assistance_satisfaction_rating,
+    id: @error_id_assistance_satisfaction_rating,
+    items: [
+      {
+        value: 5,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.very_satisfied"),
+        checked: @value_assistance_satisfaction_rating == "5"
+      },
+      {
+        value: 4,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.satisfied"),
+        checked: @value_assistance_satisfaction_rating == "4"
+      },
+      {
+        value: 3,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.neither"),
+        checked: @value_assistance_satisfaction_rating == "3"
+      },
+      {
+        value: 2,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.dissatisfied"),
+        checked: @value_assistance_satisfaction_rating == "2"
+      },
+      {
+        value: 1,
+        text: t("controllers.contact.govuk.assisted_digital_feedback.very_dissatisfied"),
+        checked: @value_assistance_satisfaction_rating == "1"
+      },
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/character_count", {
+    textarea: {
+      label: {
+        text: t("controllers.contact.govuk.assisted_digital_feedback.how_improve"),
+        bold: true,
+      },
+      name: "service_feedback[assistance_improvement_comments]",
+      id_prefix: locals[:id_prefix],
+      hint: t("controllers.contact.govuk.assisted_digital_feedback.no_pii_hint"),
+      error_message: @error_message_assistance_improvement_comments,
+      id: @error_id_assistance_improvement_comments,
+      value: @value_assistance_improvement_comments
+    },
+    maxlength: 1250
+  } %>
