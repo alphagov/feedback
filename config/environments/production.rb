@@ -60,7 +60,7 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  config.log_level = :info
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", :info)
 
   config.serve_static_files = false
 
