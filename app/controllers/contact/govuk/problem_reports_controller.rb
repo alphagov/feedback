@@ -39,7 +39,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
         # and replace what the app sends back with a standard error page
         render "contact/govuk/problem_reports/thankyou"
       end
-      format.js do
+      format.json do
         response = { message: @message, status: status_text }
         response[:errors] = ticket.errors.full_messages unless ticket.valid?
 
