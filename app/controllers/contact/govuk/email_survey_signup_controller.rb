@@ -59,7 +59,7 @@ module Contact
     private
 
       def ajax_request?
-        request.xhr? || request.format == :js
+        request.xhr? || request.format.json?
       end
     end
   end
