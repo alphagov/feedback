@@ -77,7 +77,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
 
   context "for a JS request" do
     it "responds inline with a 200 ok success message" do
-      submit_email_survey_sign_up as_js: true
+      submit_email_survey_sign_up as_json: true
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("application/json")
@@ -85,7 +85,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
     end
 
     it "responds with a 422 failure for invalid submissions" do
-      submit_email_survey_sign_up as_js: true, params: {}
+      submit_email_survey_sign_up as_json: true, params: {}
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.media_type).to eq("application/json")
@@ -99,7 +99,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
       stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
         .to_return(status: 403, body: '{"errors":[{"error":403,"message":"forbidden"}]}')
 
-      submit_email_survey_sign_up as_js: true
+      submit_email_survey_sign_up as_json: true
 
       expect(response).to have_http_status(:service_unavailable)
       expect(response.media_type).to eq("application/json")
@@ -122,13 +122,14 @@ RSpec.describe "Email survey sign-up request", type: :request do
     expect(notify_request).to have_been_requested
   end
 
-  def submit_email_survey_sign_up(params: valid_params, headers: {}, as_xhr: false, as_js: false)
+  def submit_email_survey_sign_up(params: valid_params, headers: {}, as_xhr: false, as_json: false)
     url = "/contact/govuk/email-survey-signup"
 
     if as_xhr
       post url, params:, headers:, xhr: true
+    elsif as_json
+      post url, params:, headers:, as: :json
     else
-      url << ".js" if as_js
       post url, params:, headers:
     end
   end

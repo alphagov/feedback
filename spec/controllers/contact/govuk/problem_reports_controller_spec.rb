@@ -99,7 +99,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
                  javascript_enabled: "true",
                  referrer: "https://www.gov.uk/some-url/",
                }.merge(attrs),
-               xhr: true
+               as: :json
         end
 
         it "should save the ticket" do
