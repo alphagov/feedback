@@ -29,7 +29,7 @@ module Contact
 
       def confirm_submission
         if ajax_request?
-          render json: { message: "email survey sign up success" }, status: :ok
+          render json: { message: "email survey sign up success" }, status: :created
         else
           redirect_to contact_anonymous_feedback_thankyou_path
         end

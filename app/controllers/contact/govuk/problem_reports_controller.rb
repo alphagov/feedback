@@ -21,7 +21,7 @@ class Contact::Govuk::ProblemReportsController < ContactController
 
       hide_report_a_problem_form_in_response
       @message = DONE_OK_TEXT.html_safe
-      status = 201
+      status = :created
       status_text = "success"
       GovukStatsd.increment("report_a_problem.successful_submission")
     else

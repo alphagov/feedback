@@ -44,7 +44,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
     it "responds inline with a 200 ok success message" do
       submit_email_survey_sign_up as_xhr: true
 
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:created)
       expect(response.media_type).to eq("application/json")
       expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
@@ -79,7 +79,7 @@ RSpec.describe "Email survey sign-up request", type: :request do
     it "responds inline with a 200 ok success message" do
       submit_email_survey_sign_up as_json: true
 
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:created)
       expect(response.media_type).to eq("application/json")
       expect(JSON.parse(response.body)).to eq("message" => "email survey sign up success")
     end
