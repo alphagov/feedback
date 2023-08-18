@@ -7,15 +7,15 @@ Rails.application.routes.draw do
   get "/contact", format: false, to: "contact#index"
 
   constraints FormatRoutingConstraint.new("completed_transaction") do
-    get "*slug", slug: %r{done/register-flood-risk-exemption}, to: "assisted_digital_feedback#new"
-    post "*slug", slug: %r{done/register-flood-risk-exemption}, to: "assisted_digital_feedback#create"
-    get "*slug", slug: %r{done/waste-carrier-or-broker-registration}, to: "assisted_digital_feedback#new"
-    post "*slug", slug: %r{done/waste-carrier-or-broker-registration}, to: "assisted_digital_feedback#create"
-    get "*slug", slug: %r{done/register-waste-exemption}, to: "assisted_digital_feedback#new"
-    post "*slug", slug: %r{done/register-waste-exemption}, to: "assisted_digital_feedback#create"
+    get "*base_path", base_path: %r{done/register-flood-risk-exemption}, to: "assisted_digital_feedback#new"
+    post "*base_path", base_path: %r{done/register-flood-risk-exemption}, to: "assisted_digital_feedback#create"
+    get "*base_path", base_path: %r{done/waste-carrier-or-broker-registration}, to: "assisted_digital_feedback#new"
+    post "*base_path", base_path: %r{done/waste-carrier-or-broker-registration}, to: "assisted_digital_feedback#create"
+    get "*base_path", base_path: %r{done/register-waste-exemption}, to: "assisted_digital_feedback#new"
+    post "*base_path", base_path: %r{done/register-waste-exemption}, to: "assisted_digital_feedback#create"
 
-    get "*slug", slug: %r{done/.+}, to: "service_feedback#new"
-    post "*slug", slug: %r{done/.+}, to: "service_feedback#create"
+    get "*base_path", base_path: %r{done/.+}, to: "service_feedback#new"
+    post "*base_path", base_path: %r{done/.+}, to: "service_feedback#create"
   end
 
   namespace :contact do

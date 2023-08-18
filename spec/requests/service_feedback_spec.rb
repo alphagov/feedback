@@ -19,12 +19,12 @@ RSpec.describe "Service feedback submission", type: :request do
   end
 
   before do
-    stub_content_store_has_item("/#{slug}", schema_name: format)
+    stub_content_store_has_item("/#{base_path}", schema_name: format)
   end
 
   context "render a Service Feedback form" do
     it "displays title from the completed transaction's content item" do
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
 
       expect(page).to have_content("Some Transaction")
@@ -34,7 +34,7 @@ RSpec.describe "Service feedback submission", type: :request do
     include_examples "Service Feedback", "/done/some-transaction"
 
     it "displays service satisfaction rating radio buttons" do
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
 
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.service_satisfaction_rating"))
@@ -46,7 +46,7 @@ RSpec.describe "Service feedback submission", type: :request do
     end
 
     it "displays service feedback improvement comments text area" do
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
       expect(page).to have_field(I18n.translate("controllers.contact.govuk.service_feedback.how_improve", type: "textarea"))
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.no_pii_hint"))
@@ -59,7 +59,7 @@ RSpec.describe "Service feedback submission", type: :request do
     end
 
     it "submits with valid data" do
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
       within(".service-feedback") do
         choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
@@ -70,7 +70,7 @@ RSpec.describe "Service feedback submission", type: :request do
     end
 
     it "displays validation error when Service Satisfaction Rating is blank" do
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
       within(".service-feedback") do
         fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
@@ -81,7 +81,7 @@ RSpec.describe "Service feedback submission", type: :request do
 
     it "displays validation error when Service Improvement comments exceeds maximum character count" do
       long_comment = "a" * 1255
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
       within(".service-feedback") do
         choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
@@ -94,7 +94,7 @@ RSpec.describe "Service feedback submission", type: :request do
 
     it "displays Welsh translation when locale is set to cy" do
       payload.merge!({ locale: "cy" })
-      stub_content_store_has_item("/#{slug}", payload)
+      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
 
       expect(page).to have_content "Arolwg boddhad"
@@ -213,7 +213,7 @@ RSpec.describe "Service feedback submission", type: :request do
     "completed_transaction"
   end
 
-  def slug
+  def base_path
     "done/some-transaction"
   end
 end

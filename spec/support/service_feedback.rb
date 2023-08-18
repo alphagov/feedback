@@ -1,6 +1,6 @@
 RSpec.shared_examples_for "Service Feedback" do |path|
   it "displays no promotion when there is no promotion choice" do
-    stub_content_store_has_item("/#{slug}", payload)
+    stub_content_store_has_item(path, payload)
     visit(path)
 
     expect(page).not_to have_selector(".promotion")
@@ -51,12 +51,12 @@ RSpec.shared_examples_for "Service Feedback" do |path|
     expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.mot_reminder.title"))
   end
 
-  it "does not show survey for legacy slugs" do
-    do_not_show_survey_for_legacy_slugs_payload = payload.merge({
+  it "does not show survey for legacy base paths" do
+    do_not_show_survey_for_legacy_base_paths_payload = payload.merge({
       base_path: "/done/transaction-finished",
     })
 
-    stub_content_store_has_item("/done/transaction-finished", do_not_show_survey_for_legacy_slugs_payload)
+    stub_content_store_has_item("/done/transaction-finished", do_not_show_survey_for_legacy_base_paths_payload)
 
     visit("/done/transaction-finished")
     expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.thanks_for_visiting"))

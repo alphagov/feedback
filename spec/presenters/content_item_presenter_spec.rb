@@ -4,7 +4,7 @@ require "gds_api/test_helpers/content_store"
 
 RSpec.describe ContentItemPresenter do
   include GdsApi::TestHelpers::ContentStore
-  let(:slug) { "done/some-transaction" }
+  let(:base_path) { "done/some-transaction" }
   let(:payload) do
     {
       base_path: "/done/some-transaction",
@@ -98,7 +98,7 @@ RSpec.describe ContentItemPresenter do
   end
 
   def setup_content_item_presenter
-    stub_content_store_has_item("/#{slug}", payload)
+    stub_content_store_has_item("/#{base_path}", payload)
     content_item_presenter
   end
 end

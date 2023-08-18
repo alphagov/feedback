@@ -8,7 +8,7 @@ RSpec.describe FormatRoutingConstraint do
     context "when the content_store returns a document" do
       before do
         @format = "completed_transaction"
-        stub_content_store_has_item("/#{slug}", schema_name: @format)
+        stub_content_store_has_item("/#{base_path}", schema_name: @format)
         @request = request
       end
 
@@ -30,7 +30,7 @@ RSpec.describe FormatRoutingConstraint do
 
     context "when the content_store API call throws an error" do
       before do
-        stub_content_store_does_not_have_item("/#{slug}")
+        stub_content_store_does_not_have_item("/#{base_path}")
         @request = request
       end
 
@@ -47,11 +47,11 @@ RSpec.describe FormatRoutingConstraint do
     end
   end
 
-  def slug
+  def base_path
     "done/some-transaction"
   end
 
   def request
-    double({ params: { slug: }, env: {} })
+    double({ params: { base_path: }, env: {} })
   end
 end
