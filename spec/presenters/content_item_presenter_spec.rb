@@ -82,7 +82,7 @@ RSpec.describe ContentItemPresenter do
   end
 
   it "presents the slug" do
-    expect(content_item_presenter.slug).to eql("done/some-transaction")
+    expect(content_item_presenter.slug).to eql("some-transaction")
   end
 
   it "presents the format" do
