@@ -3,14 +3,6 @@
 This app collects feedback from users via contact forms rendered on GOV.UK.
 This data is then sent to the [support](https://github.com/alphagov/support) app or [support-api](https://github.com/alphagov/support-api) app to be dealt with.
 
-## Screenshots
-
-### Contact Page on GOV.UK
-![Contact Page on GOV.UK](/docs/screenshots/contact_page.png?raw=true "Contact Page on GOV.UK")
-
-### Contact Form on GOV.UK
-![Contact Form on GOV.UK](/docs/screenshots/contact_form.png?raw=true "Contact Form on GOV.UK")
-
 ## Live examples
 
 - https://www.gov.uk/contact/
@@ -82,6 +74,7 @@ bundle exec rake
 
 ## Further documentation
 
+- [An overview of how the Feedback, Support and Support-api applications fit together[(https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
