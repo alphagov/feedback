@@ -643,7 +643,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
-    valid_email (0.1.4)
+    valid_email (0.2.0)
       activemodel
       mail (>= 2.6.1)
       simpleidn
