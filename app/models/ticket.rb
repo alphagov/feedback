@@ -11,7 +11,6 @@ class Ticket
   # 1 character long.
   FIELD_MAXIMUM_CHARACTER_COUNT = 1250
 
-  validate :validate_giraffe
   validates :url, length: { maximum: 2048 }
   validates :user_agent, length: { maximum: 2048 }
 
@@ -40,12 +39,5 @@ class Ticket
 
   def referrer
     UrlNormaliser.url_if_valid(@referrer)
-  end
-
-private
-
-  def validate_giraffe
-    # giraffe is used as a naive bot-preventor
-    @errors.add :giraffe if giraffe.present?
   end
 end
