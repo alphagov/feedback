@@ -4,12 +4,6 @@ RSpec.describe Ticket, type: :model do
   it { is_expected.to allow_value("https://www.gov.uk/done/whatever").for(:url) }
   it { is_expected.not_to be_spam }
 
-  context "a bot has populated the giraffe field" do
-    let(:subject) { Ticket.new(giraffe: "xxxxx") }
-    it { is_expected.to be_spam }
-    it { is_expected.not_to be_valid }
-  end
-
   it "should validate the length of URLs" do
     expect(Ticket.new(url: "https://www.gov.uk/#{'a' * 2048}").errors[:url].size).to eq(1)
   end
