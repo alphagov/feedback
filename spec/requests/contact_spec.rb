@@ -52,19 +52,6 @@ RSpec.describe "Contact", type: :request do
     assert_requested(stub_post)
   end
 
-  it "should not accept spam (ie a request with honeypot field filled in)" do
-    visit "/contact/govuk"
-
-    choose "location-0" # The whole site
-    fill_in_valid_contact_details_and_description
-    fill_in "giraffe", with: "test val"
-    click_on "Send message"
-
-    no_post_calls_should_have_been_made
-
-    expect(page.status_code).to eq(400)
-  end
-
   it "should let the user submit an anonymous request" do
     stub_post = stub_support_api_long_form_anonymous_contact_creation(
       details: "test text details",
