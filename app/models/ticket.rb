@@ -23,7 +23,7 @@ class Ticket
   end
 
   def spam?
-    errors[:giraffe] && errors[:giraffe].any?
+    false
   end
 
   def url
