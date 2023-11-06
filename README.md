@@ -78,6 +78,7 @@ bundle exec rake
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
+- [Spam control methods for the Contact form](https://gov-uk.atlassian.net/wiki/spaces/GOVUK/pages/3665821697/Contact+us+form+-+spam+control) (for internal use only) 
 
 ## Licence
 
