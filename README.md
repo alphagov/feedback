@@ -74,10 +74,11 @@ bundle exec rake
 
 ## Further documentation
 
-- [An overview of how the Feedback, Support and Support-api applications fit together[(https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
+- [An overview of how the Feedback, Support and Support-api applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)
+- [Spam control methods for the Contact form](https://gov-uk.atlassian.net/wiki/spaces/GOVUK/pages/3665821697/Contact+us+form+-+spam+control) (for internal use only) 
 
 ## Licence
 
