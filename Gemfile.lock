@@ -105,8 +105,7 @@ GEM
     declarative (0.0.20)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    domain_name (0.5.20190701)
-      unf (>= 0.0.5, < 1.0.0)
+    domain_name (0.6.20231109)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -615,12 +614,12 @@ GEM
     simplecov_json_formatter (0.1.4)
     simpleidn (0.2.1)
       unf (~> 0.1.4)
-    slimmer (18.2.0)
+    slimmer (18.3.0)
       json
       nokogiri (~> 1.7)
       null_logger
       plek (>= 1.1.0)
-      rack
+      rack (>= 3.0)
       rest-client
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -642,7 +641,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8.2)
+    unf_ext (0.0.9.1)
     unicode-display_width (2.4.2)
     valid_email (0.2.0)
       activemodel
