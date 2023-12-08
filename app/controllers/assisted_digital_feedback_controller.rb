@@ -4,7 +4,7 @@ class AssistedDigitalFeedbackController < ContactController
 
   before_action :set_locale, if: -> { request.format.html? }
 
-  LEGACY_SLUGS = [
+  LEGACY_BASE_PATHS = [
     "done/transaction-finished",
     "done/driving-transaction-finished",
   ].freeze
@@ -70,7 +70,7 @@ private
   end
 
   def show_survey?
-    LEGACY_SLUGS.exclude?(params[:slug])
+    LEGACY_BASE_PATHS.exclude?(params[:slug])
   end
 
   def handle_form_errors

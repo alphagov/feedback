@@ -5,8 +5,8 @@
   margin_bottom: 4
 } %>
 
-<form action=<%= "#{publication.slug.gsub("done/", "")}" %> method="post" data-module="transaction-survey-form" class="service-feedback">
-  <input type="hidden" id="service_slug" name="service_feedback[slug]" value=<%= publication.slug %>/>
+<form action=<%= publication.slug %> method="post" data-module="transaction-survey-form" class="service-feedback">
+  <input type="hidden" id="service_slug" name="service_feedback[slug]" value=<%= publication.slug %>>
   <input type="hidden" id="service_done_page_url" name="service_feedback[url]" value="<%= publication.web_url %>" />
   <%= render partial: "shared/spam_honeypot", locals: { form_name: "service_feedback" } %>
 

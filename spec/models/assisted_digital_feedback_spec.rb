@@ -7,7 +7,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
   include GdsApi::TestHelpers::ContentStore
 
   before do
-    stub_content_store_has_item("/#{slug}", schema_name: format)
+    stub_content_store_has_item("/#{base_path}", schema_name: format)
   end
 
   context "a minimal valid feedback item" do
@@ -375,7 +375,7 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
     "completed_transaction"
   end
 
-  def slug
+  def base_path
     "done/some-transaction"
   end
 end

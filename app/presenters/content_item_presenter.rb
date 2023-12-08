@@ -26,7 +26,7 @@ class ContentItemPresenter
   end
 
   def slug
-    URI.parse(base_path).path.sub(%r{\A/}, "")
+    base_path.split("/").last
   end
 
   def format

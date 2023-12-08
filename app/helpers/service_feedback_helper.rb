@@ -23,7 +23,7 @@ private
     @completed_transaction_content_item ||= request.env[:content_item] || request_content_item
   end
 
-  def request_content_item(base_path = "/#{params[:slug]}")
+  def request_content_item(base_path = "/#{params[:base_path]}")
     GdsApi.content_store.content_item(base_path)
   end
 end
