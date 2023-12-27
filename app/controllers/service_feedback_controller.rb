@@ -93,14 +93,14 @@ private
 
   def set_error_message_per_component
     # Set error message vars to be used to display errors above components
-    @errors.each do |k, _v|
+    @errors.each_key do |k|
       instance_variable_set("@error_message_#{k}", @errors[k].first)
     end
   end
 
   def set_error_message_id_per_component
     # Set error message id vars to be used for linking to components from error summary
-    @errors.each do |k, _v|
+    @errors.each_key do |k|
       instance_variable_set("@error_id_#{k}", "error-#{k}".gsub("_", "-"))
     end
   end
