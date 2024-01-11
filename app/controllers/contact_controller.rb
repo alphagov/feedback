@@ -5,6 +5,7 @@ class ContactController < ApplicationController
   include ApplicationHelper
 
   before_action :set_expiry, only: %i[new index]
+  after_action :add_cors_header
 
   def index
     @popular_links = filtered_links(CONTACT_LINKS.popular)
@@ -125,5 +126,12 @@ private
 
   def technical_attributes
     { user_agent: request.user_agent }
+  end
+
+  def add_cors_header
+    origin_header = request.headers["origin"]
+    if origin_header && origin_header.end_with?(".gov.uk")
+      response.headers["Access-Control-Allow-Origin"] = origin_header
+    end
   end
 end

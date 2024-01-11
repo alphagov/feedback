@@ -204,6 +204,50 @@ RSpec.describe "Contact", type: :request do
     end
   end
 
+  it "should include the Access-Control-Allow-Origin if the request came from .gov.uk" do
+    stub_support_named_contact_creation
+
+    params = {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details",
+      },
+    }
+    headers = { "ORIGIN" => "https://assets.publishing.service.gov.uk" }
+    post("/contact/govuk", params:, headers:)
+
+    assert_requested(:post, %r{/named_contacts}) do |_request|
+      response.headers["Access-Control-Allow-Origin"] == "https://assets.publishing.service.gov.uk"
+    end
+  end
+
+  it "shouldn't include the Access-Control-Allow-Origin if the request did not come from .gov.uk" do
+    stub_support_named_contact_creation
+
+    params = {
+      contact: {
+        query: "report-problem",
+        link: "www.test.com",
+        location: "specific",
+        name: "test name",
+        email: "test@test.com",
+        textdetails: "test text details",
+      },
+    }
+
+    headers = { "ORIGIN" => "https://not-gov.uk" }
+
+    post("/contact/govuk", params:, headers:)
+
+    assert_requested(:post, %r{/named_contacts}) do |_request|
+      response.headers["Access-Control-Allow-Origin"].nil?
+    end
+  end
+
   it "should include the referrer if present in the contact params" do
     stub_support_named_contact_creation
 
