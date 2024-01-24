@@ -22,3 +22,5 @@
 /yarn-error.log
 /public/assets
 .env
+/app/assets/builds/*
+!/app/assets/builds/.keep

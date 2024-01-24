@@ -27,8 +27,6 @@ module Feedback
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
 
-    config.assets.precompile << get_component_css_paths
-
     config.max_age = ENV["MAX_AGE"] || 300
 
     config.i18n.default_locale = :en
