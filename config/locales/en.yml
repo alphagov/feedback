@@ -18,6 +18,13 @@ en:
   controllers:
     contact:
       govuk:
+        contact_govuk:
+          title: "Contact GOV.UK"
+          questions:
+            link: "What's it to do with?"
+            textdetails: "What are the details?"
+            contact: "If you want a reply (optional)"
+          submit_text: "Send message"
         email_survey_signup:
           survey_body: Give us feedback on requesting accessible documents on GOV.UK
           short_survey: (short survey)

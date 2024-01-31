@@ -45,7 +45,7 @@ RSpec.describe "Contact", type: :request do
     visit "/contact/govuk"
     expect(page).to have_title "Contact GOV.UK"
 
-    choose "location-0" # The whole site
+    choose "location-0" # Selects the 'The whole site' radio button
     fill_in_valid_contact_details_and_description
     contact_submission_should_be_successful
 
@@ -66,7 +66,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-0" # The whole site
+    choose "location-0" # Selects the 'The whole site' radio button
     fill_in "textdetails", with: "test text details"
     anonymous_submission_should_be_successful
 
@@ -78,7 +78,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-1" # A specific page
+    choose "location-1" # Selects the 'A specific page' radio button
     fill_in_valid_contact_details_and_description
     fill_in "link", with: "some url"
     click_on "Send message"
@@ -97,7 +97,7 @@ RSpec.describe "Contact", type: :request do
   it "should not proceed if the user hasn't filled in all required fields" do
     visit "/contact/govuk"
 
-    choose "location-0" # The whole site
+    choose "location-0" # Selects the 'The whole site' radio button
     fill_in "Your name", with: "test name"
     fill_in "Your email address", with: "a@a.com"
     click_on "Send message"
@@ -113,7 +113,7 @@ RSpec.describe "Contact", type: :request do
   it "should not let the user submit a request with email without name" do
     visit "/contact/govuk"
 
-    choose "location-0" # The whole site
+    choose "location-0" # Selects the 'The whole site' radio button
     fill_in "Your email address", with: "a@a.com"
     fill_in "textdetails", with: "test text details"
     click_on "Send message"
@@ -129,7 +129,7 @@ RSpec.describe "Contact", type: :request do
   it "should not let the user submit a request with name without email" do
     visit "/contact/govuk"
 
-    choose "location-0" # The whole site
+    choose "location-0" # Selects the 'The whole site' radio button
     fill_in "Your name", with: "test name"
     fill_in "textdetails", with: "test text details"
     click_on "Send message"
@@ -147,7 +147,7 @@ RSpec.describe "Contact", type: :request do
 
     visit "/contact/govuk"
 
-    choose "location-1" # A specific page
+    choose "location-1" # # Selects the 'A specific page' radio button
     fill_in_valid_contact_details_and_description
     fill_in "link", with: "some url"
     click_on "Send message"
@@ -166,7 +166,7 @@ RSpec.describe "Contact", type: :request do
     visit "/contact/govuk"
     malicious_input = "<script>alert(0)</script>"
 
-    choose "location-0" # The whole site
+    choose "location-0" # # Selects the 'The whole site' radio button
     fill_in "Your name", with: malicious_input
     fill_in "Your email address", with: malicious_input
     fill_in "textdetails", with: malicious_input
@@ -330,5 +330,71 @@ RSpec.describe "Contact", type: :request do
     contact_referrer_cookie = cookies.find { |c| c[:name] == "govuk_contact_referrer" }
     expect(contact_referrer_cookie).not_to be_nil
     expect(contact_referrer_cookie[:value]).to match(/\/thankyou$/)
+  end
+
+  it "should have the GA4 form tracker on the form" do
+    visit "/contact/govuk"
+
+    expect(page).to have_selector(".contact-form[data-module=ga4-form-tracker]")
+    expect(page).to have_selector("#link[data-ga4-form-include-input]")
+
+    form = page.first(".contact-form")
+    ga4_data = JSON.parse(form["data-ga4-form"])
+
+    expect(ga4_data["event_name"]).to eq "form_response"
+    expect(ga4_data["type"]).to eq "contact"
+    expect(ga4_data["section"]).to eq "What's it to do with?"
+    expect(ga4_data["action"]).to eq "Send message"
+    expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
+  end
+
+  it "should have the GA4 auto tracker on the thank you pages" do
+    visit "/contact/govuk/anonymous-feedback/thankyou"
+
+    expect(page).to have_selector("p[data-module=ga4-auto-tracker]")
+
+    ga4_auto_element = page.first("p[data-module=ga4-auto-tracker]")
+    ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
+
+    expect(ga4_data["event_name"]).to eq "form_complete"
+    expect(ga4_data["type"]).to eq "contact"
+    expect(ga4_data["text"]).to eq "Thank you for contacting GOV.UK"
+    expect(ga4_data["action"]).to eq "complete"
+    expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
+
+    visit "/contact/govuk/thankyou"
+
+    expect(page).to have_selector("p[data-module=ga4-auto-tracker]")
+
+    ga4_auto_element = page.first("p[data-module=ga4-auto-tracker]")
+    ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
+
+    expect(ga4_data["event_name"]).to eq "form_complete"
+    expect(ga4_data["type"]).to eq "contact"
+    expect(ga4_data["text"]).to eq "Your message has been sent, and the team will get back to you to answer any questions as soon as possible."
+    expect(ga4_data["action"]).to eq "complete"
+    expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
+  end
+
+  it "should have the GA4 auto tracker on form error" do
+    visit "/contact/govuk"
+
+    choose "location-1" # Selects the 'A specific page' radio button
+    fill_in "Your name", with: ""
+    fill_in "Your email address", with: ".@a.com"
+    fill_in "textdetails", with: ""
+    fill_in "link", with: ""
+    click_on "Send message"
+
+    i_should_be_on "/contact/govuk"
+
+    ga4_auto_element = page.first("form div[data-module=ga4-auto-tracker]")
+    ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
+
+    expect(ga4_data["event_name"]).to eq "form_error"
+    expect(ga4_data["type"]).to eq "contact"
+    expect(ga4_data["text"]).to eq "The link field cannot be empty, The message field cannot be empty, The email address must be valid, The name field cannot be empty"
+    expect(ga4_data["section"]).to eq "What's it to do with?, What are the details?, If you want a reply (optional), If you want a reply (optional)"
+    expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
   end
 end

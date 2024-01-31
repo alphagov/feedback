@@ -1,5 +1,25 @@
-<% content_for :title do "Contact GOV.UK" end %>
-  <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form" } do |f| %>
+<%
+  ga4_english_strings = {
+    page_title: t("controllers.contact.govuk.contact_govuk.title", lang: :en),
+    questions: {
+      link: t("controllers.contact.govuk.contact_govuk.questions.link", lang: :en),
+      textdetails: t("controllers.contact.govuk.contact_govuk.questions.textdetails", lang: :en),
+      contact: t("controllers.contact.govuk.contact_govuk.questions.contact", lang: :en),
+    },
+    submit_text: t("controllers.contact.govuk.contact_govuk.submit_text", lang: :en)
+  }
+
+  ga4_form_tracker_json = {
+    event_name: "form_response",
+    type: "contact",
+    section: ga4_english_strings[:questions][:link],
+    action: ga4_english_strings[:submit_text],
+    tool_name: ga4_english_strings[:page_title]
+  }.to_json
+%>
+
+<% content_for :title do t("controllers.contact.govuk.contact_govuk.title") end %>
+  <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form", data: { module: "ga4-form-tracker", ga4_form: ga4_form_tracker_json } } do |f| %>
     <%= hidden_field_tag 'contact[url]', Plek.new.website_root + contact_govuk_path %>
 
     <p class="govuk-body">This form is for issues to do with the GOV.UK website.</p>
@@ -9,21 +29,44 @@
 
     <%= render partial: "shared/spam_honeypot", locals: { form_name: 'contact' } %>
     <% if @errors %>
-      <%= render "govuk_publishing_components/components/error_summary", {
-        id: "error-summary",
-        title: "Please check the form",
-        # app adds a spam protection giraffe error,
-        # which we do not want to display in the error summary
-        # so we filter it out
-        items: @errors.keys.reject { |key| key == :giraffe }.map do |key|
-          {
-            text: @errors[key].first,
-            href: "##{key.to_s}"
-          }
+      <%
+        # Each key in the @errors hash is the id of the corresponding question.
+        # Therefore we can map this key to our ga4_english_strings[:questions] hash to get the question title of each error.
+        ga4_erroring_sections = @errors.keys.map do |error_key|
+          if error_key.to_s == "name" || error_key.to_s == "email" # Both errors use the same question title.
+            ga4_english_strings[:questions][:contact]
+          else
+            ga4_english_strings[:questions][error_key]
+          end
         end
-      } %>
-    <% end %>
 
+        ga4_erroring_sections = ga4_erroring_sections.join(', ')
+
+        ga4_auto_tracker_json = {
+          event_name: 'form_error',
+          type: 'contact',
+          text: @errors.values.map { | error_hash | error_hash.first }.join(', '),
+          section: ga4_erroring_sections,
+          tool_name:  ga4_english_strings[:page_title]
+        }.to_json
+      %>
+
+      <div data-module="ga4-auto-tracker" data-ga4-auto="<%= ga4_auto_tracker_json %>">
+        <%= render "govuk_publishing_components/components/error_summary", {
+          id: "error-summary",
+          title: "Please check the form",
+          # app adds a spam protection giraffe error,
+          # which we do not want to display in the error summary
+          # so we filter it out
+          items: @errors.keys.reject { |key| key == :giraffe }.map do |key|
+            {
+              text: @errors[key].first,
+              href: "##{key.to_s}"
+            }
+          end
+        } %>
+      </div>
+    <% end %>
     <%
       value = @old ? @old[:link] : ''
       if @errors && @errors[:link]
@@ -39,13 +82,14 @@
         name: "contact[link]",
         id: "link",
         value: value,
-        error_message: linkerror
+        error_message: linkerror,
+        data: { ga4_form_include_input: "" }
       } %>
     <% end %>
 
     <%= render "govuk_publishing_components/components/radio", {
       name: "contact[location]",
-      heading: "What's it to do with?",
+      heading: t("controllers.contact.govuk.contact_govuk.questions.link"),
       heading_size: "m",
       heading_level: 0,
       id_prefix: "location",
@@ -80,7 +124,7 @@
     <%= render "govuk_publishing_components/components/character_count", {
       textarea: {
         label: {
-          text: "What are the details?",
+          text: t("controllers.contact.govuk.contact_govuk.questions.textdetails"),
           heading_size: "m"
         },
         name: "contact[textdetails]",
@@ -93,7 +137,7 @@
     } %>
 
     <%= render "govuk_publishing_components/components/fieldset", {
-      legend_text: "If you want a reply (optional)",
+      legend_text: t("controllers.contact.govuk.contact_govuk.questions.contact"),
       heading_size: "m"
     } do %>
       <p class="govuk-body">If you'd like us to get back to you, please leave your details below.</p>
@@ -134,5 +178,5 @@
       } %>
     <% end %>
 
-    <%= render "govuk_publishing_components/components/button", text: "Send message", margin_bottom: true %>
+    <%= render "govuk_publishing_components/components/button", text: t("controllers.contact.govuk.contact_govuk.submit_text"), margin_bottom: true %>
   <% end %>
