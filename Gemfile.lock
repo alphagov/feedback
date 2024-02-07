@@ -176,7 +176,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.2.4)
+    govuk_publishing_components (37.3.0)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -232,11 +232,11 @@ GEM
     mime-types-data (3.2023.1205)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.21.2)
+    minitest (5.22.1)
     msgpack (1.7.2)
     multi_json (1.15.0)
     mutex_m (0.2.0)
-    net-imap (0.4.9.1)
+    net-imap (0.4.10)
       date
       net-protocol
     net-pop (0.1.2)
@@ -253,10 +253,10 @@ GEM
     notifications-ruby-client (6.0.0)
       jwt (>= 1.5, < 3)
     null_logger (0.0.1)
-    opentelemetry-api (1.2.3)
-    opentelemetry-common (0.20.0)
+    opentelemetry-api (1.2.4)
+    opentelemetry-common (0.20.1)
       opentelemetry-api (~> 1.0)
-    opentelemetry-exporter-otlp (0.26.2)
+    opentelemetry-exporter-otlp (0.26.3)
       google-protobuf (~> 3.14)
       googleapis-common-protos-types (~> 1.3)
       opentelemetry-api (~> 1.1)
@@ -467,7 +467,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.8)
+    rack (3.0.9)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-proxy (0.7.7)
@@ -657,7 +657,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.12)
+    zeitwerk (2.6.13)
 
 PLATFORMS
   ruby
