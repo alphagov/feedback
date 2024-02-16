@@ -315,7 +315,7 @@ RSpec.describe "Contact", type: :request do
 
   it "should have a cookie with the previous page page before filling the form", js: true do
     visit "/contact"
-    click_on "GOV.UK form"
+    click_on "GOV.UK contact form"
 
     stub_support_named_contact_creation
 
