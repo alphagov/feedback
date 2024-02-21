@@ -646,7 +646,7 @@ GEM
       activemodel
       mail (>= 2.6.1)
       simpleidn
-    webmock (3.21.1)
+    webmock (3.22.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
