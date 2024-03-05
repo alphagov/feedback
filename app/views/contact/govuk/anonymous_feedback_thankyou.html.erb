@@ -2,6 +2,6 @@
 <% content_for :title, title %>
 <p class="govuk-body" 
    data-module="ga4-auto-tracker"
-   data-ga4-auto="<%= { event_name: "form_complete", type: "contact", text: title, action: "complete", tool_name: "Contact GOV.UK" }.to_json %>">
+   data-ga4-auto="<%= { event_name: "form_complete", type: "contact", text: title, action: "complete", tool_name: "Contact GOV.UK", section: title }.to_json %>">
   <a href="/" class="govuk-link">Return to the GOV.UK home page</a>.
 </p>

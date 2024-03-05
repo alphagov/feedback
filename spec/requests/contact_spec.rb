@@ -356,11 +356,14 @@ RSpec.describe "Contact", type: :request do
     ga4_auto_element = page.first("p[data-module=ga4-auto-tracker]")
     ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
 
+    title = "Thank you for contacting GOV.UK"
+
     expect(ga4_data["event_name"]).to eq "form_complete"
     expect(ga4_data["type"]).to eq "contact"
-    expect(ga4_data["text"]).to eq "Thank you for contacting GOV.UK"
+    expect(ga4_data["text"]).to eq title
     expect(ga4_data["action"]).to eq "complete"
     expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
+    expect(ga4_data["section"]).to eq title
 
     visit "/contact/govuk/thankyou"
 
@@ -374,6 +377,7 @@ RSpec.describe "Contact", type: :request do
     expect(ga4_data["text"]).to eq "Your message has been sent, and the team will get back to you to answer any questions as soon as possible."
     expect(ga4_data["action"]).to eq "complete"
     expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
+    expect(ga4_data["section"]).to eq title
   end
 
   it "should have the GA4 auto tracker on form error" do
