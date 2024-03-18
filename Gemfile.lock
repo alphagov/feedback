@@ -79,7 +79,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.2.0)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
     brakeman (6.1.0)
@@ -231,7 +231,7 @@ GEM
     mime-types-data (3.2024.0206)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
     msgpack (1.7.2)
     multi_json (1.15.0)
     mutex_m (0.2.0)
@@ -651,7 +651,7 @@ GEM
       unf_ext
     unf_ext (0.0.9.1)
     unicode-display_width (2.5.0)
-    valid_email (0.2.0)
+    valid_email (0.2.1)
       activemodel
       mail (>= 2.6.1)
       simpleidn
