@@ -1,3 +1,17 @@
+PATH
+  remote: ../govuk_publishing_components
+  specs:
+    govuk_publishing_components (37.8.1)
+      govuk_app_config
+      govuk_personalisation (>= 0.7.0)
+      kramdown
+      plek
+      rails (>= 6)
+      rouge
+      sprockets (>= 3)
+      sprockets-rails
+      terser
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -172,18 +186,9 @@ GEM
       sentry-rails (~> 5.3)
       sentry-ruby (~> 5.3)
       statsd-ruby (~> 1.5)
-    govuk_personalisation (0.15.0)
+    govuk_personalisation (0.16.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.8.1)
-      govuk_app_config
-      govuk_personalisation (>= 0.7.0)
-      kramdown
-      plek
-      rails (>= 6)
-      rouge
-      sprockets (>= 3)
-      sprockets-rails
     govuk_schemas (4.7.0)
       json-schema (>= 2.8, < 4.2)
     govuk_test (4.0.2)
@@ -541,7 +546,7 @@ GEM
       netrc (~> 0.8)
     retriable (3.1.2)
     rexml (3.2.6)
-    rouge (4.2.0)
+    rouge (4.2.1)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.0)
@@ -640,6 +645,8 @@ GEM
       sprockets (>= 3.0.0)
     statsd-ruby (1.5.0)
     stringio (3.1.0)
+    terser (1.2.0)
+      execjs (>= 0.3.0, < 3)
     thor (1.3.1)
     timeout (0.4.1)
     trailblazer-option (0.1.2)
@@ -680,7 +687,7 @@ DEPENDENCIES
   gds-api-adapters
   google-api-client
   govuk_app_config
-  govuk_publishing_components
+  govuk_publishing_components!
   govuk_schemas
   govuk_test
   invalid_utf8_rejector
