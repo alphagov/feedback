@@ -344,7 +344,7 @@ RSpec.describe "Contact", type: :request do
     expect(ga4_data["event_name"]).to eq "form_response"
     expect(ga4_data["type"]).to eq "contact"
     expect(ga4_data["section"]).to eq "What's it to do with?"
-    expect(ga4_data["action"]).to eq "Send message"
+    expect(ga4_data["action"]).to eq "send message"
     expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
   end
 
