@@ -42,6 +42,10 @@ cy:
           very_dissatisfied: Anfodlon iawn
           yes: Oes
         service_feedback:
+          bring_id_to_vote:
+            title:
+            description:
+            link_text:
           electric_vehicle:
             title: Hybu ceir trydan
             description: Cael gwybod faint o arian y gallwch ei arbed ar danwydd drwy newid i gerbyd trydan.
