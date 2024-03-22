@@ -62,7 +62,7 @@ Rails.application.configure do
   config.serve_static_files = false
 
   # Compress JS using a preprocessor.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = :terser
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
