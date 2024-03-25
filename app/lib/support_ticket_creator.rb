@@ -6,13 +6,20 @@ class SupportTicketCreator
   def self.call(...) = new(...).send
 
   def initialize(hash)
+    @zendesk_client = hash[:zendesk_client] ||
+      GDSZendesk::Client.new(ZENDESK_CREDENTIALS.merge(logger: Rails.logger)).zendesk_client
     @requester = hash[:requester]
     @body = construct_body(**hash)
   end
 
   def send
-    zendesk_client.users.search(query: @requester[:email])
-    zendesk_client.tickets.create!(payload)
+    known_users = @zendesk_client.users.search(query: @requester[:email])
+    known_user = known_users.count == 1 ? known_users.first : nil
+    if known_user && known_user["suspended"]
+      GovukStatsd.increment("report_a_problem.submission_from_suspended_user")
+    else
+      @zendesk_client.tickets.create!(payload)
+    end
   end
 
   def payload
@@ -45,16 +52,5 @@ class SupportTicketCreator
       [JavaScript Enabled]
       #{javascript_enabled}
     MULTILINE_STRING
-  end
-
-private
-
-  def zendesk_client
-    client = if Rails.env.development?
-               GDSZendesk::DummyClient.new(logger: Rails.logger)
-             else
-               GDSZendesk::Client.new(ZENDESK_CREDENTIALS.merge(logger: Rails.logger))
-             end
-    client.zendesk_client
   end
 end

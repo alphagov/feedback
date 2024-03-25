@@ -39,6 +39,30 @@ RSpec.describe SupportTicketCreator do
 
       expect { SupportTicketCreator.call(messy_args) }.to_not raise_exception
     end
+
+    context "user is suspended" do
+      before do
+        self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
+        stub_zendesk_ticket_creation
+        zendesk_has_user(email: args[:requester][:email], suspended: true)
+      end
+
+      it "doesn't raise an exception" do
+        expect { SupportTicketCreator.call(args) }.to_not raise_exception
+      end
+
+      it "avoids creating a ticket" do
+        client = GDSZendesk::Client.new(ZENDESK_CREDENTIALS).zendesk_client
+        args[:zendesk_client] = client
+        expect(client).to_not receive(:tickets)
+        SupportTicketCreator.call(args)
+      end
+
+      it "increments the GovukStatsd" do
+        expect(GovukStatsd).to receive(:increment).with("report_a_problem.submission_from_suspended_user").once
+        SupportTicketCreator.call(args)
+      end
+    end
   end
 
   describe "#send" do
