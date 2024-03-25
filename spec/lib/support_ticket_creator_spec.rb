@@ -17,12 +17,16 @@ RSpec.describe SupportTicketCreator do
       javascript_enabled: true,
     }
   end
-  let(:support_ticket) { SupportTicketCreator.new(args) }
+  let(:support_ticket) do
+    zendesk_has_user(email: args[:requester][:email], suspended: false)
+    SupportTicketCreator.new(args)
+  end
 
   describe ".call" do
     it "sends input via instance" do
       self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
       stub_zendesk_ticket_creation
+      zendesk_has_user(email: args[:requester][:email], suspended: false)
 
       expect { SupportTicketCreator.call(args) }.to_not raise_exception
     end
@@ -30,6 +34,7 @@ RSpec.describe SupportTicketCreator do
     it "ignores any extra keyword arguments" do
       self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
       stub_zendesk_ticket_creation
+      zendesk_has_user(email: args[:requester][:email], suspended: false)
       messy_args = args.merge(foo: "bar")
 
       expect { SupportTicketCreator.call(messy_args) }.to_not raise_exception

@@ -1,5 +1,6 @@
 require "gds_zendesk/client"
 require "gds_zendesk/dummy_client"
+require "gds_zendesk/users"
 
 class SupportTicketCreator
   def self.call(...) = new(...).send
@@ -10,6 +11,7 @@ class SupportTicketCreator
   end
 
   def send
+    zendesk_client.users.search(query: @requester[:email])
     zendesk_client.tickets.create!(payload)
   end
 
