@@ -79,6 +79,11 @@ RSpec.describe SupportTicketCreator do
       expect(support_ticket.payload[:subject]).to eq("Named contact")
     end
 
+    it "includes dynamic subject if link provided" do
+      args[:link] = "https://www.gov.uk/browse/visas-immigration"
+      expect(support_ticket.payload[:subject]).to eq("Named contact about /browse/visas-immigration")
+    end
+
     it "includes hardcoded tags" do
       expect(support_ticket.payload[:tags]).to eq(%w[public_form named_contact])
     end

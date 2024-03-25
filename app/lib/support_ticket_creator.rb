@@ -1,6 +1,6 @@
 require "gds_zendesk/client"
-require "gds_zendesk/dummy_client"
 require "gds_zendesk/users"
+require "uri"
 
 class SupportTicketCreator
   def self.call(...) = new(...).send
@@ -9,6 +9,7 @@ class SupportTicketCreator
     @zendesk_client = hash[:zendesk_client] ||
       GDSZendesk::Client.new(ZENDESK_CREDENTIALS.merge(logger: Rails.logger)).zendesk_client
     @requester = hash[:requester]
+    @subject = construct_subject(hash[:link])
     @body = construct_body(**hash)
   end
 
@@ -24,12 +25,23 @@ class SupportTicketCreator
 
   def payload
     {
-      subject: "Named contact",
+      subject: @subject,
       tags: %w[public_form named_contact],
       priority: "normal",
       comment: { body: @body },
       requester: @requester,
     }
+  end
+
+  def construct_subject(link)
+    path = nil
+    begin
+      uri = URI.parse(link)
+      path = uri.path if uri.host == "www.gov.uk"
+    rescue URI::InvalidURIError
+      # If invalid URI provided by user, we'll just go with a general subject line
+    end
+    "Named contact#{path.present? ? " about #{path.sub('h', '')}" : ''}"
   end
 
   def construct_body(requester:, details:, link:, javascript_enabled:, referrer: "Unknown", user_agent: "Unknown", **)
