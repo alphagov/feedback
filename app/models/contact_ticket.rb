@@ -1,5 +1,3 @@
-require "gds_api/support"
-
 class ContactTicket < Ticket
   attr_accessor :location,
                 :textdetails,
@@ -31,7 +29,7 @@ class ContactTicket < Ticket
       if anonymous?
         Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
       else
-        Rails.application.config.support.create_named_contact(ticket_details)
+        SupportTicketCreator.call(**ticket_details)
       end
     end
   end

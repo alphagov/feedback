@@ -1,7 +1,7 @@
 # Feedback
 
 This app collects feedback from users via contact forms rendered on GOV.UK.
-This data is then sent to the [support](https://github.com/alphagov/support) app or [support-api](https://github.com/alphagov/support-api) app to be dealt with.
+This data is then sent to [support-api](https://github.com/alphagov/support-api) app to be dealt with.
 
 ## Live examples
 
@@ -18,7 +18,7 @@ or other and relates to pages published on GOV.UK.
 submitted via an anonymous contact form.
 - **Named Contact**: In contrast with the Anonymous Contact feedback, this is submitted
 via a form that will require you to identify yourself. This data is sent directly
-to the support app.
+to Zendesk.
 
 ## Completed Transaction feedback forms
 
@@ -55,8 +55,7 @@ ASSISTED_DIGITAL_GOOGLE_SPREADSHEET_KEY=
 
 The `.env` file is listed within the `.gitignore` file. Do not push the `.env` file to version control.
 
-Completed transaction feedback forms were previously rendered by the Frontend application. [Rendering was moved into this application](https://github.com/alphagov/feedback/pull/1601) which enabled the implementation of form validation. 
-
+Completed transaction feedback forms were previously rendered by the Frontend application. [Rendering was moved into this application](https://github.com/alphagov/feedback/pull/1601) which enabled the implementation of form validation.
 
 ## Technical documentation
 
@@ -74,7 +73,7 @@ bundle exec rake
 
 ## Further documentation
 
-- [An overview of how the Feedback, Support and Support-api applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
+- [An overview of how the Feedback and Support API applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Email survey signups feedback](docs/email_survey_signups.md)

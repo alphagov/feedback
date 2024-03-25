@@ -1,12 +1,12 @@
 require "rails_helper"
-require "gds_api/test_helpers/support"
 require "gds_api/test_helpers/support_api"
+require "gds_zendesk/test_helpers"
 
 # Note - rate limit exemptions are tested in accessible_format_request_spec.rb
 
 RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
-  include GdsApi::TestHelpers::Support
   include GdsApi::TestHelpers::SupportApi
+  include GDSZendesk::TestHelpers
 
   let(:valid_params) do
     {
@@ -21,7 +21,8 @@ RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
 
   before do
     Rack::Attack.enabled = true
-    stub_support_named_contact_creation
+    self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
+    stub_zendesk_ticket_creation
   end
 
   after do

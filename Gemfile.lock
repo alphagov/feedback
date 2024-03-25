@@ -120,6 +120,8 @@ GEM
     faraday (2.3.0)
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (2.0.2)
     gds-api-adapters (94.0.0)
       addressable
@@ -127,6 +129,9 @@ GEM
       null_logger
       plek (>= 1.9.0)
       rest-client (~> 2.0)
+    gds_zendesk (3.6.0)
+      null_logger (~> 0)
+      zendesk_api (>= 1.37, < 4.0)
     gems (1.2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -192,12 +197,14 @@ GEM
       puma
       selenium-webdriver (>= 4.0)
     hashdiff (1.1.0)
+    hashie (5.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
+    inflection (1.0.0)
     invalid_utf8_rejector (0.0.4)
     io-console (0.7.2)
     irb (1.12.0)
@@ -234,6 +241,7 @@ GEM
     minitest (5.22.3)
     msgpack (1.7.2)
     multi_json (1.15.0)
+    multipart-post (2.4.0)
     mutex_m (0.2.0)
     net-imap (0.4.10)
       date
@@ -668,6 +676,13 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.13)
+    zendesk_api (3.0.5)
+      faraday (> 2.0.0)
+      faraday-multipart
+      hashie (>= 3.5.2, < 6.0.0)
+      inflection
+      mini_mime
+      multipart-post (~> 2.0)
 
 PLATFORMS
   ruby
@@ -678,6 +693,7 @@ DEPENDENCIES
   dartsass-rails
   dotenv-rails
   gds-api-adapters
+  gds_zendesk
   google-api-client
   govuk_app_config
   govuk_publishing_components
@@ -701,7 +717,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.0p0
+   ruby 3.2.3p157
 
 BUNDLED WITH
    2.5.6
