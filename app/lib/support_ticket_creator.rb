@@ -5,6 +5,7 @@ class SupportTicketCreator
   def self.call(...) = new(...).send
 
   def initialize(hash)
+    @requester = hash[:requester]
     @body = construct_body(**hash)
   end
 
@@ -18,6 +19,7 @@ class SupportTicketCreator
       tags: %w[public_form named_contact],
       priority: "normal",
       comment: { body: @body },
+      requester: @requester,
     }
   end
 

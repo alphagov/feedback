@@ -66,6 +66,7 @@ RSpec.describe "Contact", type: :request do
       tags: %w[public_form named_contact],
       priority: "normal",
       comment: { body: },
+      requester: { name: "test name", email: "a@a.com" },
     )
 
     visit "/contact/govuk"
