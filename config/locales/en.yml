@@ -92,6 +92,10 @@ en:
           very_dissatisfied: Very dissatisfied
           yes: Yes
         service_feedback:
+          bring_id_to_vote:
+            title: Bring photo ID to vote
+            description: You will need to show photo ID when you vote in person in some UK elections or referendums.
+            link_text: Check which photo ID you’ll need to vote
           electric_vehicle:
             title: Electric car promotion
             description: Find out how much money you can save on fuel by switching to an electric vehicle.
