@@ -23,6 +23,11 @@ RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
     Rack::Attack.enabled = true
     self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
     stub_zendesk_ticket_creation
+    zendesk_has_user(email: "test@test.com", suspended: false)
+    zendesk_has_user(email: "test1@test.com", suspended: false)
+    zendesk_has_user(email: "test2@test.com", suspended: false)
+    zendesk_has_user(email: "test3@test.com", suspended: false)
+    zendesk_has_user(email: "new.email@test.com", suspended: false)
   end
 
   after do

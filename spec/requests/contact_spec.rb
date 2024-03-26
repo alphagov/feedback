@@ -42,6 +42,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should let the user submit a request with contact details" do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     body = <<~MULTILINE_STRING
       [Requester]
       test name <a@a.com>
@@ -107,6 +108,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     choose "location-0" # Selects the 'The whole site' radio button
@@ -123,6 +125,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should not let the user submit a request with email without name" do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     choose "location-0" # Selects the 'The whole site' radio button
@@ -155,6 +158,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should let the user submit a request with a link" do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     stub_zendesk_ticket_creation
 
     visit "/contact/govuk"
@@ -193,6 +197,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the user agent if available" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     # Using Rack::Test to allow setting the user agent.
@@ -215,6 +220,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the Access-Control-Allow-Origin if the request came from .gov.uk" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     params = {
@@ -236,6 +242,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "shouldn't include the Access-Control-Allow-Origin if the request did not come from .gov.uk" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     params = {
@@ -259,6 +266,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the referrer if present in the contact params" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     params = {
@@ -280,6 +288,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the referrer if present in the post" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     params = {
@@ -301,6 +310,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the referrer from the request" do
+    zendesk_has_user(email: "test@test.com", suspended: false)
     stub_zendesk_ticket_creation
 
     params = {
@@ -321,6 +331,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should have a cookie with the previous page page before filling the form", js: true do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact"
     click_on "GOV.UK contact form"
 
@@ -340,6 +351,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should have the GA4 form tracker on the form" do
+    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     expect(page).to have_selector(".contact-form[data-module=ga4-form-tracker]")

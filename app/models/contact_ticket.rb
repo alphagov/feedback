@@ -39,7 +39,7 @@ private
   def ticket_details
     details = {
       details: textdetails,
-      link:, # needed for the `support` app
+      link:, # needed for 'named contact' requests
       user_specified_url: link, # needed for the `support-api` app
       user_agent:,
       referrer:,

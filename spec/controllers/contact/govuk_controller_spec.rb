@@ -7,6 +7,8 @@ RSpec.describe Contact::GovukController, type: :controller do
   render_views
 
   let(:valid_params) do
+    zendesk_has_user(email: "test@test.com", suspended: false)
+
     {
       contact: {
         name: "Joe Bloggs",
