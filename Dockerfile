@@ -3,17 +3,17 @@ ARG base_image=ghcr.io/alphagov/govuk-ruby-base:$ruby_version
 ARG builder_image=ghcr.io/alphagov/govuk-ruby-builder:$ruby_version
 
 
-FROM $builder_image AS builder
+FROM --platform=$TARGETPLATFORM $builder_image AS builder
 
 WORKDIR $APP_HOME
 COPY Gemfile* .ruby-version ./
-RUN bundle install
+RUN bundle install --jobs=$(nproc)
 COPY . .
 RUN bootsnap precompile --gemfile .
 RUN rails assets:precompile && rm -fr log
 
 
-FROM $base_image
+FROM --platform=$TARGETPLATFORM $base_image
 
 ENV GOVUK_APP_NAME=feedback
 
