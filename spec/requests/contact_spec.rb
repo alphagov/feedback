@@ -415,6 +415,7 @@ RSpec.describe "Contact", type: :request do
     ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
 
     expect(ga4_data["event_name"]).to eq "form_error"
+    expect(ga4_data["action"]).to eq "error"
     expect(ga4_data["type"]).to eq "contact"
     expect(ga4_data["text"]).to eq "The link field cannot be empty, The message field cannot be empty, The email address must be valid, The name field cannot be empty"
     expect(ga4_data["section"]).to eq "What's it to do with?, What are the details?, If you want a reply (optional), If you want a reply (optional)"
