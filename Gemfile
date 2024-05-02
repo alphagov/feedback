@@ -19,7 +19,7 @@ gem "plek"
 gem "rack-attack"
 gem "slimmer"
 gem "sprockets-rails"
-gem "uglifier"
+gem "terser"
 gem "valid_email"
 
 group :development, :test do
