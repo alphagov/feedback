@@ -45,6 +45,7 @@
         ga4_auto_tracker_json = {
           event_name: 'form_error',
           type: 'contact',
+          action: 'error',
           text: @errors.values.map { | error_hash | error_hash.first }.join(', '),
           section: ga4_erroring_sections,
           tool_name:  ga4_english_strings[:page_title]
