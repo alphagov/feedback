@@ -2,10 +2,6 @@ cy:
   activemodel:
     errors:
       models:
-        email_survey_signup:
-          attributes:
-            survey_id:
-              is_not_currently_running: "The survey is not currently active"
         service_feedback:
           select_rating: Mae'n rhaid i chi ddewis mesur
           max_character_count: Gall maes y neges gynnwys hyd at %{field_maximum_character_count} nod

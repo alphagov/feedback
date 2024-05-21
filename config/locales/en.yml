@@ -2,10 +2,6 @@ en:
   activemodel:
     errors:
       models:
-        email_survey_signup:
-          attributes:
-            survey_id:
-              is_not_currently_running: "The survey is not currently active"
         service_feedback:
           select_rating: You must select a rating
           max_character_count: The message field can be max %{field_maximum_character_count} characters
@@ -25,11 +21,6 @@ en:
             textdetails: "What are the details?"
             contact: "If you want a reply (optional)"
           submit_text: "Send message"
-        email_survey_signup:
-          survey_body: Give us feedback on requesting accessible documents on GOV.UK
-          short_survey: (short survey)
-          done_invalid_email: <h2>Sorry, we’re unable to send your message as you haven’t given us a valid email address.</h2> <p>Enter an email address in the correct format, like name@example.com</p>
-          service_unavailable: <h2>Sorry, we’re unable to receive your message right now.<h2> <p>If the problem persists, we have other ways for you to provide feedback on the contact page.</p>
         assisted_digital_feedback:
           assistance_question: Did you receive any assistance to use this service today?
           dissatisfied: Dissatisfied
