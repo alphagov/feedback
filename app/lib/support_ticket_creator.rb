@@ -41,7 +41,7 @@ class SupportTicketCreator
     rescue URI::InvalidURIError
       # If invalid URI provided by user, we'll just go with a general subject line
     end
-    "Named contact#{path.present? ? " about #{path.sub('h', '')}" : ''}"
+    "Named contact#{path.present? ? " about #{path}" : ''}"
   end
 
   def construct_body(requester:, details:, link:, javascript_enabled:, referrer: "Unknown", user_agent: "Unknown", **)
