@@ -262,7 +262,7 @@ GEM
     nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    notifications-ruby-client (6.0.0)
+    notifications-ruby-client (6.1.0)
       jwt (>= 1.5, < 3)
     null_logger (0.0.1)
     opentelemetry-api (1.2.5)
