@@ -27,8 +27,6 @@ Rails.application.routes.draw do
 
     namespace :govuk do
       post "problem_reports", to: "problem_reports#create", format: false
-      post "email-survey-signup", to: "email_survey_signup#create", format: false
-      post "email-survey-signup.js", to: "email_survey_signup#create", defaults: { format: :js }
       post "content_improvement", to: "content_improvement#create", defaults: { format: :js }
       resources "page_improvements", only: [:create], format: false
     end
