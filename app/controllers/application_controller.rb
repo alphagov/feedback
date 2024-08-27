@@ -26,7 +26,7 @@ protected
   end
 
   def unable_to_create_ticket_error(exception)
-    log_exception(exception)
+    GovukError.notify(exception)
 
     respond_to do |format|
       format.html do
@@ -45,12 +45,5 @@ protected
 
   def hide_report_a_problem_form_in_response
     @hide_feedback_component = true
-  end
-
-  def log_exception(exception)
-    GovukError.notify(exception)
-
-    exception_class_name = exception.class.name.demodulize.downcase
-    GovukStatsd.increment("exception.#{exception_class_name}")
   end
 end

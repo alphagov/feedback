@@ -16,11 +16,9 @@ class SupportTicketCreator
   def send
     known_users = @zendesk_client.users.search(query: @requester[:email])
     known_user = known_users.count == 1 ? known_users.first : nil
-    if known_user && known_user["suspended"]
-      GovukStatsd.increment("report_a_problem.submission_from_suspended_user")
-    else
-      @zendesk_client.tickets.create!(payload)
-    end
+    return if known_user && known_user["suspended"]
+
+    @zendesk_client.tickets.create!(payload)
   end
 
   def payload

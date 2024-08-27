@@ -57,11 +57,6 @@ RSpec.describe SupportTicketCreator do
         expect(client).to_not receive(:tickets)
         SupportTicketCreator.call(args)
       end
-
-      it "increments the GovukStatsd" do
-        expect(GovukStatsd).to receive(:increment).with("report_a_problem.submission_from_suspended_user").once
-        SupportTicketCreator.call(args)
-      end
     end
   end
 
