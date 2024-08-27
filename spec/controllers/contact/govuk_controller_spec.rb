@@ -1,14 +1,12 @@
 require "rails_helper"
-require "gds_zendesk/test_helpers"
+require "gds_api/test_helpers/support_api"
 
 RSpec.describe Contact::GovukController, type: :controller do
-  include GDSZendesk::TestHelpers
+  include GdsApi::TestHelpers::SupportApi
 
   render_views
 
   let(:valid_params) do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-
     {
       contact: {
         name: "Joe Bloggs",
@@ -22,9 +20,8 @@ RSpec.describe Contact::GovukController, type: :controller do
   it_behaves_like "a GOV.UK contact"
 
   context "with a valid contact submission" do
-    it "should pass the contact onto the support app" do
-      self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-      stub_post = stub_zendesk_ticket_creation
+    it "should pass the contact onto the support api" do
+      stub_post = stub_any_support_api_call
 
       post :create, params: valid_params
 

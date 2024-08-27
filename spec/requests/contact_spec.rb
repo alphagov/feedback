@@ -1,6 +1,5 @@
 require "rails_helper"
 require "gds_api/test_helpers/support_api"
-require "gds_zendesk/test_helpers"
 
 def fill_in_valid_contact_details_and_description
   fill_in "Your name", with: "test name"
@@ -22,7 +21,7 @@ end
 
 def response_contains(request, field, expected_value)
   response = JSON.parse(request.body)
-  raw_body = response["ticket"]["comment"]["body"]
+  raw_body = response["description"]
   actual_value = raw_body.match(/#{Regexp.quote(field)}\n([^\[]+)/)
   actual_value = actual_value[1].strip unless actual_value.nil?
   actual_value == expected_value
@@ -30,11 +29,6 @@ end
 
 RSpec.describe "Contact", type: :request do
   include GdsApi::TestHelpers::SupportApi
-  include GDSZendesk::TestHelpers
-
-  before do
-    self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-  end
 
   it "should display an index page" do
     visit "/contact"
@@ -42,7 +36,6 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should let the user submit a request with contact details" do
-    zendesk_has_user(email: "a@a.com", suspended: false)
     body = <<~MULTILINE_STRING
       [Requester]
       test name <a@a.com>
@@ -62,11 +55,11 @@ RSpec.describe "Contact", type: :request do
       [JavaScript Enabled]
       false
     MULTILINE_STRING
-    stub_post = stub_zendesk_ticket_creation(
+    stub_post = stub_support_api_valid_raise_support_ticket(
       subject: "Named contact",
       tags: %w[public_form named_contact],
       priority: "normal",
-      comment: { body: },
+      description: body,
       requester: { name: "test name", email: "a@a.com" },
     )
 
@@ -108,7 +101,6 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should not proceed if the user hasn't filled in all required fields" do
-    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     choose "location-0" # Selects the 'The whole site' radio button
@@ -125,7 +117,6 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should not let the user submit a request with email without name" do
-    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     choose "location-0" # Selects the 'The whole site' radio button
@@ -158,8 +149,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should let the user submit a request with a link" do
-    zendesk_has_user(email: "a@a.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     visit "/contact/govuk"
 
@@ -172,7 +162,7 @@ RSpec.describe "Contact", type: :request do
 
     expect(page).to have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
-    assert_requested(:post, %r{/tickets}) do |request|
+    assert_requested(:post, %r{/support-tickets}) do |request|
       response_contains(request, "[Link]", "some url")
     end
   end
@@ -197,8 +187,7 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should include the user agent if available" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     # Using Rack::Test to allow setting the user agent.
     params = {
@@ -214,14 +203,13 @@ RSpec.describe "Contact", type: :request do
     headers = { "HTTP_USER_AGENT" => "T1000 (Bazinga)" }
     post("/contact/govuk", params:, headers:)
 
-    assert_requested(:post, %r{/tickets}) do |request|
+    assert_requested(:post, %r{/support-tickets}) do |request|
       response_contains(request, "[User agent]", "T1000 (Bazinga)")
     end
   end
 
   it "should include the Access-Control-Allow-Origin if the request came from .gov.uk" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     params = {
       contact: {
@@ -236,14 +224,13 @@ RSpec.describe "Contact", type: :request do
     headers = { "ORIGIN" => "https://assets.publishing.service.gov.uk" }
     post("/contact/govuk", params:, headers:)
 
-    assert_requested(:post, %r{/tickets}) do |_request|
+    assert_requested(:post, %r{/support-tickets}) do |_request|
       response.headers["Access-Control-Allow-Origin"] == "https://assets.publishing.service.gov.uk"
     end
   end
 
   it "shouldn't include the Access-Control-Allow-Origin if the request did not come from .gov.uk" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     params = {
       contact: {
@@ -260,14 +247,13 @@ RSpec.describe "Contact", type: :request do
 
     post("/contact/govuk", params:, headers:)
 
-    assert_requested(:post, %r{/tickets}) do |_request|
+    assert_requested(:post, %r{/support-tickets}) do |_request|
       response.headers["Access-Control-Allow-Origin"].nil?
     end
   end
 
   it "should include the referrer if present in the contact params" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     params = {
       contact: {
@@ -282,14 +268,13 @@ RSpec.describe "Contact", type: :request do
     }
     post("/contact/govuk", params:)
 
-    assert_requested(:post, %r{/tickets}) do |request|
+    assert_requested(:post, %r{/support-tickets}) do |request|
       response_contains(request, "[Referrer]", "https://www.dev.gov.uk/referring_url")
     end
   end
 
   it "should include the referrer if present in the post" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     params = {
       contact: {
@@ -304,14 +289,13 @@ RSpec.describe "Contact", type: :request do
     }
     post("/contact/govuk", params:)
 
-    assert_requested(:post, %r{/tickets}) do |request|
+    assert_requested(:post, %r{/support-tickets}) do |request|
       response_contains(request, "[Referrer]", "https://www.dev.gov.uk/referring_url")
     end
   end
 
   it "should include the referrer from the request" do
-    zendesk_has_user(email: "test@test.com", suspended: false)
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     params = {
       contact: {
@@ -325,17 +309,16 @@ RSpec.describe "Contact", type: :request do
     }
     post "/contact/govuk", params:, headers: { "HTTP_REFERER" => "https://www.dev.gov.uk/referring_url" }
 
-    assert_requested(:post, %r{/tickets}) do |request|
+    assert_requested(:post, %r{/support-tickets}) do |request|
       response_contains(request, "[Referrer]", "https://www.dev.gov.uk/referring_url")
     end
   end
 
   it "should have a cookie with the previous page page before filling the form", js: true do
-    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact"
     click_on "GOV.UK contact form"
 
-    stub_zendesk_ticket_creation
+    stub_any_support_api_call
 
     fill_in_valid_contact_details_and_description
     click_on "Send message"
@@ -351,7 +334,6 @@ RSpec.describe "Contact", type: :request do
   end
 
   it "should have the GA4 form tracker on the form" do
-    zendesk_has_user(email: "a@a.com", suspended: false)
     visit "/contact/govuk"
 
     expect(page).to have_selector(".contact-form[data-module=ga4-form-tracker]")

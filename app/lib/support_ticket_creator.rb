@@ -1,24 +1,16 @@
-require "gds_zendesk/client"
-require "gds_zendesk/users"
 require "uri"
 
 class SupportTicketCreator
   def self.call(...) = new(...).send
 
   def initialize(hash)
-    @zendesk_client = hash[:zendesk_client] ||
-      GDSZendesk::Client.new(ZENDESK_CREDENTIALS.merge(logger: Rails.logger)).zendesk_client
     @requester = hash[:requester]
     @subject = construct_subject(hash[:link])
     @body = construct_body(**hash)
   end
 
   def send
-    known_users = @zendesk_client.users.search(query: @requester[:email])
-    known_user = known_users.count == 1 ? known_users.first : nil
-    return if known_user && known_user["suspended"]
-
-    @zendesk_client.tickets.create!(payload)
+    GdsApi.support_api.raise_support_ticket(payload)
   end
 
   def payload
@@ -26,7 +18,7 @@ class SupportTicketCreator
       subject: @subject,
       tags: %w[public_form named_contact],
       priority: "normal",
-      comment: { body: @body },
+      description: @body,
       requester: @requester,
     }
   end

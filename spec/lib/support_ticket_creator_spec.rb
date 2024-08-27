@@ -1,8 +1,8 @@
 require "rails_helper"
-require "gds_zendesk/test_helpers"
+require "gds_api/test_helpers/support_api"
 
 RSpec.describe SupportTicketCreator do
-  include GDSZendesk::TestHelpers
+  include GdsApi::TestHelpers::SupportApi
 
   let(:args) do
     {
@@ -17,53 +17,27 @@ RSpec.describe SupportTicketCreator do
       javascript_enabled: true,
     }
   end
-  let(:support_ticket) do
-    zendesk_has_user(email: args[:requester][:email], suspended: false)
-    SupportTicketCreator.new(args)
-  end
+
+  let(:support_ticket) { SupportTicketCreator.new(args) }
 
   describe ".call" do
     it "sends input via instance" do
-      self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-      stub_zendesk_ticket_creation
-      zendesk_has_user(email: args[:requester][:email], suspended: false)
+      stub_any_support_api_call
 
       expect { SupportTicketCreator.call(args) }.to_not raise_exception
     end
 
     it "ignores any extra keyword arguments" do
-      self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-      stub_zendesk_ticket_creation
-      zendesk_has_user(email: args[:requester][:email], suspended: false)
+      stub_any_support_api_call
       messy_args = args.merge(foo: "bar")
 
       expect { SupportTicketCreator.call(messy_args) }.to_not raise_exception
     end
-
-    context "user is suspended" do
-      before do
-        self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-        stub_zendesk_ticket_creation
-        zendesk_has_user(email: args[:requester][:email], suspended: true)
-      end
-
-      it "doesn't raise an exception" do
-        expect { SupportTicketCreator.call(args) }.to_not raise_exception
-      end
-
-      it "avoids creating a ticket" do
-        client = GDSZendesk::Client.new(ZENDESK_CREDENTIALS).zendesk_client
-        args[:zendesk_client] = client
-        expect(client).to_not receive(:tickets)
-        SupportTicketCreator.call(args)
-      end
-    end
   end
 
   describe "#send" do
-    it "sends payload to gov uk zendesk" do
-      self.valid_zendesk_credentials = ZENDESK_CREDENTIALS
-      stub_zendesk_ticket_creation(support_ticket.payload)
+    it "sends payload to Support API" do
+      stub_any_support_api_call
 
       expect { support_ticket.send }.to_not raise_exception
     end
@@ -108,7 +82,7 @@ RSpec.describe SupportTicketCreator do
         true
       MULTILINE_STRING
 
-      expect(support_ticket.payload[:comment][:body]).to eq(body)
+      expect(support_ticket.payload[:description]).to eq(body)
     end
 
     it "defaults to 'Unknown' for referrer and user agent" do
@@ -134,7 +108,7 @@ RSpec.describe SupportTicketCreator do
         true
       MULTILINE_STRING
 
-      expect(support_ticket.payload[:comment][:body]).to eq(body)
+      expect(support_ticket.payload[:description]).to eq(body)
     end
   end
 end
