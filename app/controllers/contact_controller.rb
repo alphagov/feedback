@@ -31,12 +31,10 @@ class ContactController < ApplicationController
     ticket = ticket_class.new data
 
     if ticket.valid?
-      GovukStatsd.increment("#{type}.successful_submission")
       @contact_provided = data[:email].present?
 
       respond_to_valid_submission(ticket)
     else
-      GovukStatsd.increment("#{type}.invalid_submission")
       raise SpamError if ticket.spam?
 
       @errors = ticket.errors.to_hash

@@ -18,12 +18,12 @@ or other and relates to pages published on GOV.UK.
 submitted via an anonymous contact form.
 - **Named Contact**: In contrast with the Anonymous Contact feedback, this is submitted
 via a form that will require you to identify yourself. This data is sent directly
-to Zendesk.
+to Support API, which passes it on to Zendesk.
 
 ## Completed Transaction feedback forms
 
 ### Service Feedback
-Most of the `/done/completed-transaction` pages render a Service Feedback form. An example is: [www.gov.uk/done/vehicle-tax](http://www.gov.uk/done/vehicle-tax). 
+Most of the `/done/completed-transaction` pages render a Service Feedback form. An example is: [www.gov.uk/done/vehicle-tax](http://www.gov.uk/done/vehicle-tax).
 
 ### Assisted Digital Feedback
 There are also three assisted digital feedback forms:
@@ -51,7 +51,7 @@ For submitting the Assisted Digital Feedback form, you will need to get the Goog
 GOOGLE_PRIVATE_KEY=
 GOOGLE_CLIENT_EMAIL=
 ASSISTED_DIGITAL_GOOGLE_SPREADSHEET_KEY=
-``` 
+```
 
 The `.env` file is listed within the `.gitignore` file. Do not push the `.env` file to version control.
 
@@ -73,10 +73,10 @@ bundle exec rake
 
 ## Further documentation
 
-- [An overview of how the Feedback and Support API applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only) 
+- [An overview of how the Feedback and Support API applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only)
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
 - [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
-- [Spam control methods for the Contact form](https://gov-uk.atlassian.net/wiki/spaces/GOVUK/pages/3665821697/Contact+us+form+-+spam+control) (for internal use only) 
+- [Spam control methods for the Contact form](https://gov-uk.atlassian.net/wiki/spaces/GOVUK/pages/3665821697/Contact+us+form+-+spam+control) (for internal use only)
 
 ## Licence
 
