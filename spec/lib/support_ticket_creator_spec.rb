@@ -33,6 +33,20 @@ RSpec.describe SupportTicketCreator do
 
       expect { SupportTicketCreator.call(messy_args) }.to_not raise_exception
     end
+
+    it "raises an error when 422 error is returned" do
+      stub_support_api_invalid_raise_support_ticket(support_ticket.payload)
+
+      expect { SupportTicketCreator.call(args) }.to raise_exception(GdsApi::HTTPUnprocessableEntity)
+    end
+
+    it "doesn't raise an error when a 422 error is returned for a suspended user" do
+      post_stub = stub_http_request(:post, "#{Plek.find('support-api')}/support-tickets")
+      post_stub.with(body: support_ticket.payload)
+      post_stub.to_return(status: 422, body: { status: "error", errors: { requester: ["is suspended in Zendesk"] } }.to_json)
+
+      expect { SupportTicketCreator.call(args) }.not_to raise_exception
+    end
   end
 
   describe "#send" do
