@@ -11,6 +11,12 @@ class SupportTicketCreator
 
   def send
     GdsApi.support_api.raise_support_ticket(payload)
+  rescue GdsApi::HTTPUnprocessableEntity => e
+    if e.error_details.dig("errors", "requester")&.include?("is suspended in Zendesk")
+      Rails.logger.info("Support API skipped ticket creation because user is suspended")
+    else
+      raise e
+    end
   end
 
   def payload
