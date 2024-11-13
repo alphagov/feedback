@@ -1,0 +1,102 @@
+<% content_for :title do t("controllers.contact.govuk_app.problem_reports.new.title") end %>
+
+<%= form_tag contact_govuk_app_report_problem_path, method: :post do |f| %>
+  <%= render partial: "shared/spam_honeypot", locals: { form_name: "problem_report" } %>
+
+  <p class="govuk-body"><%= t("controllers.contact.govuk_app.problem_reports.new.description") %></p>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: t("controllers.contact.govuk_app.problem_reports.new.phone"),
+      heading_size: "m"
+    },
+    name: "problem_report[phone]",
+    id: "phone",
+    width: 20
+  } %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: t("controllers.contact.govuk_app.problem_reports.new.app_version"),
+      heading_size: "m"
+    },
+    name: "problem_report[app_version]",
+    id: "app_version",
+    width: 20
+  } %>
+
+  <%= render "govuk_publishing_components/components/character_count", {
+    textarea: {
+      label: {
+        text: t("controllers.contact.govuk_app.problem_reports.new.trying_to_do"),
+        heading_size: "m"
+      },
+      name: "problem_report[trying_to_do]"
+    },
+    id: "trying_to_do",
+    maxlength: 1200
+  } %>
+
+  <%= render "govuk_publishing_components/components/character_count", {
+    textarea: {
+      label: {
+        text: t("controllers.contact.govuk_app.problem_reports.new.what_happened"),
+        heading_size: "m"
+      },
+      name: "problem_report[what_happened]",
+      hint: "Include details of the problem"
+    },
+    id: "what_happened",
+    maxlength: 1200
+  } %>
+
+  <% reply_inputs = capture do %>
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: t("controllers.contact.govuk_app.shared.email"),
+        heading_size: "s"
+      },
+      name: "problem_report[email]",
+      id: "email",
+      width: 20,
+      hint: "We will only use this to reply to your message"
+    } %>
+
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: t("controllers.contact.govuk_app.shared.name"),
+        heading_size: "s"
+      },
+      name: "problem_report[name]",
+      id: "name",
+      width: 20
+    } %>
+
+    <br />
+    <%= t("controllers.contact.govuk_app.shared.personal_information_html") %>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "problem_report[reply]",
+    heading: t("controllers.contact.govuk_app.shared.can_we_reply"),
+    heading_size: "m",
+    heading_level: 0,
+    id_prefix: "reply",
+    items: [
+      {
+        value: "yes",
+        text: t("controllers.contact.govuk_app.shared.yes"),
+        conditional: reply_inputs
+      },
+      {
+        value: "no",
+        text: t("controllers.contact.govuk_app.shared.no")
+      }
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: t("controllers.contact.govuk_app.shared.send_message"),
+    margin_bottom: true
+  } %>
+<% end %>

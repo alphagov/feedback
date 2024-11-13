@@ -1,0 +1,26 @@
+<% contact_type = "contact_type" %>
+
+<%= form_tag contact_govuk_app_path, method: :post do |f| %>
+  <% content_for :title do t("controllers.contact.govuk_app.new.title") end %>
+  <%= t("controllers.contact.govuk_app.new.description_html") %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "contact[type]",
+    heading: t("controllers.contact.govuk_app.new.radio_heading"),
+    heading_size: "m",
+    heading_level: 0,
+    id: contact_type,
+    items: [
+      {
+        value: "problem",
+        text: t("controllers.contact.govuk_app.new.radio_problem_text")
+      },
+      {
+        value: "suggestion",
+        text: t("controllers.contact.govuk_app.new.radio_suggestion_text")
+      }
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/button", text: t("controllers.contact.govuk_app.new.continue_text"), margin_bottom: true %>
+<% end %>

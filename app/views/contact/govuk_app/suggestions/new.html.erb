@@ -1,0 +1,67 @@
+<% content_for :title do t("controllers.contact.govuk_app.suggestions.new.title") end %>
+
+<%= form_tag contact_govuk_app_make_suggestion_path, method: :post do |f| %>
+  <%= render partial: "shared/spam_honeypot", locals: { form_name: "suggestion" } %>
+
+  <%= render "govuk_publishing_components/components/character_count", {
+    textarea: {
+      label: {
+        text: t("controllers.contact.govuk_app.suggestions.new.what_is_your_suggestion"),
+        heading_size: "m"
+      },
+      name: "suggestion[details]"
+    },
+    id: "suggestion",
+    maxlength: 1200
+  } %>
+
+  <% reply_inputs = capture do %>
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: t("controllers.contact.govuk_app.shared.email"),
+        heading_size: "s"
+      },
+      name: "suggestion[email]",
+      id: "email",
+      width: 20,
+      hint: "We will only use this to reply to your message"
+    } %>
+
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: t("controllers.contact.govuk_app.shared.name"),
+        heading_size: "s"
+      },
+      name: "suggestion[name]",
+      id: "name",
+      width: 20
+    } %>
+
+    <br />
+    <%= t("controllers.contact.govuk_app.shared.personal_information_html") %>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "suggestion[reply]",
+    heading: t("controllers.contact.govuk_app.shared.can_we_reply"),
+    heading_size: "m",
+    heading_level: 0,
+    id_prefix: "reply",
+    items: [
+      {
+        value: "yes",
+        text: t("controllers.contact.govuk_app.shared.yes"),
+        conditional: reply_inputs
+      },
+      {
+        value: "no",
+        text: t("controllers.contact.govuk_app.shared.no")
+      }
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: t("controllers.contact.govuk_app.shared.send_message"),
+    margin_bottom: true
+  } %>
+<% end %>
