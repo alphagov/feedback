@@ -9,6 +9,8 @@ class Contact::GovukAppController < ApplicationController
     end
   end
 
+  def confirmation; end
+
 private
 
   def type

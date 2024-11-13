@@ -47,10 +47,10 @@ RSpec.describe "Contact", type: :request do
 
 
       [Referrer]
-
+      Unknown
 
       [User agent]
-
+      Unknown
 
       [JavaScript Enabled]
       false
