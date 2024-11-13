@@ -32,7 +32,7 @@ RSpec.describe ContactTicket, type: :model do
       ]
       bad_actors.each do |bad_actor|
         bad_ticket = ContactTicket.new valid_named_ticket_details.merge(name: "Bad Robot", email: bad_actor)
-        expect(SupportTicketCreator).to_not receive(:send)
+        expect(WebSupportTicketCreator).to_not receive(:send)
         bad_ticket.save
       end
     end

@@ -29,7 +29,7 @@ class ContactTicket < Ticket
       if anonymous?
         Rails.application.config.support_api.create_anonymous_long_form_contact(ticket_details)
       else
-        SupportTicketCreator.call(**ticket_details)
+        WebSupportTicketCreator.new(**ticket_details).send
       end
     end
   end

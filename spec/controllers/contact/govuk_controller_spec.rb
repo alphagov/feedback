@@ -34,7 +34,7 @@ RSpec.describe Contact::GovukController, type: :controller do
     }
   end
 
-  let(:support_ticket) { SupportTicketCreator.new(ticket_creator_params) }
+  let(:support_ticket) { WebSupportTicketCreator.new(ticket_creator_params) }
 
   it_behaves_like "a GOV.UK contact"
 
