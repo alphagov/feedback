@@ -13,6 +13,40 @@ en:
 
   controllers:
     contact:
+      govuk_app:
+        shared:
+          'yes': "Yes"
+          'no': "No"
+          email: Email address
+          name: Your name
+          personal_information_html: <p class="govuk-body">Find out how we use your personal information in the <a href="https://www.gov.uk/government/publications/govuk-app-privacy-notice-how-we-use-your-data">privacy notice</a>.</p>
+          can_we_reply: Can we reply to you by email?
+          send_message: Send message
+        new:
+          title: Contact the GOV.UK app team
+          radio_heading: What would you like to do?
+          radio_problem_text: Report a problem with the app
+          radio_suggestion_text: Make a suggestion for improving the app
+          continue_text: Continue
+          description_html: |
+            <p class="govuk-body">You can use this form to report a problem with the app or make a suggestion for improving the app.</p>
+            <p class="govuk-body">We can’t reply to you with advice. We don’t have access to information about you held by government departments.</p>
+            <p class="govuk-body">If you have a question about a government service or policy, <a class="govuk-link" href="/help">find contact details for the service</a> or contact the <a class="govuk-link" href="/government/organisations">government department</a> directly.</p>
+          contact_type_error_message: Select if you want to report a problem or make a suggestion
+        confirmation:
+          message: Your message has been submitted
+        problem_reports:
+          new:
+            title: Report a problem with the GOV.UK app
+            description: Details you give us about your problem make it easier for us to understand it and figure out how to fix it.
+            phone: What phone do you have?
+            app_version: The app version where you found the problem
+            trying_to_do: What were you trying to do?
+            what_happened: What happened?
+        suggestions:
+          new:
+            title: Make a suggestion about the GOV.UK app
+            what_is_your_suggestion: What is your suggestion?
       govuk:
         contact_govuk:
           title: "Contact GOV.UK"
