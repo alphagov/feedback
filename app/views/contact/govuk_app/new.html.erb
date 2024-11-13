@@ -1,4 +1,7 @@
 <% contact_type = "contact_type" %>
+<% if local_assigns[:form_errors]
+  contact_type_error = local_assigns[:form_errors][:contact_type].first
+end %>
 
 <%= form_tag contact_govuk_app_path, method: :post do |f| %>
   <% content_for :title do t("controllers.contact.govuk_app.new.title") end %>
@@ -9,6 +12,7 @@
     heading: t("controllers.contact.govuk_app.new.radio_heading"),
     heading_size: "m",
     heading_level: 0,
+    error_message: contact_type_error,
     id: contact_type,
     items: [
       {

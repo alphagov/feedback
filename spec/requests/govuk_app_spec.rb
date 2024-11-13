@@ -32,8 +32,10 @@ RSpec.describe "GOV.UK App", type: :request do
 
   context "#confirmation" do
     it "should display confirmation page" do
-      visit "/contact/govuk-app/confirmation"
-      expect(page).to have_content "Your message has been submitted"
+      get "/contact/govuk-app/confirmation"
+      expect(response.body).to include(
+        I18n.t("controllers.contact.govuk_app.confirmation.message"),
+      )
     end
   end
 end
