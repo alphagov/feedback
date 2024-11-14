@@ -56,4 +56,61 @@ RSpec.describe AppProblemReportTicket, type: :model do
       expect(ticket_creator).to have_received(:send)
     end
   end
+
+  context "when the ticket is invalid" do
+    it "returns an error if trying_to_do is missing" do
+      ticket_details[:trying_to_do] = ""
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:trying_to_do]).to eq(
+        ["Enter details about what you were trying to do"],
+      )
+    end
+
+    it "returns an error if what_happened is missing" do
+      ticket_details[:what_happened] = ""
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:what_happened]).to eq(
+        ["Enter details about what the problem was"],
+      )
+    end
+
+    it "returns an error if reply is missing" do
+      ticket_details[:reply] = ""
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:reply]).to eq(
+        ["Select a reply option"],
+      )
+    end
+
+    it "returns an error if reply equals yes but email missing" do
+      ticket_details[:email] = ""
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:email]).to eq(
+        ["Please add an email address"],
+      )
+    end
+
+    it "returns an error if the email is invalid" do
+      ticket_details[:email] = "doggo"
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:email]).to eq(
+        ["The email address must be valid"],
+      )
+    end
+  end
 end
