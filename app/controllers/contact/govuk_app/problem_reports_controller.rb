@@ -4,8 +4,12 @@ class Contact::GovukApp::ProblemReportsController < ApplicationController
   def create
     ticket = AppProblemReportTicket.new(problem_report_params)
 
-    ticket.save
-    redirect_to contact_govuk_app_confirmation_path
+    if ticket.valid?
+      ticket.save
+      redirect_to contact_govuk_app_confirmation_path
+    else
+      render "new", locals: { ticket:, form_errors: ticket.errors.messages }
+    end
   end
 
 private

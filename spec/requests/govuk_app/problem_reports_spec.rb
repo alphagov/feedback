@@ -62,5 +62,14 @@ RSpec.describe "GOV.UK app problem reports", type: :request do
       expect(request).to have_been_made
       expect(response).to redirect_to("/contact/govuk-app/confirmation")
     end
+
+    it "should re-render form and not submit ticket if submission invalid" do
+      request = stub_any_support_api_call
+      params[:what_happened] = ""
+      post "/contact/govuk-app/report-problem", params: { problem_report: params }
+
+      expect(request).to_not have_been_made
+      expect(response).to render_template("new")
+    end
   end
 end

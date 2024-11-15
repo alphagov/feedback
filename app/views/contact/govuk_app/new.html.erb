@@ -1,4 +1,3 @@
-<% contact_type = "contact_type" %>
 <% if local_assigns[:form_errors]
   contact_type_error = local_assigns[:form_errors][:contact_type].first
 end %>
@@ -13,7 +12,7 @@ end %>
     heading_size: "m",
     heading_level: 0,
     error_message: contact_type_error,
-    id: contact_type,
+    id: "contact_type",
     items: [
       {
         value: "problem",
