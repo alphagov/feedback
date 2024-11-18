@@ -17,7 +17,7 @@ class AppProblemReportTicket
   validate :validates_email_if_can_reply
 
   def save
-    if valid?
+    if valid? && !spam?
       AppProblemReportTicketCreator.new(ticket_params).send
     end
   end
@@ -43,5 +43,9 @@ private
     if can_reply? && email.blank?
       errors.add(:email, "Please add an email address")
     end
+  end
+
+  def spam?
+    giraffe.present?
   end
 end

@@ -16,6 +16,18 @@ RSpec.describe AppProblemReportTicket, type: :model do
     instance_double(AppProblemReportTicketCreator)
   end
 
+  it "doesn't create a ticket if giraffe field present" do
+    ticket_details[:giraffe] = "I am a robot"
+    allow(AppProblemReportTicketCreator).to receive(:new)
+      .with(anything) { ticket_creator }
+    allow(ticket_creator).to receive(:send)
+    ticket = AppProblemReportTicket.new(ticket_details)
+
+    ticket.save
+
+    expect(ticket_creator).to_not have_received(:send)
+  end
+
   context "when the ticket is valid" do
     it "sends a ticket on save" do
       ticket_creator_args = {
