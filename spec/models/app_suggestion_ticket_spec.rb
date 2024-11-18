@@ -45,4 +45,50 @@ RSpec.describe AppSuggestionTicket, type: :model do
       expect(ticket_creator).to have_received(:send)
     end
   end
+
+  context "when the ticket is invalid" do
+    it "returns an error if details is missing" do
+      ticket_details.delete(:details)
+      ticket = AppSuggestionTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:details]).to eq(
+        ["Enter your suggestion"],
+      )
+    end
+
+    it "returns an error if reply is missing" do
+      ticket_details[:reply] = ""
+      ticket = AppSuggestionTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:reply]).to eq(
+        ["Select a reply option"],
+      )
+    end
+
+    it "returns an error if reply equals yes but email missing" do
+      ticket_details[:email] = ""
+      ticket = AppSuggestionTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:email]).to eq(
+        ["Please add an email address"],
+      )
+    end
+
+    it "returns an error if the email is invalid" do
+      ticket_details[:email] = "doggo"
+      ticket = AppSuggestionTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:email]).to eq(
+        ["The email address must be valid"],
+      )
+    end
+  end
 end
