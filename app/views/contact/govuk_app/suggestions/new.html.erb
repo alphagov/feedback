@@ -1,3 +1,6 @@
+<% ticket ||= nil %>
+<% errors = local_assigns[:form_errors] %>
+
 <% content_for :title do t("controllers.contact.govuk_app.suggestions.new.title") end %>
 
 <%= form_tag contact_govuk_app_make_suggestion_path, method: :post do |f| %>
@@ -5,13 +8,15 @@
 
   <%= render "govuk_publishing_components/components/character_count", {
     textarea: {
+      value: ticket ? ticket.details : nil,
+      error_message: errors ? errors[:details].first : nil,
       label: {
         text: t("controllers.contact.govuk_app.suggestions.new.what_is_your_suggestion"),
         heading_size: "m"
       },
       name: "suggestion[details]"
     },
-    id: "suggestion",
+    id: "details",
     maxlength: 1200
   } %>
 
@@ -23,6 +28,8 @@
       },
       name: "suggestion[email]",
       id: "email",
+      value: ticket ? ticket.email : nil,
+      error_message: errors ? errors[:email].first : nil,
       width: 20,
       hint: "We will only use this to reply to your message"
     } %>
@@ -34,6 +41,7 @@
       },
       name: "suggestion[name]",
       id: "name",
+      value: ticket ? ticket.name : nil,
       width: 20
     } %>
 
@@ -43,19 +51,22 @@
 
   <%= render "govuk_publishing_components/components/radio", {
     name: "suggestion[reply]",
+    error_message: errors ? errors[:reply].first : nil,
     heading: t("controllers.contact.govuk_app.shared.can_we_reply"),
     heading_size: "m",
     heading_level: 0,
-    id_prefix: "reply",
+    id: "reply",
     items: [
       {
         value: "yes",
         text: t("controllers.contact.govuk_app.shared.yes"),
-        conditional: reply_inputs
+        conditional: reply_inputs,
+        checked: ticket ? ticket.reply == "yes" : false,
       },
       {
         value: "no",
-        text: t("controllers.contact.govuk_app.shared.no")
+        text: t("controllers.contact.govuk_app.shared.no"),
+        checked: ticket ? ticket.reply == "no" : false,
       }
     ]
   } %>
