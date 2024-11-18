@@ -35,7 +35,7 @@ class WebSupportTicketCreator < TicketCreator
   end
 
   def priority
-    "normal"
+    NORMAL_PRIORTIY
   end
 
   def tags

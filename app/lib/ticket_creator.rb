@@ -1,4 +1,6 @@
 class TicketCreator
+  NORMAL_PRIORTIY = "normal".freeze
+
   def initialize(ticket_params)
     @ticket_params = ticket_params
   end

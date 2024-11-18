@@ -14,11 +14,11 @@ class AppSuggestionTicketCreator < TicketCreator
   end
 
   def priority
-    "medium"
+    NORMAL_PRIORTIY
   end
 
   def tags
-    %w[app_form]
+    %w[govuk_app govuk_app_suggestion]
   end
 
 private

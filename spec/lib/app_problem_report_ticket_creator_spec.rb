@@ -21,11 +21,11 @@ RSpec.describe AppProblemReportTicketCreator do
   end
 
   it "includes priority" do
-    expect(support_ticket.priority).to eq("high")
+    expect(support_ticket.priority).to eq("normal")
   end
 
   it "includes tags" do
-    expect(support_ticket.tags).to eq(%w[app_form])
+    expect(support_ticket.tags).to eq(%w[govuk_app govuk_app_problem_report])
   end
 
   it "includes subject" do

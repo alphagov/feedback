@@ -23,11 +23,11 @@ class AppProblemReportTicketCreator < TicketCreator
   end
 
   def priority
-    "high"
+    NORMAL_PRIORTIY
   end
 
   def tags
-    %w[app_form]
+    %w[govuk_app govuk_app_problem_report]
   end
 
 private

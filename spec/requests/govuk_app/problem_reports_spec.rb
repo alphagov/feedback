@@ -47,8 +47,8 @@ RSpec.describe "GOV.UK app problem reports", type: :request do
       request = stub_support_api_valid_raise_support_ticket(
         {
           subject: "Problem report",
-          priority: "high",
-          tags: %w[app_form],
+          priority: "normal",
+          tags: %w[govuk_app govuk_app_problem_report],
           description: body,
           requester: {
             email: "someone@something.com",
