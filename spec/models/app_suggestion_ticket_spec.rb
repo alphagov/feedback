@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe AppSuggestionTicket, type: :model do
+  include ValidatorHelper
+
   let(:ticket_details) do
     {
       details: "A good suggestion",
@@ -11,18 +13,6 @@ RSpec.describe AppSuggestionTicket, type: :model do
   end
   let(:ticket_creator) do
     instance_double(AppSuggestionTicketCreator)
-  end
-
-  it "doesn't create a ticket if giraffe field present" do
-    ticket_details[:giraffe] = "I am a robot"
-    allow(AppSuggestionTicketCreator).to receive(:new)
-      .with(anything) { ticket_creator }
-    allow(ticket_creator).to receive(:send)
-    ticket = AppSuggestionTicket.new(ticket_details)
-
-    ticket.save
-
-    expect(ticket_creator).to_not have_received(:send)
   end
 
   context "when the ticket is valid" do
@@ -70,36 +60,14 @@ RSpec.describe AppSuggestionTicket, type: :model do
       )
     end
 
-    it "returns an error if reply is missing" do
-      ticket_details[:reply] = ""
+    it "returns an error if suggestion has too many characters" do
+      ticket_details[:details] = build_random_string(1251)
       ticket = AppSuggestionTicket.new(ticket_details)
 
       ticket.save
 
-      expect(ticket.errors[:reply]).to eq(
-        ["Select a reply option"],
-      )
-    end
-
-    it "returns an error if reply equals yes but email missing" do
-      ticket_details[:email] = ""
-      ticket = AppSuggestionTicket.new(ticket_details)
-
-      ticket.save
-
-      expect(ticket.errors[:email]).to eq(
-        ["Please add an email address"],
-      )
-    end
-
-    it "returns an error if the email is invalid" do
-      ticket_details[:email] = "doggo"
-      ticket = AppSuggestionTicket.new(ticket_details)
-
-      ticket.save
-
-      expect(ticket.errors[:email]).to eq(
-        ["The email address must be valid"],
+      expect(ticket.errors[:details]).to eq(
+        ["Your suggestion must be 1250 characters or less"],
       )
     end
   end

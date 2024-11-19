@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe AppProblemReportTicket, type: :model do
+  include ValidatorHelper
+
   let(:ticket_details) do
     {
       phone: "iPhone 15",
@@ -14,18 +16,6 @@ RSpec.describe AppProblemReportTicket, type: :model do
   end
   let(:ticket_creator) do
     instance_double(AppProblemReportTicketCreator)
-  end
-
-  it "doesn't create a ticket if giraffe field present" do
-    ticket_details[:giraffe] = "I am a robot"
-    allow(AppProblemReportTicketCreator).to receive(:new)
-      .with(anything) { ticket_creator }
-    allow(ticket_creator).to receive(:send)
-    ticket = AppProblemReportTicket.new(ticket_details)
-
-    ticket.save
-
-    expect(ticket_creator).to_not have_received(:send)
   end
 
   context "when the ticket is valid" do
@@ -92,36 +82,47 @@ RSpec.describe AppProblemReportTicket, type: :model do
       )
     end
 
-    it "returns an error if reply is missing" do
-      ticket_details[:reply] = ""
+    it "returns an error if phone has too many characters" do
+      ticket_details[:phone] = build_random_string(1251)
       ticket = AppProblemReportTicket.new(ticket_details)
 
       ticket.save
 
-      expect(ticket.errors[:reply]).to eq(
-        ["Select a reply option"],
+      expect(ticket.errors[:phone]).to eq(
+        ["Details about your phone must be 1250 characters or less"],
       )
     end
 
-    it "returns an error if reply equals yes but email missing" do
-      ticket_details[:email] = ""
+    it "returns an error if app_version has too many characters" do
+      ticket_details[:app_version] = build_random_string(1251)
       ticket = AppProblemReportTicket.new(ticket_details)
 
       ticket.save
 
-      expect(ticket.errors[:email]).to eq(
-        ["Please add an email address"],
+      expect(ticket.errors[:app_version]).to eq(
+        ["The app version must be 1250 characters or less"],
       )
     end
 
-    it "returns an error if the email is invalid" do
-      ticket_details[:email] = "doggo"
+    it "returns an error if trying_to_do has too many characters" do
+      ticket_details[:trying_to_do] = build_random_string(1251)
       ticket = AppProblemReportTicket.new(ticket_details)
 
       ticket.save
 
-      expect(ticket.errors[:email]).to eq(
-        ["The email address must be valid"],
+      expect(ticket.errors[:trying_to_do]).to eq(
+        ["Details about what you were trying to do must be 1250 characters or less"],
+      )
+    end
+
+    it "returns an error if what_happened has too many characters" do
+      ticket_details[:what_happened] = build_random_string(1251)
+      ticket = AppProblemReportTicket.new(ticket_details)
+
+      ticket.save
+
+      expect(ticket.errors[:what_happened]).to eq(
+        ["Details about what the problem was must be 1250 characters or less"],
       )
     end
   end
