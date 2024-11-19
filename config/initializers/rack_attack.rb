@@ -30,6 +30,7 @@ end
 def throttled_path?(path)
   # RAF and /done/completed_transaction pages make two requests in quick succession, so are exempt for now
   return false if path.start_with?("/contact/govuk/request-accessible-format") || path.match?(%r{contact/govuk/done/.+})
+  return false if path == "/contact/govuk-app"
 
   path.start_with?("/contact/govuk")
 end
