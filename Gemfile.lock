@@ -178,10 +178,10 @@ GEM
       sentry-rails (~> 5.3)
       sentry-ruby (~> 5.3)
       statsd-ruby (~> 1.5)
-    govuk_personalisation (1.0.0)
+    govuk_personalisation (1.1.0)
       plek (>= 1.9.0)
-      rails (>= 6, < 8)
-    govuk_publishing_components (45.4.1)
+      rails (>= 6, < 9)
+    govuk_publishing_components (45.5.0)
       chartkick
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
@@ -217,8 +217,8 @@ GEM
       addressable (>= 2.8)
     jwt (2.8.2)
       base64
-    kramdown (2.4.0)
-      rexml
+    kramdown (2.5.1)
+      rexml (>= 3.3.9)
     language_server-protocol (3.17.0.3)
     link_header (0.0.8)
     logger (1.6.1)
@@ -531,7 +531,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.7.0)
+    rdoc (6.8.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
     reline (0.5.11)
