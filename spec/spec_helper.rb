@@ -17,4 +17,8 @@ RSpec.configure do |config|
   if config.files_to_run.one?
     config.default_formatter = "doc"
   end
+
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
 end
