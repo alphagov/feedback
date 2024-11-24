@@ -18,6 +18,31 @@
   }.to_json
 %>
 
+<% if @errors
+  # Each key in the @errors hash is the id of the corresponding question.
+  # Therefore we can map this key to our ga4_english_strings[:questions] hash to get the question title of each error.
+  ga4_erroring_sections = @errors.keys.map do |error_key|
+    if error_key.to_s == "name" || error_key.to_s == "email" # Both errors use the same question title.
+        ga4_english_strings[:questions][:contact]
+    else
+        ga4_english_strings[:questions][error_key]
+    end
+  end
+
+  ga4_auto_tracker_json = {
+    event_name: 'form_error',
+    type: 'contact',
+    action: 'error',
+    text: @errors.values.map { |field_errors| field_errors.join(', ') }.join(', '),
+    section: ga4_erroring_sections.join(', '),
+    tool_name:  ga4_english_strings[:page_title]
+  }.to_json
+
+  content_for :error_summary do
+    render partial: "shared/error_summary", locals: { ga4_auto_tracker_json: ga4_auto_tracker_json }
+  end
+end %>
+
 <% content_for :title do t("controllers.contact.govuk.contact_govuk.title") end %>
   <%= form_for :contact, url: contact_govuk_path, as: :post, authenticity_token: false, html: { class: "contact-form", data: { module: "ga4-form-tracker", ga4_form: ga4_form_tracker_json } } do |f| %>
     <%= hidden_field_tag 'contact[url]', Plek.new.website_root + contact_govuk_path %>
@@ -28,46 +53,7 @@
     <p class="govuk-body">If you have a question about a government service or policy, check the <a class="govuk-link" href="/help">help pages</a> or contact the <a class="govuk-link" href="/government/organisations">government department</a> directly.</p>
 
     <%= render partial: "shared/spam_honeypot", locals: { form_name: 'contact' } %>
-    <% if @errors %>
-      <%
-        # Each key in the @errors hash is the id of the corresponding question.
-        # Therefore we can map this key to our ga4_english_strings[:questions] hash to get the question title of each error.
-        ga4_erroring_sections = @errors.keys.map do |error_key|
-          if error_key.to_s == "name" || error_key.to_s == "email" # Both errors use the same question title.
-            ga4_english_strings[:questions][:contact]
-          else
-            ga4_english_strings[:questions][error_key]
-          end
-        end
 
-        ga4_erroring_sections = ga4_erroring_sections.join(', ')
-
-        ga4_auto_tracker_json = {
-          event_name: 'form_error',
-          type: 'contact',
-          action: 'error',
-          text: @errors.values.map { | error_hash | error_hash.first }.join(', '),
-          section: ga4_erroring_sections,
-          tool_name:  ga4_english_strings[:page_title]
-        }.to_json
-      %>
-
-      <div data-module="ga4-auto-tracker" data-ga4-auto="<%= ga4_auto_tracker_json %>">
-        <%= render "govuk_publishing_components/components/error_summary", {
-          id: "error-summary",
-          title: "Please check the form",
-          # app adds a spam protection giraffe error,
-          # which we do not want to display in the error summary
-          # so we filter it out
-          items: @errors.keys.reject { |key| key == :giraffe }.map do |key|
-            {
-              text: @errors[key].first,
-              href: "##{key.to_s}"
-            }
-          end
-        } %>
-      </div>
-    <% end %>
     <%
       value = @old ? @old[:link] : ''
       if @errors && @errors[:link]

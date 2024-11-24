@@ -393,7 +393,7 @@ RSpec.describe "Contact", type: :request do
 
     i_should_be_on "/contact/govuk"
 
-    ga4_auto_element = page.first("form div[data-module=ga4-auto-tracker]")
+    ga4_auto_element = page.first("div[data-module=ga4-auto-tracker]")
     ga4_data = JSON.parse(ga4_auto_element["data-ga4-auto"])
 
     expect(ga4_data["event_name"]).to eq "form_error"

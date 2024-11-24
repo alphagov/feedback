@@ -1,0 +1,12 @@
+<div data-module="ga4-auto-tracker" data-ga4-auto="<%= ga4_auto_tracker_json %>">
+  <%= render "govuk_publishing_components/components/error_summary", {
+    id: "error-summary",
+    title: "Please check the form",
+    items: @errors.keys.reject { |key| key == :giraffe }.map do |key|
+      {
+        text: @errors[key].first,
+        href: "##{key.to_s}"
+      }
+    end
+  } %>
+</div>

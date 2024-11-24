@@ -19,6 +19,7 @@
               end
             } %>
         <% end %>
+        <%= yield(:error_summary) %>
         <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
           <%= yield %>
         </div>
