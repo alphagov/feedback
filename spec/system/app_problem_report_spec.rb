@@ -9,6 +9,16 @@ RSpec.describe "Submitting app problem report" do
       visit "/contact/govuk-app"
     end
 
+    it "adds GA4 attributes for form submit events" do
+      data_module = page.find("form")["data-module"]
+      expected_data_module = "ga4-form-tracker"
+      ga4_form_attribute = page.find("form")["data-ga4-form"]
+      ga4_expected_object = "{\"event_name\":\"form_response\",\"type\":\"contact\",\"section\":\"What would you like to do?\",\"action\":\"Continue\",\"tool_name\":\"Contact the GOV.UK app team\"}"
+
+      expect(data_module).to eq(expected_data_module)
+      expect(ga4_form_attribute).to eq(ga4_expected_object)
+    end
+
     it "shows govuk app contact start page" do
       expect(page).to have_title("Contact the GOV.UK app team")
       expect(page).to have_content("What would you like to do?")
@@ -54,6 +64,16 @@ RSpec.describe "Submitting app problem report" do
         expect(page).to have_field("Your name")
         expect(page).to have_unchecked_field("No")
       end
+    end
+
+    it "adds GA4 attributes for form submit events" do
+      data_module = page.find("form")["data-module"]
+      expected_data_module = "ga4-form-tracker"
+      ga4_form_attribute = page.find("form")["data-ga4-form"]
+      ga4_expected_object = "{\"event_name\":\"form_response\",\"type\":\"contact\",\"section\":\"What phone do you have?, The app version where you found the problem, What were you trying to do?, What happened?, Can we reply to you by email?, Email address, Your name\",\"action\":\"Send message\",\"tool_name\":\"Contact the GOV.UK app team\"}"
+
+      expect(data_module).to eq(expected_data_module)
+      expect(ga4_form_attribute).to eq(ga4_expected_object)
     end
   end
 
@@ -178,6 +198,14 @@ RSpec.describe "Submitting app problem report" do
         expect(page).to have_content("Select yes if you want a reply")
         expect(page).to have_content("Enter details about what you were trying to do")
       end
+    end
+
+    it "adds GA4 attributes to error summary" do
+      auto_tracker_element = page.find("div[data-module=ga4-auto-tracker]")
+      ga4_auto_attribute = auto_tracker_element["data-ga4-auto"]
+      ga4_expected_object = "{\"event_name\":\"form_error\",\"type\":\"contact\",\"action\":\"error\",\"text\":\"Select yes if you want a reply, Enter details about what you were trying to do\",\"section\":\"Can we reply to you by email?, What were you trying to do?\",\"tool_name\":\"Contact the GOV.UK app team\"}"
+
+      expect(ga4_auto_attribute).to eq(ga4_expected_object)
     end
 
     it "includes field error for what you were trying to do" do
