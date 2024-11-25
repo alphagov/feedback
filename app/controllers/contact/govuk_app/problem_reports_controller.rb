@@ -8,7 +8,9 @@ class Contact::GovukApp::ProblemReportsController < ApplicationController
       ticket.save
       redirect_to contact_govuk_app_confirmation_path
     else
-      render "new", locals: { ticket:, form_errors: ticket.errors.messages }
+      @errors = ticket.errors.messages
+      @ticket = ticket
+      render "new"
     end
   end
 

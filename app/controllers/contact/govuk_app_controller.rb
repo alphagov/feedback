@@ -3,7 +3,7 @@ class Contact::GovukAppController < ApplicationController
 
   def create
     if errors
-      return render "new", locals: { form_errors: errors }
+      return render "new"
     end
 
     if type == "problem"
@@ -29,7 +29,7 @@ private
 
   def errors
     if blank_or_invalid_type?
-      {
+      @errors = {
         contact_type: [t("controllers.contact.govuk_app.new.contact_type_error_message")],
       }
     end
