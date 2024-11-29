@@ -33,6 +33,24 @@ RSpec.describe AppSuggestionTicket, type: :model do
       expect(ticket_creator).to have_received(:send)
     end
 
+    it "sends a ticket on save when missing name" do
+      ticket_details[:name] = ""
+      ticket_creator_args = {
+        details: ticket_details[:details],
+        requester: {
+          name: "Not submitted",
+          email: ticket_details[:email],
+        },
+      }
+      allow(AppSuggestionTicketCreator).to receive(:new)
+        .with(ticket_creator_args) { ticket_creator }
+      allow(ticket_creator).to receive(:send)
+
+      AppSuggestionTicket.new(ticket_details).save
+
+      expect(ticket_creator).to have_received(:send)
+    end
+
     it "sends a ticket on save with no requester details" do
       ticket_details[:reply] = "no"
       ticket_details[:name] = ""

@@ -16,8 +16,9 @@ class AppSuggestionTicket < AppTicket
 private
 
   def ticket_params
+    named = name.presence || "Not submitted"
     params = { details: }
-    params[:requester] = { name:, email: } if can_reply?
+    params[:requester] = { name: named, email: } if can_reply?
     params
   end
 end

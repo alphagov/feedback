@@ -33,13 +33,14 @@ class AppProblemReportTicket < AppTicket
 private
 
   def ticket_params
+    named = name.presence || "Not submitted"
     params = {
       phone:,
       app_version:,
       trying_to_do:,
       what_happened:,
     }
-    params[:requester] = { name:, email: } if can_reply?
+    params[:requester] = { name: named, email: } if can_reply?
     params
   end
 end
