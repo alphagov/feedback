@@ -1,0 +1,60 @@
+<%
+  ga4_english_strings = {
+    page_title: t("controllers.contact.govuk_app.new.title", locale: :en),
+    contact_type: t("controllers.contact.govuk_app.new.radio_heading", locale: :en),
+    continue_text: t("controllers.contact.govuk_app.new.continue_text", locale: :en)
+  }
+
+  ga4_form_tracker_json = {
+    event_name: "form_response",
+    type: "contact",
+    section: ga4_english_strings[:contact_type],
+    action: ga4_english_strings[:continue_text],
+    tool_name: ga4_english_strings[:page_title]
+  }.to_json
+%>
+
+<% if @errors
+  contact_type_error = @errors[:contact_type].first
+
+  ga4_auto_tracker_json = {
+    event_name: 'form_error',
+    type: 'contact',
+    action: 'error',
+    text: contact_type_error,
+    section: ga4_english_strings[:contact_type],
+    tool_name:  ga4_english_strings[:page_title]
+  }.to_json
+
+  content_for :error_summary do
+    render partial: "shared/error_summary", locals: { ga4_auto_tracker_json: ga4_auto_tracker_json }
+  end
+  content_for :error_summary do
+  end
+end %>
+
+<%= form_tag contact_govuk_app_path, method: :post, class: "contact-form", data: { module: "ga4-form-tracker", ga4_form: ga4_form_tracker_json } do |f| %>
+  <% content_for :title do t("controllers.contact.govuk_app.new.title") end %>
+  <%= t("controllers.contact.govuk_app.new.description_html") %>
+
+  <%= render "govuk_publishing_components/components/radio", {
+    name: "contact[type]",
+    heading: t("controllers.contact.govuk_app.new.radio_heading"),
+    heading_size: "m",
+    heading_level: 0,
+    error_message: contact_type_error,
+    id: "contact_type",
+    items: [
+      {
+        value: "problem",
+        text: t("controllers.contact.govuk_app.new.radio_problem_text")
+      },
+      {
+        value: "suggestion",
+        text: t("controllers.contact.govuk_app.new.radio_suggestion_text")
+      }
+    ]
+  } %>
+
+  <%= render "govuk_publishing_components/components/button", text: t("controllers.contact.govuk_app.new.continue_text"), margin_bottom: true %>
+<% end %>

@@ -30,6 +30,20 @@ Rails.application.routes.draw do
       post "content_improvement", to: "content_improvement#create", defaults: { format: :js }
       resources "page_improvements", only: [:create], format: false
     end
+
+    get "govuk-app", to: "govuk_app#new"
+    post "govuk-app", to: "govuk_app#create"
+    get "govuk-app/confirmation", to: "govuk_app#confirmation"
+
+    namespace :govuk_app, path: "govuk-app" do
+      get "report-problem", to: "problem_reports#new"
+      post "report-problem", to: "problem_reports#create"
+
+      get "make-suggestion", to: "suggestions#new"
+      post "make-suggestion", to: "suggestions#create"
+    end
+
+    root to: redirect("/contact")
   end
 
   root to: redirect("/contact")

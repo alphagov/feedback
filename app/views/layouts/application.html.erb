@@ -7,6 +7,7 @@
     <main id="content" role="main">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+          <%= yield(:error_summary) %>
           <%= render 'govuk_publishing_components/components/title', title: yield(:title) %>
           <%= yield %>
         </div>

@@ -25,3 +25,4 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure(&:filter_rails_from_backtrace!)
+RSpec.configure(&:infer_spec_type_from_file_location!)
