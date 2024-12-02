@@ -1,4 +1,6 @@
 class Contact::GovukApp::ProblemReportsController < ApplicationController
+  include ThrottlingManager
+
   def new
     @phone = params[:phone]
     @app_version = params[:app_version]
@@ -11,6 +13,8 @@ class Contact::GovukApp::ProblemReportsController < ApplicationController
       ticket.save
       redirect_to contact_govuk_app_confirmation_path
     else
+      decrement_throttle_counts
+
       @errors = ticket.errors.messages
       @ticket = ticket
       render "new"
