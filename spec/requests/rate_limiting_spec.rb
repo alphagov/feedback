@@ -30,6 +30,17 @@ RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
     before do
       Rack::Attack.reset!
       allow_any_instance_of(Rack::Attack::Request).to receive(:ip).and_return("192.168.1.1")
+      allow_any_instance_of(ActionDispatch::Request).to receive(:ip).and_return("192.168.1.1")
+    end
+
+    it "doesn't throttle if manually decrementing throttle counts due to validation errors" do
+      invalid_params = { contact: {} }
+      post "/contact/govuk", params: invalid_params
+      expect(response.status).to eq(200)
+      3.times do |i|
+        post "/contact/govuk", params: invalid_params.merge(contact: { email: "test#{i}@test.com" })
+        expect(response.status).to eq(200)
+      end
     end
 
     it "begins on the 2nd request from the same IP" do
@@ -76,6 +87,17 @@ RSpec.describe "Rack::Attack Throttling of POSTs", type: :request do
         allow_any_instance_of(Rack::Attack::Request).to receive(:ip).and_return("192.168.1.#{i}")
         post "/contact/govuk", params: valid_params
         expect(response.status).to eq(429)
+      end
+    end
+
+    it "doesn't throttle if manually decrementing throttle counts due to validation errors" do
+      invalid_params = { contact: { email: "example@example.com" } }
+      post "/contact/govuk", params: invalid_params
+      expect(response.status).to eq(200)
+      3.times do |i|
+        allow_any_instance_of(Rack::Attack::Request).to receive(:ip).and_return("192.168.1.#{i}")
+        post "/contact/govuk", params: invalid_params
+        expect(response.status).to eq(200)
       end
     end
 

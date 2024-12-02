@@ -1,4 +1,6 @@
 class Contact::GovukApp::SuggestionsController < ApplicationController
+  include ThrottlingManager
+
   def new; end
 
   def create
@@ -8,6 +10,8 @@ class Contact::GovukApp::SuggestionsController < ApplicationController
       ticket.save
       redirect_to contact_govuk_app_confirmation_path
     else
+      decrement_throttle_counts
+
       @errors = ticket.errors.messages
       @ticket = ticket
       render "new"
