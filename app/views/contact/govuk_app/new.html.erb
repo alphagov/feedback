@@ -33,7 +33,7 @@
   end
 end %>
 
-<%= form_tag contact_govuk_app_path, method: :post, class: "contact-form", data: { module: "ga4-form-tracker", ga4_form: ga4_form_tracker_json } do |f| %>
+<%= form_tag contact_govuk_app_path(params: phone_details_params), method: :post, class: "contact-form", data: { module: "ga4-form-tracker", ga4_form: ga4_form_tracker_json } do |f| %>
   <% content_for :title do t("controllers.contact.govuk_app.new.title") end %>
   <%= t("controllers.contact.govuk_app.new.description_html") %>
 
