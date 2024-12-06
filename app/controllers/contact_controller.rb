@@ -3,6 +3,7 @@ require "slimmer/headers"
 class ContactController < ApplicationController
   include Slimmer::Headers
   include ApplicationHelper
+  include ThrottlingManager
 
   before_action :set_expiry, only: %i[new index]
   after_action :add_cors_header
@@ -36,6 +37,8 @@ class ContactController < ApplicationController
       respond_to_valid_submission(ticket)
     else
       raise SpamError if ticket.spam?
+
+      decrement_throttle_counts
 
       @errors = ticket.errors.to_hash
       @old = data

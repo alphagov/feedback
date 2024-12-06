@@ -59,5 +59,15 @@ RSpec.describe "GOV.UK app suggestions", type: :request do
       expect(request).to_not have_been_made
       expect(response).to render_template("new")
     end
+
+    it "shouldn't rate limit submissions if there are form errors" do
+      params[:details] = ""
+      post "/contact/govuk-app/make-suggestion", params: { suggestion: params }
+      expect(response.status).to eq(200)
+      3.times do
+        post "/contact/govuk-app/make-suggestion", params: { suggestion: params }
+        expect(response.status).to eq(200)
+      end
+    end
   end
 end
