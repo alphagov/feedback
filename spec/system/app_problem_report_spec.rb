@@ -27,7 +27,7 @@ RSpec.describe "Submitting app problem report" do
 
   context "when selecting report a problem" do
     before do
-      visit "/contact/govuk-app"
+      visit "/contact/govuk-app?app_version=1.0&phone=Apple+iPhone+15+pro+18.1"
       choose("Report a problem with the app")
       click_on("Continue")
     end
@@ -40,12 +40,20 @@ RSpec.describe "Submitting app problem report" do
       expect(page).to have_title("Report a problem with the GOV.UK app")
     end
 
-    it "includes phone model field" do
+    it "includes phone field" do
       expect(page).to have_field("What phone do you have?")
+    end
+
+    it "populates phone field with phone query param" do
+      expect(page.find("#phone").value).to eq("Apple iPhone 15 pro 18.1")
     end
 
     it "includes app version field" do
       expect(page).to have_field("The app version where you found the problem")
+    end
+
+    it "populates app version field with app_version query param" do
+      expect(page.find("#app_version").value).to eq("1.0")
     end
 
     it "includes what you were trying to do field" do

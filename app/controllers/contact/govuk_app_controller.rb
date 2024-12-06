@@ -7,13 +7,18 @@ class Contact::GovukAppController < ApplicationController
     end
 
     if type == "problem"
-      redirect_to contact_govuk_app_report_problem_path
+      redirect_to contact_govuk_app_report_problem_path(params: phone_details_params)
     else
       redirect_to contact_govuk_app_make_suggestion_path
     end
   end
 
   def confirmation; end
+
+  helper_method :phone_details_params
+  def phone_details_params
+    params.slice(:phone, :app_version).permit!
+  end
 
 private
 

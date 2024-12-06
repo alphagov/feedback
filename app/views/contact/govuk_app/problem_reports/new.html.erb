@@ -55,7 +55,7 @@ end %>
     },
     name: "problem_report[phone]",
     id: "phone",
-    value: @ticket ? @ticket.phone : nil,
+    value: @ticket ? @ticket.phone : @phone,
     width: 20
   } %>
 
@@ -66,7 +66,7 @@ end %>
     },
     name: "problem_report[app_version]",
     id: "app_version",
-    value: @ticket ? @ticket.app_version : nil,
+    value: @ticket ? @ticket.app_version : @app_version,
     width: 20
   } %>
 

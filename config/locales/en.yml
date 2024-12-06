@@ -31,10 +31,13 @@ en:
           description_html: |
             <p class="govuk-body">You can use this form to report a problem with the app or make a suggestion for improving the app.</p>
             <p class="govuk-body">We can’t reply to you with advice. We don’t have access to information about you held by government departments.</p>
-            <p class="govuk-body">If you have a question about a government service or policy, <a class="govuk-link" href="/help">find contact details for the service</a> or contact the <a class="govuk-link" href="/government/organisations">government department</a> directly.</p>
+            <p class="govuk-body">If you have a question about a government service or policy, <a class="govuk-link" href="/contact">find contact details for the service</a> or contact the <a class="govuk-link" href="/government/organisations">government department</a> directly.</p>
           contact_type_error_message: Select if you want to report a problem or make a suggestion
         confirmation:
           message: Your message has been submitted
+          thanks_html: |
+            <p class="govuk-body">Thank you for your message.</p>
+            <p class="govuk-body"><a href="https://www.gov.uk">Return to the GOV.UK homepage</a></p>
         problem_reports:
           new:
             title: Report a problem with the GOV.UK app
