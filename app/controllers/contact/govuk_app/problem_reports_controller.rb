@@ -1,5 +1,8 @@
 class Contact::GovukApp::ProblemReportsController < ApplicationController
-  def new; end
+  def new
+    @phone = params[:phone]
+    @app_version = params[:app_version]
+  end
 
   def create
     ticket = AppProblemReportTicket.new(problem_report_params)
