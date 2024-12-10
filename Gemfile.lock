@@ -123,7 +123,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
       net-http
-    gds-api-adapters (97.5.0)
+    gds-api-adapters (97.6.0)
       addressable
       link_header
       null_logger
@@ -202,7 +202,7 @@ GEM
       selenium-webdriver (>= 4.0)
     hashdiff (1.1.1)
     http-accept (1.7.0)
-    http-cookie (1.0.7)
+    http-cookie (1.0.8)
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (1.14.6)
