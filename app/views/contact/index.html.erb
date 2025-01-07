@@ -1,5 +1,6 @@
 <% content_for :title do "Find contact details for services" end %>
   <%= render "govuk_publishing_components/components/document_list", {
+    equal_item_spacing: true,
     items: @popular_links
   } %>
 
@@ -7,6 +8,7 @@
     title: "More topics"
   } do %>
     <%= render "govuk_publishing_components/components/document_list", {
+      equal_item_spacing: true,
       items: @long_tail_links
     } %>
   <% end %>
