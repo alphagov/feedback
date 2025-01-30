@@ -1,7 +1,19 @@
-<% title = "Thank you for contacting GOV.UK" %>
-<% content_for :title, title %>
-<p class="govuk-body" 
-   data-module="ga4-auto-tracker"
-   data-ga4-auto="<%= { event_name: "form_complete", type: "contact", text: title, action: "complete", tool_name: "Contact GOV.UK", section: title }.to_json %>">
+<%
+  title = "Thank you for contacting GOV.UK"
+  content_for :title, title
+  data_attributes = {
+    module: "ga4-auto-tracker",
+    ga4_auto: {
+      event_name: "form_complete",
+      type: "contact",
+      text: title,
+      action: "complete",
+      tool_name: "Contact GOV.UK",
+      section: title,
+    }.to_json
+  } if @govuk_contact_form
+%>
+
+<%= tag.p(class: "govuk-body", data: data_attributes) do %>
   <a href="/" class="govuk-link">Return to the GOV.UK home page</a>.
-</p>
+<% end %>
