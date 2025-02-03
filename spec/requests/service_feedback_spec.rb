@@ -67,6 +67,21 @@ RSpec.describe "Service feedback submission", type: :request do
       expect(page).to have_content "Thank you for contacting GOV.UK"
     end
 
+    it "does not have GA4 auto tracking on the thank you page" do
+      stub_content_store_has_item("/#{base_path}", payload)
+      visit("/done/some-transaction")
+      within(".service-feedback") do
+        choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
+        fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: "Test"
+        click_on I18n.translate("controllers.contact.govuk.service_feedback.send_feedback")
+      end
+
+      i_should_be_on "/contact/govuk/anonymous-feedback/thankyou"
+      expect(page).to have_content "Thank you for contacting GOV.UK"
+      expect(page).to_not have_selector("p[data-module=ga4-auto-tracker]")
+      expect(page).to_not have_selector("p[data-ga4-auto]")
+    end
+
     it "displays validation error when Service Satisfaction Rating is blank" do
       stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")

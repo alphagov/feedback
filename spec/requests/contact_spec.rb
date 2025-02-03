@@ -9,13 +9,13 @@ end
 
 def contact_submission_should_be_successful
   click_on "Send message"
-  i_should_be_on "/contact/govuk/thankyou"
+  i_should_be_on "/contact/govuk/thankyou?govuk_contact_form=true"
   expect(page).to have_content("Your message has been sent")
 end
 
 def anonymous_submission_should_be_successful
   click_on "Send message"
-  i_should_be_on "/contact/govuk/anonymous-feedback/thankyou"
+  i_should_be_on "/contact/govuk/anonymous-feedback/thankyou?govuk_contact_form=true"
   expect(page).to have_content("Thank you for contacting GOV.UK")
 end
 
@@ -158,7 +158,7 @@ RSpec.describe "Contact", type: :request do
     fill_in "link", with: "some url"
     click_on "Send message"
 
-    i_should_be_on "/contact/govuk/thankyou"
+    i_should_be_on "/contact/govuk/thankyou?govuk_contact_form=true"
 
     expect(page).to have_content("Your message has been sent, and the team will get back to you to answer any questions as soon as possible.")
 
@@ -323,14 +323,14 @@ RSpec.describe "Contact", type: :request do
     fill_in_valid_contact_details_and_description
     click_on "Send message"
 
-    i_should_be_on "/contact/govuk/thankyou"
+    i_should_be_on "/contact/govuk/thankyou?govuk_contact_form=true"
 
     click_on "Return to the GOV.UK home page"
 
     cookies = page.driver.browser.manage.all_cookies
     contact_referrer_cookie = cookies.find { |c| c[:name] == "govuk_contact_referrer" }
     expect(contact_referrer_cookie).not_to be_nil
-    expect(contact_referrer_cookie[:value]).to match(/\/thankyou$/)
+    expect(contact_referrer_cookie[:value]).to match(/\/thankyou\?govuk_contact_form=true$/)
   end
 
   it "should have the GA4 form tracker on the form" do
@@ -349,8 +349,24 @@ RSpec.describe "Contact", type: :request do
     expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
   end
 
-  it "should have the GA4 auto tracker on the thank you pages" do
-    visit "/contact/govuk/anonymous-feedback/thankyou"
+  it "should have the GA4 auto tracker on the thank you pages if the origin form is /contact/govuk" do
+    # Anonymous submission thank you page
+    stub_support_api_long_form_anonymous_contact_creation(
+      details: "test text details",
+      link: nil,
+      user_specified_url: nil,
+      javascript_enabled: false,
+      user_agent: nil,
+      referrer: nil,
+      url: "#{Plek.new.website_root}/contact/govuk",
+      path: "/contact/govuk",
+    )
+
+    visit "/contact/govuk"
+
+    choose "location-0" # Selects the 'The whole site' radio button
+    fill_in "textdetails", with: "test text details"
+    anonymous_submission_should_be_successful
 
     expect(page).to have_selector("p[data-module=ga4-auto-tracker]")
 
@@ -366,7 +382,15 @@ RSpec.describe "Contact", type: :request do
     expect(ga4_data["tool_name"]).to eq "Contact GOV.UK"
     expect(ga4_data["section"]).to eq title
 
-    visit "/contact/govuk/thankyou"
+    # Named contact submission thank you page
+    visit "/contact/govuk"
+
+    stub_any_support_api_call
+
+    fill_in_valid_contact_details_and_description
+    click_on "Send message"
+
+    i_should_be_on "/contact/govuk/thankyou?govuk_contact_form=true"
 
     expect(page).to have_selector("p[data-module=ga4-auto-tracker]")
 

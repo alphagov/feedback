@@ -89,10 +89,14 @@ private
     respond_to do |format|
       format.html do
         hide_report_a_problem_form_in_response
+        params = {}
+        if contact_params["url"] == Plek.new.website_root + contact_govuk_path
+          params[:govuk_contact_form] = true
+        end
         if @contact_provided
-          redirect_to contact_named_contact_thankyou_path
+          redirect_to contact_named_contact_thankyou_path(params)
         else
-          redirect_to contact_anonymous_feedback_thankyou_path
+          redirect_to contact_anonymous_feedback_thankyou_path(params)
         end
       end
       format.any { head(:not_acceptable) }
