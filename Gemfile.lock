@@ -198,7 +198,7 @@ GEM
       capybara (>= 3.36)
       puma
       selenium-webdriver (>= 4.0)
-    hashdiff (1.1.1)
+    hashdiff (1.1.2)
     http-accept (1.7.0)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
@@ -671,7 +671,7 @@ GEM
       activemodel
       mail (>= 2.6.1)
       simpleidn
-    webmock (3.24.0)
+    webmock (3.25.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
