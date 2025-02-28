@@ -5,7 +5,8 @@
   } %>
 
   <%= render "govuk_publishing_components/components/details", {
-    title: "More topics"
+    title: "More topics",
+    ga4_attributes: { index_section_count: 1 }
   } do %>
     <%= render "govuk_publishing_components/components/document_list", {
       equal_item_spacing: true,

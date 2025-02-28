@@ -35,6 +35,14 @@ RSpec.describe "Contact", type: :request do
     expect(page).to have_title "Find contact details for services - GOV.UK"
   end
 
+  it "should pass index_section_count to the details component on the index page" do
+    visit "/contact"
+
+    details = page.first(".gem-c-details")
+    ga4_data = JSON.parse(details["data-ga4-event"])
+    expect(ga4_data["index_section_count"]).to eq 1
+  end
+
   it "should let the user submit a request with contact details" do
     body = <<~MULTILINE_STRING
       [Requester]
