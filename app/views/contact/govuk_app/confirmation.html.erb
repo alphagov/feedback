@@ -1,3 +1,7 @@
+<% content_for :extra_head_content do %>
+  <meta name="robots" content="noindex">
+<% end %>
+
 <%= render "govuk_publishing_components/components/panel", {
   title: t("controllers.contact.govuk_app.confirmation.message")
 } %>
