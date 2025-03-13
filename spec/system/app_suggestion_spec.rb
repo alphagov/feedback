@@ -23,6 +23,10 @@ RSpec.describe "Submitting a suggestion" do
       expect(page).to have_title("Contact the GOV.UK app team")
       expect(page).to have_content("What would you like to do?")
     end
+
+    it "adds noindex meta tag" do
+      expect(page).to have_selector('meta[name=robots][content="noindex"]', visible: false)
+    end
   end
 
   context "when selecting report a problem" do
@@ -62,6 +66,10 @@ RSpec.describe "Submitting a suggestion" do
 
       expect(data_module).to eq(expected_data_module)
       expect(ga4_form_attribute).to eq(ga4_expected_object)
+    end
+
+    it "adds noindex meta tag" do
+      expect(page).to have_selector('meta[name=robots][content="noindex"]', visible: false)
     end
   end
 
@@ -106,6 +114,10 @@ RSpec.describe "Submitting a suggestion" do
 
       it "confirms the submission" do
         expect(page).to have_content("Your message has been submitted")
+      end
+
+      it "adds noindex meta tag" do
+        expect(page).to have_selector('meta[name=robots][content="noindex"]', visible: false)
       end
     end
 
