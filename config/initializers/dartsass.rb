@@ -1,4 +1,5 @@
 APP_STYLESHEETS = {
+  "application.scss" => "application.css",
   "views/_completed_transaction.scss" => "views/_completed_transaction.css",
 }.freeze
 
