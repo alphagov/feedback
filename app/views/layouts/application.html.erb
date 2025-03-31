@@ -1,5 +1,7 @@
+<% stylesheet_link_tag "application", media: "all"  # Trigger this without rendering it to ensure it appears in links header %>
+
 <% content_for :body do %>
-  <div id="wrapper">
+  <div class="govuk-width-container">
     <%= render 'govuk_publishing_components/components/breadcrumbs', {
       breadcrumbs: @breadcrumbs,
       collapse_on_mobile: true
@@ -21,20 +23,15 @@
   </div>
 <% end %>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title><%= yield :title %> - GOV.UK</title>
-    <%= yield :extra_head_content %>
-    <%=
-      render_component_stylesheets
-    %>
-  </head>
-  <body>
-    <%= yield :body %>
-    <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
-    <%= javascript_include_tag 'application', integrity: false, type: "module" %>
-  </body>
-</html>
+<%= content_for :head do %>
+  <%= csp_meta_tag %>
+  <%= render_component_stylesheets %>
+<% end %>
 
+<%= render "govuk_publishing_components/components/layout_for_public", {
+      title: yield(:title) + " - GOV.UK",
+      omit_feedback_form: true,
+  } do %>
+  <%= yield :body %>
+  <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
+<% end %>
