@@ -1,3 +1,5 @@
+<% stylesheet_link_tag "application", media: "all"  # Trigger this without rendering it to ensure it appears in links header %>
+
 <% content_for :body do %>
   <%= render 'govuk_publishing_components/components/breadcrumbs', {
     breadcrumbs: @breadcrumbs,
