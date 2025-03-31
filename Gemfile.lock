@@ -735,7 +735,6 @@ DEPENDENCIES
   rubocop-govuk
   shoulda-matchers
   simplecov
-  slimmer
   sprockets-rails
   terser
   valid_email
