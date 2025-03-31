@@ -27,6 +27,7 @@
 
 <%= render "govuk_publishing_components/components/layout_for_public", {
       title: yield(:title),
+      omit_feedback_form: true,
   } do %>
   <%= yield :body %>
   <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
