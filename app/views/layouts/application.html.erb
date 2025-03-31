@@ -1,40 +1,34 @@
 <% content_for :body do %>
-  <div id="wrapper">
-    <%= render 'govuk_publishing_components/components/breadcrumbs', {
-      breadcrumbs: @breadcrumbs,
-      collapse_on_mobile: true
-    } %>
-    <main id="content" role="main" class="govuk-main-wrapper--l">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <%= yield(:error_summary) %>
-          <%= render "govuk_publishing_components/components/heading", {
-            text: yield(:title),
-            heading_level: 1,
-            font_size: "xl",
-            margin_bottom: 8
-          } %>
-          <%= yield %>
-        </div>
+  <%= render 'govuk_publishing_components/components/breadcrumbs', {
+    breadcrumbs: @breadcrumbs,
+    collapse_on_mobile: true
+  } %>
+  <main id="content" role="main" class="govuk-main-wrapper--l">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= yield(:error_summary) %>
+        <%= render "govuk_publishing_components/components/heading", {
+          text: yield(:title),
+          heading_level: 1,
+          font_size: "xl",
+          margin_bottom: 8
+        } %>
+        <%= yield %>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 <% end %>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title><%= yield :title %> - GOV.UK</title>
-    <%= yield :extra_head_content %>
-    <%=
-      render_component_stylesheets
-    %>
-  </head>
-  <body>
-    <%= yield :body %>
-    <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
-    <%= javascript_include_tag 'application', integrity: false, type: "module" %>
-  </body>
-</html>
+<%= content_for :head do %>
+  <%= csp_meta_tag %>
+  <meta name="robots" content="noindex">
+  <%= render_component_stylesheets %>
+<% end %>
 
+<%= render "govuk_publishing_components/components/layout_for_public", {
+      title: yield(:title) + " - GOV.UK",
+      omit_feedback_form: true,
+  } do %>
+  <%= yield :body %>
+  <%= javascript_include_tag 'test-dependencies' if Rails.env.test? %>
+<% end %>
