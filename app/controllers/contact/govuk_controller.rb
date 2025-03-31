@@ -1,5 +1,3 @@
-require "slimmer/headers"
-
 class Contact::GovukController < ContactController
   before_action proc {
     hide_report_a_problem_form_in_response
