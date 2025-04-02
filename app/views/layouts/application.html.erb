@@ -30,7 +30,7 @@
 <% end %>
 
 <%= render "govuk_publishing_components/components/layout_for_public", {
-      title: yield(:title),
+      title: yield(:title) + " - GOV.UK",
       omit_feedback_form: true,
   } do %>
   <%= yield :body %>
