@@ -14,24 +14,24 @@
             font_size: "xl",
             margin_bottom: 8
           } %>
-          <div class="govuk-grid-column-two-thirds">
+        </div>
+        <div class="govuk-grid-column-two-thirds">
             <%= yield %>
             <%= render 'shared/publication_metadata', :publication => publication %>
-          </div>
-          <div class="govuk-grid-column-one-third">
-            <%= render 'govuk_publishing_components/components/contextual_sidebar',
-              content_item: content_item_hash
-            %>
-          </div>
-          <div class="govuk-grid-column-two-thirds">
-            <%= render 'govuk_publishing_components/components/contextual_footer',
-              content_item: content_item_hash
-            %>
-          </div>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <%= render 'govuk_publishing_components/components/contextual_sidebar',
+            content_item: content_item_hash
+          %>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+          <%= render 'govuk_publishing_components/components/contextual_footer',
+            content_item: content_item_hash
+          %>
         </div>
       </div>
     </main>
-  </div>
+  <div>
 <% end %>
 
 <%= content_for :head do %>
@@ -40,6 +40,7 @@
   <%= render_component_stylesheets %>
 <% end %>
 
+<% I18n.locale = I18n.default_locale %>
 <%= render "govuk_publishing_components/components/layout_for_public", {
       title: yield(:title),
       omit_feedback_form: true,
