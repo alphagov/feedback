@@ -96,7 +96,6 @@ RSpec.describe "Service feedback submission", type: :request do
       long_comment = "a" * 1255
       stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/some-transaction")
-      byebug
       within(".service-feedback") do
         choose I18n.translate("controllers.contact.govuk.service_feedback.very_satisfied")
         fill_in I18n.translate("controllers.contact.govuk.service_feedback.how_improve"), with: long_comment
