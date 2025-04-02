@@ -1,4 +1,4 @@
-<% content_for :extra_headers do %>
+<% content_for :head do %>
   <% if publication.description.present? %>
     <meta name="description" content="<%= publication.description %>" />
   <% elsif publication.short_description.present? %>

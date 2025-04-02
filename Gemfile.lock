@@ -648,13 +648,6 @@ GEM
     simplecov_json_formatter (0.1.4)
     simpleidn (0.2.2)
       unf (~> 0.1.4)
-    slimmer (18.7.0)
-      json
-      nokogiri (~> 1.7)
-      null_logger
-      plek (>= 1.1.0)
-      rack (>= 3.0)
-      rest-client
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -723,7 +716,6 @@ DEPENDENCIES
   rubocop-govuk
   shoulda-matchers
   simplecov
-  slimmer
   sprockets-rails
   terser
   valid_email

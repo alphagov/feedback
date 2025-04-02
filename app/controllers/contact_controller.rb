@@ -1,7 +1,4 @@
-require "slimmer/headers"
-
 class ContactController < ApplicationController
-  include Slimmer::Headers
   include ApplicationHelper
   include ThrottlingManager
 
