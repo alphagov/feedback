@@ -64,7 +64,7 @@ en:
           friend_or_relative: A friend or relative
           government_staff: A staff member of the responsible government department
           help_improve: Help us improve this service
-          how_improve: How could we improve this service?
+          how_improve: How could we improve this service? (optional)
           neither: Neither satisfied or dissatisfied
           no: No
           no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
@@ -100,7 +100,7 @@ en:
             link_text: Register a decision to donate
           error_messages: There is a problem
           dissatisfied: Dissatisfied
-          how_improve: How could we improve this service?
+          how_improve: How could we improve this service? (optional)
           heading: Satisfaction survey
           no_pii_hint: Do not include any personal or financial information, for example your National Insurance or credit card numbers.
           neither: Neither satisfied or dissatisfied
