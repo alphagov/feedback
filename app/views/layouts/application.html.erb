@@ -27,6 +27,11 @@
   <%= csp_meta_tag %>
   <meta name="robots" content="noindex">
   <%= render_component_stylesheets %>
+  <%= render "govuk_publishing_components/components/meta_tags", {
+    content_item: {
+      rendering_app: "feedback",
+    }
+  } %>
 <% end %>
 
 <%= render "govuk_publishing_components/components/layout_for_public", {
