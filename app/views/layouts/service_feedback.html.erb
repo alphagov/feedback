@@ -37,6 +37,11 @@
 <%= content_for :head do %>
   <%= csp_meta_tag %>
   <meta name="robots" content="noindex, nofollow">
+  <%= render "govuk_publishing_components/components/meta_tags", {
+    content_item: {
+      rendering_app: "feedback",
+    }
+  } %>
   <%= render_component_stylesheets %>
 <% end %>
 
