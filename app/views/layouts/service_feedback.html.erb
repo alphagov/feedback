@@ -39,6 +39,11 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="govuk:format" content="<%= content_item_hash["document_type"] %>">
   <meta name="govuk:schema-name" content="<%= content_item_hash["schema_name"] %>">
+  <%= render "govuk_publishing_components/components/meta_tags", {
+    content_item: {
+      rendering_app: "feedback",
+    }
+  } %>
   <%= render_component_stylesheets %>
 <% end %>
 
