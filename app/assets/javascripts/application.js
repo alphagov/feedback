@@ -9,6 +9,7 @@
 //= require govuk_publishing_components/components/search-with-autocomplete
 //= require govuk_publishing_components/components/skip-link
 //= require govuk_publishing_components/components/step-by-step-nav
+//= require govuk_web_banners/dependencies
 
 (function () {
   'use strict'
