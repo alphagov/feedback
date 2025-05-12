@@ -122,7 +122,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
       net-http
-    gds-api-adapters (99.1.0)
+    gds-api-adapters (99.2.0)
       addressable
       link_header
       null_logger
