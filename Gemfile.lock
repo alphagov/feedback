@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/alphagov/govuk_publishing_components
-  revision: c447c89ec675af664253ded7ff27c721df93c481
+  revision: 368eb60803573d566372f68c8b4982be03543f01
   branch: single-quote-wrapper
   specs:
     govuk_publishing_components (57.0.0)
