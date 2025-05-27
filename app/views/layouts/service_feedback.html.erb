@@ -3,6 +3,8 @@
   <head>
     <meta name="robots" content="noindex">
     <meta charset="utf-8" />
+    <meta name="govuk:format" content="<%= content_item_hash["document_type"] %>">
+    <meta name="govuk:schema-name" content="<%= content_item_hash["schema_name"] %>">
     <title><%= yield :title %> - GOV.UK</title>
     <%=
       render_component_stylesheets
