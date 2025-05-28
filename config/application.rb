@@ -4,6 +4,7 @@ require "rails"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_support/time"
+require "govuk_publishing_components/middleware/ga4_optimise"
 
 Bundler.require(*Rails.groups)
 
@@ -36,5 +37,8 @@ module Feedback
       en
       cy
     ]
+
+    # Use the middleware to compact data-ga4-event/link attributes
+    config.middleware.use GovukPublishingComponents::Middleware::Ga4Optimise
   end
 end
