@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   rescue_from SpamError, with: :robot_script_submission_detected
   rescue_from GdsApi::BaseError, with: :unable_to_create_ticket_error
 
-  include Slimmer::Template
-
   skip_forgery_protection
 
   if ENV["BASIC_AUTH_USERNAME"]
@@ -16,12 +14,9 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  slimmer_template :gem_layout_no_feedback_form
-
 protected
 
   def robot_script_submission_detected
-    headers[Slimmer::Headers::SKIP_HEADER] = "1"
     head(:bad_request)
   end
 
@@ -31,7 +26,6 @@ protected
     respond_to do |format|
       format.html do
         # no content needed here, will display the default 503 page
-        headers[Slimmer::Headers::SKIP_HEADER] = "1"
         head(:service_unavailable)
       end
       format.any(:js, :json) do
