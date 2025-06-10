@@ -2,3 +2,17 @@
 // for components and views on pages where they are needed.
 
 // https://github.com/alphagov/govuk_publishing_components/blob/main/docs/set-up-individual-component-css-loading.md
+@import "govuk_publishing_components/govuk_frontend_support";
+@import "govuk_publishing_components/component_support";
+
+@import "govuk_publishing_components/components/button";
+@import "govuk_publishing_components/components/cookie-banner";
+@import "govuk_publishing_components/components/heading";
+@import "govuk_publishing_components/components/input";
+@import "govuk_publishing_components/components/label";
+@import "govuk_publishing_components/components/layout-footer";
+@import "govuk_publishing_components/components/layout-for-public";
+@import "govuk_publishing_components/components/layout-super-navigation-header";
+@import "govuk_publishing_components/components/search";
+@import "govuk_publishing_components/components/search-with-autocomplete";
+@import "govuk_publishing_components/components/skip-link";
