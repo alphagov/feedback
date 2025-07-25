@@ -4,6 +4,8 @@ updates:
     directory: /
     schedule:
       interval: daily
+    ignore:
+      - dependency-name: "govuk_publishing_components"
 
   - package-ecosystem: npm
     directory: /
