@@ -114,7 +114,7 @@ GEM
       dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.3)
-    erb (5.0.2)
+    erb (5.0.3)
     erubi (1.13.1)
     execjs (2.10.0)
     faraday (2.9.0)
@@ -182,7 +182,7 @@ GEM
     govuk_personalisation (1.1.0)
       plek (>= 1.9.0)
       rails (>= 6, < 9)
-    govuk_publishing_components (61.1.0)
+    govuk_publishing_components (61.1.1)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -254,7 +254,7 @@ GEM
     multi_json (1.15.0)
     net-http (0.4.1)
       uri
-    net-imap (0.5.10)
+    net-imap (0.5.12)
       date
       net-protocol
     net-pop (0.1.2)
@@ -498,7 +498,7 @@ GEM
       ast (~> 2.4.1)
       racc
     plek (5.2.2)
-    pp (0.6.2)
+    pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
@@ -517,7 +517,7 @@ GEM
     puma (6.6.1)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.1)
+    rack (3.2.2)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-proxy (0.7.7)
@@ -565,9 +565,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     redis (5.4.1)
       redis-client (>= 0.22.0)
     redis-client (0.26.0)
@@ -700,7 +701,7 @@ GEM
     unicode-display_width (3.1.5)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (1.0.3)
+    uri (1.0.4)
     useragent (0.16.11)
     valid_email (0.2.1)
       activemodel
