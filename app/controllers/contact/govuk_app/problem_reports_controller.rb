@@ -4,6 +4,7 @@ class Contact::GovukApp::ProblemReportsController < ApplicationController
   def new
     @phone = params[:phone]
     @app_version = params[:app_version]
+    @what_happened = params[:what_happened]
   end
 
   def create
