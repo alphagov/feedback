@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "GOV.UK App", type: :request do
   context "#new" do
     it "should display new page" do
-      visit "/contact/govuk-app?phone=Apple+iPhone&app_version=1.0"
+      visit "/contact/govuk-app?phone=Apple+iPhone&app_version=1.0&what_happened=app+crashed"
       expect(page).to have_title "Contact the GOV.UK app team"
     end
   end
@@ -12,7 +12,7 @@ RSpec.describe "GOV.UK App", type: :request do
     it "should redirect to problem report form given problem type" do
       post "/contact/govuk-app", params: {
         contact: { type: "problem" },
-        phone: "Apple+iPhone&app_version=1.0",
+        phone: "Apple+iPhone&app_version=1.0&what_happened=app+crashed",
         app_version: "1.0",
       }
 
@@ -26,7 +26,7 @@ RSpec.describe "GOV.UK App", type: :request do
     it "should render suggestions form given suggestion type" do
       post "/contact/govuk-app", params: {
         contact: { type: "suggestion" },
-        phone: "Apple+iPhone&app_version=1.0",
+        phone: "Apple+iPhone&app_version=1.0&what_happened=app+crashed",
         app_version: "1.0",
       }
 

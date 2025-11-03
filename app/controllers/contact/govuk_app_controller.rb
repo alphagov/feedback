@@ -17,7 +17,7 @@ class Contact::GovukAppController < ApplicationController
 
   helper_method :phone_details_params
   def phone_details_params
-    params.slice(:phone, :app_version).permit!
+    params.slice(:phone, :app_version, :what_happened).permit!
   end
 
 private

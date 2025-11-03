@@ -90,7 +90,7 @@ end %>
 
   <%= render "govuk_publishing_components/components/character_count", {
     textarea: {
-      value: @ticket ? @ticket.what_happened : nil,
+      value: @ticket ? @ticket.what_happened : @what_happened,
       error_message: @errors ? @errors[:what_happened].first : nil,
       label: {
         text: t("controllers.contact.govuk_app.problem_reports.new.what_happened"),
