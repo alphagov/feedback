@@ -1,10 +1,5 @@
-<%
-  add_view_stylesheet("completed_transaction")
-%>
-<% add_gem_component_stylesheet("step-by-step-nav") %>
-<% add_gem_component_stylesheet("related-navigation") %>
-<% add_gem_component_stylesheet("step-by-step-nav-header") %>
-<% add_gem_component_stylesheet("step-by-step-nav-related") %>
-<% add_gem_component_stylesheet("contextual-sidebar") %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "views/_completed_transaction", media: "all" %>
+<% end %>
 
 <%= render partial: "shared/completed_transaction_feedback", locals: { survey: "standard_satisfaction_survey" } %>

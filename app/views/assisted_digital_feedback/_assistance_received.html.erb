@@ -1,6 +1,7 @@
-<%
-  add_view_stylesheet("completed_transaction")
-%>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "views/_completed_transaction", media: "all" %>
+<% end %>
+
 <%= render "govuk_publishing_components/components/radio", {
     name: "service_feedback[assistance_satisfaction_rating]",
     id_prefix: locals[:id_prefix],

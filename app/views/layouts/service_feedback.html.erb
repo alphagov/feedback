@@ -1,6 +1,5 @@
 <% emergency_banner = render("govuk_web_banners/emergency_banner") %>
 <% global_banner = render("govuk_web_banners/global_banner") %>
-<% stylesheet_link_tag "application", media: "all"  # Trigger this without rendering it to ensure it appears in links header %>
 
 <% content_for :body do %>
   <div class="completed_transaction service govuk-width-container">
@@ -46,7 +45,6 @@
       rendering_app: "feedback",
     }
   } %>
-  <%= render_component_stylesheets %>
 <% end %>
 
 <% I18n.locale = I18n.default_locale %>
