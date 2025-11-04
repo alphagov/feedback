@@ -1,6 +1,5 @@
 <% emergency_banner = render("govuk_web_banners/emergency_banner") %>
 <% global_banner = render("govuk_web_banners/global_banner") %>
-<% stylesheet_link_tag "application", media: "all"  # Trigger this without rendering it to ensure it appears in links header %>
 
 <% content_for :body do %>
   <div class="govuk-width-container">
@@ -27,7 +26,6 @@
 
 <%= content_for :head do %>
   <%= csp_meta_tag %>
-  <%= render_component_stylesheets %>
   <%= render "govuk_publishing_components/components/meta_tags", {
     content_item: {
       rendering_app: "feedback",
