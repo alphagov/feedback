@@ -1,6 +1,7 @@
-<%
-  add_view_stylesheet("completed_transaction")
-%>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "views/_completed_transaction", media: "all" %>
+<% end %>
+
 <% add_gem_component_stylesheet("step-by-step-nav") %>
 <% add_gem_component_stylesheet("related-navigation") %>
 <% add_gem_component_stylesheet("step-by-step-nav-header") %>
