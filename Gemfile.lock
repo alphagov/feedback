@@ -686,7 +686,7 @@ DEPENDENCIES
   dotenv-rails
   gds-api-adapters
   google-api-client
-  govuk_app_config
+  govuk_app_config (= 9.22.0)
   govuk_publishing_components
   govuk_schemas
   govuk_test
