@@ -10,7 +10,7 @@ COPY Gemfile* .ruby-version ./
 RUN bundle install --jobs=$(nproc)
 COPY . .
 RUN bootsnap precompile --gemfile .
-RUN rails assets:precompile && rm -fr log
+RUN rails assets:precompile --trace && rm -fr log
 
 
 FROM --platform=$TARGETPLATFORM $base_image
