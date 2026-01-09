@@ -5,7 +5,7 @@ ruby "~> 3.3.1"
 gem "rails", "8.1.2"
 
 gem "bootsnap", require: false
-gem "connection_pool", "< 3"
+gem "connection_pool", "< 4"
 gem "dalli"
 gem "dartsass-rails"
 gem "dotenv-rails"
