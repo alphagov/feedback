@@ -43,13 +43,3 @@ jobs:
       WEBHOOK_TOKEN: ${{ secrets.GOVUK_ARGO_EVENTS_WEBHOOK_TOKEN }}
       WEBHOOK_URL: ${{ secrets.GOVUK_ARGO_EVENTS_WEBHOOK_URL }}
       GH_TOKEN: ${{ secrets.GOVUK_CI_GITHUB_API_TOKEN }}
-  notify-slack-if-failure-on-main:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Slack if failure on main
-        if: ${{ failure() }}
-        uses: alphagov/govuk-infrastructure/.github/actions/report-run-failure@main
-        with:
-          slack_webhook_url: ${{ secrets.GOVUK_SLACK_WEBHOOK_URL }}
-          channel: govuk-patterns-and-pages
-          message: "Github was unable to complete the Deploy Actions workflow - requires further investigation."
