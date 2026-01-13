@@ -157,7 +157,7 @@ GEM
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
     google-logging-utils (0.2.0)
-    google-protobuf (4.33.2)
+    google-protobuf (4.33.4)
       bigdecimal
       rake (>= 13)
     googleapis-common-protos-types (1.22.0)
@@ -202,7 +202,7 @@ GEM
       capybara (>= 3.36)
       puma
       selenium-webdriver (>= 4.0)
-    govuk_web_banners (1.29.0)
+    govuk_web_banners (1.30.0)
       govuk_app_config (>= 9)
       govuk_publishing_components
       rails (>= 7)
@@ -458,7 +458,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.7.0)
+    prism (1.8.0)
     prometheus_exporter (2.3.1)
       webrick
     pry (0.15.2)
