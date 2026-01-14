@@ -20,5 +20,5 @@ jobs:
         uses: alphagov/govuk-infrastructure/.github/actions/report-run-failure@main
         with:
           slack_webhook_url: ${{ secrets.GOVUK_SLACK_WEBHOOK_URL }}
-          channel: govuk-patterns-and-pages
+          channel: govuk-patterns-and-pages-tech
           message: "Github was unable to complete the CI or Deploy Actions workflow - requires further investigation."
