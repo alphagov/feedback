@@ -79,7 +79,7 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     ast (2.4.3)
     base64 (0.3.0)
-    bigdecimal (3.3.1)
+    bigdecimal (4.0.1)
     bootsnap (1.21.1)
       msgpack (~> 1.2)
     brakeman (7.0.2)
@@ -197,8 +197,8 @@ GEM
       rouge
       sprockets (>= 3)
       sprockets-rails
-    govuk_schemas (6.2.0)
-      json-schema (>= 2.8, < 6.1)
+    govuk_schemas (6.2.1)
+      json-schema (>= 2.8, < 6.2)
     govuk_test (4.1.2)
       brakeman (>= 5.0.2)
       capybara (>= 3.36)
@@ -223,9 +223,9 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.18.0)
-    json-schema (6.0.0)
+    json-schema (6.1.0)
       addressable (~> 2.8)
-      bigdecimal (~> 3.1)
+      bigdecimal (>= 3.1, < 5)
     jwt (3.1.2)
       base64
     kramdown (2.5.2)
@@ -474,7 +474,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.0)
+    public_suffix (7.0.2)
     puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
