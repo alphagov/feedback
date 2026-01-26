@@ -10,7 +10,6 @@ Bundler.require(*Rails.groups)
 
 module Feedback
   class Application < Rails::Application
-    include GovukPublishingComponents::AppHelpers::AssetHelper
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
     config.add_autoload_paths_to_load_path = true
