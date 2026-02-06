@@ -11,8 +11,8 @@ class Contact::GovukAppController < ApplicationController
       redirect_to contact_govuk_app_report_problem_path(params: phone_details_params)
     when "suggestion"
       redirect_to contact_govuk_app_make_suggestion_path
-    when "chat_feedback"
-      redirect_to contact_govuk_app_chat_feedback_path
+      # when "chat_feedback"
+      #   redirect_to contact_govuk_app_chat_feedback_path
     end
   end
 
