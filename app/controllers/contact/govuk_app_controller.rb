@@ -6,13 +6,10 @@ class Contact::GovukAppController < ApplicationController
       return render "new"
     end
 
-    case type
-    when "problem"
+    if type == "problem"
       redirect_to contact_govuk_app_report_problem_path(params: phone_details_params)
-    when "suggestion"
+    else
       redirect_to contact_govuk_app_make_suggestion_path
-    when "chat_feedback"
-      redirect_to contact_govuk_app_chat_feedback_path
     end
   end
 
@@ -32,7 +29,7 @@ private
   def blank_or_invalid_type?
     return true unless params[:contact]
 
-    %w[problem suggestion chat_feedback].exclude?(type)
+    %w[problem suggestion].exclude?(type)
   end
 
   def errors
