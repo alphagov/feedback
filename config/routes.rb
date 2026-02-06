@@ -41,9 +41,6 @@ Rails.application.routes.draw do
 
       get "make-suggestion", to: "suggestions#new"
       post "make-suggestion", to: "suggestions#create"
-
-      get "leave-feedback-about-govuk-chat", to: "chat_feedback#new", as: "chat_feedback"
-      post "leave-feedback-about-govuk-chat", to: "chat_feedback#create"
     end
 
     root to: redirect("/contact")
