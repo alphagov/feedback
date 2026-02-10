@@ -121,10 +121,12 @@ GEM
     erb (6.0.1)
     erubi (1.13.1)
     execjs (2.10.0)
-    faraday (2.9.0)
-      faraday-net_http (>= 2.0, < 3.2)
-    faraday-net_http (3.1.0)
-      net-http
+    faraday (2.14.1)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     gds-api-adapters (102.0.0)
       addressable
       link_header
@@ -259,8 +261,8 @@ GEM
       prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
-    net-http (0.4.1)
-      uri
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-imap (0.6.2)
       date
       net-protocol
