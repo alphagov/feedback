@@ -14,6 +14,7 @@ class FormatRoutingConstraint
     base_path = request.params.fetch(:base_path)
 
     begin
+      # TODO
       request.env[:content_item] = GdsApi.content_store.content_item("/#{base_path}")
     rescue GdsApi::HTTPErrorResponse, GdsApi::InvalidUrl => e
       request.env[:content_item_error] = e

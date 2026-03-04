@@ -24,6 +24,8 @@ private
   end
 
   def request_content_item(base_path = "/#{params[:base_path]}")
-    GdsApi.content_store.content_item(base_path)
+    # GdsApi.content_store.content_item(base_path)
+    loader = GovukConditionalContentItemLoader.new(request: request)
+    loader.load
   end
 end
