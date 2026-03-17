@@ -7,11 +7,11 @@ RSpec.describe ServiceFeedbackHelper, type: :helper do
 
   let(:payload) do
     {
-      base_path:,
-      schema_name: "completed_transaction",
-      document_type: "completed_transaction",
-      external_related_links: [],
-      title: "Some Transaction",
+      "base_path" => base_path,
+      "schema_name" => "completed_transaction",
+      "document_type" => "completed_transaction",
+      "external_related_links" => [],
+      "title" => "Some Transaction",
     }
   end
 
@@ -42,7 +42,7 @@ RSpec.describe ServiceFeedbackHelper, type: :helper do
 
   describe "set_locale" do
     it "sets the default locale to Welsh when locale is cy" do
-      payload.merge!({ locale: "cy" })
+      payload.merge!({ "locale" => "cy" })
       stub_content_store_has_item("/#{base_path}", payload)
 
       expect(helper.set_locale).to eql("cy")
