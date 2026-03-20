@@ -1,13 +1,12 @@
 require "rails_helper"
-require "gds_api/test_helpers/content_store"
 
 RSpec.describe AssistedDigitalFeedback, type: :model do
   include ValidatorHelper
   include ActiveSupport::Testing::TimeHelpers
-  include GdsApi::TestHelpers::ContentStore
+  include GovukConditionalContentItemLoaderTestHelpers
 
   before do
-    stub_content_store_has_item("/#{base_path}", schema_name: format)
+    stub_conditional_loader_returns_content_item_for_path("/done/some-transaction", schema_name: "completed_transaction")
   end
 
   context "a minimal valid feedback item" do
@@ -369,13 +368,5 @@ RSpec.describe AssistedDigitalFeedback, type: :model do
         expect(subject[11]).to eq "#{Plek.new.website_root}/some-transaction/completed"
       end
     end
-  end
-
-  def format
-    "completed_transaction"
-  end
-
-  def base_path
-    "done/some-transaction"
   end
 end

@@ -1,6 +1,6 @@
 RSpec.shared_examples_for "Service Feedback" do |path|
   it "displays no promotion when there is no promotion choice" do
-    stub_content_store_has_item(path, payload)
+    stub_conditional_loader_returns_content_item_for_path(path, payload)
     visit(path)
 
     expect(page).not_to have_selector(".promotion")
@@ -14,7 +14,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
       },
     })
 
-    stub_content_store_has_item(path, electric_can_promotion_payload)
+    stub_conditional_loader_returns_content_item_for_path(path, electric_can_promotion_payload)
 
     visit(path)
 
@@ -29,7 +29,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
       },
     })
 
-    stub_content_store_has_item(path, organ_donation_promotion_payload)
+    stub_conditional_loader_returns_content_item_for_path(path, organ_donation_promotion_payload)
 
     visit(path)
 
@@ -44,7 +44,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
       },
     })
 
-    stub_content_store_has_item(path, mot_promotion_payload)
+    stub_conditional_loader_returns_content_item_for_path(path, mot_promotion_payload)
 
     visit(path)
 
@@ -56,7 +56,7 @@ RSpec.shared_examples_for "Service Feedback" do |path|
       base_path: "/done/transaction-finished",
     })
 
-    stub_content_store_has_item("/done/transaction-finished", do_not_show_survey_for_legacy_base_paths_payload)
+    stub_conditional_loader_returns_content_item_for_path("/done/transaction-finished", do_not_show_survey_for_legacy_base_paths_payload)
 
     visit("/done/transaction-finished")
     expect(page).to have_content(I18n.translate("controllers.contact.govuk.service_feedback.thanks_for_visiting"))
