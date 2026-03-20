@@ -26,14 +26,24 @@ RSpec.describe "GOV.UK App", type: :request do
     it "should render suggestions form given suggestion type" do
       post "/contact/govuk-app", params: {
         contact: { type: "suggestion" },
-        phone: "Apple+iPhone&app_version=1.0&what_happened=app+crashed",
-        app_version: "1.0",
       }
 
       follow_redirect!
 
       expect(response.body).to include(
         I18n.t("controllers.contact.govuk_app.suggestions.new.title"),
+      )
+    end
+
+    it "should render chat feedback form given feedback type" do
+      post "/contact/govuk-app", params: {
+        contact: { type: "chat_feedback" },
+      }
+
+      follow_redirect!
+
+      expect(response.body).to include(
+        I18n.t("controllers.contact.govuk_app.chat_feedback.new.title"),
       )
     end
   end

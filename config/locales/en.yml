@@ -27,6 +27,7 @@ en:
           radio_heading: What would you like to do?
           radio_problem_text: Report a problem with the app
           radio_suggestion_text: Make a suggestion for improving the app
+          radio_chat_feedback_text: Leave feedback about GOV.UK Chat
           continue_text: Continue
           description_html: |
             <p class="govuk-body">You can use this form to report a problem with the app or make a suggestion for improving the app.</p>
@@ -50,6 +51,11 @@ en:
           new:
             title: Make a suggestion about the GOV.UK app
             what_is_your_suggestion: What is your suggestion?
+        chat_feedback:
+          new:
+            title: Leave feedback about GOV.UK Chat
+            feedback: Please leave your feedback
+            send_feedback: Send feedback
       govuk:
         contact_govuk:
           title: "Contact GOV.UK"
