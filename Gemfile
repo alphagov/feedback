@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "~> 3.3.1"
 
-gem "rails", "8.1.2"
+gem "rails", "8.1.2.1"
 
 gem "bootsnap", require: false
 gem "connection_pool", "< 3" # Do not bump via Dependabot - https://github.com/alphagov/feedback/pull/2319
