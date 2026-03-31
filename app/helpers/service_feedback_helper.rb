@@ -1,5 +1,3 @@
-require "gds_api/publishing_api"
-
 module ServiceFeedbackHelper
   def content_item_hash
     @content_item_hash ||= completed_transaction_content_item.to_h
@@ -20,10 +18,10 @@ module ServiceFeedbackHelper
 private
 
   def completed_transaction_content_item
-    @completed_transaction_content_item ||= request.env[:content_item] || request_content_item
+    @completed_transaction_content_item ||= request.env[:content_item] || request_content_item(request)
   end
 
-  def request_content_item(base_path = "/#{params[:base_path]}")
-    GdsApi.content_store.content_item(base_path)
+  def request_content_item(request)
+    GovukConditionalContentItemLoader.new(request: request).load
   end
 end

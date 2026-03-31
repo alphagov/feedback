@@ -37,6 +37,12 @@ There are also three assisted digital feedback forms:
 The transaction finished page can be found here: https://www.gov.uk/done/transaction-finished.
 This doesn’t display a form, just content to inform the user that the transaction is finished.
 
+### How content is loaded
+
+Content for Completed Transaction pages is retrieved via [`govuk_content_item_loader`](https://github.com/alphagov/govuk_content_item_loader) from either Content Store or Publishing API (GraphQL).
+
+The initial request for the content item is made by the FormatRoutingConstraint, which determines the appropriate route and fetches the required data before the request is passed further down the stack.
+
 ### Where is the data sent?
 
 The Service Feedback form fields also exist within the Assisted Digital Feedback form. They are foundationally the same, but Assisted Digital Feedback has some extra fields.

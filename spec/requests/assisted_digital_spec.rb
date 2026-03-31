@@ -1,11 +1,10 @@
 require "rails_helper"
 require "gds_api/test_helpers/support_api"
-require "gds_api/test_helpers/content_store"
 
 RSpec.describe "Assisted digital help with fees submission", type: :request do
   include GdsApi::TestHelpers::SupportApi
   include ActiveSupport::Testing::TimeHelpers
-  include GdsApi::TestHelpers::ContentStore
+  include GovukConditionalContentItemLoaderTestHelpers
 
   let(:payload) do
     {
@@ -18,7 +17,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
   end
 
   before do
-    stub_content_store_has_item("/#{base_path}", schema_name: format)
+    stub_conditional_loader_returns_content_item_for_path("/#{base_path}", payload)
     stub_request(:post, %r{https://sheets.googleapis.com/v4/spreadsheets/*})
     stub_support_api_service_feedback_creation
     # Set auth to nil, and this won't try to incur extra requests
@@ -27,7 +26,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
   context "render an Assisted Digital Feedback form" do
     it "displays title from the completed transaction's content item" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content("Some Transaction")
@@ -37,7 +35,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     include_examples "Service Feedback", "/done/register-flood-risk-exemption"
 
     it "displays did you receive assistance radio buttons" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_field("Yes", type: "radio")
@@ -45,7 +42,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays service satisfaction rating radio buttons" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.online_satisfaction_check"))
@@ -57,21 +53,18 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays service feedback improvement comments text area" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       expect(page).to have_field(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.how_improve", type: "textarea"))
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.no_pii_hint"))
     end
 
     it "displays What assistance did you receive? text area" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_field(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.what_assistance"), type: "textarea")
     end
 
     it "displays Who provided the assistance? radio buttons" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.who_assisted"))
@@ -82,7 +75,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays How satisfied are you with the assistance received? (government staff) radio buttons" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.satisfaction_check"))
@@ -95,21 +87,18 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays how could we improve this service? (government staff) text area" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_field("service_feedback[assistance_improvement_comments]", type: "textarea")
     end
 
     it "displays tell us who the other person was? (other) text input" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_field(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.other_person"), type: "text")
     end
 
     it "displays How satisfied are you with the assistance received? (other) radio buttons" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content(I18n.translate("controllers.contact.govuk.assisted_digital_feedback.satisfaction_check"))
@@ -121,7 +110,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays how could we improve this service? (other) text area" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_field("service_feedback[assistance_improvement_comments_other]", type: "textarea")
@@ -129,7 +117,7 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
     it "displays Welsh translation when locale is set to cy" do
       payload.merge!({ locale: "cy" })
-      stub_content_store_has_item("/#{base_path}", payload)
+      stub_conditional_loader_returns_content_item_for_path("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
 
       expect(page).to have_content "Helpwch ni i wella'r gwasanaeth hwn"
@@ -151,7 +139,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "submits with valid data" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       choose("service_feedback[assistance_received]", option: "no")
       choose("service_feedback[service_satisfaction_rating]", option: "5")
@@ -162,7 +149,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays an error message when all fields are blank" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       click_on I18n.translate("controllers.contact.govuk.assisted_digital_feedback.send_feedback")
 
@@ -172,7 +158,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays an error message when assistance was not needed and fields are blank" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       choose("service_feedback[assistance_received]", option: "no")
       click_on I18n.translate("controllers.contact.govuk.assisted_digital_feedback.send_feedback")
@@ -182,7 +167,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
     it "displays an error message when assistance was not needed and How could we improve this service is too long" do
       long_comment = "a" * 1255
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "no")
@@ -195,7 +179,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays an error message when assistance was needed and fields are blank" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")
@@ -210,7 +193,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
     it "displays an error message when assistance was needed and What assistance did you receive? is too long" do
       long_comment = "a" * 1255
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")
@@ -222,7 +204,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays an error message when assistance was provided by government staff and the government staff section is blank" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")
@@ -237,7 +218,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
     it "displays an error message when assistance was provided by government staff and how could we improve this service? is too long" do
       long_comment = "a" * 1255
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")
@@ -251,7 +231,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
     end
 
     it "displays an error message when assistance was provided by other and fields are blank" do
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")
@@ -267,7 +246,6 @@ RSpec.describe "Assisted digital help with fees submission", type: :request do
 
     it "displays an error message when assistance was provided by other and How could we improve this service? is too long" do
       long_comment = "a" * 1255
-      stub_content_store_has_item("/#{base_path}", payload)
       visit("/done/register-flood-risk-exemption")
       within(".service-feedback") do
         choose("service_feedback[assistance_received]", option: "yes")

@@ -1,9 +1,9 @@
 require "rails_helper"
 require "gds_api/test_helpers/support_api"
-require "gds_api/test_helpers/content_store"
 
 RSpec.describe ContentItemPresenter do
-  include GdsApi::TestHelpers::ContentStore
+  include GovukConditionalContentItemLoaderTestHelpers
+
   let(:base_path) { "done/some-transaction" }
   let(:payload) do
     {
@@ -98,7 +98,7 @@ RSpec.describe ContentItemPresenter do
   end
 
   def setup_content_item_presenter
-    stub_content_store_has_item("/#{base_path}", payload)
+    stub_conditional_loader_returns_content_item_for_path("/#{base_path}", payload)
     content_item_presenter
   end
 end

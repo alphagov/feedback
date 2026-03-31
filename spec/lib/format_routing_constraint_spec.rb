@@ -1,14 +1,14 @@
 require "rails_helper"
-require "gds_api/test_helpers/content_store"
 
 RSpec.describe FormatRoutingConstraint do
-  include GdsApi::TestHelpers::ContentStore
+  include GovukConditionalContentItemLoaderTestHelpers
+
   context "#matches?" do
     subject { described_class.new(@format) }
-    context "when the content_store returns a document" do
+    context "when the content loader returns a document" do
       before do
         @format = "completed_transaction"
-        stub_content_store_has_item("/#{base_path}", schema_name: @format)
+        stub_conditional_loader_returns_content_item_for_path(base_path, schema_name: @format)
         @request = request
       end
 
@@ -28,9 +28,9 @@ RSpec.describe FormatRoutingConstraint do
       end
     end
 
-    context "when the content_store API call throws an error" do
+    context "when the API call throws an error" do
       before do
-        stub_content_store_does_not_have_item("/#{base_path}")
+        stub_conditional_loader_does_not_return_content_item_for_path(base_path)
         @request = request
       end
 
@@ -48,10 +48,10 @@ RSpec.describe FormatRoutingConstraint do
   end
 
   def base_path
-    "done/some-transaction"
+    "/done/some-transaction"
   end
 
   def request
-    double({ params: { base_path: }, env: {} })
+    double({ params: { base_path: base_path }, path: base_path, env: {} })
   end
 end
