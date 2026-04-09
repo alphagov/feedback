@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  checks = [
+    ENV["PLEK_HOSTNAME_PREFIX"] == "draft-" ? nil : GovukHealthcheck::RailsCache,
+  ].compact
+
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
-  get "/healthcheck/ready", to: GovukHealthcheck.rack_response
+  get "/healthcheck/ready", to: GovukHealthcheck.rack_response(*checks)
 
   mount GovukPublishingComponents::Engine, at: "/component-guide"
 
