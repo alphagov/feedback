@@ -103,7 +103,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    dalli (5.0.2)
+    dalli (4.3.3)
       logger
     dartsass-rails (0.5.1)
       railties (>= 6.0.0)
@@ -699,7 +699,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   connection_pool (< 3)
-  dalli
+  dalli (~> 4)
   dartsass-rails
   dotenv-rails
   gds-api-adapters
