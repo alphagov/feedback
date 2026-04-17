@@ -118,7 +118,7 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
-    erb (6.0.2)
+    erb (6.0.3)
     erubi (1.13.1)
     execjs (2.10.0)
     faraday (2.14.1)
@@ -173,7 +173,7 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (>= 0.16, < 2.a)
-    govuk_app_config (9.23.9)
+    govuk_app_config (9.23.10)
       connection_pool (< 3)
       logstasher (~> 2.1)
       opentelemetry-exporter-otlp (>= 0.25, < 0.34)
@@ -535,7 +535,7 @@ GEM
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.4.1)
+    rake (13.4.2)
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
@@ -704,7 +704,7 @@ DEPENDENCIES
   dotenv-rails
   gds-api-adapters
   google-api-client
-  govuk_app_config (= 9.23.9)
+  govuk_app_config (= 9.23.10)
   govuk_content_item_loader
   govuk_publishing_components
   govuk_schemas
