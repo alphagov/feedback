@@ -127,7 +127,7 @@ GEM
       logger
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    gds-api-adapters (103.3.0)
+    gds-api-adapters (103.3.1)
       addressable
       link_header
       null_logger
@@ -217,7 +217,7 @@ GEM
       redis
     hashdiff (1.2.1)
     http-accept (1.7.0)
-    http-cookie (1.1.4)
+    http-cookie (1.1.6)
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (1.14.8)
