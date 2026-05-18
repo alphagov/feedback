@@ -1,11 +1,12 @@
 source "https://rubygems.org"
 
-ruby "~> 3.3.1"
+ruby "~> 4.0"
 
 gem "rails", "8.1.3"
 
 gem "bootsnap", require: false
 gem "connection_pool", "< 3" # Do not bump via Dependabot - https://github.com/alphagov/feedback/pull/2319
+gem "csv"
 gem "dalli", "~> 4"
 gem "dartsass-rails"
 gem "dotenv-rails"
@@ -16,6 +17,7 @@ gem "govuk_content_item_loader"
 gem "govuk_publishing_components"
 gem "govuk_web_banners"
 gem "invalid_utf8_rejector"
+gem "mutex_m"
 gem "notifications-ruby-client"
 gem "plek"
 gem "rack-attack"

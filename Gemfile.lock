@@ -103,6 +103,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.5)
     dalli (4.3.3)
       logger
     dartsass-rails (0.5.1)
@@ -267,6 +268,7 @@ GEM
       prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
+    mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.4)
@@ -699,6 +701,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   connection_pool (< 3)
+  csv
   dalli (~> 4)
   dartsass-rails
   dotenv-rails
@@ -711,6 +714,7 @@ DEPENDENCIES
   govuk_test
   govuk_web_banners
   invalid_utf8_rejector
+  mutex_m
   notifications-ruby-client
   plek
   pry-byebug
@@ -727,7 +731,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.1p55
+  ruby 4.0.2p0
 
 BUNDLED WITH
-   2.5.9
+  4.0.11
