@@ -25,13 +25,6 @@ to Support API, which passes it on to Zendesk.
 ### Service Feedback
 Most of the `/done/completed-transaction` pages render a Service Feedback form. An example is: [www.gov.uk/done/vehicle-tax](http://www.gov.uk/done/vehicle-tax).
 
-### Assisted Digital Feedback
-There are also three assisted digital feedback forms:
-
-- https://www.gov.uk/done/register-flood-risk-exemption
-- https://www.gov.uk/done/waste-carrier-or-broker-registration
-- https://www.gov.uk/done/register-waste-exemption
-
 ### Transaction finished
 
 The transaction finished page can be found here: https://www.gov.uk/done/transaction-finished.
@@ -45,21 +38,7 @@ The initial request for the content item is made by the FormatRoutingConstraint,
 
 ### Where is the data sent?
 
-The Service Feedback form fields also exist within the Assisted Digital Feedback form. They are foundationally the same, but Assisted Digital Feedback has some extra fields.
-
-The Service Feedback form data from both types of form is sent to the Support API. It can be viewed using the Support app within the Feedback Explorer.
-
-In addition to sending some data to the Support API, the data from the other fields (from the Assisted Digital Feedback form) plus some data from hidden fields appended using JS (`referrer` and `javascript_enabled`) are written to a Google spreadsheet.
-
-For submitting the Assisted Digital Feedback form, you will need to get the Google API credentials from AWS secrets/integration. To use them locally, create a .dotenv file and write them in:
-
-```
-GOOGLE_PRIVATE_KEY=
-GOOGLE_CLIENT_EMAIL=
-ASSISTED_DIGITAL_GOOGLE_SPREADSHEET_KEY=
-```
-
-The `.env` file is listed within the `.gitignore` file. Do not push the `.env` file to version control.
+The Service Feedback form data is sent to the Support API. It can be viewed using the Support app within the Feedback Explorer.
 
 Completed transaction feedback forms were previously rendered by the Frontend application. [Rendering was moved into this application](https://github.com/alphagov/feedback/pull/1601) which enabled the implementation of form validation.
 
@@ -81,7 +60,6 @@ bundle exec rake
 
 - [An overview of how the Feedback and Support API applications fit together](https://docs.google.com/presentation/d/1KNJQsH7Stu1hAe8DL-Zs585Q_yXSleGYiH0G6Sw6rOw/edit#slide=id.g59de842929_0_5) (for internal use only)
 - [Testing with real authorisation](docs/testing_with_real_authorisation.md)
-- [Assisted digital feedback workflow](docs/assisted_digital_feedback.md)
 - [Spam control methods for the Contact form](https://gov-uk.atlassian.net/wiki/spaces/GOVUK/pages/3665821697/Contact+us+form+-+spam+control) (for internal use only)
 
 ## Licence
