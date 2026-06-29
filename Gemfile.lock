@@ -187,7 +187,7 @@ GEM
       sentry-rails (>= 5.3, < 7.0)
       sentry-ruby (>= 5.3, < 7.0)
       statsd-ruby (~> 1.5)
-    govuk_content_item_loader (2.2.1)
+    govuk_content_item_loader (2.2.2)
       gds-api-adapters (>= 99.3)
       plek (>= 1.9.0)
       railties (>= 7.2)
@@ -483,9 +483,6 @@ GEM
     pry-byebug (3.12.0)
       byebug (~> 13.0)
       pry (>= 0.13, < 0.17)
-    psych (5.4.0)
-      date
-      stringio
     public_suffix (7.0.5)
     puma (8.0.2)
       nio4r (~> 2.0)
@@ -538,9 +535,14 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
-    rdoc (7.2.0)
+    rbs (4.0.3)
+      logger
+      prism (>= 1.6.0)
+      tsort
+    rdoc (8.0.0)
       erb
-      psych (>= 4.0.0)
+      prism (>= 1.6.0)
+      rbs (>= 4.0.0)
       tsort
     redis (5.4.1)
       redis-client (>= 0.22.0)
@@ -660,7 +662,6 @@ GEM
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     statsd-ruby (1.5.0)
-    stringio (3.2.0)
     strscan (3.1.8)
     terser (1.2.7)
       execjs (>= 0.3.0, < 3)
