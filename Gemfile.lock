@@ -111,6 +111,9 @@ GEM
       railties (>= 6.0.0)
       sass-embedded (~> 1.63)
     date (3.5.1)
+    debug (1.11.1)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     diff-lcs (1.6.2)
     docile (1.4.0)
     domain_name (0.6.20240107)
@@ -653,6 +656,7 @@ DEPENDENCIES
   csv
   dalli (~> 4)
   dartsass-rails
+  debug
   dotenv-rails
   gds-api-adapters
   govuk_app_config (= 9.25.1)
