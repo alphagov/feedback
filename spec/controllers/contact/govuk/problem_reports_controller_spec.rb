@@ -87,6 +87,24 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
                  }
           end
         end
+
+        describe "no 'url' value or referrer set" do
+          it "should fall back to the root path for the 'url'" do
+            stub_ticket = double("Ticket")
+            expect(ReportAProblemTicket).to receive(:new)
+              .with(hash_including(url: "/"))
+              .and_return(stub_ticket)
+            expect(stub_ticket).to receive(:valid?).and_return(true)
+            expect(stub_ticket).to receive(:save).and_return(true)
+
+            @request.env["HTTP_REFERER"] = nil
+            post :create,
+                 params: {
+                   what_doing: "Nothing",
+                   what_wrong: "Something",
+                 }
+          end
+        end
       end
 
       context "ajax submission" do
