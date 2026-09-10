@@ -9,10 +9,11 @@ class Contact::Govuk::ProblemReportsController < ContactController
     attributes = params.merge(technical_attributes)
 
     # Where the 'url' parameter isn't explicitly provided, obtain it
-    # from the HTTP referer. This is an edge case in the app as there
+    # from the HTTP referer and that falls back to the root path if both values are blank.
+    # This is an edge case in the app as there
     # should only be a finite number of places where this occurs.
     # Specifially, the 40X pages on GOV.UK.
-    attributes = attributes.merge(url: request.referer) unless params.key? :url
+    attributes = attributes.merge(url: attributes[:url].presence || request.referer || "/")
 
     ticket = ReportAProblemTicket.new(attributes)
 
