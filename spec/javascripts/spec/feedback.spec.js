@@ -6,7 +6,7 @@ describe('Feedback', function () {
   })
 
   describe('when on the contact page', function () {
-    var locationPathnameSpy
+    let locationPathnameSpy
 
     beforeEach(function () {
       locationPathnameSpy = spyOn(GOVUK.feedback, 'getLocationPathname').and.returnValue('/contact')
@@ -23,7 +23,7 @@ describe('Feedback', function () {
   })
 
   describe('when there is a feedback form on the page', function () {
-    var contactForm, linkInput, specificLocationInput, javascriptEnabledInput, referrerInput
+    let contactForm, linkInput, specificLocationInput, javascriptEnabledInput, referrerInput
 
     beforeAll(function () {
       contactForm = document.createElement('form')
@@ -82,11 +82,11 @@ describe('Feedback', function () {
     })
 
     describe('when there is an email address in the specific page URL', function () {
-      var cookieSpy
+      let cookieSpy
 
       beforeEach(function () {
         linkInput.value = ''
-        var referrerWithEmail = document.referrer + '?email=test@example.com'
+        const referrerWithEmail = document.referrer + '?email=test@example.com'
         cookieSpy = spyOn(GOVUK, 'cookie').and.returnValue(referrerWithEmail)
         GOVUK.feedback.init()
       })
@@ -102,7 +102,7 @@ describe('Feedback', function () {
   })
 
   describe('when there is a service feedback form on the page', function () {
-    var serviceFeedbackForm, javascriptEnabledInput, referrerInput
+    let serviceFeedbackForm, javascriptEnabledInput, referrerInput
 
     beforeAll(function () {
       serviceFeedbackForm = document.createElement('form')
