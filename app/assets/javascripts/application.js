@@ -23,15 +23,15 @@
   }
 
   GOVUK.feedback.prepopulateFormBasedOnReferrer = function (form) {
-    var specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer
+    let specificPage = GOVUK.cookie('govuk_contact_referrer') || document.referrer
 
     // Mask email addresses
-    var emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
+    const emailPattern = /[^\s=/?&]+(?:@|%40)[^\s=/?&]+/g
     specificPage = specificPage.replace(emailPattern, '[email]')
 
-    var specificPagePath = this.getPathFor(specificPage)
-    var linkInput = form.querySelector('input[name="contact[link]"]')
-    var locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
+    const specificPagePath = this.getPathFor(specificPage)
+    const linkInput = form.querySelector('input[name="contact[link]"]')
+    const locationSpecificInput = form.querySelector('input[name="contact[location]"][value="specific"]')
 
     // Prepopulate specific page if one is not already set
     if (linkInput && !linkInput.value && specificPagePath !== '/contact') {
@@ -45,19 +45,19 @@
   }
 
   GOVUK.feedback.getPathFor = function (url) {
-    var link = document.createElement('a')
+    const link = document.createElement('a')
     link.href = url
     return link.pathname
   }
 
   GOVUK.feedback.appendHiddenInputs = function (form, formName) {
-    var jsInput = document.createElement('input')
+    const jsInput = document.createElement('input')
     jsInput.type = 'hidden'
     jsInput.name = formName + '[javascript_enabled]'
     jsInput.value = 'true'
     form.appendChild(jsInput)
 
-    var referrerInput = document.createElement('input')
+    const referrerInput = document.createElement('input')
     referrerInput.type = 'hidden'
     referrerInput.name = formName + '[referrer]'
     referrerInput.value = document.referrer
@@ -73,8 +73,8 @@
       this.saveReferrerToCookie()
     }
 
-    var form = document.querySelector('form.contact-form')
-    var serviceFeedbackForm = document.querySelector('form.service-feedback')
+    const form = document.querySelector('form.contact-form')
+    const serviceFeedbackForm = document.querySelector('form.service-feedback')
 
     if (form) {
       this.prepopulateFormBasedOnReferrer(form)
