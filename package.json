@@ -34,5 +34,6 @@
     "standard": "^17.1.2",
     "stylelint": "^17.15.0",
     "stylelint-config-gds": "^3.0.0"
-  }
+  },
+  "packageManager": "yarn@4.18.0"
 }
