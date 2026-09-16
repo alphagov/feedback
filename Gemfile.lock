@@ -115,7 +115,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.6.2)
-    domain_name (0.6.20240107)
+    domain_name (0.6.20260907)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
       dotenv (= 3.2.0)
@@ -124,7 +124,7 @@ GEM
     erb (6.0.7)
     erubi (1.13.1)
     execjs (2.10.1)
-    gds-api-adapters (103.4.4)
+    gds-api-adapters (103.5.0)
       addressable
       link_header
       null_logger
