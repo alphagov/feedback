@@ -1,3 +1,4 @@
+require "metrics"
 # Throttle by IP address and by provided email address to 1 rpm on any contact forms
 # endpoint except the request-accessible-format endpoints
 
@@ -5,7 +6,10 @@ rate_limit_enabled = true
 
 if ENV["DISABLE_THROTTLE"]&.downcase == "true"
   Rails.logger.warn("Request throttling disabled by DISABLE_THROTTLE env var")
+  Metrics::GAUGES[:rate_limit_enabled].observe(0)
   rate_limit_enabled = false
+else
+  Metrics::GAUGES[:rate_limit_enabled].observe(1)
 end
 
 RATE_LIMIT_COUNT = ENV["RATE_LIMIT_COUNT"]&.to_i || 1
