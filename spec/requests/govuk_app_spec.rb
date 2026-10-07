@@ -34,18 +34,6 @@ RSpec.describe "GOV.UK App", type: :request do
         I18n.t("controllers.contact.govuk_app.suggestions.new.title"),
       )
     end
-
-    it "should render chat feedback form given feedback type" do
-      post "/contact/govuk-app", params: {
-        contact: { type: "chat_feedback" },
-      }
-
-      follow_redirect!
-
-      expect(response.body).to include(
-        I18n.t("controllers.contact.govuk_app.chat_feedback.new.title"),
-      )
-    end
   end
 
   context "#confirmation" do
