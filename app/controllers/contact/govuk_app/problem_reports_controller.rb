@@ -1,6 +1,8 @@
 class Contact::GovukApp::ProblemReportsController < ApplicationController
   include ThrottlingManager
 
+  rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
+
   def new
     @phone = params[:phone]
     @app_version = params[:app_version]
@@ -25,7 +27,7 @@ class Contact::GovukApp::ProblemReportsController < ApplicationController
 private
 
   def problem_report_params
-    params[:problem_report].slice(
+    params.require(:problem_report).permit(
       :giraffe,
       :phone,
       :app_version,
@@ -34,6 +36,10 @@ private
       :reply,
       :name,
       :email,
-    ).permit!
+    )
+  end
+
+  def parameter_missing_error
+    render plain: "Required parameter is missing", status: :bad_request
   end
 end

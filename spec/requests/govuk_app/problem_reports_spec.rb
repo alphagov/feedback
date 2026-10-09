@@ -72,6 +72,12 @@ RSpec.describe "GOV.UK app problem reports", type: :request do
       expect(response).to render_template("new")
     end
 
+    it "should show an error message for invalid form submission" do
+      post "/contact/govuk-app/report-problem", params: { wrong_param: "test" }
+
+      expect(response).to have_http_status(:bad_request)
+    end
+
     it "shouldn't rate limit submissions if there are form errors" do
       params[:what_happened] = ""
       post "/contact/govuk-app/report-problem", params: { problem_report: params }
