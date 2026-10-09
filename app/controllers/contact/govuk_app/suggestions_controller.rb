@@ -1,6 +1,8 @@
 class Contact::GovukApp::SuggestionsController < ApplicationController
   include ThrottlingManager
 
+  rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
+
   def new; end
 
   def create
@@ -21,12 +23,16 @@ class Contact::GovukApp::SuggestionsController < ApplicationController
 private
 
   def suggestion_params
-    params[:suggestion].slice(
+    params.require(:suggestion).permit(
       :giraffe,
       :details,
       :reply,
       :name,
       :email,
-    ).permit!
+    )
+  end
+
+  def parameter_missing_error
+    render plain: "Required parameter is missing", status: :bad_request
   end
 end

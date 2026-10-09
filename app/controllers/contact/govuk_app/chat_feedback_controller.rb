@@ -1,6 +1,8 @@
 class Contact::GovukApp::ChatFeedbackController < ApplicationController
   include ThrottlingManager
 
+  rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
+
   def new; end
 
   def create
@@ -21,12 +23,16 @@ class Contact::GovukApp::ChatFeedbackController < ApplicationController
 private
 
   def chat_feedback_params
-    params[:chat_feedback].slice(
+    params.require(:chat_feedback).permit(
       :giraffe,
       :feedback,
       :reply,
       :name,
       :email,
-    ).permit!
+    )
+  end
+
+  def parameter_missing_error
+    render plain: "Required parameter is missing", status: :bad_request
   end
 end
