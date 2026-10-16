@@ -1,5 +1,10 @@
+require "metrics"
 # Throttle by IP address and by provided email address to 1 rpm on any contact forms
 # endpoint except the request-accessible-format endpoints
+ActiveSupport::Notifications.subscribe("throttle.rack_attack") do |_name, _start, _finish, _id, payload|
+  Rails.logger.info("Rack::Attack throttled: #{payload[:request].path}")
+  Metrics::COUNTERS[:rack_attack_throttled_requests_total].increment
+end
 
 rate_limit_enabled = true
 
