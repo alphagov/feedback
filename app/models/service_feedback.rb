@@ -34,6 +34,8 @@ class ServiceFeedback < Ticket
 private
 
   def path
-    !url.nil? ? URI(url).path : nil
+    return "/" if url.blank?
+
+    URI(url).path.presence || "/"
   end
 end
