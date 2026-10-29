@@ -47,7 +47,7 @@ RSpec.describe ServiceFeedback, type: :model do
 
     describe "#options" do
       subject { super().options }
-      it { is_expected.to include(path: nil) }
+      it { is_expected.to include(path: "/") }
     end
   end
 end
