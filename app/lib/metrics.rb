@@ -6,5 +6,10 @@ module Metrics
       "rack_attack_throttled_requests_total",
       "Number of requests throttled by Rack::Attack",
     ),
+    feedback_spam_requests_total: CLIENT.register(
+      :counter,
+      "feedback_spam_requests_total",
+      "Number of spam requests detected",
+    ),
   }.freeze
 end
