@@ -26,7 +26,9 @@ class ReportAProblemTicket < Ticket
   end
 
   def spam?
-    Rails.application.config.problem_report_spam_matchers.any? { |pattern| pattern[self] }
+    spam_result = Rails.application.config.problem_report_spam_matchers.any? { |pattern| pattern[self] }
+    Metrics::COUNTERS[:feedback_spam_requests_total].increment if spam_result
+    spam_result
   end
 
 private
