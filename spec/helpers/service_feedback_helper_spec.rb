@@ -1,7 +1,9 @@
 require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe ServiceFeedbackHelper, type: :helper do
-  include GovukConditionalContentItemLoaderTestHelpers
+  include ServiceFeedbackHelper
+  include GdsApi::TestHelpers::ContentStore
 
   let(:payload) do
     {
@@ -13,11 +15,11 @@ RSpec.describe ServiceFeedbackHelper, type: :helper do
     }
   end
 
-  let(:base_path) { "/done/some-transaction" }
+  let(:base_path) { "done/some-transaction" }
 
   before do
-    allow(request).to receive(:path).and_return(base_path)
-    stub_conditional_loader_returns_content_item_for_path(base_path, payload)
+    stub_content_store_has_item("/#{base_path}", payload)
+    params[:base_path] = base_path
   end
 
   describe "#content_item_hash" do
@@ -35,7 +37,7 @@ RSpec.describe ServiceFeedbackHelper, type: :helper do
   describe "set_locale" do
     it "sets the default locale to Welsh when locale is cy" do
       payload.merge!({ "locale" => "cy" })
-      stub_conditional_loader_returns_content_item_for_path(base_path, payload)
+      stub_content_store_has_item("/#{base_path}", payload)
 
       expect(helper.set_locale).to eql("cy")
     end
