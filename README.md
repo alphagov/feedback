@@ -30,12 +30,6 @@ Most of the `/done/completed-transaction` pages render a Service Feedback form. 
 The transaction finished page can be found here: https://www.gov.uk/done/transaction-finished.
 This doesn’t display a form, just content to inform the user that the transaction is finished.
 
-### How content is loaded
-
-Content for Completed Transaction pages is retrieved via [`govuk_content_item_loader`](https://github.com/alphagov/govuk_content_item_loader) from either Content Store or Publishing API (GraphQL).
-
-The initial request for the content item is made by the FormatRoutingConstraint, which determines the appropriate route and fetches the required data before the request is passed further down the stack.
-
 ### Where is the data sent?
 
 The Service Feedback form data is sent to the Support API. It can be viewed using the Support app within the Feedback Explorer.
