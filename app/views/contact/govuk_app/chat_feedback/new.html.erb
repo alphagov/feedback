@@ -18,7 +18,7 @@
     event_name: "form_response",
     type: "contact",
     section: ga4_english_strings[:questions].values.join(", "),
-    action: ga4_english_strings[:send_message],
+    action: ga4_english_strings[:send_message].downcase,
     tool_name: ga4_english_strings[:page_title]
   }.to_json
 %>

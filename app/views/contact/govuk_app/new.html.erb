@@ -13,7 +13,7 @@
     event_name: "form_response",
     type: "contact",
     section: ga4_english_strings[:contact_type],
-    action: ga4_english_strings[:continue_text],
+    action: ga4_english_strings[:continue_text].downcase,
     tool_name: ga4_english_strings[:page_title]
   }.to_json
 %>
