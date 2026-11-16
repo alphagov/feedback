@@ -30,33 +30,9 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
           do_submit
         end
 
-        describe "assigning the return url" do
-          it "should assign the return_url to the given url without the host etc." do
-            do_submit
-            expect(assigns[:return_path]).to eq("/somewhere")
-          end
-
-          it "should retain the query_string from the given URL" do
-            do_submit url: "http://www.example.com/somewhere?foo=bar&baz=1"
-            expect(assigns[:return_path]).to eq("/somewhere?foo=bar&baz=1")
-          end
-
-          it "should assign nil if an invalid url is provided" do
-            do_submit url: "b[]laaaaaargh!"
-            expect(assigns[:return_path]).to eq(nil)
-          end
-
-          it "should assign nil if no url is provided" do
-            do_submit url: nil
-            expect(assigns[:return_path]).to eq(nil)
-          end
-        end
-
-        it "should render the thankyou template assigning the message string" do
+        it "should return a successful created status" do
           do_submit
-          expect(response).to render_template("thankyou")
-          expect(assigns[:message]).to eq("<h1 class='govuk-heading-l'>Thank you for your help.</h1> <p class='govuk-body'>If you have more extensive feedback, please visit the <a class='govuk-link' href='/contact'>contact page</a>.</p>")
-          expect(assigns[:message]).to be_html_safe
+          expect(response.response_code).to eq(201)
         end
 
         context "when ticket creation fails" do
@@ -64,7 +40,7 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
             allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           end
 
-          it "should render the thankyou template assigning the message string" do
+          it "should return a service unavailable status" do
             do_submit
             expect(response.response_code).to eq(503)
           end
@@ -136,17 +112,20 @@ RSpec.describe Contact::Govuk::ProblemReportsController, type: :controller do
           do_submit
         end
 
-        it "should return json indicating success" do
+        it "should return a success status when ticket creation succeeds" do
           do_submit
-          data = JSON.parse(response.body)
-          expect(data).to eq("status" => "success", "message" => "<h1 class='govuk-heading-l'>Thank you for your help.</h1> <p class='govuk-body'>If you have more extensive feedback, please visit the <a class='govuk-link' href='/contact'>contact page</a>.</p>")
+          expect(response.response_code).to eq(201)
         end
 
         it "should return json indicating failure when ticket creation fails" do
           allow_any_instance_of(ReportAProblemTicket).to receive(:save).and_raise(GdsApi::BaseError)
           do_submit
+          expect(response.response_code).to eq(503)
           data = JSON.parse(response.body)
-          expect(data).to eq("status" => "error", "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>")
+          expect(data).to eq(
+            "status" => "error",
+            "message" => "<p>Sorry, we're unable to receive your message right now.</p> <p>We have other ways for you to provide feedback on the <a href='/contact'>contact page</a>.</p>",
+          )
         end
       end
     end
