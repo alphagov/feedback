@@ -21,42 +21,13 @@ class Contact::Govuk::ProblemReportsController < ContactController
       ticket.save
 
       hide_report_a_problem_form_in_response
-      @message = DONE_OK_TEXT.html_safe
-      status = 201
-      status_text = "success"
+
+      head :created
     else
-      @message = DONE_INVALID_TEXT.html_safe
-      status = 422
-      status_text = "error"
+      render json: {
+        status: "error",
+        errors: ticket.errors.full_messages,
+      }, status: :unprocessable_entity
     end
-
-    respond_to do |format|
-      format.html do
-        @return_path = extract_return_path(params[:url])
-        # not returning the strictly correct status code here because
-        # nginx is currently configured to intercept 4XX errors
-        # and replace what the app sends back with a standard error page
-        render "contact/govuk/problem_reports/thankyou"
-      end
-      format.js do
-        response = { message: @message, status: status_text }
-        response[:errors] = ticket.errors.full_messages unless ticket.valid?
-
-        render json: response, status:
-      end
-    end
-  end
-
-private
-
-  def extract_return_path(url)
-    return nil if url.blank?
-
-    uri = URI.parse(url)
-    return_path = uri.path
-    return_path << "?#{uri.query}" if uri.query.present?
-    return_path
-  rescue URI::InvalidURIError
-    nil
   end
 end
