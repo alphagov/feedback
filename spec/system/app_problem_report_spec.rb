@@ -82,7 +82,7 @@ RSpec.describe "Submitting app problem report" do
       data_module = page.find("form")["data-module"]
       expected_data_module = "ga4-form-tracker"
       ga4_form_attribute = page.find("form")["data-ga4-form"]
-      ga4_expected_object = "{\"event_name\":\"form_response\",\"type\":\"contact\",\"section\":\"What phone do you have?, The app version where you found the problem, What were you trying to do?, What happened?, Can we reply to you by email?, Email address, Your name\",\"action\":\"Send message\",\"tool_name\":\"Contact the GOV.UK app team\"}"
+      ga4_expected_object = "{\"event_name\":\"form_response\",\"type\":\"contact\",\"section\":\"What phone do you have?, The app version where you found the problem, What were you trying to do?, What happened?, Can we reply to you by email?, Email address, Your name\",\"action\":\"send message\",\"tool_name\":\"Contact the GOV.UK app team\"}"
 
       expect(data_module).to eq(expected_data_module)
       expect(ga4_form_attribute).to eq(ga4_expected_object)
