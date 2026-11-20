@@ -5,7 +5,7 @@ ruby "~> 4.0"
 gem "rails", "8.1.4.1"
 
 gem "bootsnap", require: false
-gem "connection_pool", "< 3" # Do not bump via Dependabot - https://github.com/alphagov/feedback/pull/2319
+gem "connection_pool", "< 4" # Do not bump via Dependabot - https://github.com/alphagov/feedback/pull/2319
 gem "csv"
 gem "dalli", "~> 4"
 gem "dartsass-rails"
