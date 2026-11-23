@@ -138,13 +138,14 @@ GEM
       rake (~> 13.3)
     googleapis-common-protos-types (1.25.0)
       google-protobuf (~> 4.26)
-    govuk_app_config (9.28.0)
+    govuk_app_config (10.1.0)
       connection_pool (< 4)
       logstasher (>= 2.1, < 4.0)
       opentelemetry-exporter-otlp (>= 0.25, < 0.35)
       opentelemetry-instrumentation-all (>= 0.39.1, < 0.98.0)
       opentelemetry-sdk (~> 1.2)
-      plek (>= 4, < 6)
+      ostruct (~> 0.6)
+      plek (>= 4, < 7)
       prometheus_exporter (~> 2.3)
       puma (>= 5.6, < 9.0)
       rack-proxy (>= 0.7, < 2.0)
@@ -449,7 +450,7 @@ GEM
     puma (8.1.2)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.8)
+    rack (3.2.9)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
     rack-proxy (1.0.3)
@@ -655,7 +656,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   gds-api-adapters
-  govuk_app_config (= 9.28.0)
+  govuk_app_config (= 10.1.0)
   govuk_publishing_components
   govuk_schemas
   govuk_test
